@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
 [ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://game/battle/camera_director.gd" id="5_camera"]
 [ext_resource type="Script" path="res://game/battle/aim_guide.gd" id="6_aim"]
 [ext_resource type="Script" path="res://game/battle/unstable_power_cell.gd" id="7_hazard"]
+[ext_resource type="Script" path="res://game/battle/central_roadblock.gd" id="8_roadblock"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_ground"]
 size = Vector2(2160, 90)
@@ -19,6 +20,9 @@ size = Vector2(240, 95)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_cell"]
 size = Vector2(54, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_roadblock"]
+size = Vector2(224, 155)
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_battle")
@@ -33,6 +37,13 @@ position = Vector2(1080, 1080)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
 shape = SubResource("RectangleShape_ground")
+
+[node name="CentralRoadblock" type="StaticBody2D" parent="World"]
+position = Vector2(1080, 958)
+script = ExtResource("8_roadblock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/CentralRoadblock"]
+shape = SubResource("RectangleShape_roadblock")
 
 [node name="Player" type="CharacterBody2D" parent="World"]
 position = Vector2(300, 1040)
@@ -157,12 +168,36 @@ mouse_filter = 0
 theme_override_font_sizes/font_size = 18
 text = "INSPECT ENEMY"
 
+[node name="EnemyLocatorLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 236.0
+offset_right = 540.0
+offset_bottom = 276.0
+theme_override_font_sizes/font_size = 20
+text = "ENEMY →  ~39m"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="WeaponDescriptionLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 824.0
+offset_right = 655.0
+offset_bottom = 892.0
+theme_override_font_sizes/font_size = 17
+text = "Balanced improvised round."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
 [node name="WeaponBar" type="HBoxContainer" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 55.0
-offset_top = 925.0
+offset_top = 900.0
 offset_right = 665.0
-offset_bottom = 1010.0
+offset_bottom = 985.0
 theme_override_constants/separation = 10
 
 [node name="ScrapBolt" type="Button" parent="HUD/Root/WeaponBar"]
@@ -170,7 +205,7 @@ custom_minimum_size = Vector2(196, 76)
 layout_mode = 2
 toggle_mode = true
 text = "SCRAP BOLT
-BOUNCE ×1"
+BOUNCE ×2"
 
 [node name="HeavySlug" type="Button" parent="HUD/Root/WeaponBar"]
 custom_minimum_size = Vector2(196, 76)
@@ -189,9 +224,9 @@ RADIAL"
 [node name="PowerLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 60.0
-offset_top = 1040.0
+offset_top = 1005.0
 offset_right = 330.0
-offset_bottom = 1084.0
+offset_bottom = 1051.0
 theme_override_font_sizes/font_size = 24
 text = "POWER —"
 horizontal_alignment = 1
@@ -199,9 +234,9 @@ horizontal_alignment = 1
 [node name="AngleLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 390.0
-offset_top = 1040.0
+offset_top = 1005.0
 offset_right = 660.0
-offset_bottom = 1084.0
+offset_bottom = 1051.0
 theme_override_font_sizes/font_size = 24
 text = "ANGLE —"
 horizontal_alignment = 1
@@ -209,13 +244,15 @@ horizontal_alignment = 1
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 55.0
-offset_top = 1110.0
+offset_top = 1080.0
 offset_right = 665.0
-offset_bottom = 1186.0
+offset_bottom = 1152.0
 theme_override_font_sizes/font_size = 18
 text = "Preparing battle..."
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
+mouse_filter = 2
 
 [node name="RestartButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
