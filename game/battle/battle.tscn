@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
 [ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://game/battle/destructible_cover.gd" id="4_cover"]
 [ext_resource type="Script" path="res://game/battle/camera_director.gd" id="5_camera"]
 [ext_resource type="Script" path="res://game/battle/aim_guide.gd" id="6_aim"]
+[ext_resource type="Script" path="res://game/battle/unstable_power_cell.gd" id="7_hazard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_ground"]
 size = Vector2(2160, 90)
@@ -16,6 +17,9 @@ size = Vector2(48, 118)
 [sub_resource type="RectangleShape2D" id="RectangleShape_cover"]
 size = Vector2(240, 95)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape_cell"]
+size = Vector2(54, 92)
+
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_battle")
 
@@ -24,7 +28,7 @@ script = ExtResource("1_battle")
 [node name="BattlefieldVisual" type="Node2D" parent="World"]
 script = ExtResource("2_field")
 
-[node name="Ground" type="StaticBody2D" parent="World"]
+[node name="Ground" type="StaticBody2D" parent="World" groups=["ground_surface"]]
 position = Vector2(1080, 1080)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
@@ -51,7 +55,7 @@ facing = 1
 shape = SubResource("RectangleShape_cover")
 
 [node name="EnemyCover" type="StaticBody2D" parent="World"]
-position = Vector2(1590, 1000)
+position = Vector2(1540, 1000)
 script = ExtResource("4_cover")
 body_color = Color(0.32, 0.38, 0.35, 1)
 facing = -1
@@ -59,8 +63,16 @@ facing = -1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/EnemyCover"]
 shape = SubResource("RectangleShape_cover")
 
+[node name="UnstablePowerCell" type="StaticBody2D" parent="World"]
+position = Vector2(1715, 1028)
+script = ExtResource("7_hazard")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/UnstablePowerCell"]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape_cell")
+
 [node name="Enemy" type="CharacterBody2D" parent="World"]
-position = Vector2(1810, 1040)
+position = Vector2(1860, 1040)
 script = ExtResource("3_combatant")
 display_name = "Enemy"
 facing = -1
@@ -135,26 +147,6 @@ text = "DIRECT HIT"
 horizontal_alignment = 1
 mouse_filter = 2
 
-[node name="PowerLabel" type="Label" parent="HUD/Root"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 1080.0
-offset_right = 330.0
-offset_bottom = 1124.0
-theme_override_font_sizes/font_size = 24
-text = "POWER —"
-horizontal_alignment = 1
-
-[node name="AngleLabel" type="Label" parent="HUD/Root"]
-layout_mode = 0
-offset_left = 390.0
-offset_top = 1080.0
-offset_right = 660.0
-offset_bottom = 1124.0
-theme_override_font_sizes/font_size = 24
-text = "ANGLE —"
-horizontal_alignment = 1
-
 [node name="InspectButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 235.0
@@ -165,13 +157,62 @@ mouse_filter = 0
 theme_override_font_sizes/font_size = 18
 text = "INSPECT ENEMY"
 
+[node name="WeaponBar" type="HBoxContainer" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 925.0
+offset_right = 665.0
+offset_bottom = 1010.0
+theme_override_constants/separation = 10
+
+[node name="ScrapBolt" type="Button" parent="HUD/Root/WeaponBar"]
+custom_minimum_size = Vector2(196, 76)
+layout_mode = 2
+toggle_mode = true
+text = "SCRAP BOLT
+BOUNCE ×1"
+
+[node name="HeavySlug" type="Button" parent="HUD/Root/WeaponBar"]
+custom_minimum_size = Vector2(196, 76)
+layout_mode = 2
+toggle_mode = true
+text = "HEAVY SLUG
+COVER"
+
+[node name="ShockCapsule" type="Button" parent="HUD/Root/WeaponBar"]
+custom_minimum_size = Vector2(196, 76)
+layout_mode = 2
+toggle_mode = true
+text = "SHOCK CAPSULE
+RADIAL"
+
+[node name="PowerLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 1040.0
+offset_right = 330.0
+offset_bottom = 1084.0
+theme_override_font_sizes/font_size = 24
+text = "POWER —"
+horizontal_alignment = 1
+
+[node name="AngleLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 1040.0
+offset_right = 660.0
+offset_bottom = 1084.0
+theme_override_font_sizes/font_size = 24
+text = "ANGLE —"
+horizontal_alignment = 1
+
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 1150.0
-offset_right = 650.0
-offset_bottom = 1204.0
-theme_override_font_sizes/font_size = 19
+offset_left = 55.0
+offset_top = 1110.0
+offset_right = 665.0
+offset_bottom = 1186.0
+theme_override_font_sizes/font_size = 18
 text = "Preparing battle..."
 horizontal_alignment = 1
 autowrap_mode = 2
