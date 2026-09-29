@@ -3,6 +3,7 @@ extends Resource
 
 @export var id := "mission"
 @export var display_name := "Encounter"
+@export var test_focus := "BASELINE"
 @export_multiline var briefing := ""
 @export var objective_text := "INCAPACITATE ENEMY"
 
