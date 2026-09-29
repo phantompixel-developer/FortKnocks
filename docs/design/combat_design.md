@@ -72,9 +72,11 @@ Weapon values live in `WeaponDefinition` resources so future projectiles can be 
 ## Information
 The opponent does not need to remain visible while the player aims. Portrait UX instead uses:
 - an initial enemy preview,
-- a subtle relative-position strip,
 - an off-screen enemy direction/distance indicator,
-- an optional tap/hold inspect action.
+- a fast Inspect Enemy action,
+- a temporary target card during inspection showing enemy health, cover state, and interactive hazard state.
+
+The target card is informational only; it does not pause or alter combat rules, reveal a solved trajectory, or remain on screen during aiming.
 
 ## Impact feedback contract
 Every resolved shot must communicate what happened without relying on the player inferring it from HP values:
