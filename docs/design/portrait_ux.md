@@ -17,20 +17,29 @@ Do not repeat a long cinematic pan every turn if it becomes tedious. The system 
 
 ## During aiming
 Visible information should include only what supports the shot:
-- active weapon,
-- a dedicated weapon-description band,
+- selected weapon name and concise tactical role,
+- compact weapon tabs,
 - power,
 - angle in degrees,
+- previous-shot power/angle/result,
 - short trajectory preview,
-- environmental force indicator when relevant,
 - enemy direction and approximate distance when off screen,
 - turn/status information.
 
-The portrait HUD separates these into non-overlapping vertical bands: weapon description, weapon selection, power/angle, then transient turn/aim hints. Weapon descriptions must never share the same rectangle as power/angle feedback.
+The portrait HUD uses one compact **control deck** rather than stacking unrelated labels. Its order is:
+1. selected weapon name,
+2. one-line tactical role,
+3. three single-line weapon tabs,
+4. power and angle,
+5. previous-shot readout.
+
+Long weapon descriptions do not appear in the live battle HUD. The underlying Resource may retain a full description for menus/help later.
+
+Transient battle messages live in a separate status strip above the deck. This prevents weapon controls, power/angle, and turn feedback from competing for the same space.
 
 The off-screen enemy cue is intentionally approximate (direction plus rounded distance) so it restores spatial context without becoming a precise minimap.
 
-Avoid covering the central play space with controls.
+Avoid covering the central play space with controls. The control deck should occupy only the height required by its contents and should be hidden during projectile flight, enemy turns, and inspection.
 
 ## Enemy inspection
 Provide a fast player-controlled **Inspect Enemy** action during the player's aiming phase. It pans to the opponent, briefly holds the enemy/cover position, then returns to the shooter. The player's selected power, angle, and trajectory state must remain intact; inspection is information gathering, not an aim reset.
