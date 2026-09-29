@@ -1,7 +1,7 @@
 class_name BattleProjectile
 extends RigidBody2D
 
-signal resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2)
+signal resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2, damage_amount: int)
 
 @export var damage := 50
 @export var knockback_force := 520.0
@@ -59,7 +59,7 @@ func _resolve(body: Node) -> void:
 	linear_velocity = Vector2.ZERO
 	angular_velocity = 0.0
 	set_deferred("freeze", true)
-	resolved.emit(impact, body, impact_velocity)
+	resolved.emit(impact, body, impact_velocity, damage)
 	queue_free()
 
 func _draw() -> void:

@@ -133,6 +133,7 @@ pivot_offset = Vector2(200, 30)
 theme_override_font_sizes/font_size = 34
 text = "DIRECT HIT"
 horizontal_alignment = 1
+mouse_filter = 2
 
 [node name="PowerLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0

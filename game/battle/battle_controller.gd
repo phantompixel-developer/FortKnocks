@@ -229,7 +229,7 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2) -> void:
 	projectile.launch(shooter.get_launch_origin(), launch_velocity, shooter)
 	camera_director.follow(projectile)
 
-func _on_projectile_resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2) -> void:
+func _on_projectile_resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2, damage_amount: int) -> void:
 	phase = Phase.IMPACT_RESOLUTION
 	camera_director.stop_follow_at(impact_position, 0.10)
 
@@ -238,14 +238,14 @@ func _on_projectile_resolved(impact_position: Vector2, hit_body: Node, impact_ve
 
 	if hit_body is Combatant:
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.CREW, impact_strength)
-		_spawn_damage_popup(impact_position + Vector2(0.0, -90.0), "-50", Color("ef9b84"))
+		_spawn_damage_popup(impact_position + Vector2(0.0, -90.0), "-%d" % damage_amount, Color("ef9b84"))
 		_show_feedback("DIRECT HIT")
 		camera_director.impact_impulse(1.0, direction)
 		hint_label.text = "Direct hit"
 	elif hit_body is DestructibleCover:
 		var cover := hit_body as DestructibleCover
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
-		_spawn_damage_popup(impact_position + Vector2(0.0, -70.0), "-50 COVER", Color("e4bd78"))
+		_spawn_damage_popup(impact_position + Vector2(0.0, -70.0), "-%d COVER" % damage_amount, Color("e4bd78"))
 		if cover.is_destroyed:
 			_show_feedback("COVER DESTROYED")
 			hint_label.text = "Cover destroyed — firing line opened"
