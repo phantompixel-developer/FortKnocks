@@ -443,9 +443,12 @@ func _update_enemy_correction(impact_position: Vector2, hit_body: Node, weapon: 
 
 	var correction := float(_enemy_speed_correction[weapon.id])
 	if hit_body == null or hit_body.is_in_group("ground_surface"):
-		var error := impact_position.x - _enemy_target_x
-		if absf(error) > 45.0:
-			var adjustment := clampf(-error / 9000.0, -0.035, 0.035)
+		var travel_direction := signf(_enemy_target_x - enemy.get_launch_origin().x)
+		if is_zero_approx(travel_direction):
+			travel_direction = -1.0
+		var range_error := (impact_position.x - _enemy_target_x) * travel_direction
+		if absf(range_error) > 45.0:
+			var adjustment := clampf(-range_error / 9000.0, -0.035, 0.035)
 			correction = clampf(correction + adjustment, 0.90, 1.12)
 	else:
 		correction = lerpf(correction, 1.0, 0.18)
