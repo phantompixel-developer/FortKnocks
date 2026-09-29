@@ -1,3 +1,4 @@
+class_name Combatant
 extends CharacterBody2D
 
 signal health_changed(current: int, maximum: int)
@@ -33,25 +34,20 @@ func _draw() -> void:
 	var body_color := accent_color if health > 0 else Color("555555")
 	var outline := Color("252827")
 
-	# Legs/body.
 	draw_line(Vector2(-10, -35), Vector2(-18, 0), outline, 10.0)
 	draw_line(Vector2(10, -35), Vector2(18, 0), outline, 10.0)
 	draw_line(Vector2(0, -92), Vector2(0, -32), outline, 26.0)
 	draw_line(Vector2(0, -90), Vector2(0, -35), body_color, 18.0)
 
-	# Arms and improvised launcher.
 	draw_line(Vector2(-2, -76), Vector2(38 * facing, -62), outline, 11.0)
 	draw_line(Vector2(-2, -76), Vector2(38 * facing, -62), body_color, 7.0)
 	draw_line(Vector2(28 * facing, -67), Vector2(65 * facing, -77), Color("373c39"), 9.0)
 
-	# Head.
 	draw_circle(Vector2(0, -112), 23.0, outline)
 	draw_circle(Vector2(0, -112), 18.0, Color("d8b691"))
 
-	# Backpack silhouette.
 	draw_rect(Rect2(Vector2(-24 if facing > 0 else 5, -86), Vector2(19, 42)), Color("596057"))
 
-	# Simple health pip above the character.
 	draw_rect(Rect2(-34, -158, 68, 8), Color("2d302f"))
 	var ratio := float(health) / float(max_health)
 	draw_rect(Rect2(-32, -156, 64.0 * ratio, 4), Color("d6d0a0"))

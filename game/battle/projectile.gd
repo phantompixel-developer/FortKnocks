@@ -1,3 +1,4 @@
+class_name BattleProjectile
 extends RigidBody2D
 
 signal resolved(impact_position: Vector2, hit_body: Node)

@@ -1,3 +1,4 @@
+class_name DestructibleCover
 extends StaticBody2D
 
 signal health_changed(current: int, maximum: int)
@@ -37,7 +38,6 @@ func _draw() -> void:
 	var shell := body_color.darkened(damage_ratio * 0.35)
 	var outline := Color("292c2a")
 
-	# Simplified ruined civilian car.
 	draw_rect(Rect2(-120, -40, 240, 78), outline)
 	draw_rect(Rect2(-115, -36, 230, 68), shell)
 	draw_polygon(

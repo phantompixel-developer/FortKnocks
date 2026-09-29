@@ -1,3 +1,4 @@
+class_name AimGuide
 extends Node2D
 
 var _velocity := Vector2.ZERO

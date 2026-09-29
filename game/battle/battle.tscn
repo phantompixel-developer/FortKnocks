@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
 [ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]

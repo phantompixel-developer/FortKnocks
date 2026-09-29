@@ -14,13 +14,11 @@ const MIN_FIRE_DRAG := 36.0
 const MIN_SPEED := 520.0
 const MAX_SPEED := 1380.0
 
-@onready var camera_director: Node2D = $CameraDirector
-@onready var player: CharacterBody2D = $World/Player
-@onready var enemy: CharacterBody2D = $World/Enemy
-@onready var player_cover: StaticBody2D = $World/PlayerCover
-@onready var enemy_cover: StaticBody2D = $World/EnemyCover
+@onready var camera_director: BattleCameraDirector = $CameraDirector
+@onready var player: Combatant = $World/Player
+@onready var enemy: Combatant = $World/Enemy
 @onready var projectile_layer: Node2D = $ProjectileLayer
-@onready var aim_guide: Node2D = $AimGuide
+@onready var aim_guide: AimGuide = $AimGuide
 @onready var turn_label: Label = $HUD/Root/TurnLabel
 @onready var health_label: Label = $HUD/Root/HealthLabel
 @onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
@@ -33,7 +31,7 @@ var _dragging := false
 var _drag_start := Vector2.ZERO
 var _aim_velocity := Vector2.ZERO
 var _aim_power := 0.0
-var _active_shooter: CharacterBody2D
+var _active_shooter: Combatant
 
 func _ready() -> void:
 	player.health_changed.connect(_on_health_changed)
@@ -148,7 +146,7 @@ func _start_enemy_turn() -> void:
 	var velocity := _calculate_enemy_velocity(origin, target)
 	_fire_projectile(enemy, velocity)
 
-func _fire_projectile(shooter: CharacterBody2D, launch_velocity: Vector2) -> void:
+func _fire_projectile(shooter: Combatant, launch_velocity: Vector2) -> void:
 	if phase == Phase.GAME_OVER:
 		return
 
@@ -157,7 +155,11 @@ func _fire_projectile(shooter: CharacterBody2D, launch_velocity: Vector2) -> voi
 	aim_guide.clear()
 	hint_label.text = "SHOT AWAY"
 
-	var projectile := ProjectileScene.instantiate()
+	var projectile := ProjectileScene.instantiate() as BattleProjectile
+	if projectile == null:
+		push_error("Projectile scene did not instantiate as BattleProjectile.")
+		return
+
 	projectile_layer.add_child(projectile)
 	projectile.resolved.connect(_on_projectile_resolved)
 	projectile.launch(shooter.get_launch_origin(), launch_velocity, shooter)
@@ -188,7 +190,6 @@ func _calculate_enemy_velocity(origin: Vector2, target: Vector2) -> Vector2:
 	if denominator > 1.0:
 		speed = sqrt((gravity * dx * dx) / denominator)
 
-	# Primitive AI is intentionally imperfect.
 	speed *= randf_range(0.965, 1.025)
 	var direction := signf(target.x - origin.x)
 	return Vector2(direction * speed * cos_theta, -speed * sin(theta))

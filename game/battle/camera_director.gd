@@ -1,3 +1,4 @@
+class_name BattleCameraDirector
 extends Node2D
 
 @export var world_left := 0.0
