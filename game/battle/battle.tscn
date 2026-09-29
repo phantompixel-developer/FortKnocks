@@ -1,0 +1,173 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
+[ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]
+[ext_resource type="Script" path="res://game/battle/combatant.gd" id="3_combatant"]
+[ext_resource type="Script" path="res://game/battle/destructible_cover.gd" id="4_cover"]
+[ext_resource type="Script" path="res://game/battle/camera_director.gd" id="5_camera"]
+[ext_resource type="Script" path="res://game/battle/aim_guide.gd" id="6_aim"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_ground"]
+size = Vector2(2160, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_character"]
+size = Vector2(48, 118)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_cover"]
+size = Vector2(240, 95)
+
+[node name="Battle" type="Node2D"]
+script = ExtResource("1_battle")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="BattlefieldVisual" type="Node2D" parent="World"]
+script = ExtResource("2_field")
+
+[node name="Ground" type="StaticBody2D" parent="World"]
+position = Vector2(1080, 1080)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
+shape = SubResource("RectangleShape_ground")
+
+[node name="Player" type="CharacterBody2D" parent="World"]
+position = Vector2(300, 1040)
+script = ExtResource("3_combatant")
+display_name = "You"
+facing = 1
+accent_color = Color(0.77, 0.67, 0.43, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
+position = Vector2(0, -59)
+shape = SubResource("RectangleShape_character")
+
+[node name="PlayerCover" type="StaticBody2D" parent="World"]
+position = Vector2(520, 1000)
+script = ExtResource("4_cover")
+body_color = Color(0.43, 0.31, 0.24, 1)
+facing = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlayerCover"]
+shape = SubResource("RectangleShape_cover")
+
+[node name="EnemyCover" type="StaticBody2D" parent="World"]
+position = Vector2(1590, 1000)
+script = ExtResource("4_cover")
+body_color = Color(0.32, 0.38, 0.35, 1)
+facing = -1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/EnemyCover"]
+shape = SubResource("RectangleShape_cover")
+
+[node name="Enemy" type="CharacterBody2D" parent="World"]
+position = Vector2(1810, 1040)
+script = ExtResource("3_combatant")
+display_name = "Enemy"
+facing = -1
+accent_color = Color(0.53, 0.60, 0.49, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Enemy"]
+position = Vector2(0, -59)
+shape = SubResource("RectangleShape_character")
+
+[node name="ProjectileLayer" type="Node2D" parent="."]
+
+[node name="AimGuide" type="Node2D" parent="."]
+script = ExtResource("6_aim")
+
+[node name="CameraDirector" type="Node2D" parent="."]
+script = ExtResource("5_camera")
+
+[node name="Camera2D" type="Camera2D" parent="CameraDirector"]
+position_smoothing_enabled = false
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Root" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TurnLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 42.0
+offset_right = 495.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 30
+text = "FORT KNOCKS"
+horizontal_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 104.0
+offset_right = 250.0
+offset_bottom = 142.0
+theme_override_font_sizes/font_size = 20
+text = "YOU 100/100"
+
+[node name="EnemyHealthLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 104.0
+offset_right = 692.0
+offset_bottom = 142.0
+theme_override_font_sizes/font_size = 20
+text = "ENEMY 100/100"
+horizontal_alignment = 2
+
+[node name="PowerLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 1080.0
+offset_right = 330.0
+offset_bottom = 1124.0
+theme_override_font_sizes/font_size = 24
+text = "POWER —"
+horizontal_alignment = 1
+
+[node name="AngleLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 1080.0
+offset_right = 660.0
+offset_bottom = 1124.0
+theme_override_font_sizes/font_size = 24
+text = "ANGLE —"
+horizontal_alignment = 1
+
+[node name="InspectButton" type="Button" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 164.0
+offset_right = 485.0
+offset_bottom = 220.0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 18
+text = "INSPECT ENEMY"
+
+[node name="HintLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 1150.0
+offset_right = 650.0
+offset_bottom = 1204.0
+theme_override_font_sizes/font_size = 19
+text = "Preparing battle..."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RestartButton" type="Button" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 620.0
+offset_right = 485.0
+offset_bottom = 700.0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 24
+text = "RESTART"
