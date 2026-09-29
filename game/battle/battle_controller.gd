@@ -27,6 +27,8 @@ const MIN_FIRE_DRAG := 36.0
 const MIN_SPEED := 520.0
 const MAX_SPEED := 1380.0
 
+static var _pending_mission_id := ""
+
 @onready var camera_director: BattleCameraDirector = $CameraDirector
 @onready var world: Node2D = $World
 @onready var battlefield_visual: Node2D = $World/BattlefieldVisual
@@ -70,6 +72,7 @@ const MAX_SPEED := 1380.0
 @onready var high_ground_button: Button = $HUD/Root/EncounterPicker/HighGroundButton
 @onready var scrap_gate_button: Button = $HUD/Root/EncounterPicker/ScrapGateButton
 @onready var restart_button: Button = $HUD/Root/RestartButton
+@onready var change_encounter_button: Button = $HUD/Root/ChangeEncounterButton
 
 var phase := Phase.INTRO
 var _dragging := false
@@ -111,6 +114,7 @@ func _ready() -> void:
 	high_ground_button.pressed.connect(func() -> void: _begin_mission(HighGroundTrial as MissionDefinition))
 	scrap_gate_button.pressed.connect(func() -> void: _begin_mission(ScrapGateTrial as MissionDefinition))
 	restart_button.pressed.connect(_restart)
+	change_encounter_button.pressed.connect(_change_encounter)
 
 	world.visible = false
 	health_label.visible = false
@@ -122,6 +126,7 @@ func _ready() -> void:
 	target_card.visible = false
 	encounter_picker.visible = true
 	restart_button.visible = false
+	change_encounter_button.visible = false
 	feedback_label.visible = false
 	last_impact_marker.clear_marker()
 
@@ -131,16 +136,37 @@ func _ready() -> void:
 	_update_last_shot_display()
 	_update_hud()
 	_show_encounter_picker()
+	if not _pending_mission_id.is_empty():
+		call_deferred("_resume_pending_mission")
 
 func _show_encounter_picker() -> void:
 	phase = Phase.INTRO
 	world.visible = false
 	encounter_picker.visible = true
+	restart_button.visible = false
+	change_encounter_button.visible = false
 	health_label.visible = false
 	enemy_health_label.visible = false
 	turn_label.text = "ENCOUNTER PROOF"
 	picker_briefing_label.text = "Choose a greybox battle problem. Each uses the same weapons and combat rules."
 	hint_label.text = "Select an encounter to begin"
+
+func _resume_pending_mission() -> void:
+	var definition := _mission_for_id(_pending_mission_id)
+	_pending_mission_id = ""
+	if definition != null:
+		_begin_mission(definition)
+
+func _mission_for_id(mission_id: String) -> MissionDefinition:
+	match mission_id:
+		"roadblock_trial":
+			return RoadblockTrial as MissionDefinition
+		"high_ground_trial":
+			return HighGroundTrial as MissionDefinition
+		"scrap_gate_trial":
+			return ScrapGateTrial as MissionDefinition
+		_:
+			return null
 
 func _begin_mission(definition: MissionDefinition) -> void:
 	if definition == null or not encounter_picker.visible:
@@ -149,6 +175,8 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	_current_mission = definition
 	_configure_mission(definition)
 	encounter_picker.visible = false
+	restart_button.visible = false
+	change_encounter_button.visible = false
 	world.visible = true
 	health_label.visible = true
 	enemy_health_label.visible = true
@@ -777,6 +805,7 @@ func _check_game_over() -> bool:
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	restart_button.visible = true
+	change_encounter_button.visible = true
 
 	if player.is_alive():
 		turn_label.text = "YOU WIN"
@@ -833,4 +862,10 @@ func _update_enemy_locator() -> void:
 	enemy_locator_label.text = "ENEMY %s  ~%dm" % [arrow, approximate_metres]
 
 func _restart() -> void:
+	if _current_mission != null:
+		_pending_mission_id = _current_mission.id
+	get_tree().reload_current_scene()
+
+func _change_encounter() -> void:
+	_pending_mission_id = ""
 	get_tree().reload_current_scene()
