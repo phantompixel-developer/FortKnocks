@@ -2,15 +2,17 @@ class_name AimGuide
 extends Node2D
 
 var _velocity := Vector2.ZERO
+var _pullback_offset := Vector2.ZERO
 var _active := false
 var _gravity := 980.0
 
 func _ready() -> void:
 	_gravity = float(ProjectSettings.get_setting("physics/2d/default_gravity", 980.0))
 
-func show_prediction(origin: Vector2, launch_velocity: Vector2) -> void:
+func show_prediction(origin: Vector2, launch_velocity: Vector2, pullback_offset: Vector2) -> void:
 	global_position = origin
 	_velocity = launch_velocity
+	_pullback_offset = pullback_offset
 	_active = true
 	queue_redraw()
 
@@ -21,6 +23,11 @@ func clear() -> void:
 func _draw() -> void:
 	if not _active:
 		return
+
+	# Virtual tension line shows the finger pulling opposite the firing direction.
+	draw_line(Vector2.ZERO, _pullback_offset, Color(0.32, 0.30, 0.25, 0.82), 5.0, true)
+	draw_circle(_pullback_offset, 16.0, Color(0.86, 0.78, 0.52, 0.92))
+	draw_circle(_pullback_offset, 8.0, Color(0.27, 0.27, 0.24, 0.96))
 
 	for i in range(1, 10):
 		var t := float(i) * 0.085
