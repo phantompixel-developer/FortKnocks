@@ -23,6 +23,8 @@ An overview state may be added only if encounters require it.
 - Repetitive preview/travel durations should shorten after the first reveal of an encounter.
 - Camera shake/impulse is presentation only and must never obscure essential targeting information.
 - Projectile follow should look ahead enough to reveal impact rather than centering blindly on the projectile.
+- Impact impulse is short, directional, and scaled by result: strongest for crew/destruction, lighter for cover, subtle for environment misses.
+- After impact, the camera holds through an explicit settle phase before the next turn begins.
 
 ## World bounds
 The camera must respect authored battlefield bounds but may use controlled overscan/lead framing for projectiles.
@@ -34,5 +36,8 @@ Camera tests should include:
 - targets above/below the player,
 - screen-edge impacts,
 - fast projectiles,
+- direct crew hits,
+- cover destruction,
+- environment misses,
 - interrupted inspection,
 - unusual phone aspect ratios.

@@ -72,6 +72,8 @@ shape = SubResource("RectangleShape_character")
 
 [node name="ProjectileLayer" type="Node2D" parent="."]
 
+[node name="EffectsLayer" type="Node2D" parent="."]
+
 [node name="AimGuide" type="Node2D" parent="."]
 script = ExtResource("6_aim")
 
@@ -120,6 +122,17 @@ offset_bottom = 142.0
 theme_override_font_sizes/font_size = 20
 text = "ENEMY 100/100"
 horizontal_alignment = 2
+
+[node name="FeedbackLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 360.0
+offset_right = 560.0
+offset_bottom = 420.0
+pivot_offset = Vector2(200, 30)
+theme_override_font_sizes/font_size = 34
+text = "DIRECT HIT"
+horizontal_alignment = 1
 
 [node name="PowerLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0

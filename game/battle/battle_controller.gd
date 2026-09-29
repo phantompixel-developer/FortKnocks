@@ -3,12 +3,16 @@ extends Node2D
 enum Phase {
 	INTRO,
 	PLAYER_AIM,
-	PROJECTILE,
+	PROJECTILE_FLIGHT,
+	IMPACT_RESOLUTION,
+	SETTLE,
 	ENEMY_THINKING,
 	GAME_OVER,
 }
 
 const ProjectileScene := preload("res://game/battle/projectile.tscn")
+const ImpactEffectScript := preload("res://game/battle/impact_effect.gd")
+const DamagePopupScript := preload("res://game/battle/damage_popup.gd")
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
 const MIN_SPEED := 520.0
@@ -18,12 +22,14 @@ const MAX_SPEED := 1380.0
 @onready var player: Combatant = $World/Player
 @onready var enemy: Combatant = $World/Enemy
 @onready var projectile_layer: Node2D = $ProjectileLayer
+@onready var effects_layer: Node2D = $EffectsLayer
 @onready var aim_guide: AimGuide = $AimGuide
 @onready var turn_label: Label = $HUD/Root/TurnLabel
 @onready var health_label: Label = $HUD/Root/HealthLabel
 @onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
 @onready var power_label: Label = $HUD/Root/PowerLabel
 @onready var angle_label: Label = $HUD/Root/AngleLabel
+@onready var feedback_label: Label = $HUD/Root/FeedbackLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
 @onready var inspect_button: Button = $HUD/Root/InspectButton
 @onready var restart_button: Button = $HUD/Root/RestartButton
@@ -36,6 +42,7 @@ var _aim_power := 0.0
 var _aim_angle_degrees := 0.0
 var _is_inspecting := false
 var _active_shooter: Combatant
+var _feedback_tween: Tween
 
 func _ready() -> void:
 	player.health_changed.connect(_on_health_changed)
@@ -44,6 +51,7 @@ func _ready() -> void:
 	restart_button.pressed.connect(_restart)
 	inspect_button.visible = false
 	restart_button.visible = false
+	feedback_label.visible = false
 	_update_hud()
 	await get_tree().process_frame
 	_start_player_turn(true)
@@ -92,7 +100,6 @@ func _update_drag(screen_position: Vector2) -> void:
 		aim_guide.clear()
 		return
 
-	# Slingshot-style control: the shot travels opposite the finger pull.
 	var constrained_pullback := pullback.normalized() * length
 	var throw_vector := -constrained_pullback
 	var angle := atan2(-throw_vector.y, throw_vector.x)
@@ -205,7 +212,7 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2) -> void:
 	if phase == Phase.GAME_OVER:
 		return
 
-	phase = Phase.PROJECTILE
+	phase = Phase.PROJECTILE_FLIGHT
 	_is_inspecting = false
 	inspect_button.visible = false
 	_active_shooter = shooter
@@ -222,10 +229,47 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2) -> void:
 	projectile.launch(shooter.get_launch_origin(), launch_velocity, shooter)
 	camera_director.follow(projectile)
 
-func _on_projectile_resolved(impact_position: Vector2, _hit_body: Node) -> void:
-	camera_director.stop_follow_at(impact_position, 0.14)
+func _on_projectile_resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2) -> void:
+	phase = Phase.IMPACT_RESOLUTION
+	camera_director.stop_follow_at(impact_position, 0.10)
+
+	var direction := signf(impact_velocity.x)
+	var impact_strength := clampf(impact_velocity.length() / 1050.0, 0.45, 1.15)
+
+	if hit_body is Combatant:
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.CREW, impact_strength)
+		_spawn_damage_popup(impact_position + Vector2(0.0, -90.0), "-50", Color("ef9b84"))
+		_show_feedback("DIRECT HIT")
+		camera_director.impact_impulse(1.0, direction)
+		hint_label.text = "Direct hit"
+	elif hit_body is DestructibleCover:
+		var cover := hit_body as DestructibleCover
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
+		_spawn_damage_popup(impact_position + Vector2(0.0, -70.0), "-50 COVER", Color("e4bd78"))
+		if cover.is_destroyed:
+			_show_feedback("COVER DESTROYED")
+			hint_label.text = "Cover destroyed — firing line opened"
+			camera_director.impact_impulse(1.0, direction)
+		else:
+			_show_feedback("COVER HIT")
+			hint_label.text = "Cover damaged"
+			camera_director.impact_impulse(0.72, direction)
+	elif hit_body != null:
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.DUST, impact_strength)
+		_show_feedback("MISS")
+		hint_label.text = "Shot hit the environment"
+		camera_director.impact_impulse(0.38, direction)
+	else:
+		_show_feedback("MISS")
+		hint_label.text = "Shot went wide"
+
 	_update_hud()
-	await get_tree().create_timer(0.75).timeout
+	await get_tree().create_timer(0.30).timeout
+	if phase == Phase.GAME_OVER:
+		return
+
+	phase = Phase.SETTLE
+	await get_tree().create_timer(0.52).timeout
 
 	if _check_game_over():
 		return
@@ -234,6 +278,36 @@ func _on_projectile_resolved(impact_position: Vector2, _hit_body: Node) -> void:
 		_start_enemy_turn()
 	else:
 		_start_player_turn(false)
+
+func _spawn_impact_effect(world_position: Vector2, kind: ImpactEffect.Kind, strength: float) -> void:
+	var effect := ImpactEffectScript.new() as ImpactEffect
+	if effect == null:
+		return
+	effects_layer.add_child(effect)
+	effect.global_position = world_position
+	effect.setup(kind, strength)
+
+func _spawn_damage_popup(world_position: Vector2, message: String, color: Color) -> void:
+	var popup := DamagePopupScript.new() as DamagePopup
+	if popup == null:
+		return
+	effects_layer.add_child(popup)
+	popup.setup(world_position, message, color)
+
+func _show_feedback(message: String) -> void:
+	if _feedback_tween != null and _feedback_tween.is_running():
+		_feedback_tween.kill()
+
+	feedback_label.text = message
+	feedback_label.visible = true
+	feedback_label.modulate = Color.WHITE
+	feedback_label.scale = Vector2(0.82, 0.82)
+
+	_feedback_tween = create_tween()
+	_feedback_tween.set_parallel(true)
+	_feedback_tween.tween_property(feedback_label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_feedback_tween.tween_property(feedback_label, "modulate:a", 0.0, 0.62).set_delay(0.22)
+	_feedback_tween.chain().tween_callback(func() -> void: feedback_label.visible = false)
 
 func _calculate_enemy_velocity(origin: Vector2, target: Vector2) -> Vector2:
 	var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity", 980.0))

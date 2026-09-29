@@ -11,6 +11,7 @@ extends Node2D
 
 var _follow_target: Node2D
 var _move_tween: Tween
+var _impulse_tween: Tween
 
 func _ready() -> void:
 	global_position = Vector2(viewport_half_width, fixed_y)
@@ -39,6 +40,21 @@ func follow(target: Node2D) -> void:
 func stop_follow_at(world_position: Vector2, duration := 0.16) -> void:
 	_follow_target = null
 	focus_x(world_position.x, duration)
+
+func impact_impulse(strength := 1.0, horizontal_direction := 1.0) -> void:
+	if _impulse_tween != null and _impulse_tween.is_running():
+		_impulse_tween.kill()
+
+	var direction := signf(horizontal_direction)
+	if is_zero_approx(direction):
+		direction = 1.0
+
+	var amount := clampf(strength, 0.25, 1.25)
+	camera.offset = Vector2(17.0 * amount * direction, -10.0 * amount)
+
+	_impulse_tween = create_tween()
+	_impulse_tween.tween_property(camera, "offset", Vector2(-8.0 * amount * direction, 5.0 * amount), 0.055)
+	_impulse_tween.tween_property(camera, "offset", Vector2.ZERO, 0.11).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _process(delta: float) -> void:
 	if _follow_target == null or not is_instance_valid(_follow_target):

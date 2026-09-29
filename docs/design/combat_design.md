@@ -9,10 +9,10 @@ The battle should be understandable in seconds but reward repeated judgement. Th
 3. **Decision** — select weapon/tool if more than one is available.
 4. **Aim** — set angle and power.
 5. **Commit** — fire.
-6. **Flight** — projectile simulation and camera follow.
-7. **Impact** — collision, damage, force, cover/module reaction, effects.
-8. **Settle** — allow essential physics and destruction to resolve.
-9. **Status resolution** — deaths/incapacitation, fire/status effects, victory check.
+6. **Projectile flight** — projectile simulation, visible trail, and camera follow.
+7. **Impact resolution** — classify direct hit, cover hit, environment hit, or miss; apply damage/force and immediate feedback.
+8. **Settle** — hold the result long enough for hit reactions, destruction, and feedback to read.
+9. **Status resolution** — deaths/incapacitation, later status effects, and victory check.
 10. **Turn handoff**.
 
 ## Aiming
@@ -36,6 +36,17 @@ The opponent does not need to remain visible while the player aims. Portrait UX 
 - an off-screen enemy direction/distance indicator,
 - an optional tap/hold inspect action.
 
+## Impact feedback contract
+Every resolved shot must communicate what happened without relying on the player inferring it from HP values:
+- projectile flight has a readable streak/trail,
+- direct crew hits produce a distinct impact burst, hit reaction, damage popup, and strong camera impulse,
+- cover hits produce a material impact burst, visible staged damage, cover damage popup, and medium camera impulse,
+- environment impacts produce dust and explicit miss feedback,
+- off-world shots report a miss without manufacturing a fake impact,
+- the camera briefly settles on the result before turn handoff.
+
+Feedback is intentionally procedural during greybox development. Production VFX/audio come later.
+
 ## Damage model
 Combat objects are separated conceptually into:
 - **Crew** — vulnerable characters whose incapacitation can end the fight.
@@ -44,6 +55,8 @@ Combat objects are separated conceptually into:
 - **Environment** — selected props/supports/hazards that can react to impacts.
 
 Do not implement fully arbitrary destruction. Use authored destructible zones and state changes.
+
+The greybox wrecked-car cover uses three authored damage stages before becoming rubble. The purpose is to prove that repeated cover hits visibly change the firing problem before modular platform damage is introduced.
 
 ## Projectile outcomes
 A projectile definition can combine:
