@@ -40,15 +40,20 @@ const MAX_SPEED := 1380.0
 @onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
 @onready var inspect_button: Button = $HUD/Root/InspectButton
+@onready var weapon_tray: ColorRect = $HUD/Root/WeaponTray
 @onready var control_deck: ColorRect = $HUD/Root/ControlDeck
+@onready var target_card: ColorRect = $HUD/Root/TargetCard
+@onready var target_enemy_label: Label = $HUD/Root/TargetCard/EnemyInfoLabel
+@onready var target_cover_label: Label = $HUD/Root/TargetCard/CoverInfoLabel
+@onready var target_hazard_label: Label = $HUD/Root/TargetCard/HazardInfoLabel
 @onready var weapon_name_label: Label = $HUD/Root/ControlDeck/WeaponNameLabel
 @onready var weapon_role_label: Label = $HUD/Root/ControlDeck/WeaponRoleLabel
 @onready var power_label: Label = $HUD/Root/ControlDeck/PowerLabel
 @onready var angle_label: Label = $HUD/Root/ControlDeck/AngleLabel
 @onready var last_shot_label: Label = $HUD/Root/ControlDeck/LastShotLabel
-@onready var scrap_bolt_button: Button = $HUD/Root/ControlDeck/WeaponBar/ScrapBolt
-@onready var heavy_slug_button: Button = $HUD/Root/ControlDeck/WeaponBar/HeavySlug
-@onready var shock_capsule_button: Button = $HUD/Root/ControlDeck/WeaponBar/ShockCapsule
+@onready var scrap_bolt_button: Button = $HUD/Root/WeaponTray/ScrapBolt
+@onready var heavy_slug_button: Button = $HUD/Root/WeaponTray/HeavySlug
+@onready var shock_capsule_button: Button = $HUD/Root/WeaponTray/ShockCapsule
 @onready var restart_button: Button = $HUD/Root/RestartButton
 
 var phase := Phase.INTRO
@@ -89,7 +94,9 @@ func _ready() -> void:
 
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
+	weapon_tray.visible = false
 	control_deck.visible = false
+	target_card.visible = false
 	restart_button.visible = false
 	feedback_label.visible = false
 	last_impact_marker.clear_marker()
@@ -231,7 +238,9 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	inspect_button.visible = false
 	inspect_button.disabled = false
 	enemy_locator_label.visible = false
+	weapon_tray.visible = false
 	control_deck.visible = false
+	target_card.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	last_impact_marker.visible = false
@@ -241,8 +250,11 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 
 	if show_enemy_preview:
 		hint_label.text = "Enemy position"
+		target_card.visible = true
+		_update_target_card()
 		camera_director.focus_x(enemy.global_position.x, 0.35)
 		await get_tree().create_timer(0.70).timeout
+		target_card.visible = false
 		if phase == Phase.GAME_OVER:
 			return
 
@@ -255,7 +267,9 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	phase = Phase.PLAYER_AIM
 	inspect_button.visible = true
 	enemy_locator_label.visible = true
+	weapon_tray.visible = true
 	control_deck.visible = true
+	target_card.visible = false
 	if last_impact_marker.has_valid_marker:
 		last_impact_marker.visible = true
 
@@ -273,7 +287,10 @@ func _inspect_enemy() -> void:
 	_is_inspecting = true
 	inspect_button.disabled = true
 	enemy_locator_label.visible = false
+	weapon_tray.visible = false
 	control_deck.visible = false
+	target_card.visible = true
+	_update_target_card()
 	_set_weapon_buttons_enabled(false)
 	var previous_hint := hint_label.text
 
@@ -294,7 +311,9 @@ func _inspect_enemy() -> void:
 	hint_label.text = previous_hint
 	inspect_button.disabled = false
 	enemy_locator_label.visible = true
+	weapon_tray.visible = true
 	control_deck.visible = true
+	target_card.visible = false
 	_update_enemy_locator()
 	_set_weapon_buttons_enabled(true)
 	_is_inspecting = false
@@ -307,7 +326,9 @@ func _start_enemy_turn() -> void:
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
+	weapon_tray.visible = false
 	control_deck.visible = false
+	target_card.visible = false
 	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
@@ -353,7 +374,9 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
+	weapon_tray.visible = false
 	control_deck.visible = false
+	target_card.visible = false
 	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	_active_shooter = shooter
@@ -630,7 +653,9 @@ func _check_game_over() -> bool:
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
+	weapon_tray.visible = false
 	control_deck.visible = false
+	target_card.visible = false
 	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
@@ -655,6 +680,24 @@ func _update_hud() -> void:
 	enemy_health_label.text = "ENEMY  %d/100" % enemy.health
 	if enemy_locator_label.visible:
 		_update_enemy_locator()
+	if target_card.visible:
+		_update_target_card()
+
+func _update_target_card() -> void:
+	target_enemy_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
+
+	var stage := enemy_cover.get_damage_stage()
+	match stage:
+		0:
+			target_cover_label.text = "COVER: INTACT"
+		1:
+			target_cover_label.text = "COVER: DAMAGED"
+		2:
+			target_cover_label.text = "COVER: CRITICAL"
+		_:
+			target_cover_label.text = "COVER: RUBBLE"
+
+	target_hazard_label.text = "POWER CELL: SPENT" if power_cell.is_discharged else "POWER CELL: ACTIVE"
 
 func _update_enemy_locator() -> void:
 	if not enemy.is_alive():
