@@ -26,8 +26,7 @@ const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
 const MIN_SPEED := 520.0
 const MAX_SPEED := 1380.0
-
-static var _pending_mission_id := ""
+const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 
 @onready var camera_director: BattleCameraDirector = $CameraDirector
 @onready var world: Node2D = $World
@@ -136,8 +135,11 @@ func _ready() -> void:
 	_update_last_shot_display()
 	_update_hud()
 	_show_encounter_picker()
-	if not _pending_mission_id.is_empty():
-		call_deferred("_resume_pending_mission")
+	if get_tree().root.has_meta(PENDING_MISSION_META):
+		var pending_id := str(get_tree().root.get_meta(PENDING_MISSION_META))
+		get_tree().root.remove_meta(PENDING_MISSION_META)
+		if not pending_id.is_empty():
+			call_deferred("_resume_pending_mission", pending_id)
 
 func _show_encounter_picker() -> void:
 	phase = Phase.INTRO
@@ -151,9 +153,8 @@ func _show_encounter_picker() -> void:
 	picker_briefing_label.text = "Choose a greybox battle problem. Each uses the same weapons and combat rules."
 	hint_label.text = "Select an encounter to begin"
 
-func _resume_pending_mission() -> void:
-	var definition := _mission_for_id(_pending_mission_id)
-	_pending_mission_id = ""
+func _resume_pending_mission(mission_id: String) -> void:
+	var definition := _mission_for_id(mission_id)
 	if definition != null:
 		_begin_mission(definition)
 
@@ -863,9 +864,10 @@ func _update_enemy_locator() -> void:
 
 func _restart() -> void:
 	if _current_mission != null:
-		_pending_mission_id = _current_mission.id
+		get_tree().root.set_meta(PENDING_MISSION_META, _current_mission.id)
 	get_tree().reload_current_scene()
 
 func _change_encounter() -> void:
-	_pending_mission_id = ""
+	if get_tree().root.has_meta(PENDING_MISSION_META):
+		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()
