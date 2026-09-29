@@ -4,7 +4,7 @@ extends StaticBody2D
 var platform_size := Vector2(320.0, 80.0)
 
 func configure(rect: Rect2) -> void:
-	global_position = rect.position + rect.size * 0.5
+	position = rect.position + rect.size * 0.5
 	platform_size = rect.size
 
 func _ready() -> void:
