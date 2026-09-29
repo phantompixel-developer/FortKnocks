@@ -5,6 +5,7 @@ enum Kind {
 	DUST,
 	COVER,
 	CREW,
+	PULSE,
 }
 
 const LIFETIME := 0.48
@@ -25,7 +26,7 @@ var _age := 0.0
 
 func setup(impact_kind: Kind, impact_strength := 1.0) -> void:
 	kind = impact_kind
-	strength = clampf(impact_strength, 0.6, 1.4)
+	strength = clampf(impact_strength, 0.6, 1.6)
 	queue_redraw()
 
 func _process(delta: float) -> void:
@@ -37,7 +38,8 @@ func _process(delta: float) -> void:
 func _draw() -> void:
 	var progress := clampf(_age / LIFETIME, 0.0, 1.0)
 	var fade := 1.0 - progress
-	var ring_radius := lerpf(12.0, 72.0, progress) * strength
+	var max_radius := 92.0 if kind == Kind.PULSE else 72.0
+	var ring_radius := lerpf(12.0, max_radius, progress) * strength
 	var base_color := _color_for_kind()
 
 	draw_arc(Vector2.ZERO, ring_radius, 0.0, TAU, 28, Color(base_color, 0.75 * fade), maxf(2.0, 7.0 * fade), true)
@@ -45,6 +47,8 @@ func _draw() -> void:
 	for i in range(SPARK_DIRECTIONS.size()):
 		var direction: Vector2 = SPARK_DIRECTIONS[i]
 		var travel := (24.0 + float(i % 3) * 9.0) * strength * progress
+		if kind == Kind.PULSE:
+			travel *= 1.45
 		var start := direction * travel * 0.45
 		var finish := direction * travel
 		draw_line(start, finish, Color(base_color.lightened(0.18), fade), maxf(1.0, 5.0 * fade), true)
@@ -54,6 +58,9 @@ func _draw() -> void:
 			var offset := Vector2(float(i - 2) * 13.0, -8.0 - float(i % 2) * 8.0)
 			var radius := (12.0 + float(i) * 2.0) * (0.45 + progress) * strength
 			draw_circle(offset + Vector2(0.0, -26.0 * progress), radius, Color("777d76", 0.26 * fade))
+	elif kind == Kind.PULSE:
+		draw_circle(Vector2.ZERO, maxf(4.0, 34.0 * (1.0 - progress)) * strength, Color(base_color.lightened(0.32), 0.78 * fade))
+		draw_circle(Vector2.ZERO, maxf(3.0, 18.0 * (1.0 - progress)) * strength, Color("d9f4f7", 0.72 * fade))
 	else:
 		draw_circle(Vector2.ZERO, maxf(2.0, 18.0 * (1.0 - progress)) * strength, Color(base_color.lightened(0.35), 0.8 * fade))
 
@@ -63,5 +70,7 @@ func _color_for_kind() -> Color:
 			return Color("df8167")
 		Kind.COVER:
 			return Color("d9a35f")
+		Kind.PULSE:
+			return Color("66b7d5")
 		_:
 			return Color("aeb09b")
