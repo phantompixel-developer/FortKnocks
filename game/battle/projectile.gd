@@ -1,7 +1,7 @@
 class_name BattleProjectile
 extends RigidBody2D
 
-signal bounced(world_position: Vector2, remaining_bounces: int)
+signal bounced(world_position: Vector2, bounce_number: int, remaining_bounces: int)
 signal resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2, damage_amount: int, weapon: WeaponDefinition)
 
 const MAX_TRAIL_POINTS := 16
@@ -57,11 +57,13 @@ func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("ground_surface") and _can_ground_bounce():
 		_ground_bounces_used += 1
 		var remaining := maxi(0, weapon.max_ground_bounces - _ground_bounces_used)
-		if remaining <= 0:
+		if remaining > 0:
+			call_deferred("_set_secondary_bounce")
+		else:
 			call_deferred("_disable_future_bounce")
 		_trail_world_points.clear()
 		_trail_world_points.append(global_position)
-		bounced.emit(global_position, remaining)
+		bounced.emit(global_position, _ground_bounces_used, remaining)
 		return
 
 	var applied_damage := 0
@@ -71,6 +73,14 @@ func _on_body_entered(body: Node) -> void:
 		body.apply_hit(applied_damage, impulse, global_position)
 
 	_resolve(body, applied_damage)
+
+func _set_secondary_bounce() -> void:
+	if physics_material_override == null or weapon == null:
+		return
+	var factor := weapon.secondary_bounce_factor
+	if factor <= 0.0:
+		factor = weapon.bounce_factor * 0.72
+	physics_material_override.bounce = clampf(factor, 0.0, 0.9)
 
 func _disable_future_bounce() -> void:
 	if physics_material_override != null:
