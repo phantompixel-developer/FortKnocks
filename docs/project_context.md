@@ -95,6 +95,15 @@ It now includes:
 - Interactive unstable salvaged power cell.
 - Enemy AI that chooses among projectile roles and makes small per-projectile range corrections after misses.
 - Win / defeat / restart.
+- Touch-first greybox encounter selector for Encounter Proof.
+- Three mission-defined layouts using the same combat rules:
+  - baseline roadblock trial,
+  - enemy high-ground trial,
+  - raised-player scrap-gate trial.
+- Reusable greybox elevation geometry driven by mission data.
+- Second authored environmental interaction: a collapsible scrap gate that becomes a low obstruction when destroyed.
+
+The Encounter Proof implementation exists, but Milestone 1B is not considered passed until local repeated playtesting confirms the layouts create meaningfully different decisions.
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
 
