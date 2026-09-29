@@ -28,7 +28,7 @@ func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	_play_hit_reaction(impulse)
 
 	if health <= 0:
-		_collapse()
+		_collapse(impulse)
 	else:
 		queue_redraw()
 
@@ -37,13 +37,15 @@ func status_text() -> String:
 		return "SCRAP GATE: DOWN"
 	return "SCRAP GATE: %d/%d" % [health, max_health]
 
-func _collapse() -> void:
+func _collapse(impulse: Vector2) -> void:
 	if is_collapsed:
 		return
 
 	is_collapsed = true
 	var start_position := global_position
-	var direction := 1.0 if randf() >= 0.5 else -1.0
+	var direction := signf(impulse.x)
+	if is_zero_approx(direction):
+		direction = 1.0
 
 	var tween := create_tween()
 	tween.set_parallel(true)
