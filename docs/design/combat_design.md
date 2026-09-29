@@ -29,6 +29,15 @@ The implementation must support an accessibility alternative later: aim, lock, t
 
 Trajectory assistance must not reveal the complete solution. The initial target is a short dotted preview near the shooter, sufficient to communicate direction without removing judgement.
 
+## Previous-shot memory
+The player's next aiming turn may show the previous shot as a compact learning aid:
+- previous power percentage,
+- previous launch angle,
+- coarse result label such as DIRECT, COVER, ROADBLOCK, GROUND, or WIDE,
+- a small world-space marker at the previous final impact point when that point exists in the arena.
+
+The marker is hidden during projectile flight and enemy turns, then restored for the next player aiming phase. This supports deliberate correction without providing a solved trajectory or exact automatic targeting.
+
 ## Initial tactical weapon set
 The prototype proves three distinct shot roles. These are not a final inventory.
 
