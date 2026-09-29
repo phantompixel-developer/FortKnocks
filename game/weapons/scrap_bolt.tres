@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/weapons/weapon_definition.gd" id="1_weapon"]
+
+[resource]
+script = ExtResource("1_weapon")
+id = "scrap_bolt"
+display_name = "Scrap Bolt"
+description = "Balanced improvised round. Bounces once from the road before resolving."
+direct_damage = 50
+cover_damage = 50
+knockback_force = 520.0
+speed_multiplier = 1.0
+max_ground_bounces = 1
+bounce_factor = 0.58
+projectile_color = Color(0.949, 0.875, 0.522, 1)
+trail_color = Color(0.91, 0.82, 0.53, 0.58)
