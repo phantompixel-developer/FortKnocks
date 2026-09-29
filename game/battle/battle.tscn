@@ -400,32 +400,13 @@ vertical_alignment = 1
 autowrap_mode = 2
 mouse_filter = 2
 
-[node name="RoadblockButton" type="Button" parent="HUD/Root/EncounterPicker"]
+[node name="MissionButtons" type="VBoxContainer" parent="HUD/Root/EncounterPicker"]
 layout_mode = 0
 offset_left = 54.0
-offset_top = 174.0
+offset_top = 168.0
 offset_right = 514.0
-offset_bottom = 252.0
-theme_override_font_sizes/font_size = 20
-text = "1  ROADBLOCK TRIAL"
-
-[node name="HighGroundButton" type="Button" parent="HUD/Root/EncounterPicker"]
-layout_mode = 0
-offset_left = 54.0
-offset_top = 278.0
-offset_right = 514.0
-offset_bottom = 356.0
-theme_override_font_sizes/font_size = 20
-text = "2  HIGH GROUND"
-
-[node name="ScrapGateButton" type="Button" parent="HUD/Root/EncounterPicker"]
-layout_mode = 0
-offset_left = 54.0
-offset_top = 382.0
-offset_right = 514.0
-offset_bottom = 460.0
-theme_override_font_sizes/font_size = 20
-text = "3  SCRAP GATE"
+offset_bottom = 462.0
+theme_override_constants/separation = 22
 
 [node name="PickerFooter" type="Label" parent="HUD/Root/EncounterPicker"]
 layout_mode = 0
