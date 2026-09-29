@@ -34,6 +34,7 @@ Do not create empty directories only to satisfy this diagram. Add them when the 
 
 ## Scene-level composition
 Long-term application flow:
+
 ```text
 App
 ├── GameFlow
@@ -43,13 +44,14 @@ App
 
 Candidate screens:
 - home / Fort Knocks hub,
-- campaign map,
+- campaign map / Command Board,
 - loadout,
 - battle,
 - results,
-- workshop/garage.
+- workshop / garage.
 
-## Battle composition
+## Battle target architecture
+
 ```text
 Battle
 ├── BattleController
@@ -68,13 +70,29 @@ Battle
 
 This is an architectural target, not permission to create every node/script before it has behavior.
 
+## Current prototype architecture
+The current combat prototype intentionally keeps some orchestration inside `BattleController` while rules are still being proven.
+
+Current explicit combat phases are conceptually:
+- INTRO / preview,
+- PLAYER_AIM,
+- PROJECTILE_FLIGHT,
+- IMPACT_RESOLUTION,
+- SETTLE,
+- ENEMY_THINKING,
+- GAME_OVER.
+
+Do **not** refactor these into separate managers solely to match the target diagram. Extract `TurnController`, `ImpactResolver`, or other subsystems when feature pressure makes the responsibility boundary valuable.
+
+Current weapons already use a data-driven `WeaponDefinition` Resource. Preserve that direction rather than adding projectile-specific controller branches where configuration can own the difference.
+
 ## Responsibilities
 - **BattleController** — battle lifecycle, victory/defeat, orchestration.
-- **TurnController** — whose turn, allowed phase transitions.
-- **AimController** — local aiming input/state only.
+- **TurnController** — whose turn and allowed phase transitions once extracted.
+- **AimController** — local aiming input/state once extraction is justified.
 - **Projectile** — flight/collision behavior driven by data.
-- **ImpactResolver** — translates impact data into approved gameplay effects.
-- **DamageSystem** — applies damage to valid targets/zones.
+- **ImpactResolver** — translates impact data into approved gameplay effects once extraction is justified.
+- **DamageSystem** — applies damage to valid targets/zones when a shared system becomes necessary.
 - **CombatPlatform** — platform composition and damageable zones/modules.
 - **EnemyBrain** — chooses AI action without owning battle rules.
 - **CameraDirector** — camera state machine and transitions.
@@ -90,7 +108,8 @@ Avoid:
 - long `get_parent().get_parent()` chains,
 - global lookups for ordinary scene dependencies,
 - circular dependencies,
-- systems that both decide rules and render UI.
+- systems that both decide rules and render UI,
+- speculative abstractions with only one caller.
 
 ## Autoload policy
 Keep globals rare. Initial candidates only:
@@ -102,16 +121,21 @@ Keep globals rare. Initial candidates only:
 Do not create a global manager for every subsystem.
 
 ## Data model
-Candidate Resources:
-- ProjectileDefinition,
-- WeaponDefinition,
-- CrewDefinition,
-- CombatPlatformDefinition,
-- ModuleDefinition,
-- MissionDefinition,
+Existing / expected Resources:
+- `WeaponDefinition` — current projectile-role configuration.
+- ProjectileDefinition — add only if projectile data outgrows WeaponDefinition.
+- CrewDefinition.
+- CombatPlatformDefinition.
+- ModuleDefinition.
+- MissionDefinition.
 - RegionDefinition.
 
 Implementation should favor composition over deep inheritance.
 
 ## Save compatibility
 Save data must carry an explicit version once persistence is introduced. Migration belongs in the save layer; gameplay systems should not silently reinterpret old saves.
+
+Persistence is a Progression Shell milestone task, not a combat-prototype prerequisite.
+
+## Development-loop constraint
+A fresh checkout/pull should not require a hidden editor menu action, asset refresh button, or undocumented setup step before ordinary Play. Build import/configuration automation where needed.
