@@ -162,8 +162,8 @@ func _build_encounter_picker() -> void:
 		var mission := _missions[index]
 		var button := Button.new()
 		button.custom_minimum_size = Vector2(0.0, 74.0)
-		button.text = "%d  %s" % [index + 1, mission.display_name.to_upper()]
-		button.add_theme_font_size_override("font_size", 20)
+		button.text = "%d  %s\n%s" % [index + 1, mission.display_name.to_upper(), mission.test_focus]
+		button.add_theme_font_size_override("font_size", 16)
 		button.pressed.connect(_begin_mission.bind(mission))
 		mission_button_list.add_child(button)
 
