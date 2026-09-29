@@ -35,10 +35,10 @@ The prototype proves three distinct shot roles. These are not a final inventory.
 ### Scrap Bolt
 - baseline direct damage and knockback,
 - standard trajectory,
-- **one road bounce** before the projectile resolves,
+- **two controlled road bounces** before later ground contact resolves the shot,
 - forgiving option for banked shots under or around cover.
 
-The one-bounce rule is intentionally narrow: Scrap Bolt bounces from authored ground surfaces only. It does not bounce from characters, cover, or arbitrary props.
+The first rebound is strongest. The second retains enough energy to create a meaningful follow-up bank rather than a cosmetic hop, but is weaker than the first. Scrap Bolt bounces from authored ground surfaces only; it does not bounce from characters, cover, or arbitrary props.
 
 ### Heavy Slug
 - slightly faster travel,
@@ -74,7 +74,7 @@ Every resolved shot must communicate what happened without relying on the player
 - cover hits produce a material impact burst, visible staged damage, cover damage popup, and medium camera impulse,
 - environment impacts produce dust and explicit miss feedback,
 - off-world shots report a miss without manufacturing a fake radial effect,
-- a Scrap Bolt road bounce receives a brief ricochet cue without ending the turn,
+- each Scrap Bolt road rebound receives a numbered ricochet cue without ending the turn,
 - the camera briefly settles on the result before turn handoff.
 
 Feedback is intentionally procedural during greybox development. Production VFX/audio come later.
@@ -89,6 +89,16 @@ Combat objects are separated conceptually into:
 Do not implement fully arbitrary destruction. Use authored destructible zones and state changes.
 
 The greybox wrecked-car cover uses three authored damage stages before becoming rubble. The purpose is to prove that repeated cover hits visibly change the firing problem before modular platform damage is introduced.
+
+## Arena geometry
+The greybox encounter now includes a tall central concrete roadblock. It exists to make trajectory choice matter:
+- very low shots can collide with the obstruction,
+- high arcs can clear it,
+- Scrap Bolt can use the road before/after the obstruction for bank-shot experiments,
+- Heavy Slug remains useful when the opponent's immediate cover is the real problem,
+- Shock Capsule can reward landing near clustered targets rather than threading a direct line.
+
+This is intentionally authored geometry, not procedural terrain.
 
 ## Environmental interaction
 The current greybox arena contains one unstable salvaged power cell near the enemy position. Direct impact or a nearby Shock Capsule pulse can discharge it.
