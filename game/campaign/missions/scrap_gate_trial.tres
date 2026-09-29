@@ -6,6 +6,7 @@
 script = ExtResource("1_mission")
 id = "scrap_gate_trial"
 display_name = "Scrap Gate"
+test_focus = "SHORT RANGE • BREAKABLE GATE"
 briefing = "A closer enemy position sits behind a reinforced scrap gate while your firing point is raised. Judge the shorter power window, break the gate, or work around it."
 objective_text = "INCAPACITATE ENEMY"
 player_position = Vector2(310, 945)
