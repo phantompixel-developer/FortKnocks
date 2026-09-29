@@ -5,6 +5,15 @@ Logical game viewport: **720×1280 portrait**.
 
 The battlefield may span multiple screen widths. The camera, rather than a forced split screen, is responsible for presenting spatial information.
 
+## Encounter-proof selector
+During Milestone 1B playtesting, Play opens a touch-first greybox encounter selector before combat begins.
+
+This selector is a development/proof surface, not the final campaign Command Board. It exists so baseline, high-ground, and scrap-gate layouts can be tested without editor actions or hidden setup.
+
+After a battle ends:
+- **Restart** reloads the same selected encounter.
+- **Choose Encounter** returns to the selector.
+
 ## Camera-assisted turn presentation
 Player-turn baseline:
 1. Frame the enemy position.
