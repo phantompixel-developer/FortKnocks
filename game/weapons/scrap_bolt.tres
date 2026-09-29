@@ -6,12 +6,13 @@
 script = ExtResource("1_weapon")
 id = "scrap_bolt"
 display_name = "Scrap Bolt"
-description = "Balanced improvised round. Bounces once from the road before resolving."
+description = "Balanced improvised round. Two controlled road bounces create bank-shot options."
 direct_damage = 50
 cover_damage = 50
 knockback_force = 520.0
 speed_multiplier = 1.0
-max_ground_bounces = 1
-bounce_factor = 0.58
+max_ground_bounces = 2
+bounce_factor = 0.66
+secondary_bounce_factor = 0.48
 projectile_color = Color(0.949, 0.875, 0.522, 1)
 trail_color = Color(0.91, 0.82, 0.53, 0.58)
