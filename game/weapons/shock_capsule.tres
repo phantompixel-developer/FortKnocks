@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/weapons/weapon_definition.gd" id="1_weapon"]
+
+[resource]
+script = ExtResource("1_weapon")
+id = "shock_capsule"
+display_name = "Shock Capsule"
+description = "Low direct damage with a radial pressure pulse around impact."
+direct_damage = 20
+cover_damage = 25
+knockback_force = 300.0
+speed_multiplier = 0.92
+blast_radius = 205.0
+blast_damage = 34
+blast_force = 780.0
+projectile_color = Color(0.49, 0.72, 0.87, 1)
+trail_color = Color(0.49, 0.72, 0.87, 0.55)

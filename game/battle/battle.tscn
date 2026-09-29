@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
 [ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://game/battle/destructible_cover.gd" id="4_cover"]
 [ext_resource type="Script" path="res://game/battle/camera_director.gd" id="5_camera"]
 [ext_resource type="Script" path="res://game/battle/aim_guide.gd" id="6_aim"]
+[ext_resource type="Script" path="res://game/battle/unstable_power_cell.gd" id="7_hazard"]
+[ext_resource type="Script" path="res://game/battle/central_roadblock.gd" id="8_roadblock"]
+[ext_resource type="Script" path="res://game/battle/last_impact_marker.gd" id="9_marker"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_ground"]
 size = Vector2(2160, 90)
@@ -16,6 +19,12 @@ size = Vector2(48, 118)
 [sub_resource type="RectangleShape2D" id="RectangleShape_cover"]
 size = Vector2(240, 95)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape_cell"]
+size = Vector2(54, 92)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_roadblock"]
+size = Vector2(224, 155)
+
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_battle")
 
@@ -24,11 +33,18 @@ script = ExtResource("1_battle")
 [node name="BattlefieldVisual" type="Node2D" parent="World"]
 script = ExtResource("2_field")
 
-[node name="Ground" type="StaticBody2D" parent="World"]
+[node name="Ground" type="StaticBody2D" parent="World" groups=["ground_surface"]]
 position = Vector2(1080, 1080)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
 shape = SubResource("RectangleShape_ground")
+
+[node name="CentralRoadblock" type="StaticBody2D" parent="World"]
+position = Vector2(1080, 958)
+script = ExtResource("8_roadblock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/CentralRoadblock"]
+shape = SubResource("RectangleShape_roadblock")
 
 [node name="Player" type="CharacterBody2D" parent="World"]
 position = Vector2(300, 1040)
@@ -51,7 +67,7 @@ facing = 1
 shape = SubResource("RectangleShape_cover")
 
 [node name="EnemyCover" type="StaticBody2D" parent="World"]
-position = Vector2(1590, 1000)
+position = Vector2(1540, 1000)
 script = ExtResource("4_cover")
 body_color = Color(0.32, 0.38, 0.35, 1)
 facing = -1
@@ -59,8 +75,16 @@ facing = -1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/EnemyCover"]
 shape = SubResource("RectangleShape_cover")
 
+[node name="UnstablePowerCell" type="StaticBody2D" parent="World"]
+position = Vector2(1715, 1028)
+script = ExtResource("7_hazard")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/UnstablePowerCell"]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape_cell")
+
 [node name="Enemy" type="CharacterBody2D" parent="World"]
-position = Vector2(1810, 1040)
+position = Vector2(1860, 1040)
 script = ExtResource("3_combatant")
 display_name = "Enemy"
 facing = -1
@@ -71,6 +95,12 @@ position = Vector2(0, -59)
 shape = SubResource("RectangleShape_character")
 
 [node name="ProjectileLayer" type="Node2D" parent="."]
+
+[node name="EffectsLayer" type="Node2D" parent="."]
+
+[node name="LastImpactMarker" type="Node2D" parent="EffectsLayer"]
+visible = false
+script = ExtResource("9_marker")
 
 [node name="AimGuide" type="Node2D" parent="."]
 script = ExtResource("6_aim")
@@ -121,46 +151,219 @@ theme_override_font_sizes/font_size = 20
 text = "ENEMY 100/100"
 horizontal_alignment = 2
 
-[node name="PowerLabel" type="Label" parent="HUD/Root"]
+[node name="FeedbackLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 60.0
-offset_top = 1080.0
-offset_right = 330.0
-offset_bottom = 1124.0
-theme_override_font_sizes/font_size = 24
-text = "POWER —"
+offset_left = 160.0
+offset_top = 360.0
+offset_right = 560.0
+offset_bottom = 420.0
+pivot_offset = Vector2(200, 30)
+theme_override_font_sizes/font_size = 34
+text = "DIRECT HIT"
 horizontal_alignment = 1
-
-[node name="AngleLabel" type="Label" parent="HUD/Root"]
-layout_mode = 0
-offset_left = 390.0
-offset_top = 1080.0
-offset_right = 660.0
-offset_bottom = 1124.0
-theme_override_font_sizes/font_size = 24
-text = "ANGLE —"
-horizontal_alignment = 1
+mouse_filter = 2
 
 [node name="InspectButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 235.0
+offset_left = 240.0
 offset_top = 164.0
-offset_right = 485.0
-offset_bottom = 220.0
+offset_right = 480.0
+offset_bottom = 216.0
 mouse_filter = 0
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 17
 text = "INSPECT ENEMY"
+
+[node name="EnemyLocatorLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 230.0
+offset_right = 540.0
+offset_bottom = 270.0
+theme_override_font_sizes/font_size = 19
+text = "ENEMY →  ~39m"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="WeaponTray" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 164.0
+offset_right = 158.0
+offset_bottom = 358.0
+mouse_filter = 2
+color = Color(0.105, 0.115, 0.108, 0.88)
+
+[node name="Title" type="Label" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 132.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 14
+text = "WEAPONS"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="ScrapBolt" type="Button" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 132.0
+offset_bottom = 82.0
+toggle_mode = true
+theme_override_font_sizes/font_size = 14
+text = "BOLT"
+
+[node name="HeavySlug" type="Button" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 92.0
+offset_right = 132.0
+offset_bottom = 134.0
+toggle_mode = true
+theme_override_font_sizes/font_size = 14
+text = "SLUG"
+
+[node name="ShockCapsule" type="Button" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 144.0
+offset_right = 132.0
+offset_bottom = 186.0
+toggle_mode = true
+theme_override_font_sizes/font_size = 14
+text = "SHOCK"
+
+[node name="ControlDeck" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 926.0
+offset_right = 646.0
+offset_bottom = 1098.0
+mouse_filter = 2
+color = Color(0.105, 0.115, 0.108, 0.9)
+
+[node name="WeaponNameLabel" type="Label" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 554.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 20
+text = "SCRAP BOLT"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="WeaponRoleLabel" type="Label" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 38.0
+offset_right = 554.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 14
+text = "BALANCED • 2 ROAD BOUNCES"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="PowerLabel" type="Label" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 74.0
+offset_right = 246.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 22
+text = "POWER —"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="AngleLabel" type="Label" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 74.0
+offset_right = 546.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 22
+text = "ANGLE —"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="LastShotLabel" type="Label" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 124.0
+offset_right = 552.0
+offset_bottom = 152.0
+theme_override_font_sizes/font_size = 14
+text = "LAST SHOT —"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="TargetCard" type="ColorRect" parent="HUD/Root"]
+visible = false
+layout_mode = 0
+offset_left = 118.0
+offset_top = 914.0
+offset_right = 602.0
+offset_bottom = 1098.0
+mouse_filter = 2
+color = Color(0.105, 0.115, 0.108, 0.92)
+
+[node name="Title" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 12.0
+offset_right = 464.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+text = "TARGET STATUS"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="EnemyInfoLabel" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 52.0
+offset_right = 460.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 17
+text = "ENEMY 100/100"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="CoverInfoLabel" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 91.0
+offset_right = 460.0
+offset_bottom = 121.0
+theme_override_font_sizes/font_size = 16
+text = "COVER: INTACT"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="HazardInfoLabel" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 130.0
+offset_right = 460.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 16
+text = "POWER CELL: ACTIVE"
+horizontal_alignment = 1
+mouse_filter = 2
 
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 70.0
-offset_top = 1150.0
+offset_top = 1120.0
 offset_right = 650.0
-offset_bottom = 1204.0
-theme_override_font_sizes/font_size = 19
+offset_bottom = 1180.0
+theme_override_font_sizes/font_size = 17
 text = "Preparing battle..."
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
+mouse_filter = 2
 
 [node name="RestartButton" type="Button" parent="HUD/Root"]
 layout_mode = 0

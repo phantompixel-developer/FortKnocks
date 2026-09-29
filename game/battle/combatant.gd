@@ -9,6 +9,7 @@ signal health_changed(current: int, maximum: int)
 @export var max_health := 100
 
 var health := 100
+var _reaction_tween: Tween
 
 func _ready() -> void:
 	health = max_health
@@ -27,8 +28,24 @@ func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	health = maxi(0, health - damage)
 	var push := clampf(impulse.x * 0.025, -34.0, 34.0)
 	global_position.x += push
+	_play_hit_reaction(impulse)
 	health_changed.emit(health, max_health)
 	queue_redraw()
+
+func _play_hit_reaction(impulse: Vector2) -> void:
+	if _reaction_tween != null and _reaction_tween.is_running():
+		_reaction_tween.kill()
+
+	var direction := signf(impulse.x)
+	if is_zero_approx(direction):
+		direction = 1.0
+
+	modulate = Color(1.55, 0.88, 0.78, 1.0)
+	rotation = deg_to_rad(5.0 * direction)
+	_reaction_tween = create_tween()
+	_reaction_tween.set_parallel(true)
+	_reaction_tween.tween_property(self, "modulate", Color.WHITE, 0.22)
+	_reaction_tween.tween_property(self, "rotation", 0.0, 0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
 	var body_color := accent_color if health > 0 else Color("555555")
