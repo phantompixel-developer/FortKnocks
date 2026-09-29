@@ -18,9 +18,7 @@ const HeavySlug := preload("res://game/weapons/heavy_slug.tres")
 const ShockCapsule := preload("res://game/weapons/shock_capsule.tres")
 const ArenaPlatformScript := preload("res://game/battle/arena_platform.gd")
 const CollapsibleBarrierScript := preload("res://game/battle/collapsible_barrier.gd")
-const RoadblockTrial := preload("res://game/campaign/missions/roadblock_trial.tres")
-const HighGroundTrial := preload("res://game/campaign/missions/high_ground_trial.tres")
-const ScrapGateTrial := preload("res://game/campaign/missions/scrap_gate_trial.tres")
+const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
@@ -67,9 +65,7 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var shock_capsule_button: Button = $HUD/Root/WeaponTray/ShockCapsule
 @onready var encounter_picker: ColorRect = $HUD/Root/EncounterPicker
 @onready var picker_briefing_label: Label = $HUD/Root/EncounterPicker/BriefingLabel
-@onready var roadblock_button: Button = $HUD/Root/EncounterPicker/RoadblockButton
-@onready var high_ground_button: Button = $HUD/Root/EncounterPicker/HighGroundButton
-@onready var scrap_gate_button: Button = $HUD/Root/EncounterPicker/ScrapGateButton
+@onready var mission_button_list: VBoxContainer = $HUD/Root/EncounterPicker/MissionButtons
 @onready var restart_button: Button = $HUD/Root/RestartButton
 @onready var change_encounter_button: Button = $HUD/Root/ChangeEncounterButton
 
@@ -85,6 +81,7 @@ var _selected_weapon: WeaponDefinition
 var _feedback_tween: Tween
 var _current_mission: MissionDefinition
 var _collapsible_barrier: CollapsibleBarrier
+var _missions: Array[MissionDefinition] = []
 
 var _pending_player_power := 0.0
 var _pending_player_angle := 0.0
@@ -102,6 +99,7 @@ var _enemy_target_x := 0.0
 
 func _ready() -> void:
 	_selected_weapon = ScrapBolt as WeaponDefinition
+	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
@@ -109,9 +107,6 @@ func _ready() -> void:
 	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(ScrapBolt as WeaponDefinition))
 	heavy_slug_button.pressed.connect(func() -> void: _select_weapon(HeavySlug as WeaponDefinition))
 	shock_capsule_button.pressed.connect(func() -> void: _select_weapon(ShockCapsule as WeaponDefinition))
-	roadblock_button.pressed.connect(func() -> void: _begin_mission(RoadblockTrial as MissionDefinition))
-	high_ground_button.pressed.connect(func() -> void: _begin_mission(HighGroundTrial as MissionDefinition))
-	scrap_gate_button.pressed.connect(func() -> void: _begin_mission(ScrapGateTrial as MissionDefinition))
 	restart_button.pressed.connect(_restart)
 	change_encounter_button.pressed.connect(_change_encounter)
 
@@ -129,6 +124,7 @@ func _ready() -> void:
 	feedback_label.visible = false
 	last_impact_marker.clear_marker()
 
+	_build_encounter_picker()
 	_update_weapon_panel()
 	_update_weapon_buttons()
 	_set_weapon_buttons_enabled(false)
@@ -150,7 +146,7 @@ func _show_encounter_picker() -> void:
 	health_label.visible = false
 	enemy_health_label.visible = false
 	turn_label.text = "ENCOUNTER PROOF"
-	picker_briefing_label.text = "Choose a greybox battle problem. Each uses the same weapons and combat rules."
+	picker_briefing_label.text = "Choose one of %d greybox battle problems. Each uses the same weapons and combat rules." % _missions.size()
 	hint_label.text = "Select an encounter to begin"
 
 func _resume_pending_mission(mission_id: String) -> void:
@@ -158,16 +154,24 @@ func _resume_pending_mission(mission_id: String) -> void:
 	if definition != null:
 		_begin_mission(definition)
 
+func _build_encounter_picker() -> void:
+	for child in mission_button_list.get_children():
+		child.queue_free()
+
+	for index in range(_missions.size()):
+		var mission := _missions[index]
+		var button := Button.new()
+		button.custom_minimum_size = Vector2(0.0, 74.0)
+		button.text = "%d  %s" % [index + 1, mission.display_name.to_upper()]
+		button.add_theme_font_size_override("font_size", 20)
+		button.pressed.connect(_begin_mission.bind(mission))
+		mission_button_list.add_child(button)
+
 func _mission_for_id(mission_id: String) -> MissionDefinition:
-	match mission_id:
-		"roadblock_trial":
-			return RoadblockTrial as MissionDefinition
-		"high_ground_trial":
-			return HighGroundTrial as MissionDefinition
-		"scrap_gate_trial":
-			return ScrapGateTrial as MissionDefinition
-		_:
-			return null
+	for mission in _missions:
+		if mission.id == mission_id:
+			return mission
+	return null
 
 func _begin_mission(definition: MissionDefinition) -> void:
 	if definition == null or not encounter_picker.visible:
