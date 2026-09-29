@@ -18,11 +18,17 @@ Do not repeat a long cinematic pan every turn if it becomes tedious. The system 
 ## During aiming
 Visible information should include only what supports the shot:
 - active weapon,
+- a dedicated weapon-description band,
 - power,
+- angle in degrees,
 - short trajectory preview,
 - environmental force indicator when relevant,
 - enemy direction and approximate distance when off screen,
 - turn/status information.
+
+The portrait HUD separates these into non-overlapping vertical bands: weapon description, weapon selection, power/angle, then transient turn/aim hints. Weapon descriptions must never share the same rectangle as power/angle feedback.
+
+The off-screen enemy cue is intentionally approximate (direction plus rounded distance) so it restores spatial context without becoming a precise minimap.
 
 Avoid covering the central play space with controls.
 
