@@ -37,6 +37,8 @@ const MAX_SPEED := 1380.0
 @onready var power_label: Label = $HUD/Root/PowerLabel
 @onready var angle_label: Label = $HUD/Root/AngleLabel
 @onready var feedback_label: Label = $HUD/Root/FeedbackLabel
+@onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
+@onready var weapon_description_label: Label = $HUD/Root/WeaponDescriptionLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
 @onready var inspect_button: Button = $HUD/Root/InspectButton
 @onready var scrap_bolt_button: Button = $HUD/Root/WeaponBar/ScrapBolt
@@ -74,6 +76,8 @@ func _ready() -> void:
 	restart_button.pressed.connect(_restart)
 
 	inspect_button.visible = false
+	enemy_locator_label.visible = false
+	weapon_description_label.visible = false
 	restart_button.visible = false
 	feedback_label.visible = false
 	_update_weapon_buttons()
@@ -166,7 +170,8 @@ func _select_weapon(definition: WeaponDefinition) -> void:
 	aim_guide.clear()
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
-	hint_label.text = definition.description
+	weapon_description_label.text = definition.description
+	hint_label.text = "%s selected" % definition.display_name
 	_update_weapon_buttons()
 
 func _update_weapon_buttons() -> void:
@@ -189,6 +194,8 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	_is_inspecting = false
 	inspect_button.visible = false
 	inspect_button.disabled = false
+	enemy_locator_label.visible = false
+	weapon_description_label.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	power_label.text = "POWER —"
@@ -210,9 +217,13 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 
 	phase = Phase.PLAYER_AIM
 	inspect_button.visible = true
+	enemy_locator_label.visible = true
+	weapon_description_label.visible = true
+	weapon_description_label.text = _selected_weapon.description
 	_set_weapon_buttons_enabled(true)
 	_update_weapon_buttons()
-	hint_label.text = "%s selected • pull back to fire" % _selected_weapon.display_name
+	_update_enemy_locator()
+	hint_label.text = "Pull back to aim • release to fire"
 
 func _inspect_enemy() -> void:
 	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
@@ -220,6 +231,7 @@ func _inspect_enemy() -> void:
 
 	_is_inspecting = true
 	inspect_button.disabled = true
+	enemy_locator_label.visible = false
 	_set_weapon_buttons_enabled(false)
 	var previous_hint := hint_label.text
 
@@ -239,6 +251,8 @@ func _inspect_enemy() -> void:
 
 	hint_label.text = previous_hint
 	inspect_button.disabled = false
+	enemy_locator_label.visible = true
+	_update_enemy_locator()
 	_set_weapon_buttons_enabled(true)
 	_is_inspecting = false
 
@@ -249,6 +263,8 @@ func _start_enemy_turn() -> void:
 	phase = Phase.ENEMY_THINKING
 	_is_inspecting = false
 	inspect_button.visible = false
+	enemy_locator_label.visible = false
+	weapon_description_label.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	turn_label.text = "ENEMY TURN"
@@ -289,6 +305,8 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	phase = Phase.PROJECTILE_FLIGHT
 	_is_inspecting = false
 	inspect_button.visible = false
+	enemy_locator_label.visible = false
+	weapon_description_label.visible = false
 	_set_weapon_buttons_enabled(false)
 	_active_shooter = shooter
 	aim_guide.clear()
@@ -306,10 +324,14 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	projectile.launch(shooter.get_launch_origin(), launch_velocity, shooter)
 	camera_director.follow(projectile)
 
-func _on_projectile_bounced(world_position: Vector2, _remaining_bounces: int) -> void:
-	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, 0.55)
-	_show_feedback("RICOCHET")
-	hint_label.text = "Scrap Bolt bounced once"
+func _on_projectile_bounced(world_position: Vector2, bounce_number: int, remaining_bounces: int) -> void:
+	var strength := 0.64 if bounce_number == 1 else 0.52
+	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, strength)
+	_show_feedback("RICOCHET %d/2" % bounce_number)
+	if remaining_bounces > 0:
+		hint_label.text = "First rebound — one road bounce remains"
+	else:
+		hint_label.text = "Second rebound — next ground contact resolves"
 
 func _on_projectile_resolved(
 	impact_position: Vector2,
@@ -519,6 +541,8 @@ func _check_game_over() -> bool:
 	phase = Phase.GAME_OVER
 	_is_inspecting = false
 	inspect_button.visible = false
+	enemy_locator_label.visible = false
+	weapon_description_label.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	restart_button.visible = true
@@ -542,6 +566,18 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 func _update_hud() -> void:
 	health_label.text = "YOU  %d/100" % player.health
 	enemy_health_label.text = "ENEMY  %d/100" % enemy.health
+	if enemy_locator_label.visible:
+		_update_enemy_locator()
+
+func _update_enemy_locator() -> void:
+	if not enemy.is_alive():
+		enemy_locator_label.visible = false
+		return
+
+	var delta_x := enemy.global_position.x - player.global_position.x
+	var arrow := "→" if delta_x >= 0.0 else "←"
+	var approximate_metres := maxi(1, int(round(absf(delta_x) / 40.0)))
+	enemy_locator_label.text = "ENEMY %s  ~%dm" % [arrow, approximate_metres]
 
 func _restart() -> void:
 	get_tree().reload_current_scene()
