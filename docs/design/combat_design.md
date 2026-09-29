@@ -18,9 +18,12 @@ The battle should be understandable in seconds but reward repeated judgement. Th
 ## Aiming
 Primary mobile input:
 - Touch/press in the aiming region.
-- Drag direction controls launch angle.
-- Drag distance controls power.
+- Pull **backward**, opposite the desired firing direction, like drawing a slingshot/catapult.
+- Pull direction controls the launch angle.
+- Pull distance controls power.
 - Release commits the shot.
+- While aiming, show both **power percentage** and **launch angle in degrees**.
+- A virtual tension line behind the shooter and the short trajectory preview in front should make the inverse relationship visually obvious.
 
 The implementation must support an accessibility alternative later: aim, lock, then explicit fire.
 
