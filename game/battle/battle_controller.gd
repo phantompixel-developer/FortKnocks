@@ -52,7 +52,6 @@ var _aim_power := 0.0
 var _aim_angle_degrees := 0.0
 var _is_inspecting := false
 var _active_shooter: Combatant
-var _active_weapon: WeaponDefinition
 var _selected_weapon: WeaponDefinition
 var _feedback_tween: Tween
 
@@ -65,8 +64,6 @@ var _enemy_target_x := 0.0
 
 func _ready() -> void:
 	_selected_weapon = ScrapBolt as WeaponDefinition
-	_active_weapon = _selected_weapon
-
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
@@ -294,7 +291,6 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	inspect_button.visible = false
 	_set_weapon_buttons_enabled(false)
 	_active_shooter = shooter
-	_active_weapon = weapon
 	aim_guide.clear()
 	hint_label.text = "%s away" % weapon.display_name
 
@@ -384,7 +380,11 @@ func _on_projectile_resolved(
 		_start_player_turn(false)
 
 func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, direct_hit_body: Node) -> void:
-	var candidates: Array[Node2D] = [player, enemy, player_cover, enemy_cover]
+	var candidates: Array[Node2D] = []
+	candidates.append(player)
+	candidates.append(enemy)
+	candidates.append(player_cover)
+	candidates.append(enemy_cover)
 	if not power_cell.is_discharged:
 		candidates.append(power_cell)
 
@@ -419,7 +419,11 @@ func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: i
 	_show_feedback("POWER SURGE")
 	hint_label.text = "The unstable power cell discharged"
 
-	var targets: Array[Node2D] = [player, enemy, player_cover, enemy_cover]
+	var targets: Array[Node2D] = []
+	targets.append(player)
+	targets.append(enemy)
+	targets.append(player_cover)
+	targets.append(enemy_cover)
 	for target in targets:
 		var distance := target.global_position.distance_to(world_position)
 		if distance > radius:
