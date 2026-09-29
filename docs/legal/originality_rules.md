@@ -22,6 +22,11 @@ Do not use another game's production artwork as an image-to-image or 3D-generati
 ## References
 Reference material should be used to discuss abstract qualities such as readability, pacing, camera language, or genre conventions. New work should be designed from Fort Knocks' own brief and art bible.
 
+## Vehicles / military hardware
+Progression may use broad recognizable families such as civilian compact, pickup, APC-class, or tank-class platform.
+
+Do not assume Fort Knocks needs exact branded/licensed real-world vehicle models, markings, insignia, or manufacturer identity. Prefer originalised platform families unless there is a specific cleared reason otherwise.
+
 ## Asset provenance
 When production assets begin, track:
 - asset ID/name,
@@ -33,4 +38,8 @@ When production assets begin, track:
 - final project path.
 
 ## Naming
-Working names are not assumed legally cleared. Before public commercial launch, perform appropriate trademark/storefront/domain clearance for the final game title and major branded terms.
+Working names are not assumed legally cleared.
+
+**Fort Knocks itself is still a working commercial title for clearance purposes.** Do not represent the name as trademark/storefront/domain-cleared merely because it is the canonical internal project name.
+
+Before public commercial launch, perform appropriate title/major-brand clearance.
