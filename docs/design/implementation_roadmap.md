@@ -49,6 +49,18 @@ Prove the combat system supports multiple interesting battle problems, not just 
 - basic mission-definition data to load layouts/objectives,
 - test short/long/high-arc/bank-shot situations.
 
+### Current implementation status
+The first Encounter Proof implementation now provides:
+- three selectable greybox encounter definitions,
+- baseline, enemy-high-ground, and raised-player layouts,
+- reusable authored elevation geometry,
+- optional roadblock and power-cell placement from mission data,
+- a second environmental interaction: a collapsible scrap gate,
+- touch-first encounter selection from the normal Play flow,
+- restart-current-encounter and choose-another-encounter paths.
+
+This implements the test harness and content needed for the milestone. It does **not** pass the gate by itself; local repeated playtesting must still answer the questions below.
+
 ### Questions to answer
 - Do different layouts change the best projectile/approach?
 - Does destruction open new firing lines?
