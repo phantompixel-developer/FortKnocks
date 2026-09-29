@@ -135,6 +135,8 @@ func _begin_drag(screen_position: Vector2) -> void:
 
 	_dragging = true
 	_drag_start = screen_position
+	weapon_tray.visible = false
+	inspect_button.visible = false
 	_aim_power = 0.0
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
@@ -178,6 +180,8 @@ func _end_drag(screen_position: Vector2) -> void:
 
 	if _aim_power * MAX_DRAG < MIN_FIRE_DRAG:
 		aim_guide.clear()
+		weapon_tray.visible = true
+		inspect_button.visible = true
 		power_label.text = "POWER —"
 		angle_label.text = "ANGLE —"
 		hint_label.text = "Pull back to aim • release to fire"
@@ -295,15 +299,15 @@ func _inspect_enemy() -> void:
 	var previous_hint := hint_label.text
 
 	hint_label.text = "Inspecting enemy position"
-	camera_director.focus_x(enemy.global_position.x, 0.35)
-	await get_tree().create_timer(0.70).timeout
+	camera_director.focus_x(enemy.global_position.x, 0.30)
+	await get_tree().create_timer(0.52).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
 		return
 
 	hint_label.text = "Returning to your shooter"
-	camera_director.focus_x(player.global_position.x, 0.40)
-	await get_tree().create_timer(0.44).timeout
+	camera_director.focus_x(player.global_position.x, 0.34)
+	await get_tree().create_timer(0.38).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
 		return
