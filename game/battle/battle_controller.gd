@@ -223,7 +223,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	if definition.collapsible_barrier_enabled:
 		_collapsible_barrier = CollapsibleBarrierScript.new() as CollapsibleBarrier
 		if _collapsible_barrier != null:
-			_collapsible_barrier.global_position = definition.collapsible_barrier_position
+			_collapsible_barrier.position = definition.collapsible_barrier_position
 			_collapsible_barrier.collapsed.connect(_on_collapsible_barrier_collapsed)
 			encounter_geometry.add_child(_collapsible_barrier)
 
