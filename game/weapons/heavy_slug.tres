@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/weapons/weapon_definition.gd" id="1_weapon"]
+
+[resource]
+script = ExtResource("1_weapon")
+id = "heavy_slug"
+display_name = "Heavy Slug"
+description = "Dense recovered round. Strong against cover and high knockback."
+direct_damage = 42
+cover_damage = 82
+knockback_force = 680.0
+speed_multiplier = 1.08
+projectile_color = Color(0.73, 0.77, 0.75, 1)
+trail_color = Color(0.68, 0.73, 0.71, 0.56)
