@@ -138,7 +138,7 @@ Implementation should favor composition over deep inheritance.
 
 `BattleController` currently applies the selected definition because encounter loading is still small and has one caller. Do not create a separate global mission manager merely to move these assignments elsewhere.
 
-Reusable runtime arena pieces such as `ArenaPlatform` and `CollapsibleBarrier` must remain generic. New encounter resources should compose those pieces rather than adding mission-ID conditionals to projectile or damage code.
+Reusable runtime arena pieces such as `ArenaPlatform` and `CollapsibleBarrier` must remain generic. Encounter resources are registered through the small campaign-side `EncounterCatalog`; the battle selector builds itself from that catalog. Adding a new encounter may update content registration, but should not require mission-ID conditionals in battle, projectile, or damage rules.
 
 ## Save compatibility
 Save data must carry an explicit version once persistence is introduced. Migration belongs in the save layer; gameplay systems should not silently reinterpret old saves.
