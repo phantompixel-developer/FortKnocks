@@ -3,6 +3,8 @@
 ## Principle
 Progression should increase capability, options, identity, and visual presence. Avoid turning the game into linear stat inflation.
 
+The player should feel the transition from surviving behind scrap to commanding a serious fortified settlement and increasingly capable combat platforms.
+
 ## Primary resource
 **Salvage** is the only general progression currency in the foundation design.
 
@@ -45,10 +47,10 @@ Working visual/mechanical ladder:
    - Integrated heavy hardware.
    - Must still have weaknesses: size, vulnerable subsystems, limited firing geometry, or expensive maintenance.
 
-These are progression families, not final licensed/real-world vehicle models.
+These are progression families, not licensed or exact real-world vehicle models.
 
 ## Meaningful modules
-Potential modules:
+Working module categories:
 - armour plate,
 - repair equipment,
 - ammo storage,
@@ -59,20 +61,67 @@ Potential modules:
 - salvage rack,
 - reinforced suspension/ballast.
 
-Each module must create a decision or trade-off.
+Each module must create a decision or trade-off rather than only add a larger number.
+
+## Crew direction
+Crew should remain ability-led and readable rather than becoming a spreadsheet-heavy RPG.
+
+Working role concepts:
+- **Mechanic** — limited repair capability.
+- **Spotter** — improved trajectory information.
+- **Scavenger** — increased Salvage return.
+- **Heavy** — greater resistance to displacement/knockback.
+- **Medic** — recovery/revive utility.
+
+These role names and exact effects are provisional until implemented and playtested. The durable rule is that crew composition should create a small number of understandable tactical/progression choices.
 
 ## Fort Knocks hub progression
 The home hub should change visibly rather than communicate growth only with levels.
 
 Working hub functions:
 - **Garage** — combat platforms.
-- **Workshop** — weapons/tools.
-- **Crew quarters** — survivors.
-- **Command board** — campaign selection.
-- **Scrapyard** — salvage/progression.
-- **Radio tower** — reserved for later systems if needed.
+- **Workshop** — projectiles/weapons/tools.
+- **Crew Quarters** — survivors.
+- **Command Board** — campaign selection.
+- **Scrapyard** — Salvage/progression.
+- **Radio Tower** — reserved for later systems if a real need emerges.
 
-Early Fort Knocks should look barely defensible; late Fort Knocks should look organised, reinforced, and worth defending.
+Visual progression:
+- early: tarp, wrecked car, campfire, corrugated metal;
+- mid: workshop, generators, gates, organised storage, pickups, watchtower;
+- late: reinforced perimeter, communications, heavy garage capability, restored military hardware.
 
-## Progression rule
-Do not build these systems until the combat vertical slice proves that aiming, impact, destruction, and camera flow are fun.
+Avoid making a generic numeric “Base Level” the primary expression of hub growth.
+
+## Campaign progression
+Working region escalation:
+1. Outskirts.
+2. Suburbs.
+3. Highways.
+4. Industrial zone.
+5. Badlands.
+6. Military perimeter.
+7. Inner city / secure zones.
+
+These names/order are provisional. The durable design goal is escalation from desperate scavenging and civilian cover toward organised factions, heavy protection, complex environments, and recovered old-world technology.
+
+## Small progression-shell target
+When the combat and encounter gates are passed, the first progression implementation should remain small:
+- Fort Knocks home/hub shell,
+- Command Board,
+- roughly 4–6 connected missions plus a checkpoint/boss-style encounter,
+- Salvage rewards,
+- Garage,
+- Workshop,
+- first three platform families:
+  - run-down compact,
+  - old sedan/estate,
+  - pickup,
+- explicit versioned save data.
+
+Do not author a large campaign or seven complete platform tiers before this loop is proven.
+
+## Progression gate
+Do not build full progression systems until the combat prototype proves aiming, impact, destruction, camera flow, projectile roles, and encounter variety are fun.
+
+See `implementation_roadmap.md` for sequencing.

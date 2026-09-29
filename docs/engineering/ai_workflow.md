@@ -6,13 +6,15 @@ Codex/Claude should be able to understand, implement, validate, and review work 
 ## Task sequence
 1. Start from current `main`.
 2. Create a narrowly named branch.
-3. Read `AGENTS.md` and relevant canonical docs.
-4. Inspect existing implementation before proposing new architecture.
-5. Implement the smallest coherent task.
-6. Run available headless validation/tests.
-7. Review the diff for accidental scope growth.
-8. Update documentation when durable rules changed.
-9. Open a PR with summary, validation evidence, and known limitations.
+3. Read `AGENTS.md`, `docs/README.md`, and `docs/project_context.md`.
+4. Read the task-relevant canonical design/architecture documents.
+5. Check `docs/design/implementation_roadmap.md` before expanding scope.
+6. Inspect existing implementation before proposing new architecture.
+7. Implement the smallest coherent milestone-sized task.
+8. Run available headless validation/tests.
+9. Review the diff for accidental scope growth.
+10. Update canonical documentation when durable rules changed.
+11. Open a PR with summary, validation evidence, and known limitations.
 
 ## Branch examples
 - `feat/battle-prototype`
@@ -20,6 +22,7 @@ Codex/Claude should be able to understand, implement, validate, and review work 
 - `fix/projectile-collision`
 - `chore/headless-validation`
 - `design/combat-rules`
+- `docs/canonical-project-context`
 
 ## AI-friendly design rules
 - Prefer text-based Godot scenes/resources where practical.
@@ -30,6 +33,16 @@ Codex/Claude should be able to understand, implement, validate, and review work 
 - Build repeatable scripts for checks/import/export rather than instructions such as "click this menu item before Play."
 - Prefer changes that can be validated headlessly.
 - Do not generate large batches of content before one representative implementation is approved.
+- Do not reconstruct exact rules from memory when canonical docs already define them.
+
+## Documentation discipline
+When chat discussion produces a durable decision:
+- identify the canonical owning document,
+- update that document in the implementation branch,
+- remove or revise contradictory old wording,
+- mark concepts as provisional when they are not actually locked.
+
+Use `docs/project_context.md` for cross-cutting project decisions, not as a dumping ground for every implementation detail.
 
 ## Commit/PR quality
 A PR should answer:
@@ -38,6 +51,7 @@ A PR should answer:
 - How was it validated?
 - What is intentionally not included?
 - Did any design/architecture contract change?
+- Did the milestone status change?
 
 ## Local editor use
-The desired developer loop is still "open project and press Play." Tools may exist for diagnostics, but ordinary playtesting must not depend on a hidden refresh/import/setup ritual.
+The desired developer loop is still **open project and press Play**. Tools may exist for diagnostics, but ordinary playtesting must not depend on a hidden refresh/import/setup ritual.
