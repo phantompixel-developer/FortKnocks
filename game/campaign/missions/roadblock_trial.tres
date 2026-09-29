@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "roadblock_trial"
+display_name = "Roadblock Trial"
+briefing = "Baseline range test. Use the road, concrete obstruction, cover and unstable cell to find more than one firing solution."
+objective_text = "INCAPACITATE ENEMY"
+player_position = Vector2(300, 1040)
+player_cover_position = Vector2(520, 1000)
+enemy_position = Vector2(1860, 1040)
+enemy_cover_position = Vector2(1540, 1000)
+roadblock_enabled = true
+roadblock_position = Vector2(1080, 958)
+power_cell_enabled = true
+power_cell_position = Vector2(1715, 1028)
+collapsible_barrier_enabled = false
+platform_rects = Array[Rect2]([])
+visual_variant = 0
