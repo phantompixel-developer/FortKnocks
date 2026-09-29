@@ -25,6 +25,7 @@ const MAX_SPEED := 1380.0
 @onready var power_label: Label = $HUD/Root/PowerLabel
 @onready var angle_label: Label = $HUD/Root/AngleLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
+@onready var inspect_button: Button = $HUD/Root/InspectButton
 @onready var restart_button: Button = $HUD/Root/RestartButton
 
 var phase := Phase.INTRO
@@ -33,19 +34,22 @@ var _drag_start := Vector2.ZERO
 var _aim_velocity := Vector2.ZERO
 var _aim_power := 0.0
 var _aim_angle_degrees := 0.0
+var _is_inspecting := false
 var _active_shooter: Combatant
 
 func _ready() -> void:
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
+	inspect_button.pressed.connect(_inspect_enemy)
 	restart_button.pressed.connect(_restart)
+	inspect_button.visible = false
 	restart_button.visible = false
 	_update_hud()
 	await get_tree().process_frame
 	_start_player_turn(true)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if phase != Phase.PLAYER_AIM:
+	if phase != Phase.PLAYER_AIM or _is_inspecting:
 		return
 
 	if event is InputEventScreenTouch:
@@ -124,6 +128,9 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 		return
 
 	phase = Phase.INTRO
+	_is_inspecting = false
+	inspect_button.visible = false
+	inspect_button.disabled = false
 	aim_guide.clear()
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
@@ -143,13 +150,42 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 		return
 
 	phase = Phase.PLAYER_AIM
+	inspect_button.visible = true
 	hint_label.text = "Pull down and left to aim • release to fire"
+
+func _inspect_enemy() -> void:
+	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
+		return
+
+	_is_inspecting = true
+	inspect_button.disabled = true
+	var previous_hint := hint_label.text
+
+	hint_label.text = "Inspecting enemy position"
+	camera_director.focus_x(enemy.global_position.x, 0.35)
+	await get_tree().create_timer(0.70).timeout
+	if phase != Phase.PLAYER_AIM:
+		_is_inspecting = false
+		return
+
+	hint_label.text = "Returning to your shooter"
+	camera_director.focus_x(player.global_position.x, 0.40)
+	await get_tree().create_timer(0.44).timeout
+	if phase != Phase.PLAYER_AIM:
+		_is_inspecting = false
+		return
+
+	hint_label.text = previous_hint
+	inspect_button.disabled = false
+	_is_inspecting = false
 
 func _start_enemy_turn() -> void:
 	if _check_game_over():
 		return
 
 	phase = Phase.ENEMY_THINKING
+	_is_inspecting = false
+	inspect_button.visible = false
 	aim_guide.clear()
 	turn_label.text = "ENEMY TURN"
 	power_label.text = "POWER —"
@@ -170,6 +206,8 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2) -> void:
 		return
 
 	phase = Phase.PROJECTILE
+	_is_inspecting = false
+	inspect_button.visible = false
 	_active_shooter = shooter
 	aim_guide.clear()
 	hint_label.text = "SHOT AWAY"
@@ -218,6 +256,8 @@ func _check_game_over() -> bool:
 		return false
 
 	phase = Phase.GAME_OVER
+	_is_inspecting = false
+	inspect_button.visible = false
 	aim_guide.clear()
 	restart_button.visible = true
 	power_label.text = ""

@@ -27,7 +27,7 @@ Visible information should include only what supports the shot:
 Avoid covering the central play space with controls.
 
 ## Enemy inspection
-Provide a fast player-controlled inspect action. It must be possible to check the enemy position and return without losing aim state.
+Provide a fast player-controlled **Inspect Enemy** action during the player's aiming phase. It pans to the opponent, briefly holds the enemy/cover position, then returns to the shooter. The player's selected power, angle, and trajectory state must remain intact; inspection is information gathering, not an aim reset.
 
 ## Projectile flight
 After firing:

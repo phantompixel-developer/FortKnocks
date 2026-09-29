@@ -141,6 +141,16 @@ theme_override_font_sizes/font_size = 24
 text = "ANGLE —"
 horizontal_alignment = 1
 
+[node name="InspectButton" type="Button" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 164.0
+offset_right = 485.0
+offset_bottom = 220.0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 18
+text = "INSPECT ENEMY"
+
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 70.0
