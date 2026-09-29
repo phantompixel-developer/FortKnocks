@@ -30,20 +30,25 @@ const MAX_SPEED := 1380.0
 @onready var power_cell: UnstablePowerCell = $World/UnstablePowerCell
 @onready var projectile_layer: Node2D = $ProjectileLayer
 @onready var effects_layer: Node2D = $EffectsLayer
+@onready var last_impact_marker: LastImpactMarker = $EffectsLayer/LastImpactMarker
 @onready var aim_guide: AimGuide = $AimGuide
+
 @onready var turn_label: Label = $HUD/Root/TurnLabel
 @onready var health_label: Label = $HUD/Root/HealthLabel
 @onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
-@onready var power_label: Label = $HUD/Root/PowerLabel
-@onready var angle_label: Label = $HUD/Root/AngleLabel
 @onready var feedback_label: Label = $HUD/Root/FeedbackLabel
 @onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
-@onready var weapon_description_label: Label = $HUD/Root/WeaponDescriptionLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
 @onready var inspect_button: Button = $HUD/Root/InspectButton
-@onready var scrap_bolt_button: Button = $HUD/Root/WeaponBar/ScrapBolt
-@onready var heavy_slug_button: Button = $HUD/Root/WeaponBar/HeavySlug
-@onready var shock_capsule_button: Button = $HUD/Root/WeaponBar/ShockCapsule
+@onready var control_deck: ColorRect = $HUD/Root/ControlDeck
+@onready var weapon_name_label: Label = $HUD/Root/ControlDeck/WeaponNameLabel
+@onready var weapon_role_label: Label = $HUD/Root/ControlDeck/WeaponRoleLabel
+@onready var power_label: Label = $HUD/Root/ControlDeck/PowerLabel
+@onready var angle_label: Label = $HUD/Root/ControlDeck/AngleLabel
+@onready var last_shot_label: Label = $HUD/Root/ControlDeck/LastShotLabel
+@onready var scrap_bolt_button: Button = $HUD/Root/ControlDeck/WeaponBar/ScrapBolt
+@onready var heavy_slug_button: Button = $HUD/Root/ControlDeck/WeaponBar/HeavySlug
+@onready var shock_capsule_button: Button = $HUD/Root/ControlDeck/WeaponBar/ShockCapsule
 @onready var restart_button: Button = $HUD/Root/RestartButton
 
 var phase := Phase.INTRO
@@ -56,6 +61,13 @@ var _is_inspecting := false
 var _active_shooter: Combatant
 var _selected_weapon: WeaponDefinition
 var _feedback_tween: Tween
+
+var _pending_player_power := 0.0
+var _pending_player_angle := 0.0
+var _has_last_player_shot := false
+var _last_player_power := 0.0
+var _last_player_angle := 0.0
+var _last_player_result := ""
 
 var _enemy_speed_correction := {
 	"scrap_bolt": 1.0,
@@ -77,12 +89,17 @@ func _ready() -> void:
 
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_description_label.visible = false
+	control_deck.visible = false
 	restart_button.visible = false
 	feedback_label.visible = false
+	last_impact_marker.clear_marker()
+
+	_update_weapon_panel()
 	_update_weapon_buttons()
 	_set_weapon_buttons_enabled(false)
+	_update_last_shot_display()
 	_update_hud()
+
 	await get_tree().process_frame
 	_start_player_turn(true)
 
@@ -108,13 +125,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func _begin_drag(screen_position: Vector2) -> void:
 	if screen_position.y < 250.0:
 		return
+
 	_dragging = true
 	_drag_start = screen_position
 	_aim_power = 0.0
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
 	angle_label.text = "ANGLE —"
-	hint_label.text = "%s • pull down and left" % _selected_weapon.display_name
+	hint_label.text = "%s • pull back to aim" % _selected_weapon.display_name
 
 func _update_drag(screen_position: Vector2) -> void:
 	if not _dragging:
@@ -155,7 +173,7 @@ func _end_drag(screen_position: Vector2) -> void:
 		aim_guide.clear()
 		power_label.text = "POWER —"
 		angle_label.text = "ANGLE —"
-		hint_label.text = "Pull down and left to aim"
+		hint_label.text = "Pull back to aim • release to fire"
 		return
 
 	_fire_projectile(player, _aim_velocity, _selected_weapon)
@@ -170,9 +188,27 @@ func _select_weapon(definition: WeaponDefinition) -> void:
 	aim_guide.clear()
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
-	weapon_description_label.text = definition.description
 	hint_label.text = "%s selected" % definition.display_name
+	_update_weapon_panel()
 	_update_weapon_buttons()
+
+func _update_weapon_panel() -> void:
+	if _selected_weapon == null:
+		return
+
+	weapon_name_label.text = _selected_weapon.display_name.to_upper()
+	weapon_role_label.text = _weapon_role_text(_selected_weapon)
+
+func _weapon_role_text(definition: WeaponDefinition) -> String:
+	match definition.id:
+		"scrap_bolt":
+			return "BALANCED • 2 ROAD BOUNCES"
+		"heavy_slug":
+			return "COVER BREAKER • HIGH FORCE"
+		"shock_capsule":
+			return "RADIAL PULSE • DISPLACEMENT"
+		_:
+			return definition.description.to_upper()
 
 func _update_weapon_buttons() -> void:
 	if _selected_weapon == null:
@@ -195,9 +231,10 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	inspect_button.visible = false
 	inspect_button.disabled = false
 	enemy_locator_label.visible = false
-	weapon_description_label.visible = false
+	control_deck.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
+	last_impact_marker.visible = false
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
 	turn_label.text = "YOUR TURN"
@@ -218,10 +255,14 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	phase = Phase.PLAYER_AIM
 	inspect_button.visible = true
 	enemy_locator_label.visible = true
-	weapon_description_label.visible = true
-	weapon_description_label.text = _selected_weapon.description
+	control_deck.visible = true
+	if last_impact_marker.has_valid_marker:
+		last_impact_marker.visible = true
+
 	_set_weapon_buttons_enabled(true)
+	_update_weapon_panel()
 	_update_weapon_buttons()
+	_update_last_shot_display()
 	_update_enemy_locator()
 	hint_label.text = "Pull back to aim • release to fire"
 
@@ -232,6 +273,7 @@ func _inspect_enemy() -> void:
 	_is_inspecting = true
 	inspect_button.disabled = true
 	enemy_locator_label.visible = false
+	control_deck.visible = false
 	_set_weapon_buttons_enabled(false)
 	var previous_hint := hint_label.text
 
@@ -252,6 +294,7 @@ func _inspect_enemy() -> void:
 	hint_label.text = previous_hint
 	inspect_button.disabled = false
 	enemy_locator_label.visible = true
+	control_deck.visible = true
 	_update_enemy_locator()
 	_set_weapon_buttons_enabled(true)
 	_is_inspecting = false
@@ -264,14 +307,14 @@ func _start_enemy_turn() -> void:
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_description_label.visible = false
+	control_deck.visible = false
+	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	turn_label.text = "ENEMY TURN"
-	power_label.text = "POWER —"
-	angle_label.text = "ANGLE —"
 	hint_label.text = "Enemy is choosing a shot"
 	camera_director.focus_x(enemy.global_position.x, 0.42)
+
 	await get_tree().create_timer(0.72).timeout
 	if phase == Phase.GAME_OVER:
 		return
@@ -302,11 +345,16 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	if phase == Phase.GAME_OVER:
 		return
 
+	if shooter == player:
+		_pending_player_power = _aim_power
+		_pending_player_angle = _aim_angle_degrees
+
 	phase = Phase.PROJECTILE_FLIGHT
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_description_label.visible = false
+	control_deck.visible = false
+	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	_active_shooter = shooter
 	aim_guide.clear()
@@ -342,6 +390,9 @@ func _on_projectile_resolved(
 ) -> void:
 	phase = Phase.IMPACT_RESOLUTION
 	camera_director.stop_follow_at(impact_position, 0.10)
+
+	if _active_shooter == player:
+		_record_player_shot(impact_position, hit_body)
 
 	var direction := signf(impact_velocity.x)
 	var impact_strength := clampf(impact_velocity.length() / 1050.0, 0.45, 1.15)
@@ -400,6 +451,43 @@ func _on_projectile_resolved(
 		_start_enemy_turn()
 	else:
 		_start_player_turn(false)
+
+func _record_player_shot(impact_position: Vector2, hit_body: Node) -> void:
+	_has_last_player_shot = true
+	_last_player_power = _pending_player_power
+	_last_player_angle = _pending_player_angle
+	_last_player_result = _shot_result_name(hit_body)
+
+	if hit_body == null:
+		last_impact_marker.clear_marker()
+	else:
+		last_impact_marker.place_marker(impact_position)
+
+func _shot_result_name(hit_body: Node) -> String:
+	if hit_body == null:
+		return "WIDE"
+	if hit_body is Combatant:
+		return "DIRECT"
+	if hit_body is DestructibleCover:
+		return "COVER"
+	if hit_body is UnstablePowerCell:
+		return "CELL"
+	if hit_body is CentralRoadblock:
+		return "ROADBLOCK"
+	if hit_body.is_in_group("ground_surface"):
+		return "GROUND"
+	return "IMPACT"
+
+func _update_last_shot_display() -> void:
+	if not _has_last_player_shot:
+		last_shot_label.text = "LAST SHOT —"
+		return
+
+	last_shot_label.text = "LAST  %d%% • %d° • %s" % [
+		int(round(_last_player_power * 100.0)),
+		int(round(_last_player_angle)),
+		_last_player_result,
+	]
 
 func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, direct_hit_body: Node) -> void:
 	var candidates: Array[Node2D] = []
@@ -542,12 +630,11 @@ func _check_game_over() -> bool:
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_description_label.visible = false
+	control_deck.visible = false
+	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	restart_button.visible = true
-	power_label.text = ""
-	angle_label.text = ""
 
 	if player.is_alive():
 		turn_label.text = "YOU WIN"
