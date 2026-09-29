@@ -9,9 +9,9 @@ The battle should be understandable in seconds but reward repeated judgement. Th
 3. **Decision** — select weapon/tool if more than one is available.
 4. **Aim** — set angle and power.
 5. **Commit** — fire.
-6. **Projectile flight** — projectile simulation, visible trail, and camera follow.
-7. **Impact resolution** — classify direct hit, cover hit, environment hit, or miss; apply damage/force and immediate feedback.
-8. **Settle** — hold the result long enough for hit reactions, destruction, and feedback to read.
+6. **Projectile flight** — projectile simulation, visible trail, optional authored bounce, and camera follow.
+7. **Impact resolution** — classify direct hit, cover hit, environment hit, hazard hit, or miss; apply damage/force and immediate feedback.
+8. **Settle** — hold the result long enough for hit reactions, destruction, chained hazards, and feedback to read.
 9. **Status resolution** — deaths/incapacitation, later status effects, and victory check.
 10. **Turn handoff**.
 
@@ -29,6 +29,37 @@ The implementation must support an accessibility alternative later: aim, lock, t
 
 Trajectory assistance must not reveal the complete solution. The initial target is a short dotted preview near the shooter, sufficient to communicate direction without removing judgement.
 
+## Initial tactical weapon set
+The prototype proves three distinct shot roles. These are not a final inventory.
+
+### Scrap Bolt
+- baseline direct damage and knockback,
+- standard trajectory,
+- **one road bounce** before the projectile resolves,
+- forgiving option for banked shots under or around cover.
+
+The one-bounce rule is intentionally narrow: Scrap Bolt bounces from authored ground surfaces only. It does not bounce from characters, cover, or arbitrary props.
+
+### Heavy Slug
+- slightly faster travel,
+- lower direct crew damage than Scrap Bolt,
+- much higher cover damage,
+- stronger knockback,
+- no bounce.
+
+Its purpose is to make destroying protection a conscious tactical choice.
+
+### Shock Capsule
+- low direct damage,
+- slower travel,
+- radial pressure damage and force around impact,
+- can trigger nearby interactive hazards through its pulse,
+- no bounce.
+
+Its purpose is displacement, clustered damage, and environment interaction rather than precision damage.
+
+Weapon values live in `WeaponDefinition` resources so future projectiles can be added without branching the controller for every type.
+
 ## Information
 The opponent does not need to remain visible while the player aims. Portrait UX instead uses:
 - an initial enemy preview,
@@ -42,7 +73,8 @@ Every resolved shot must communicate what happened without relying on the player
 - direct crew hits produce a distinct impact burst, hit reaction, damage popup, and strong camera impulse,
 - cover hits produce a material impact burst, visible staged damage, cover damage popup, and medium camera impulse,
 - environment impacts produce dust and explicit miss feedback,
-- off-world shots report a miss without manufacturing a fake impact,
+- off-world shots report a miss without manufacturing a fake radial effect,
+- a Scrap Bolt road bounce receives a brief ricochet cue without ending the turn,
 - the camera briefly settles on the result before turn handoff.
 
 Feedback is intentionally procedural during greybox development. Production VFX/audio come later.
@@ -58,15 +90,39 @@ Do not implement fully arbitrary destruction. Use authored destructible zones an
 
 The greybox wrecked-car cover uses three authored damage stages before becoming rubble. The purpose is to prove that repeated cover hits visibly change the firing problem before modular platform damage is introduced.
 
+## Environmental interaction
+The current greybox arena contains one unstable salvaged power cell near the enemy position. Direct impact or a nearby Shock Capsule pulse can discharge it.
+
+The discharge:
+- creates a larger radial visual/camera response,
+- applies radial damage and impulse to nearby crew and cover,
+- can change the firing problem without requiring a dedicated shot,
+- remains an authored gameplay interaction rather than a general-purpose destruction simulation.
+
+This is the first proof that a Fort Knocks arena can contain tactical targets beyond the opposing survivor.
+
+## Enemy AI
+Enemy AI remains intentionally lightweight but is no longer a stateless calculator.
+
+It now:
+- chooses Heavy Slug frequently while player cover survives,
+- may use Shock Capsule once the player is exposed,
+- otherwise uses Scrap Bolt,
+- stores a small launch-speed correction per weapon after genuine short/long ground misses,
+- nudges the next shot in the opposite direction of the previous error,
+- retains small random variance so it does not become deterministic.
+
+This is an aiming opponent, not a strategic campaign AI.
+
 ## Projectile outcomes
 A projectile definition can combine:
 - direct damage,
-- blast damage,
+- cover damage,
 - impulse/knockback,
-- penetration,
-- bounce count,
-- status effect,
-- special impact behavior.
+- authored ground bounces,
+- radial pulse radius,
+- radial damage/force,
+- later: penetration, status effects, and special impact behavior.
 
 New weapons should change decisions, not only increase damage numbers.
 
@@ -78,5 +134,5 @@ Later missions may introduce objective variants such as destroying a specified m
 ## Physics policy
 Use deterministic-enough, controlled 2D physics and clamp extreme outcomes. Spectacle must not compromise readability. Only objects designed to react should participate in costly dynamic simulation.
 
-## Initial weapon
-The prototype uses one neutral, original test projectile. Its purpose is to tune trajectory, force, impact feedback, and timing before a weapon roster exists.
+## Prototype scope
+The current three projectile types and one interactive hazard exist to prove tactical variety. Do not expand into a large inventory until these options produce meaningfully different player choices.
