@@ -10,6 +10,7 @@ extends Resource
 @export var speed_multiplier := 1.0
 @export var max_ground_bounces := 0
 @export var bounce_factor := 0.0
+@export var secondary_bounce_factor := 0.0
 @export var blast_radius := 0.0
 @export var blast_damage := 0
 @export var blast_force := 0.0
