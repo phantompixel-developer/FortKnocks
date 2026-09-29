@@ -184,105 +184,180 @@ text = "ENEMY →  ~39m"
 horizontal_alignment = 1
 mouse_filter = 2
 
+[node name="WeaponTray" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 164.0
+offset_right = 158.0
+offset_bottom = 358.0
+mouse_filter = 2
+color = Color(0.105, 0.115, 0.108, 0.88)
+
+[node name="Title" type="Label" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 132.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 14
+text = "WEAPONS"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="ScrapBolt" type="Button" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 132.0
+offset_bottom = 82.0
+toggle_mode = true
+theme_override_font_sizes/font_size = 14
+text = "BOLT"
+
+[node name="HeavySlug" type="Button" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 92.0
+offset_right = 132.0
+offset_bottom = 134.0
+toggle_mode = true
+theme_override_font_sizes/font_size = 14
+text = "SLUG"
+
+[node name="ShockCapsule" type="Button" parent="HUD/Root/WeaponTray"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 144.0
+offset_right = 132.0
+offset_bottom = 186.0
+toggle_mode = true
+theme_override_font_sizes/font_size = 14
+text = "SHOCK"
+
 [node name="ControlDeck" type="ColorRect" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 824.0
-offset_right = 688.0
-offset_bottom = 1102.0
+offset_left = 74.0
+offset_top = 926.0
+offset_right = 646.0
+offset_bottom = 1098.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.9)
 
 [node name="WeaponNameLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 14.0
-offset_right = 636.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 23
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 554.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 20
 text = "SCRAP BOLT"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="WeaponRoleLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 47.0
-offset_right = 636.0
-offset_bottom = 74.0
-theme_override_font_sizes/font_size = 15
+offset_left = 18.0
+offset_top = 38.0
+offset_right = 554.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 14
 text = "BALANCED • 2 ROAD BOUNCES"
 horizontal_alignment = 1
 mouse_filter = 2
 
-[node name="WeaponBar" type="HBoxContainer" parent="HUD/Root/ControlDeck"]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 88.0
-offset_right = 634.0
-offset_bottom = 148.0
-theme_override_constants/separation = 9
-
-[node name="ScrapBolt" type="Button" parent="HUD/Root/ControlDeck/WeaponBar"]
-custom_minimum_size = Vector2(198, 56)
-layout_mode = 2
-toggle_mode = true
-theme_override_font_sizes/font_size = 15
-text = "SCRAP BOLT"
-
-[node name="HeavySlug" type="Button" parent="HUD/Root/ControlDeck/WeaponBar"]
-custom_minimum_size = Vector2(198, 56)
-layout_mode = 2
-toggle_mode = true
-theme_override_font_sizes/font_size = 15
-text = "HEAVY SLUG"
-
-[node name="ShockCapsule" type="Button" parent="HUD/Root/ControlDeck/WeaponBar"]
-custom_minimum_size = Vector2(198, 56)
-layout_mode = 2
-toggle_mode = true
-theme_override_font_sizes/font_size = 15
-text = "SHOCK"
-
 [node name="PowerLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 168.0
-offset_right = 302.0
-offset_bottom = 208.0
-theme_override_font_sizes/font_size = 23
+offset_left = 26.0
+offset_top = 74.0
+offset_right = 246.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 22
 text = "POWER —"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="AngleLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 354.0
-offset_top = 168.0
-offset_right = 624.0
-offset_bottom = 208.0
-theme_override_font_sizes/font_size = 23
+offset_left = 326.0
+offset_top = 74.0
+offset_right = 546.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 22
 text = "ANGLE —"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="LastShotLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 218.0
-offset_right = 628.0
-offset_bottom = 248.0
-theme_override_font_sizes/font_size = 15
+offset_left = 20.0
+offset_top = 124.0
+offset_right = 552.0
+offset_bottom = 152.0
+theme_override_font_sizes/font_size = 14
 text = "LAST SHOT —"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="TargetCard" type="ColorRect" parent="HUD/Root"]
+visible = false
+layout_mode = 0
+offset_left = 118.0
+offset_top = 914.0
+offset_right = 602.0
+offset_bottom = 1098.0
+mouse_filter = 2
+color = Color(0.105, 0.115, 0.108, 0.92)
+
+[node name="Title" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 12.0
+offset_right = 464.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
+text = "TARGET STATUS"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="EnemyInfoLabel" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 52.0
+offset_right = 460.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 17
+text = "ENEMY 100/100"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="CoverInfoLabel" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 91.0
+offset_right = 460.0
+offset_bottom = 121.0
+theme_override_font_sizes/font_size = 16
+text = "COVER: INTACT"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="HazardInfoLabel" type="Label" parent="HUD/Root/TargetCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 130.0
+offset_right = 460.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 16
+text = "POWER CELL: ACTIVE"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 70.0
-offset_top = 754.0
+offset_top = 1120.0
 offset_right = 650.0
-offset_bottom = 810.0
+offset_bottom = 1180.0
 theme_override_font_sizes/font_size = 17
 text = "Preparing battle..."
 horizontal_alignment = 1
