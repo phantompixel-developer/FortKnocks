@@ -328,7 +328,7 @@ func _on_projectile_resolved(
 	var direction := signf(impact_velocity.x)
 	var impact_strength := clampf(impact_velocity.length() / 1050.0, 0.45, 1.15)
 
-	if weapon != null and weapon.blast_radius > 0.0:
+	if weapon != null and weapon.blast_radius > 0.0 and hit_body != null:
 		_apply_weapon_pulse(impact_position, weapon, hit_body)
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.PULSE, 1.15)
 		camera_director.impact_impulse(1.0, direction)
