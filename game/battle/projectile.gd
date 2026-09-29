@@ -57,8 +57,8 @@ func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("ground_surface") and _can_ground_bounce():
 		_ground_bounces_used += 1
 		var remaining := maxi(0, weapon.max_ground_bounces - _ground_bounces_used)
-		if remaining <= 0 and physics_material_override != null:
-			physics_material_override.bounce = 0.0
+		if remaining <= 0:
+			call_deferred("_disable_future_bounce")
 		_trail_world_points.clear()
 		_trail_world_points.append(global_position)
 		bounced.emit(global_position, remaining)
@@ -71,6 +71,10 @@ func _on_body_entered(body: Node) -> void:
 		body.apply_hit(applied_damage, impulse, global_position)
 
 	_resolve(body, applied_damage)
+
+func _disable_future_bounce() -> void:
+	if physics_material_override != null:
+		physics_material_override.bounce = 0.0
 
 func _can_ground_bounce() -> bool:
 	return weapon != null and _ground_bounces_used < weapon.max_ground_bounces
