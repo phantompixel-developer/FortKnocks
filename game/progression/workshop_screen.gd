@@ -32,11 +32,9 @@ func _ready() -> void:
 		back_requested.emit()
 	)
 	heavy_button.pressed.connect(func() -> void:
-		_play_ui(&"ui_confirm")
 		specialist_weapon_requested.emit("heavy_slug")
 	)
 	shock_button.pressed.connect(func() -> void:
-		_play_ui(&"ui_confirm")
 		specialist_weapon_requested.emit("shock_capsule")
 	)
 
@@ -124,7 +122,6 @@ func _rebuild_modules(platform_id: String) -> void:
 	utility_note.text = "%d utility slot. One active module; owned modules can be swapped between runs." % platform.utility_slot_count
 
 func _request_module(module_id: String) -> void:
-	_play_ui(&"ui_confirm")
 	module_requested.emit(module_id)
 
 func _play_ui(cue: StringName) -> void:

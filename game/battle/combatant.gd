@@ -58,8 +58,10 @@ func _draw() -> void:
 
 	# Backpack and scavenged shoulder plate make the survivor silhouette readable
 	# at phone size without increasing the collision footprint.
-	draw_rect(Rect2(Vector2(-27 * facing, -94), Vector2(24 * facing, 54)), outline)
-	draw_rect(Rect2(Vector2(-24 * facing, -90), Vector2(18 * facing, 45)), leather)
+	var backpack_x := -27.0 if facing > 0 else 3.0
+	var backpack_inner_x := -24.0 if facing > 0 else 6.0
+	draw_rect(Rect2(backpack_x, -94, 24, 54), outline)
+	draw_rect(Rect2(backpack_inner_x, -90, 18, 45), leather)
 	draw_circle(Vector2(-15.0 * facing, -82), 13.0, outline)
 	draw_circle(Vector2(-15.0 * facing, -82), 9.0, metal)
 
@@ -103,7 +105,8 @@ func _draw() -> void:
 	draw_circle(Vector2(35 * facing, -63), 6.0, skin)
 	draw_line(Vector2(28 * facing, -67), Vector2(68 * facing, -79), outline, 12.0)
 	draw_line(Vector2(31 * facing, -67), Vector2(65 * facing, -77), Color("3b443f"), 7.0)
-	draw_rect(Rect2(Vector2(48 * facing, -84), Vector2(14 * facing, 9)), Color("6e5d43"))
+	var launcher_plate_x := 48.0 if facing > 0 else -62.0
+	draw_rect(Rect2(launcher_plate_x, -84, 14, 9), Color("6e5d43"))
 
 	# Head, scarf, scavenged cap and eye mark.
 	draw_circle(Vector2(0, -116), 25.0, outline)

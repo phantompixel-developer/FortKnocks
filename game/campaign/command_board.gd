@@ -67,7 +67,6 @@ func _rebuild() -> void:
 		mission_list.add_child(button)
 
 func _select_mission(mission: MissionDefinition) -> void:
-	_play_ui(&"ui_confirm")
 	mission_selected.emit(mission)
 
 func _play_ui(cue: StringName) -> void:

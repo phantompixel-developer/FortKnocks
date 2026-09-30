@@ -87,7 +87,6 @@ func _rebuild_platform_list() -> void:
 	detail_label.text = "Protection is physical: stronger platforms last longer, but a wider silhouette also occupies more of the shallow firing line."
 
 func _request_platform(platform_id: String) -> void:
-	_play_ui(&"ui_confirm")
 	platform_requested.emit(platform_id)
 
 func _platform_display_name(platform_id: String) -> String:
