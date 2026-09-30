@@ -7,7 +7,7 @@ signal back_requested
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
-@onready var mission_list: VBoxContainer = $MissionPanel/MissionList
+@onready var mission_list: VBoxContainer = $MissionPanel/MissionScroll/MissionList
 @onready var back_button: Button = $BackButton
 
 var _snapshot: Dictionary = {}
