@@ -56,12 +56,12 @@ func _draw() -> void:
 
 	for i in range(SPARK_DIRECTIONS.size()):
 		var direction: Vector2 = SPARK_DIRECTIONS[i]
-		var travel := (30.0 + float(i % 4) * 10.0) * strength * _ease_out(progress)
+		var travel: float = (30.0 + float(i % 4) * 10.0) * strength * _ease_out(progress)
 		if kind == Kind.PULSE:
 			travel *= 1.45
-		var start := direction * travel * 0.56
-		var finish := direction * travel
-		var spark_color := base.lightened(0.24)
+		var start: Vector2 = direction * travel * 0.56
+		var finish: Vector2 = direction * travel
+		var spark_color: Color = base.lightened(0.24)
 		if kind == Kind.COVER and i % 2 == 0:
 			spark_color = Color("d4aa55")
 		draw_line(start, finish, Color(spark_color, fade), maxf(1.0, 5.5 * fade), true)
@@ -78,14 +78,14 @@ func _draw() -> void:
 
 func _draw_dust(progress: float, fade: float) -> void:
 	for i in range(7):
-		var offset := Vector2(float(i - 3) * 12.0, -5.0 - float(i % 3) * 7.0)
-		var radius := (10.0 + float(i % 4) * 3.0) * (0.45 + progress) * strength
+		var offset: Vector2 = Vector2(float(i - 3) * 12.0, -5.0 - float(i % 3) * 7.0)
+		var radius: float = (10.0 + float(i % 4) * 3.0) * (0.45 + progress) * strength
 		draw_circle(offset + Vector2(0.0, -35.0 * progress), radius, Color("68716a", 0.25 * fade))
 
 func _draw_metal_debris(progress: float, fade: float) -> void:
 	for i in range(6):
 		var direction: Vector2 = SPARK_DIRECTIONS[(i * 2) % SPARK_DIRECTIONS.size()]
-		var p := direction * (18.0 + float(i) * 7.0) * progress * strength
+		var p: Vector2 = direction * (18.0 + float(i) * 7.0) * progress * strength
 		draw_rect(Rect2(p - Vector2(3, 2), Vector2(7, 4)), Color("79614a", 0.70 * fade))
 	for i in range(3):
 		draw_circle(Vector2(float(i - 1) * 17.0, -24.0 - 22.0 * progress), 13.0 + i * 2.0, Color("545d57", 0.17 * fade))
