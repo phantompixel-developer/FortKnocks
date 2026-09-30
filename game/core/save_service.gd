@@ -121,28 +121,29 @@ func _migrate_save(source: Dictionary) -> Dictionary:
 	return _default_data()
 
 func _normalize() -> void:
-	if not _data.has("campaign"):
+	if typeof(_data.get("campaign", null)) != TYPE_DICTIONARY:
 		_data["campaign"] = {}
-	if not _data.has("inventory"):
+	if typeof(_data.get("inventory", null)) != TYPE_DICTIONARY:
 		_data["inventory"] = {}
-	if not _data.has("crew"):
+	if typeof(_data.get("crew", null)) != TYPE_DICTIONARY:
 		_data["crew"] = {}
-	if not _data.has("settings"):
+	if typeof(_data.get("settings", null)) != TYPE_DICTIONARY:
 		_data["settings"] = {}
 
 	var campaign := _data["campaign"] as Dictionary
 	var inventory := _data["inventory"] as Dictionary
 
-	if not campaign.has("completed_missions"):
+	if typeof(campaign.get("completed_missions", null)) != TYPE_ARRAY:
 		campaign["completed_missions"] = []
-	if not campaign.has("unlocked_missions"):
+	if typeof(campaign.get("unlocked_missions", null)) != TYPE_ARRAY:
 		campaign["unlocked_missions"] = [STARTING_MISSION_ID]
 	if not (campaign["unlocked_missions"] as Array).has(STARTING_MISSION_ID):
 		(campaign["unlocked_missions"] as Array).append(STARTING_MISSION_ID)
 
-	if not inventory.has("salvage"):
+	if typeof(inventory.get("salvage", null)) not in [TYPE_INT, TYPE_FLOAT]:
 		inventory["salvage"] = 0
-	if not inventory.has("platform_id"):
+	inventory["salvage"] = maxi(0, int(inventory.get("salvage", 0)))
+	if not inventory.has("platform_id") or str(inventory.get("platform_id", "")).is_empty():
 		inventory["platform_id"] = "run_down_compact"
 
 	_data["save_version"] = CURRENT_SAVE_VERSION
