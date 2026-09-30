@@ -1313,7 +1313,15 @@ func _update_target_card() -> void:
 			target_cover_label.text = "COVER: RUBBLE"
 
 	if _salvage_load != null and is_instance_valid(_salvage_load):
-		target_hazard_label.text = _salvage_load.status_text()
+		if _current_mission != null and _current_mission.power_cell_enabled:
+			var cell_state: String = "SPENT" if power_cell.is_discharged else "ACTIVE"
+			target_hazard_label.text = "SALVAGE %d/%d • CELL %s" % [
+				_salvage_load.health,
+				_salvage_load.max_health,
+				cell_state,
+			]
+		else:
+			target_hazard_label.text = _salvage_load.status_text()
 	elif _signal_relay != null and is_instance_valid(_signal_relay):
 		target_hazard_label.text = _signal_relay.status_text()
 	elif _current_mission != null and _current_mission.power_cell_enabled:
