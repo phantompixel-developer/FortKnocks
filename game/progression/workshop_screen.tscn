@@ -145,7 +145,7 @@ offset_top = 18.0
 offset_right = 552.0
 offset_bottom = 50.0
 theme_override_font_sizes/font_size = 19
-text = "PICKUP UTILITY BED"
+text = "PLATFORM MODULE"
 horizontal_alignment = 1
 
 [node name="PlatformLabel" type="Label" parent="UtilityCard"]
@@ -173,7 +173,7 @@ offset_top = 342.0
 offset_right = 546.0
 offset_bottom = 430.0
 theme_override_font_sizes/font_size = 14
-text = "Recover the Pickup to unlock utility modules."
+text = "Equip a platform with a module position to fit field hardware."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
