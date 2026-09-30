@@ -5,6 +5,7 @@ signal mission_selected(mission: MissionDefinition)
 signal back_requested
 
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
+const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var mission_list: VBoxContainer = $MissionPanel/MissionScroll/MissionList
@@ -13,7 +14,15 @@ const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.g
 var _snapshot: Dictionary = {}
 
 func _ready() -> void:
-	back_button.pressed.connect(func() -> void: back_requested.emit())
+	ThemeScript.apply(self)
+	ThemeScript.style_card($Header, 1)
+	ThemeScript.style_card($TopBar)
+	ThemeScript.style_card($MissionPanel)
+	$Header/Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	back_button.pressed.connect(func() -> void:
+		_play_ui(&"ui_back")
+		back_requested.emit()
+	)
 
 func configure(save_snapshot: Dictionary) -> void:
 	_snapshot = save_snapshot.duplicate(true)
@@ -53,8 +62,15 @@ func _rebuild() -> void:
 			mission.salvage_reward,
 			state,
 		]
+		ThemeScript.mark_active(button, is_completed)
 		button.pressed.connect(_select_mission.bind(mission))
 		mission_list.add_child(button)
 
 func _select_mission(mission: MissionDefinition) -> void:
+	_play_ui(&"ui_confirm")
 	mission_selected.emit(mission)
+
+func _play_ui(cue: StringName) -> void:
+	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
+	if audio != null and audio.has_method("play_cue"):
+		audio.call("play_cue", cue)
