@@ -101,6 +101,7 @@ var _campaign_managed := false
 var _prepared_mission: MissionDefinition
 var _player_platform: CombatPlatformDefinition
 var _player_module: PlatformModuleDefinition
+var _campaign_weapon_ids: Array[String] = []
 var _completion_emitted := false
 var _progression_reward := 0
 
@@ -131,12 +132,14 @@ var _enemy_target_x := 0.0
 func prepare_for_campaign(
 	definition: MissionDefinition,
 	platform_definition: CombatPlatformDefinition,
-	module_definition: PlatformModuleDefinition = null
+	module_definition: PlatformModuleDefinition = null,
+	weapon_ids: Array[String] = []
 ) -> void:
 	_campaign_managed = true
 	_prepared_mission = definition
 	_player_platform = platform_definition
 	_player_module = module_definition
+	_campaign_weapon_ids = weapon_ids.duplicate()
 
 func set_progression_reward(amount: int) -> void:
 	_progression_reward = maxi(0, amount)
@@ -392,6 +395,8 @@ func _end_drag(screen_position: Vector2) -> void:
 func _select_weapon(definition: WeaponDefinition) -> void:
 	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
 		return
+	if not _is_weapon_allowed(definition):
+		return
 
 	_selected_weapon = definition
 	_aim_power = 0.0
@@ -427,15 +432,29 @@ func _update_weapon_buttons() -> void:
 	scrap_bolt_button.button_pressed = _selected_weapon.id == "scrap_bolt"
 	heavy_slug_button.button_pressed = _selected_weapon.id == "heavy_slug"
 	shock_capsule_button.button_pressed = _selected_weapon.id == "shock_capsule"
+	_update_weapon_button_visibility()
+
+func _is_weapon_allowed(definition: WeaponDefinition) -> bool:
+	if definition == null:
+		return false
+	if not _campaign_managed or _campaign_weapon_ids.is_empty():
+		return true
+	return _campaign_weapon_ids.has(definition.id)
+
+func _update_weapon_button_visibility() -> void:
+	scrap_bolt_button.visible = _is_weapon_allowed(ScrapBolt as WeaponDefinition)
+	heavy_slug_button.visible = _is_weapon_allowed(HeavySlug as WeaponDefinition)
+	shock_capsule_button.visible = _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
 func _set_weapon_choice_ui_visible(is_visible: bool) -> void:
 	weapon_tray.visible = is_visible
 	weapon_info_card.visible = is_visible
 
 func _set_weapon_buttons_enabled(enabled: bool) -> void:
-	scrap_bolt_button.disabled = not enabled
-	heavy_slug_button.disabled = not enabled
-	shock_capsule_button.disabled = not enabled
+	_update_weapon_button_visibility()
+	scrap_bolt_button.disabled = not enabled or not _is_weapon_allowed(ScrapBolt as WeaponDefinition)
+	heavy_slug_button.disabled = not enabled or not _is_weapon_allowed(HeavySlug as WeaponDefinition)
+	shock_capsule_button.disabled = not enabled or not _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
 func _start_player_turn(show_enemy_preview: bool) -> void:
 	if _check_game_over():
@@ -961,6 +980,9 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 		]
 		if _player_module != null:
 			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
+		if _campaign_weapon_ids.size() >= 2:
+			var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
+			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
 	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
 	mission_brief_card.visible = true
