@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "suburbs_loaded_up"
+display_name = "Loaded Up"
+test_focus = "SUBURBS • PROTECT THE SALVAGE"
+briefing = "The Crossroads haul is finally moving, but a raider crew has spotted the load. This fight is not only about surviving: the recovered Salvage must stay intact. Their gunner will deliberately shift fire toward the cargo, and your own wide pressure shots can damage it too."
+objective_text = "PROTECT SALVAGE • CLEAR RAIDERS"
+objective_mode = "protect_salvage"
+campaign_order = 9
+salvage_reward = 95
+next_mission_id = "suburbs_hot_cargo"
+feature_preview_enabled = true
+feature_preview_position = Vector2(760, 980)
+feature_preview_text = "PROTECTED OBJECTIVE • SALVAGE LOAD"
+player_position = Vector2(290, 1040)
+player_cover_position = Vector2(500, 1000)
+enemy_position = Vector2(1870, 1040)
+enemy_cover_position = Vector2(1630, 1000)
+roadblock_enabled = false
+power_cell_enabled = false
+collapsible_barrier_enabled = true
+collapsible_barrier_position = Vector2(1210, 900)
+signal_relay_enabled = false
+salvage_load_enabled = true
+salvage_load_position = Vector2(760, 1000)
+salvage_load_health = 160
+enemy_tactic = "raider"
+platform_rects = Array[Rect2]([])
+visual_variant = 3
