@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "outskirts_checkpoint"
+display_name = "Outskirts Checkpoint"
+test_focus = "CHECKPOINT • COMBINED TACTICS"
+briefing = "The last Outskirts position combines elevation, hard obstruction and a breakable gate. Bring the platform and utility setup you trust most."
+objective_text = "BREAK THE CHECKPOINT"
+campaign_order = 6
+salvage_reward = 100
+next_mission_id = ""
+feature_preview_enabled = true
+feature_preview_position = Vector2(1240, 870)
+feature_preview_text = "OUTSKIRTS CHECKPOINT • COMBINED DEFENCES"
+player_position = Vector2(290, 1040)
+player_cover_position = Vector2(520, 1000)
+enemy_position = Vector2(1900, 840)
+enemy_cover_position = Vector2(1660, 800)
+roadblock_enabled = true
+roadblock_position = Vector2(1040, 958)
+power_cell_enabled = true
+power_cell_position = Vector2(1510, 828)
+collapsible_barrier_enabled = true
+collapsible_barrier_position = Vector2(1320, 900)
+platform_rects = Array[Rect2]([Rect2(1510, 840, 520, 195)])
+visual_variant = 1
