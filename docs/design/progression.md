@@ -125,7 +125,19 @@ Implemented foundation:
 - Workshop currently exposes the three proven projectile roles without an upgrade economy.
 - Versioned local save state persists campaign completion/unlocks, Salvage, and current platform ID.
 
-This is deliberately a **foundation**, not the completed Milestone 2 economy. The next progression batch should make Salvage purchase a meaningful platform capability/choice rather than adding more menus.
+The second Progression Shell batch now makes Salvage meaningful through the first real combat-platform choice:
+
+- **Run-down Compact** remains the starting platform: 150 cover durability and a 240-wide cover profile.
+- **Old Sedan / Estate** unlocks after clearing High Ground and costs **80 Salvage**.
+- Buying a platform permanently adds it to owned platform IDs; owned platforms can be re-equipped without cost.
+- The Sedan changes battle geometry to **230 cover durability / 300-wide cover**, providing stronger protection while occupying more of the player's shallow firing line.
+- The equipped platform is shown in the mission brief and its live cover durability is visible in the battle HUD.
+- Fort Knocks visibly changes when the Sedan is equipped: the vehicle silhouette and garage/workshop corner become more organised.
+- **Pickup** is represented in data and the Garage as the next progression proof, but remains non-purchasable until its utility/module gameplay actually exists.
+
+The 80-Salvage price is intentionally aligned with the first two Outskirts rewards: Roadblock Trial (35) + High Ground (50) = 85. This creates a natural first purchase decision before Scrap Gate without requiring replay farming.
+
+The Progression Shell is still not complete. The next platform step should prove the Pickup's first module/utility choice rather than merely add more durability.
 
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
