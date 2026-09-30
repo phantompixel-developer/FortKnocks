@@ -30,7 +30,9 @@ Current v1 shape:
   "inventory": {
     "salvage": 0,
     "platform_id": "run_down_compact",
-    "owned_platform_ids": ["run_down_compact"]
+    "owned_platform_ids": ["run_down_compact"],
+    "owned_module_ids": [],
+    "equipped_module_by_platform": {}
   },
   "crew": {},
   "settings": {}
@@ -59,7 +61,13 @@ The live progression inventory values are:
 - `platform_id` — the currently equipped combat platform.
 - `owned_platform_ids` — permanently acquired platform definitions.
 
-Garage purchase/equip behavior is now live for the first platform upgrade. Purchasing deducts Salvage once, records ownership, and equipment changes persist independently. Existing v1 saves that predate `owned_platform_ids` are normalized to own `run_down_compact` without requiring a schema-version bump because this field was added during the same pre-release v1 foundation phase.
+Garage purchase/equip behavior is live for platform progression. Purchasing deducts Salvage once, records ownership, and equipment changes persist independently.
+
+Workshop module persistence now adds:
+- `owned_module_ids` — permanently built utility modules,
+- `equipped_module_by_platform` — one selected module ID per platform.
+
+Existing pre-release v1 saves that predate these fields are normalized safely without a schema-version bump. Campaign reconciliation also walks already-completed mission definitions and unlocks any newly added `next_mission_id`, allowing saves that had already cleared Scrap Gate to continue into Broken Span without reset or replay.
 
 ## App ownership
 
