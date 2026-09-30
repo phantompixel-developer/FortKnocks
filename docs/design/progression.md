@@ -167,7 +167,29 @@ The Outskirts campaign now contains six connected encounters:
 
 The last three deliberately reuse proven combat pieces in new combinations rather than introducing another weapon or combat subsystem. Existing saves that already cleared Scrap Gate reconcile forward and unlock Broken Span automatically.
 
-The Progression Shell still needs local acceptance of the Pickup/module decision and the full six-route loop before the milestone can be considered passed.
+The fourth Progression Shell batch closes the remaining structural gaps without adding another combat system:
+
+### Campaign field rack
+All three proven projectiles remain owned, but campaign battles now carry:
+- **Scrap Bolt** — permanent core round,
+- **one specialist slot** — choose either Heavy Slug or Shock Capsule in Workshop.
+
+This creates a deliberate pre-mission choice:
+- Heavy Slug specialist = cover-breaking / force,
+- Shock Capsule specialist = radial displacement / environment pressure.
+
+There is no purchase cost for switching specialists. The constraint is field capacity, not another currency sink. Standalone Encounter Proof continues to expose all three weapons for development testing.
+
+### Visible Fort Knocks campaign growth
+Fort Knocks now changes from campaign completion as well as equipped platform:
+- **0–1 cleared** — survival camp / holding together,
+- **2–3 cleared** — organised storage begins; camp is taking shape,
+- **4–5 cleared** — generator, permanent lighting, improved watch/gate; powered and organised,
+- **6 cleared** — reinforced perimeter and command mast; Outskirts secured.
+
+Platform/utility visuals layer on top of this campaign-state growth, so base progression is no longer represented only by vehicle selection.
+
+The Progression Shell now contains every structural element required by the Milestone 2 build list. It should not be expanded further by default. The remaining gate is local playtest acceptance of the full six-route campaign, platform/module decisions, field-rack decision, persistence, and visible Fort Knocks growth.
 
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
