@@ -8,7 +8,9 @@ var _campaign_stage := 0
 func configure(platform_id: String, module_id := "", completed_missions := 0) -> void:
 	_platform_id = platform_id
 	_module_id = module_id
-	if completed_missions >= 6:
+	if completed_missions >= 8:
+		_campaign_stage = 4
+	elif completed_missions >= 6:
 		_campaign_stage = 3
 	elif completed_missions >= 4:
 		_campaign_stage = 2
@@ -99,6 +101,16 @@ func _draw_campaign_progress() -> void:
 		draw_circle(Vector2(530, 410), 9.0, Color("d4aa55"))
 		draw_arc(Vector2(530, 410), 28.0, -2.6, -0.5, 18, Color("d4aa55", 0.35), 3.0, true)
 
+	if _campaign_stage >= 4:
+		# Suburbs foothold: heavier fabrication equipment appears once technical capability is recovered.
+		draw_rect(Rect2(374, 666, 286, 18), Color("202824"))
+		draw_line(Vector2(394, 670), Vector2(394, 820), Color("26312d"), 14.0)
+		draw_line(Vector2(642, 670), Vector2(642, 820), Color("26312d"), 14.0)
+		draw_line(Vector2(410, 700), Vector2(626, 700), Color("6c7369"), 8.0)
+		draw_rect(Rect2(468, 706, 96, 28), Color("4f5b55"))
+		draw_line(Vector2(480, 730), Vector2(550, 710), Color("d4aa55", 0.52), 5.0)
+		draw_circle(Vector2(586, 718), 9.0, Color("77b6bf"))
+
 func _draw_gate_and_watch() -> void:
 	var post_color := Color("222b27") if _campaign_stage < 3 else Color("19211e")
 	var brace_color := Color("4e5a53") if _campaign_stage < 3 else Color("667168")
@@ -130,7 +142,7 @@ func _draw_workshop() -> void:
 	for x in [122.0, 168.0, 214.0, 260.0]:
 		draw_line(Vector2(x, 782), Vector2(x + 18, 756), Color("d4aa55", 0.45), 4.0)
 
-	if _platform_id == "old_sedan" or _platform_id == "pickup":
+	if _platform_id == "old_sedan" or _platform_id == "pickup" or _platform_id == "improvised_technical":
 		draw_rect(Rect2(348, 680, 318, 20), Color("26312d"))
 		draw_line(Vector2(364, 680), Vector2(364, 876), Color("202824"), 13.0)
 		draw_line(Vector2(650, 680), Vector2(650, 876), Color("202824"), 13.0)
@@ -138,7 +150,9 @@ func _draw_workshop() -> void:
 		draw_line(Vector2(386, 721), Vector2(620, 721), Color("a45f42", 0.42), 4.0)
 
 func _draw_active_platform() -> void:
-	if _platform_id == "pickup":
+	if _platform_id == "improvised_technical":
+		_draw_technical()
+	elif _platform_id == "pickup":
 		_draw_pickup()
 	elif _platform_id == "old_sedan":
 		_draw_sedan()
@@ -178,6 +192,32 @@ func _draw_pickup() -> void:
 	elif _module_id == "ballast_crates":
 		draw_rect(Rect2(548, 756, 47, 34), Color("655a43"))
 		draw_rect(Rect2(599, 762, 39, 28), Color("77684b"))
+
+func _draw_technical() -> void:
+	var shell: Color = Color("4b615a")
+	draw_rect(Rect2(340, 776, 326, 84), Color("171c1b"))
+	draw_rect(Rect2(346, 782, 314, 70), shell)
+	draw_polygon(
+		PackedVector2Array([Vector2(366, 782), Vector2(410, 724), Vector2(514, 724), Vector2(556, 782)]),
+		PackedColorArray([shell.lightened(0.05)])
+	)
+	draw_rect(Rect2(430, 734, 62, 31), Color("3f5650"))
+	draw_rect(Rect2(562, 793, 86, 41), shell.darkened(0.15))
+	draw_line(Vector2(558, 789), Vector2(558, 708), Color("202824"), 8.0)
+	draw_line(Vector2(558, 712), Vector2(640, 712), Color("202824"), 8.0)
+	draw_line(Vector2(640, 712), Vector2(640, 792), Color("202824"), 8.0)
+	_draw_hub_wheels(400, 612, 864)
+
+	if _module_id == "twin_field_rack":
+		draw_rect(Rect2(574, 736, 27, 48), Color("27312d"))
+		draw_rect(Rect2(608, 736, 27, 48), Color("27312d"))
+		draw_circle(Vector2(587, 744), 5.0, Color("d4aa55"))
+		draw_circle(Vector2(621, 744), 5.0, Color("77b6bf"))
+	elif _module_id == "stabilizer_rig":
+		draw_line(Vector2(572, 804), Vector2(592, 844), Color("202824"), 8.0)
+		draw_line(Vector2(634, 804), Vector2(614, 844), Color("202824"), 8.0)
+		draw_rect(Rect2(580, 842, 28, 7), Color("667168"))
+		draw_rect(Rect2(606, 842, 28, 7), Color("667168"))
 
 func _draw_sedan() -> void:
 	var shell := Color("56675f")
