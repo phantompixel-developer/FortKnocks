@@ -172,7 +172,7 @@ Progression should cause meaningful decisions and visible Fort Knocks transforma
 
 ## Milestone 3 — Identity / Production Presentation
 
-**Status: ACTIVE**
+**Status: IMPLEMENTATION COMPLETE — LOCAL ACCEPTANCE PENDING**
 
 ### Goal
 Turn the proven game into recognisably **Fort Knocks**.
@@ -189,9 +189,41 @@ Turn the proven game into recognisably **Fort Knocks**.
 - faction/world presentation,
 - lightweight story/context.
 
-### Rule
-Do not replace every placeholder at once. Approve one representative production pipeline for each asset class before batching.
+### Current implementation
 
+The representative production-presentation pipelines are now implemented:
+- shared Fort Knocks palette/theme and reusable screen skin,
+- stronger scavenger-survivor silhouette,
+- distinct compact/sedan/pickup silhouettes with salvage repair language and authored damage presentation,
+- layered non-colliding Outskirts environment treatment across road, flyover and salvage-depot variants,
+- Fort Knocks perimeter/workshop/garage/gate identity plus visible campaign-growth stages,
+- recurring two-slash knock-mark/hazard motif as a provisional player identifier,
+- distinct visual treatment for roadblock, scrap gate and unstable power cell,
+- cohesive projectile silhouettes, trails, aim-guide treatment and staged impact VFX,
+- procedural audio director with hub/menu/battle ambience and event cues,
+- lightweight in-world context across all six Outskirts missions,
+- canonical visual/audio pipeline and provenance documentation.
+
+No new progression system, weapon catalog or campaign region was added as part of this milestone.
+
+### Acceptance gate
+
+The implementation is ready for local acceptance. Before marking the milestone **PASSED**, local Play-mode review must confirm:
+- hub, Command Board, Garage and Workshop feel visually cohesive,
+- survivor/platform silhouettes read clearly at normal phone scale,
+- the three battlefield environment families remain readable behind gameplay,
+- active platform damage states are understandable,
+- projectile roles and Spotter preview remain distinguishable,
+- impact VFX are satisfying without obscuring the result,
+- procedural audio cues are audible, distinct and not fatiguing,
+- no portrait UI overlap/regression was introduced,
+- normal campaign flow remains intact.
+
+The connected GitHub environment cannot run the Godot editor/runtime, so runtime acceptance must not be fabricated.
+
+### Rule
+
+Do not batch a large sprite/audio catalog yet. The representative visual/audio pipelines must first pass local playtesting. After acceptance, Milestone 4 may scale the proven language into additional content.
 ---
 
 ## Milestone 4 — Content Expansion

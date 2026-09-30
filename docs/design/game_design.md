@@ -91,4 +91,8 @@ The original one-projectile vertical slice has been surpassed. Current `main` no
 Exact rules live in `combat_design.md` and `portrait_ux.md`.
 
 ## Current milestone
-The project remains in **Combat Prototype V1 / encounter-proof development**. Campaign, economy, save progression, and production art should follow the milestone gates in `implementation_roadmap.md`, not be added simply because they are part of the eventual product.
+Combat Prototype V1, Encounter Proof and the Progression Shell have passed local acceptance.
+
+**Milestone 3 — Identity / Production Presentation** now has its representative implementation complete and is awaiting local Play-mode acceptance. The game has a shared Fort Knocks visual language, first-region Outskirts presentation, survivor/platform direction, cohesive UI, audio/VFX proof and lightweight world context.
+
+Do not expand into additional regions, large weapon catalogs or deeper crew systems until the Milestone 3 presentation gate is accepted. See `implementation_roadmap.md`.
