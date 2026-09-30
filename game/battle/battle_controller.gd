@@ -845,6 +845,19 @@ func _on_projectile_resolved(
 			_show_feedback("RELAY HIT")
 			hint_label.text = relay.status_text()
 			camera_director.impact_impulse(0.72, direction)
+	elif hit_body is SalvageLoad:
+		_play_audio(&"hit_metal")
+		var salvage: SalvageLoad = hit_body as SalvageLoad
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
+		_spawn_damage_popup(impact_position + Vector2(0.0, -95.0), "-%d SALVAGE" % damage_amount, Color("e4bd78"))
+		if salvage.is_destroyed:
+			_show_feedback("SALVAGE LOST")
+			hint_label.text = "Protected Salvage destroyed"
+			camera_director.impact_impulse(1.0, direction)
+		else:
+			_show_feedback("SALVAGE HIT")
+			hint_label.text = salvage.status_text()
+			camera_director.impact_impulse(0.72, direction)
 	elif hit_body is UnstablePowerCell:
 		_show_feedback("POWER CELL HIT")
 		hint_label.text = "The unstable cell discharged"
@@ -905,6 +918,8 @@ func _shot_result_name(hit_body: Node) -> String:
 		return "GATE"
 	if hit_body is SignalRelay:
 		return "RELAY"
+	if hit_body is SalvageLoad:
+		return "SALVAGE"
 	if hit_body is CentralRoadblock:
 		return "ROADBLOCK"
 	if hit_body.is_in_group("ground_surface"):
@@ -934,6 +949,8 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 		candidates.append(_collapsible_barrier)
 	if _signal_relay != null and is_instance_valid(_signal_relay) and not _signal_relay.is_destroyed:
 		candidates.append(_signal_relay)
+	if _salvage_load != null and is_instance_valid(_salvage_load) and not _salvage_load.is_destroyed:
+		candidates.append(_salvage_load)
 
 	for target in candidates:
 		if not is_instance_valid(target):
@@ -962,6 +979,8 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -110.0), "-%d GATE" % pulse_damage, Color("9dc8d4"))
 		elif target is SignalRelay:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -125.0), "-%d RELAY" % pulse_damage, Color("8fcfd0"))
+		elif target is SalvageLoad:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -105.0), "-%d SALVAGE" % pulse_damage, Color("e4bd78"))
 
 func _on_collapsible_barrier_collapsed(world_position: Vector2) -> void:
 	if _active_shooter == player:
@@ -976,6 +995,13 @@ func _on_signal_relay_destroyed(world_position: Vector2) -> void:
 	camera_director.stop_follow_at(world_position, 0.08)
 	_show_feedback("RELAY OFFLINE")
 	hint_label.text = "Objective complete — relay disabled"
+
+func _on_salvage_load_destroyed(world_position: Vector2) -> void:
+	_play_audio(&"hit_metal")
+	_spawn_impact_effect(world_position + Vector2(0.0, -50.0), ImpactEffect.Kind.COVER, 1.15)
+	camera_director.stop_follow_at(world_position, 0.08)
+	_show_feedback("SALVAGE LOST")
+	hint_label.text = "Protected Salvage destroyed"
 
 func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: int, force: float) -> void:
 	_play_audio(&"surge")
@@ -992,6 +1018,8 @@ func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: i
 	targets.append(enemy)
 	targets.append(player_cover)
 	targets.append(enemy_cover)
+	if _salvage_load != null and is_instance_valid(_salvage_load) and not _salvage_load.is_destroyed:
+		targets.append(_salvage_load)
 	for target in targets:
 		var distance := target.global_position.distance_to(world_position)
 		if distance > radius:
@@ -1008,6 +1036,8 @@ func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: i
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -125.0), "-%d SURGE" % applied_damage, Color("7bc7df"))
 		elif target is DestructibleCover:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -95.0), "-%d SURGE" % applied_damage, Color("91bfcd"))
+		elif target is SalvageLoad:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -100.0), "-%d SALVAGE" % applied_damage, Color("e4bd78"))
 
 func _update_enemy_correction(impact_position: Vector2, hit_body: Node, weapon: WeaponDefinition) -> void:
 	if weapon == null or not _enemy_speed_correction.has(weapon.id):
