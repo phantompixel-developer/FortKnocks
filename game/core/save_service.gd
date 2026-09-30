@@ -46,6 +46,48 @@ func current_platform_id() -> String:
 	var inventory := _data.get("inventory", {}) as Dictionary
 	return str(inventory.get("platform_id", "run_down_compact"))
 
+func owned_platform_ids() -> Array:
+	var inventory := _data.get("inventory", {}) as Dictionary
+	return (inventory.get("owned_platform_ids", ["run_down_compact"]) as Array).duplicate()
+
+func owns_platform(platform_id: String) -> bool:
+	return owned_platform_ids().has(platform_id)
+
+func purchase_platform(platform_id: String, cost: int) -> bool:
+	if platform_id.is_empty() or cost < 0:
+		return false
+
+	var inventory := _data.get("inventory", {}) as Dictionary
+	var owned := inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
+	if owned.has(platform_id):
+		return true
+
+	var current_salvage := int(inventory.get("salvage", 0))
+	if current_salvage < cost:
+		return false
+
+	inventory["salvage"] = current_salvage - cost
+	owned.append(platform_id)
+	inventory["owned_platform_ids"] = owned
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
+func equip_platform(platform_id: String) -> bool:
+	var inventory := _data.get("inventory", {}) as Dictionary
+	var owned := inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
+	if not owned.has(platform_id):
+		return false
+	if str(inventory.get("platform_id", "")) == platform_id:
+		return true
+
+	inventory["platform_id"] = platform_id
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
 func completed_missions() -> Array:
 	var campaign := _data.get("campaign", {}) as Dictionary
 	return (campaign.get("completed_missions", []) as Array).duplicate()
@@ -102,6 +144,7 @@ func _default_data() -> Dictionary:
 		"inventory": {
 			"salvage": 0,
 			"platform_id": "run_down_compact",
+			"owned_platform_ids": ["run_down_compact"],
 		},
 		"crew": {},
 		"settings": {},
@@ -143,9 +186,18 @@ func _normalize() -> void:
 	if typeof(inventory.get("salvage", null)) not in [TYPE_INT, TYPE_FLOAT]:
 		inventory["salvage"] = 0
 	inventory["salvage"] = maxi(0, int(inventory.get("salvage", 0)))
+	if typeof(inventory.get("owned_platform_ids", null)) != TYPE_ARRAY:
+		inventory["owned_platform_ids"] = ["run_down_compact"]
+	var owned_platforms := inventory["owned_platform_ids"] as Array
+	if not owned_platforms.has("run_down_compact"):
+		owned_platforms.append("run_down_compact")
+
 	if not inventory.has("platform_id") or str(inventory.get("platform_id", "")).is_empty():
 		inventory["platform_id"] = "run_down_compact"
+	if not owned_platforms.has(str(inventory["platform_id"])):
+		inventory["platform_id"] = "run_down_compact"
 
+	inventory["owned_platform_ids"] = owned_platforms
 	_data["save_version"] = CURRENT_SAVE_VERSION
 	_data["campaign"] = campaign
 	_data["inventory"] = inventory
