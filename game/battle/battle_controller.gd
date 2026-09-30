@@ -145,6 +145,7 @@ func _ready() -> void:
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
+	player_cover.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
 	inspect_button.pressed.connect(_inspect_enemy)
 	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(ScrapBolt as WeaponDefinition))
@@ -994,8 +995,13 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 	_update_hud()
 
 func _update_hud() -> void:
-	health_label.text = "YOU  %d/100" % player.health
-	enemy_health_label.text = "ENEMY  %d/100" % enemy.health
+	health_label.text = "YOU  %d/%d\nCOVER  %d/%d" % [
+		player.health,
+		player.max_health,
+		player_cover.health,
+		player_cover.max_health,
+	]
+	enemy_health_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
 	if enemy_locator_label.visible:
 		_update_enemy_locator()
 	if target_card.visible:
