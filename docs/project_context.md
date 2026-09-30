@@ -107,9 +107,62 @@ It now includes:
 
 Local playtesting on 2026-09-30 confirmed that the combat loop and the three Encounter Proof layouts feel good and create sufficiently distinct firing problems. **Combat Prototype V1 and Milestone 1B — Encounter Proof are accepted as passed.**
 
-The active development milestone is now **Milestone 2 — Progression Shell**. New work should connect the proven battles into the smallest complete Fort Knocks game loop rather than continuing to expand the combat prototype with speculative weapons, encounters, or modifiers.
+Milestone 2 — Progression Shell is now accepted through local playtesting. The active development milestone is **Milestone 3 — Identity / Production Presentation**. New work should improve the visual/audio/world identity of the proven game rather than expanding the Progression Shell with speculative systems.
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
+
+## Current Progression Shell foundation
+
+Milestone 2 is now under implementation.
+
+Current foundation:
+- the project boots into a greybox Fort Knocks hub through a root App scene,
+- Command Board launches campaign-managed battles,
+- Roadblock Trial → High Ground → Scrap Gate currently form the initial sequential Outskirts route,
+- first clears award 35 / 50 / 70 Salvage respectively,
+- first clear unlocks the next route,
+- replayed cleared routes grant no additional Salvage,
+- local versioned save state persists progression to `user://fort_knocks_save.json`,
+- Garage and Workshop exist as shell screens,
+- active platform begins as `run_down_compact`,
+- battle remains independently runnable as an Encounter Proof/development scene, but campaign launches bypass its internal development selector.
+
+The first meaningful Salvage/platform progression choice is now implemented:
+
+- Run-down Compact: starting platform, 150 cover durability, 240-wide cover profile.
+- Old Sedan / Estate: unlocks after High Ground, costs 80 Salvage, 230 cover durability, 300-wide cover profile.
+- The first two mission rewards total 85 Salvage, deliberately funding the first purchase before Scrap Gate.
+- Purchased platforms persist in `owned_platform_ids`; owned platforms can be re-equipped without another cost.
+- Equipped platform data changes the actual player cover collision/visual profile in battle.
+- Battle HUD shows live player cover durability and mission briefing identifies the equipped platform.
+- Fort Knocks visibly improves its garage corner and vehicle silhouette when the Sedan is equipped.
+- Pickup exists as data/Garage preview only; it is intentionally not purchasable until its first utility/module gameplay is implemented.
+
+The Pickup capability proof and short Outskirts campaign expansion are now implemented:
+
+- Pickup unlocks after **Broken Span** and costs **130 Salvage**.
+- Pickup base battle profile is 260 cover durability / 320-wide cover.
+- `CombatPlatformDefinition.utility_slot_count` now expresses utility capacity; Pickup has one slot while Compact/Sedan have none.
+- Workshop offers two Pickup-compatible modules at 40 Salvage each:
+  - **Spotter Rack** — denser visible trajectory sampling plus four highlighted continuation points.
+  - **Ballast Crates** — +80 cover durability.
+- Only one module is active per platform; module ownership/equipment persists and modules can be swapped after purchase.
+- Pickup and its equipped module are visible both in Fort Knocks and during battle.
+- The Outskirts campaign now contains six sequential encounters ending in **Outskirts Checkpoint**:
+  Roadblock Trial → High Ground → Scrap Gate → Broken Span → Depot Line → Outskirts Checkpoint.
+- Existing pre-release saves reconcile completed missions to newly added next-route unlocks, so prior Scrap Gate clears automatically expose Broken Span.
+
+Milestone 2 implementation scope is now structurally complete:
+
+- campaign field rack is live: Scrap Bolt + one Workshop-selected specialist (Heavy Slug or Shock Capsule),
+- specialist choice persists and campaign battles expose only those two player weapons,
+- standalone Encounter Proof retains all three weapons,
+- Fort Knocks now has completion-driven visual stages at 0–1, 2–3, 4–5, and 6 Outskirts clears,
+- platform and utility visuals layer on top of those base-growth stages.
+
+Local playtesting on 2026-09-30 accepted the Progression Shell, including the revised Spotter Rack precision-preview readability. **Milestone 2 is passed.**
+
+Do not add another major progression/combat system by default. The active milestone is now **Milestone 3 — Identity / Production Presentation**: production survivor/platform/environment direction, cohesive UI skin, audio/VFX, faction/world presentation, and visible Fort Knocks identity around the proven gameplay.
 
 ## Portrait UX decisions
 
@@ -247,8 +300,8 @@ Milestone order is deliberate:
 
 1. **Combat Prototype V1 — PASSED** — aiming, camera, impact, destruction, projectile roles, enemy response, and portrait readability accepted through local playtesting.
 2. **Encounter Proof — PASSED** — multiple greybox layouts and environmental interactions accepted as creating repeatable tactical decisions.
-3. **Progression Shell — ACTIVE** — Fort Knocks hub, short campaign path, Salvage, small platform progression, save data.
-4. **Identity / Production Art** — survivor, vehicle, environment, UI, audio, VFX, faction/world presentation.
+3. **Progression Shell — PASSED** — Fort Knocks hub, six-route Outskirts campaign, Salvage, platform/module/loadout progression, save data and visible hub growth accepted through local playtesting.
+4. **Identity / Production Art — ACTIVE** — survivor, vehicle, environment, UI, audio, VFX, faction/world presentation.
 5. **Content Expansion / Shipping** — mission variety, balance, performance, device validation, Android/iOS release work.
 
 Do not skip a milestone because later systems are more exciting. See `docs/design/implementation_roadmap.md`.

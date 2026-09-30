@@ -137,11 +137,11 @@ horizontal_alignment = 1
 [node name="HealthLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 104.0
+offset_top = 98.0
 offset_right = 250.0
-offset_bottom = 142.0
-theme_override_font_sizes/font_size = 20
-text = "YOU 100/100"
+offset_bottom = 158.0
+theme_override_font_sizes/font_size = 17
+text = "YOU 100/100\nCOVER 150/150"
 
 [node name="EnemyHealthLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
@@ -412,10 +412,10 @@ mouse_filter = 2
 [node name="Briefing" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
 offset_left = 34.0
-offset_top = 122.0
+offset_top = 116.0
 offset_right = 502.0
-offset_bottom = 206.0
-theme_override_font_sizes/font_size = 16
+offset_bottom = 222.0
+theme_override_font_sizes/font_size = 15
 text = "Encounter briefing"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -425,9 +425,9 @@ mouse_filter = 2
 [node name="Objective" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
 offset_left = 34.0
-offset_top = 224.0
+offset_top = 230.0
 offset_right = 502.0
-offset_bottom = 258.0
+offset_bottom = 264.0
 theme_override_font_sizes/font_size = 14
 text = "OBJECTIVE: INCAPACITATE ENEMY"
 horizontal_alignment = 1

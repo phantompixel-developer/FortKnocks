@@ -7,6 +7,11 @@ extends Resource
 @export_multiline var briefing := ""
 @export var objective_text := "INCAPACITATE ENEMY"
 
+@export_group("Campaign progression")
+@export var campaign_order := 0
+@export var salvage_reward := 0
+@export var next_mission_id := ""
+
 @export_group("Tactical preview")
 @export var feature_preview_enabled := false
 @export var feature_preview_position := Vector2(1080.0, 900.0)

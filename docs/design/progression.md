@@ -105,6 +105,96 @@ Working region escalation:
 
 These names/order are provisional. The durable design goal is escalation from desperate scavenging and civilian cover toward organised factions, heavy protection, complex environments, and recovered old-world technology.
 
+## Current Progression Shell foundation
+
+The first implementation batch now establishes the application loop around the proven combat.
+
+Implemented foundation:
+- Press Play opens an early greybox **Fort Knocks hub**, not the battle scene.
+- The hub presents current Salvage, Outskirts completion, active platform, Command Board, Garage, and Workshop.
+- **Command Board** reads campaign state and launches mission definitions.
+- The three accepted Encounter Proof missions currently seed the first campaign path:
+  1. Roadblock Trial — first-clear reward: **35 Salvage**.
+  2. High Ground — first-clear reward: **50 Salvage**.
+  3. Scrap Gate — first-clear reward: **70 Salvage**.
+- Clearing a route once unlocks the next route.
+- Cleared routes remain replayable but do not grant repeat Salvage in this foundation.
+- Defeat grants no Salvage and no unlock.
+- Battle reports a structured result to `App`; battle does not mutate progression directly.
+- Garage currently exposes the active **run-down compact** and previews the sedan/estate and pickup path.
+- Workshop currently exposes the three proven projectile roles without an upgrade economy.
+- Versioned local save state persists campaign completion/unlocks, Salvage, and current platform ID.
+
+The second Progression Shell batch now makes Salvage meaningful through the first real combat-platform choice:
+
+- **Run-down Compact** remains the starting platform: 150 cover durability and a 240-wide cover profile.
+- **Old Sedan / Estate** unlocks after clearing High Ground and costs **80 Salvage**.
+- Buying a platform permanently adds it to owned platform IDs; owned platforms can be re-equipped without cost.
+- The Sedan changes battle geometry to **230 cover durability / 300-wide cover**, providing stronger protection while occupying more of the player's shallow firing line.
+- The equipped platform is shown in the mission brief and its live cover durability is visible in the battle HUD.
+- Fort Knocks visibly changes when the Sedan is equipped: the vehicle silhouette and garage/workshop corner become more organised.
+- **Pickup** is represented in data and the Garage as the next progression proof, but remains non-purchasable until its utility/module gameplay actually exists.
+
+The 80-Salvage price is intentionally aligned with the first two Outskirts rewards: Roadblock Trial (35) + High Ground (50) = 85. This creates a natural first purchase decision before Scrap Gate without requiring replay farming.
+
+The third Progression Shell batch now proves the Pickup as the first capability-changing platform:
+
+- **Pickup** unlocks after clearing **Broken Span** and costs **130 Salvage**.
+- Pickup base battle profile: **260 cover durability / 320-wide cover**.
+- The Pickup has exactly **one utility-bed slot** in this proof.
+- Two mutually exclusive utility modules are available in Workshop once the Pickup is owned and equipped:
+  - **Spotter Rack** — 40 Salvage; turns the normal sparse arc into a visibly denser precision preview across the same on-screen curve, plus four highlighted continuation points beyond the normal horizon.
+  - **Ballast Crates** — 40 Salvage; adds 80 cover durability.
+- Owned modules can be swapped freely; only the equipped module affects battle.
+- Pickup/module state is visible in Fort Knocks and in the battle mission brief.
+
+The economy is intentionally staged:
+- after buying the 80-Salvage Sedan, clearing Scrap Gate leaves 75 Salvage,
+- Broken Span awards 65, bringing the player to 140,
+- Pickup costs 130, leaving 10,
+- Depot Line awards 75, bringing the player to 85,
+- either first module costs 40 before the Outskirts Checkpoint.
+
+This means the new choices are funded by campaign progress rather than replay farming.
+
+The Outskirts campaign now contains six connected encounters:
+1. Roadblock Trial — 35 Salvage.
+2. High Ground — 50 Salvage.
+3. Scrap Gate — 70 Salvage.
+4. Broken Span — 65 Salvage.
+5. Depot Line — 75 Salvage.
+6. Outskirts Checkpoint — 100 Salvage.
+
+The last three deliberately reuse proven combat pieces in new combinations rather than introducing another weapon or combat subsystem. Existing saves that already cleared Scrap Gate reconcile forward and unlock Broken Span automatically.
+
+The fourth Progression Shell batch closes the remaining structural gaps without adding another combat system:
+
+### Campaign field rack
+All three proven projectiles remain owned, but campaign battles now carry:
+- **Scrap Bolt** — permanent core round,
+- **one specialist slot** — choose either Heavy Slug or Shock Capsule in Workshop.
+
+This creates a deliberate pre-mission choice:
+- Heavy Slug specialist = cover-breaking / force,
+- Shock Capsule specialist = radial displacement / environment pressure.
+
+There is no purchase cost for switching specialists. The constraint is field capacity, not another currency sink. Standalone Encounter Proof continues to expose all three weapons for development testing.
+
+### Visible Fort Knocks campaign growth
+Fort Knocks now changes from campaign completion as well as equipped platform:
+- **0–1 cleared** — survival camp / holding together,
+- **2–3 cleared** — organised storage begins; camp is taking shape,
+- **4–5 cleared** — generator, permanent lighting, improved watch/gate; powered and organised,
+- **6 cleared** — reinforced perimeter and command mast; Outskirts secured.
+
+Platform/utility visuals layer on top of this campaign-state growth, so base progression is no longer represented only by vehicle selection.
+
+The Progression Shell contains every structural element required by the Milestone 2 build list.
+
+**Accepted on 2026-09-30.** Local playtesting confirmed the six-route campaign loop, persistence, platform purchases/equipment, Pickup utility choice, specialist field rack, visible Fort Knocks growth, and the revised Spotter Rack precision-preview readability are sufficient to close Milestone 2.
+
+Do not expand this shell further by default. Additional platforms, modules, crew systems, missions, and progression depth belong to later content milestones after production identity is established.
+
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
 - Fort Knocks home/hub shell,

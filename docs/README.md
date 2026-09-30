@@ -27,6 +27,7 @@ Chat history and model memory are useful context, but exact rules that affect im
 - **Application/battle architecture:** `architecture/architecture.md`
 - **Camera:** `architecture/camera_architecture.md`
 - **Combat platforms:** `architecture/combat_platform.md`
+- **Save format / persistence ownership:** `architecture/save_architecture.md`
 - **AI development workflow:** `engineering/ai_workflow.md`
 - **Task completion requirements:** `engineering/definition_of_done.md`
 - **Originality and provenance:** `legal/originality_rules.md`

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "broken_span"
+display_name = "Broken Span"
+test_focus = "MIXED ELEVATION • FIRING WINDOWS"
+briefing = "A broken overpass splits the firing line. Work around the raised concrete sections and use the unstable cell if the direct route closes."
+objective_text = "CLEAR THE BROKEN SPAN"
+campaign_order = 4
+salvage_reward = 65
+next_mission_id = "depot_line"
+feature_preview_enabled = true
+feature_preview_position = Vector2(1180, 900)
+feature_preview_text = "BROKEN SPAN • FIND A FIRING WINDOW"
+player_position = Vector2(300, 1040)
+player_cover_position = Vector2(520, 1000)
+enemy_position = Vector2(1870, 900)
+enemy_cover_position = Vector2(1620, 860)
+roadblock_enabled = true
+roadblock_position = Vector2(1110, 958)
+power_cell_enabled = true
+power_cell_position = Vector2(1460, 1008)
+collapsible_barrier_enabled = false
+platform_rects = Array[Rect2]([Rect2(1450, 900, 520, 135), Rect2(860, 980, 300, 55)])
+visual_variant = 1

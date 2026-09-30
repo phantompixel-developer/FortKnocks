@@ -33,22 +33,40 @@ docs/
 Do not create empty directories only to satisfy this diagram. Add them when the first real file belongs there.
 
 ## Scene-level composition
-Long-term application flow:
+
+The application now boots through `game/core/app.tscn` rather than directly into battle.
+
+Current composition:
 
 ```text
 App
-├── GameFlow
-├── CurrentScreen
-└── OverlayLayer
+├── SaveService
+└── CurrentScreen
+    ├── Fort Knocks Hub
+    ├── Command Board
+    ├── Garage
+    ├── Workshop
+    └── Battle
 ```
 
-Candidate screens:
-- home / Fort Knocks hub,
-- campaign map / Command Board,
-- loadout,
-- battle,
-- results,
-- workshop / garage.
+`App` owns screen transitions and progression orchestration. It does not own battle rules.
+
+`SaveService` is currently a child of `App`, not an autoload. It owns local persistence and normalized save snapshots.
+
+`CurrentScreen` contains exactly one active gameplay/UI screen at a time.
+
+The current progression flow is:
+
+```text
+Fort Knocks Hub
+→ Command Board
+→ mission-defined Battle
+→ result
+→ SaveService update
+→ Fort Knocks Hub
+```
+
+Garage and Workshop are real navigation surfaces in the foundation pass, but purchase/upgrade behavior remains intentionally deferred until the application loop itself is playtested.
 
 ## Battle target architecture
 
@@ -141,9 +159,16 @@ Implementation should favor composition over deep inheritance.
 Reusable runtime arena pieces such as `ArenaPlatform` and `CollapsibleBarrier` must remain generic. Encounter resources are registered through the small campaign-side `EncounterCatalog`; the battle selector builds itself from that catalog. Adding a new encounter may update content registration, but should not require mission-ID conditionals in battle, projectile, or damage rules.
 
 ## Save compatibility
-Save data must carry an explicit version once persistence is introduced. Migration belongs in the save layer; gameplay systems should not silently reinterpret old saves.
 
-Persistence is a Progression Shell milestone task, not a combat-prototype prerequisite.
+Persistence is now implemented as part of the Progression Shell.
+
+- local path: `user://fort_knocks_save.json`,
+- current schema: `save_version = 1`,
+- migration/normalization ownership: `SaveService`,
+- battle never writes progression data directly,
+- UI screens consume snapshots rather than owning save semantics.
+
+Exact schema and progression persistence rules live in `docs/architecture/save_architecture.md`.
 
 ## Development-loop constraint
 A fresh checkout/pull should not require a hidden editor menu action, asset refresh button, or undocumented setup step before ordinary Play. Build import/configuration automation where needed.

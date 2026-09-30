@@ -81,7 +81,7 @@ The proof set demonstrated:
 
 ## Milestone 2 — Progression Shell
 
-**Status: ACTIVE**
+**Status: PASSED**
 
 ### Goal
 Connect proven battles into the smallest complete game loop.
@@ -100,6 +100,52 @@ Connect proven battles into the smallest complete game loop.
   - pickup,
 - existing projectile roles integrated into progression/loadout,
 - explicit versioned save format.
+
+### Current implementation status
+
+The first Progression Shell foundation now includes:
+- root App / CurrentScreen game flow,
+- greybox Fort Knocks hub,
+- Command Board,
+- campaign-managed battle launch/return,
+- first-clear Salvage rewards,
+- sequential mission unlocks,
+- battle result → progression update contract,
+- Garage and Workshop shell screens,
+- explicit local `save_version = 1` persistence,
+- first live Salvage purchase/equip flow,
+- Old Sedan / Estate unlock after High Ground for 80 Salvage,
+- equipped-platform cover durability/geometry applied in battle,
+- visible Fort Knocks garage/platform change after equipping the Sedan,
+- Pickup unlock/purchase/equip flow,
+- one Pickup utility slot with Spotter Rack vs Ballast Crates,
+- utility effects applied in battle,
+- six connected Outskirts encounters ending in a checkpoint-style combined-tactics mission,
+- campaign reconciliation for older pre-release saves when the route expands,
+- Pickup and equipped utility shown in Fort Knocks,
+- campaign field rack: Scrap Bolt + one selected specialist (Heavy Slug or Shock Capsule),
+- specialist choice persisted and applied only to campaign battles,
+- four Fort Knocks visual stages driven by Outskirts completion in addition to platform/utility visuals.
+
+The current Outskirts route now meets the intended 4–6 mission plus checkpoint scale without adding speculative combat systems. Existing projectile roles are now integrated into a real loadout choice rather than only listed in Workshop.
+
+**Milestone 2 implementation scope is complete and accepted.**
+
+### Local acceptance — 2026-09-30
+
+Local playtesting confirmed the Progression Shell is ready to advance:
+- hub → Command Board → battle → reward → hub flow works,
+- campaign progress and Salvage persist,
+- Sedan and Pickup ownership/equip progression works,
+- Pickup utility modules persist and materially alter battle,
+- Spotter Rack now has a clearly perceptible precision-preview advantage over the normal trajectory guide,
+- Ballast Crates provide the intended protection alternative,
+- specialist field-rack selection works,
+- six-route Outskirts progression is usable,
+- Fort Knocks visibly changes as campaign/platform progression advances.
+
+### Gate
+**Passed.** Do not continue expanding the Progression Shell by default. New work should move to Milestone 3 and improve identity/presentation around the now-proven systems.
 
 ### Campaign scope
 Start small: approximately 4–6 connected missions plus a checkpoint/boss-style encounter is enough to prove progression. Do not author dozens of missions yet.
@@ -125,6 +171,8 @@ Progression should cause meaningful decisions and visible Fort Knocks transforma
 ---
 
 ## Milestone 3 — Identity / Production Presentation
+
+**Status: ACTIVE**
 
 ### Goal
 Turn the proven game into recognisably **Fort Knocks**.

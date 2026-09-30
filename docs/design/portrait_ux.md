@@ -45,6 +45,16 @@ Weapon selection lives in a compact top-left tray beneath the player health area
 
 The tray is deliberately outside the lower aiming deck and central projectile corridor. It is visible while choosing a shot, but auto-hides as soon as the player begins the pull-back gesture. If the pull is cancelled before firing, the tray returns.
 
+### Campaign weapon tray
+
+In campaign battles the weapon tray reflects the Workshop field rack:
+- Scrap Bolt is always shown.
+- Only the selected specialist (Heavy Slug or Shock Capsule) is shown beside it.
+- The unequipped specialist is hidden rather than disabled to keep the portrait tray compact.
+- Standalone Encounter Proof still shows all three weapons.
+
+Changing specialist happens in Workshop between runs, not inside battle.
+
 ### Weapon info card
 The selected weapon name and one-line tactical role live in a compact card in the upper HUD, beside the weapon tray rather than over the shooter.
 

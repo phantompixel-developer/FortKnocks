@@ -1,5 +1,9 @@
 extends Node2D
 
+signal battle_completed(result: Dictionary)
+signal exit_requested
+signal rematch_requested
+
 enum Phase {
 	INTRO,
 	PLAYER_AIM,
@@ -93,6 +97,13 @@ var _feedback_tween: Tween
 var _current_mission: MissionDefinition
 var _collapsible_barrier: CollapsibleBarrier
 var _missions: Array[MissionDefinition] = []
+var _campaign_managed := false
+var _prepared_mission: MissionDefinition
+var _player_platform: CombatPlatformDefinition
+var _player_module: PlatformModuleDefinition
+var _campaign_weapon_ids: Array[String] = []
+var _completion_emitted := false
+var _progression_reward := 0
 
 var _player_shots_fired := 0
 var _player_direct_hits := 0
@@ -118,11 +129,29 @@ var _enemy_speed_correction := {
 }
 var _enemy_target_x := 0.0
 
+func prepare_for_campaign(
+	definition: MissionDefinition,
+	platform_definition: CombatPlatformDefinition,
+	module_definition: PlatformModuleDefinition = null,
+	weapon_ids: Array[String] = []
+) -> void:
+	_campaign_managed = true
+	_prepared_mission = definition
+	_player_platform = platform_definition
+	_player_module = module_definition
+	_campaign_weapon_ids = weapon_ids.duplicate()
+
+func set_progression_reward(amount: int) -> void:
+	_progression_reward = maxi(0, amount)
+	if result_card != null and result_card.visible:
+		_update_result_card()
+
 func _ready() -> void:
 	_selected_weapon = ScrapBolt as WeaponDefinition
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
+	player_cover.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
 	inspect_button.pressed.connect(_inspect_enemy)
 	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(ScrapBolt as WeaponDefinition))
@@ -154,6 +183,14 @@ func _ready() -> void:
 	_set_weapon_buttons_enabled(false)
 	_update_last_shot_display()
 	_update_hud()
+
+	if _campaign_managed and _prepared_mission != null:
+		encounter_picker.visible = false
+		restart_button.text = "REMATCH"
+		change_encounter_button.text = "FORT KNOCKS"
+		call_deferred("_begin_mission", _prepared_mission)
+		return
+
 	_show_encounter_picker()
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		var pending_id := str(get_tree().root.get_meta(PENDING_MISSION_META))
@@ -200,10 +237,14 @@ func _mission_for_id(mission_id: String) -> MissionDefinition:
 	return null
 
 func _begin_mission(definition: MissionDefinition) -> void:
-	if definition == null or not encounter_picker.visible:
+	if definition == null:
+		return
+	if not _campaign_managed and not encounter_picker.visible:
 		return
 
 	_current_mission = definition
+	_completion_emitted = false
+	_progression_reward = 0
 	_reset_encounter_metrics()
 	_configure_mission(definition)
 	encounter_picker.visible = false
@@ -226,6 +267,12 @@ func _begin_mission(definition: MissionDefinition) -> void:
 func _configure_mission(definition: MissionDefinition) -> void:
 	player.global_position = definition.player_position
 	player_cover.global_position = definition.player_cover_position
+	if _player_platform != null:
+		player_cover.configure_platform(_player_platform, _player_module)
+	var preview_steps := 9
+	if _player_module != null:
+		preview_steps += _player_module.trajectory_preview_steps_bonus
+	aim_guide.set_preview_steps(preview_steps)
 	enemy.global_position = definition.enemy_position
 	enemy_cover.global_position = definition.enemy_cover_position
 
@@ -297,7 +344,11 @@ func _begin_drag(screen_position: Vector2) -> void:
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
 	angle_label.text = "ANGLE —"
-	hint_label.text = "%s • pull back to aim" % _selected_weapon.display_name
+	hint_label.text = (
+		"%s • SPOTTER PRECISION PREVIEW" % _selected_weapon.display_name
+		if _spotter_preview_active()
+		else "%s • pull back to aim" % _selected_weapon.display_name
+	)
 
 func _update_drag(screen_position: Vector2) -> void:
 	if not _dragging:
@@ -348,6 +399,8 @@ func _end_drag(screen_position: Vector2) -> void:
 func _select_weapon(definition: WeaponDefinition) -> void:
 	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
 		return
+	if not _is_weapon_allowed(definition):
+		return
 
 	_selected_weapon = definition
 	_aim_power = 0.0
@@ -383,15 +436,39 @@ func _update_weapon_buttons() -> void:
 	scrap_bolt_button.button_pressed = _selected_weapon.id == "scrap_bolt"
 	heavy_slug_button.button_pressed = _selected_weapon.id == "heavy_slug"
 	shock_capsule_button.button_pressed = _selected_weapon.id == "shock_capsule"
+	_update_weapon_button_visibility()
+
+func _is_weapon_allowed(definition: WeaponDefinition) -> bool:
+	if definition == null:
+		return false
+	if not _campaign_managed or _campaign_weapon_ids.is_empty():
+		return true
+	return _campaign_weapon_ids.has(definition.id)
+
+func _update_weapon_button_visibility() -> void:
+	scrap_bolt_button.visible = _is_weapon_allowed(ScrapBolt as WeaponDefinition)
+	heavy_slug_button.visible = _is_weapon_allowed(HeavySlug as WeaponDefinition)
+	shock_capsule_button.visible = _is_weapon_allowed(ShockCapsule as WeaponDefinition)
+
+	if _campaign_managed and not _campaign_weapon_ids.is_empty():
+		weapon_tray.offset_bottom = 308.0
+		if shock_capsule_button.visible and not heavy_slug_button.visible:
+			shock_capsule_button.offset_top = 92.0
+			shock_capsule_button.offset_bottom = 134.0
+	else:
+		weapon_tray.offset_bottom = 358.0
+		shock_capsule_button.offset_top = 144.0
+		shock_capsule_button.offset_bottom = 186.0
 
 func _set_weapon_choice_ui_visible(is_visible: bool) -> void:
 	weapon_tray.visible = is_visible
 	weapon_info_card.visible = is_visible
 
 func _set_weapon_buttons_enabled(enabled: bool) -> void:
-	scrap_bolt_button.disabled = not enabled
-	heavy_slug_button.disabled = not enabled
-	shock_capsule_button.disabled = not enabled
+	_update_weapon_button_visibility()
+	scrap_bolt_button.disabled = not enabled or not _is_weapon_allowed(ScrapBolt as WeaponDefinition)
+	heavy_slug_button.disabled = not enabled or not _is_weapon_allowed(HeavySlug as WeaponDefinition)
+	shock_capsule_button.disabled = not enabled or not _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
 func _start_player_turn(show_enemy_preview: bool) -> void:
 	if _check_game_over():
@@ -449,7 +526,17 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	_update_weapon_buttons()
 	_update_last_shot_display()
 	_update_enemy_locator()
-	hint_label.text = "Pull back to aim • release to fire"
+	hint_label.text = (
+		"SPOTTER ACTIVE • denser trajectory preview"
+		if _spotter_preview_active()
+		else "Pull back to aim • release to fire"
+	)
+
+func _spotter_preview_active() -> bool:
+	return (
+		_player_module != null
+		and _player_module.trajectory_preview_steps_bonus > 0
+	)
 
 func _inspect_enemy() -> void:
 	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
@@ -879,6 +966,19 @@ func _check_game_over() -> bool:
 		camera_director.focus_x(player.global_position.x, 0.35)
 
 	_update_result_card()
+
+	if not _completion_emitted:
+		_completion_emitted = true
+		battle_completed.emit({
+			"victory": player.is_alive(),
+			"mission_id": _current_mission.id if _current_mission != null else "",
+			"shots": _player_shots_fired,
+			"direct_hits": _player_direct_hits,
+			"cover_hits": _player_cover_hits,
+			"environment_events": _player_environment_events,
+			"weapon_shots": _weapon_shots.duplicate(true),
+		})
+
 	return true
 
 func _reset_encounter_metrics() -> void:
@@ -893,7 +993,21 @@ func _reset_encounter_metrics() -> void:
 func _show_mission_brief(definition: MissionDefinition) -> void:
 	mission_brief_title.text = definition.display_name.to_upper()
 	mission_brief_focus.text = definition.test_focus
-	mission_brief_text.text = definition.briefing
+	var briefing := definition.briefing
+	if _campaign_managed and _player_platform != null:
+		var effective_cover := _player_platform.cover_health
+		if _player_module != null:
+			effective_cover += _player_module.cover_health_bonus
+		briefing += "\n\nPLATFORM: %s • %d COVER" % [
+			_player_platform.display_name.to_upper(),
+			effective_cover,
+		]
+		if _player_module != null:
+			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
+		if _campaign_weapon_ids.size() >= 2:
+			var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
+			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
+	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
 	mission_brief_card.visible = true
 
@@ -911,7 +1025,16 @@ func _update_result_card() -> void:
 		int(_weapon_shots["heavy_slug"]),
 		int(_weapon_shots["shock_capsule"]),
 	]
-	result_takeaway_label.text = _encounter_takeaway()
+	var takeaway := _encounter_takeaway()
+	if _campaign_managed:
+		if not player.is_alive():
+			result_takeaway_label.text = "NO SALVAGE RECOVERED\n%s" % takeaway
+		elif _progression_reward > 0:
+			result_takeaway_label.text = "+%d SALVAGE SECURED\n%s" % [_progression_reward, takeaway]
+		else:
+			result_takeaway_label.text = "ROUTE ALREADY CLEARED • NO NEW SALVAGE\n%s" % takeaway
+	else:
+		result_takeaway_label.text = takeaway
 
 func _encounter_takeaway() -> String:
 	if _player_environment_events > 0:
@@ -930,8 +1053,13 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 	_update_hud()
 
 func _update_hud() -> void:
-	health_label.text = "YOU  %d/100" % player.health
-	enemy_health_label.text = "ENEMY  %d/100" % enemy.health
+	health_label.text = "YOU  %d/%d\nCOVER  %d/%d" % [
+		player.health,
+		player.max_health,
+		player_cover.health,
+		player_cover.max_health,
+	]
+	enemy_health_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
 	if enemy_locator_label.visible:
 		_update_enemy_locator()
 	if target_card.visible:
@@ -970,11 +1098,19 @@ func _update_enemy_locator() -> void:
 	enemy_locator_label.text = "ENEMY %s  ~%dm" % [arrow, approximate_metres]
 
 func _restart() -> void:
+	if _campaign_managed:
+		rematch_requested.emit()
+		return
+
 	if _current_mission != null:
 		get_tree().root.set_meta(PENDING_MISSION_META, _current_mission.id)
 	get_tree().reload_current_scene()
 
 func _change_encounter() -> void:
+	if _campaign_managed:
+		exit_requested.emit()
+		return
+
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()

@@ -1,0 +1,130 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/hub/fort_knocks_hub.gd" id="1_hub"]
+[ext_resource type="Script" path="res://game/hub/fort_knocks_hub_visual.gd" id="2_visual"]
+
+[node name="FortKnocksHub" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hub")
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("2_visual")
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.06, 0.055, 0.18)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 44.0
+offset_right = 682.0
+offset_bottom = 94.0
+theme_override_font_sizes/font_size = 34
+text = "FORT KNOCKS"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="."]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 100.0
+offset_right = 630.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 16
+text = "OUTSKIRTS CAMP • HOLDING TOGETHER"
+horizontal_alignment = 1
+
+[node name="TopBar" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 154.0
+offset_right = 686.0
+offset_bottom = 214.0
+color = Color(0.09, 0.105, 0.095, 0.9)
+
+[node name="SalvageLabel" type="Label" parent="TopBar"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = 302.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 19
+text = "SALVAGE  0"
+
+[node name="ProgressLabel" type="Label" parent="TopBar"]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 14.0
+offset_right = 634.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 17
+text = "OUTSKIRTS  0/6 CLEARED"
+horizontal_alignment = 2
+
+[node name="StatusCard" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 252.0
+offset_right = 352.0
+offset_bottom = 350.0
+color = Color(0.09, 0.105, 0.095, 0.86)
+
+[node name="PlatformLabel" type="Label" parent="StatusCard"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 276.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 17
+text = "ACTIVE PLATFORM\nRUN-DOWN COMPACT"
+vertical_alignment = 1
+
+[node name="NoticeLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 76.0
+offset_top = 374.0
+offset_right = 644.0
+offset_bottom = 438.0
+theme_override_font_sizes/font_size = 17
+text = "+35 SALVAGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Actions" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 970.0
+offset_right = 628.0
+offset_bottom = 1240.0
+theme_override_constants/separation = 16
+
+[node name="CommandBoardButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(0, 82)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "COMMAND BOARD\nCHOOSE THE NEXT RUN"
+
+[node name="GarageButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "GARAGE"
+
+[node name="WorkshopButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "WORKSHOP"

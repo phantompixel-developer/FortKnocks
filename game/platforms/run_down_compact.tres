@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CombatPlatformDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/platforms/combat_platform_definition.gd" id="1_platform"]
+
+[resource]
+script = ExtResource("1_platform")
+id = "run_down_compact"
+display_name = "Run-down Compact"
+tactical_summary = "Narrow firing line • fragile protection"
+purchase_cost = 0
+unlock_after_mission_id = ""
+purchasable = true
+cover_health = 150
+cover_size = Vector2(240, 95)
+cover_color = Color(0.43, 0.31, 0.24, 1)
+visual_profile = 0

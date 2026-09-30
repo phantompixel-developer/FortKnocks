@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlatformModuleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/platforms/platform_module_definition.gd" id="1_module"]
+
+[resource]
+script = ExtResource("1_module")
+id = "ballast_crates"
+display_name = "Ballast Crates"
+tactical_summary = "+80 cover durability • protection over precision"
+purchase_cost = 40
+compatible_platform_ids = Array[String](["pickup"])
+cover_health_bonus = 80
+trajectory_preview_steps_bonus = 0
