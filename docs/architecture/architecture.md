@@ -152,11 +152,11 @@ Implementation should favor composition over deep inheritance.
 
 ## Encounter authoring
 
-`MissionDefinition` owns stable encounter data; it does not own battle rules. The current definition supplies combatant/cover positions, optional authored obstacles/interactions, reusable greybox platform rectangles, a backdrop variant, objective/test-focus text, and an optional tactical-feature preview position/text.
+`MissionDefinition` owns stable encounter data; it does not own battle rules. The current definition supplies combatant/cover positions, optional authored obstacles/interactions, reusable platform rectangles, a backdrop variant, objective/test-focus text, an explicit objective mode, mission-defined enemy tactic, and an optional tactical-feature preview position/text. Objective-specific target placement/durability such as the signal relay or protected Salvage Load also belongs in mission data.
 
 `BattleController` currently applies the selected definition because encounter loading is still small and has one caller. Do not create a separate global mission manager merely to move these assignments elsewhere.
 
-Reusable runtime arena pieces such as `ArenaPlatform` and `CollapsibleBarrier` must remain generic. Encounter resources are registered through the small campaign-side `EncounterCatalog`; the battle selector builds itself from that catalog. Adding a new encounter may update content registration, but should not require mission-ID conditionals in battle, projectile, or damage rules.
+Reusable runtime arena pieces such as `ArenaPlatform`, `CollapsibleBarrier`, `SignalRelay`, and `SalvageLoad` must remain generic. Encounter resources are registered through the small campaign-side `EncounterCatalog`; the battle selector builds itself from that catalog. Adding a new encounter may update content registration, but should not require mission-ID conditionals in battle, projectile, or damage rules.
 
 ## Save compatibility
 

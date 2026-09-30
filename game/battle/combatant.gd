@@ -9,6 +9,7 @@ signal health_changed(current: int, maximum: int)
 @export var max_health := 100
 
 var health := 100
+var knockback_multiplier: float = 1.0
 var _reaction_tween: Tween
 
 func _ready() -> void:
@@ -18,6 +19,9 @@ func _ready() -> void:
 func is_alive() -> bool:
 	return health > 0
 
+func configure_knockback_multiplier(value: float) -> void:
+	knockback_multiplier = clampf(value, 0.25, 1.0)
+
 func get_launch_origin() -> Vector2:
 	return global_position + Vector2(60.0 * float(facing), -110.0)
 
@@ -26,7 +30,7 @@ func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 		return
 
 	health = maxi(0, health - damage)
-	var push := clampf(impulse.x * 0.025, -34.0, 34.0)
+	var push: float = clampf(impulse.x * 0.025 * knockback_multiplier, -34.0, 34.0)
 	global_position.x += push
 	_play_hit_reaction(impulse)
 	health_changed.emit(health, max_health)

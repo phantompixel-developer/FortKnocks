@@ -13,6 +13,7 @@ const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 @onready var specialist_label: Label = $LoadoutCard/SpecialistLabel
 @onready var heavy_button: Button = $LoadoutCard/HeavyButton
 @onready var shock_button: Button = $LoadoutCard/ShockButton
+@onready var loadout_rule_label: Label = $LoadoutCard/RuleLabel
 @onready var platform_label: Label = $UtilityCard/PlatformLabel
 @onready var module_list: VBoxContainer = $UtilityCard/ModuleList
 @onready var utility_note: Label = $UtilityCard/Note
@@ -44,6 +45,10 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	var platform_id := str(inventory.get("platform_id", "run_down_compact"))
 	var platform := PlatformCatalogScript.by_id(platform_id)
 	var specialist_id := str(inventory.get("specialist_weapon_id", "heavy_slug"))
+	var equipped := inventory.get("equipped_module_by_platform", {}) as Dictionary
+	var active_module_id := str(equipped.get(platform_id, ""))
+	var active_module: PlatformModuleDefinition = PlatformModuleCatalogScript.by_id(active_module_id) if not active_module_id.is_empty() else null
+	var full_rack_active: bool = active_module != null and active_module.carry_both_specialists
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 	platform_label.text = "ACTIVE PLATFORM: %s" % (
@@ -51,10 +56,21 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
-	_update_specialist_loadout(specialist_id)
+	_update_specialist_loadout(specialist_id, full_rack_active)
 	_rebuild_modules(platform_id)
 
-func _update_specialist_loadout(specialist_id: String) -> void:
+func _update_specialist_loadout(specialist_id: String, full_rack_active: bool) -> void:
+	if full_rack_active:
+		specialist_label.text = "FIELD RACK: BOLT + SLUG + SHOCK"
+		heavy_button.disabled = true
+		shock_button.disabled = true
+		ThemeScript.mark_active(heavy_button, true)
+		ThemeScript.mark_active(shock_button, true)
+		heavy_button.text = "HEAVY SLUG\nCover breaker • high force\nCARRIED BY TWIN RACK"
+		shock_button.text = "SHOCK CAPSULE\nRadial pulse • displacement\nCARRIED BY TWIN RACK"
+		loadout_rule_label.text = "Twin Field Rack active: both specialists are carried. Swap the mount to restore the one-specialist constraint."
+		return
+
 	specialist_label.text = "FIELD RACK: SCRAP BOLT + %s" % (
 		"HEAVY SLUG" if specialist_id == "heavy_slug" else "SHOCK CAPSULE"
 	)
@@ -68,6 +84,7 @@ func _update_specialist_loadout(specialist_id: String) -> void:
 	shock_button.text = "SHOCK CAPSULE\nRadial pulse • displacement\n%s" % (
 		"ACTIVE SPECIALIST" if specialist_id == "shock_capsule" else "EQUIP SPECIALIST"
 	)
+	loadout_rule_label.text = "Campaign rack: Scrap Bolt + one specialist. Switch freely between runs."
 
 func _rebuild_modules(platform_id: String) -> void:
 	for child in module_list.get_children():
@@ -80,7 +97,7 @@ func _rebuild_modules(platform_id: String) -> void:
 	var platform := PlatformCatalogScript.by_id(platform_id)
 
 	if platform == null or platform.utility_slot_count <= 0:
-		utility_note.text = "This platform has no utility bed. Recover the Pickup before fitting field modules."
+		utility_note.text = "This platform has no module position. Progress to a platform with a utility or support mount."
 		return
 
 	var compatible_modules := PlatformModuleCatalogScript.for_platform(platform_id)
@@ -119,7 +136,7 @@ func _rebuild_modules(platform_id: String) -> void:
 		button.pressed.connect(_request_module.bind(definition.id))
 		module_list.add_child(button)
 
-	utility_note.text = "%d utility slot. One active module; owned modules can be swapped between runs." % platform.utility_slot_count
+	utility_note.text = "%d module slot. One active module; owned modules can be swapped between runs." % platform.utility_slot_count
 
 func _request_module(module_id: String) -> void:
 	module_requested.emit(module_id)

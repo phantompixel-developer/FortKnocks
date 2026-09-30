@@ -116,13 +116,13 @@ layout_mode = 0
 offset_left = 28.0
 offset_top = 76.0
 offset_right = 548.0
-offset_bottom = 404.0
-theme_override_constants/separation = 12
+offset_bottom = 428.0
+theme_override_constants/separation = 8
 
 [node name="DetailLabel" type="Label" parent="ProgressionCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 426.0
+offset_top = 442.0
 offset_right = 546.0
 offset_bottom = 510.0
 theme_override_font_sizes/font_size = 14

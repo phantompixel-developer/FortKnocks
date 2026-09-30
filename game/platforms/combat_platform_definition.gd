@@ -13,4 +13,4 @@ extends Resource
 @export var cover_health := 150
 @export var cover_size := Vector2(240.0, 95.0)
 @export var cover_color := Color("7a6554")
-@export_range(0, 2, 1) var visual_profile := 0
+@export_range(0, 3, 1) var visual_profile := 0

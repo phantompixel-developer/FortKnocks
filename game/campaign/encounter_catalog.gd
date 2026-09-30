@@ -7,6 +7,10 @@ const ScrapGateTrial := preload("res://game/campaign/missions/scrap_gate_trial.t
 const BrokenSpan := preload("res://game/campaign/missions/broken_span.tres")
 const DepotLine := preload("res://game/campaign/missions/depot_line.tres")
 const OutskirtsCheckpoint := preload("res://game/campaign/missions/outskirts_checkpoint.tres")
+const SuburbsDeadAir := preload("res://game/campaign/missions/suburbs_dead_air.tres")
+const SuburbsCrossroads := preload("res://game/campaign/missions/suburbs_crossroads.tres")
+const SuburbsLoadedUp := preload("res://game/campaign/missions/suburbs_loaded_up.tres")
+const SuburbsHotCargo := preload("res://game/campaign/missions/suburbs_hot_cargo.tres")
 
 static func all() -> Array[MissionDefinition]:
 	var missions: Array[MissionDefinition] = []
@@ -16,6 +20,10 @@ static func all() -> Array[MissionDefinition]:
 	missions.append(BrokenSpan as MissionDefinition)
 	missions.append(DepotLine as MissionDefinition)
 	missions.append(OutskirtsCheckpoint as MissionDefinition)
+	missions.append(SuburbsDeadAir as MissionDefinition)
+	missions.append(SuburbsCrossroads as MissionDefinition)
+	missions.append(SuburbsLoadedUp as MissionDefinition)
+	missions.append(SuburbsHotCargo as MissionDefinition)
 	return missions
 
 static func by_id(mission_id: String) -> MissionDefinition:

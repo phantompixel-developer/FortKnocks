@@ -172,7 +172,7 @@ Progression should cause meaningful decisions and visible Fort Knocks transforma
 
 ## Milestone 3 — Identity / Production Presentation
 
-**Status: IMPLEMENTATION COMPLETE — LOCAL ACCEPTANCE PENDING**
+**Status: PASSED**
 
 ### Goal
 Turn the proven game into recognisably **Fort Knocks**.
@@ -206,30 +206,76 @@ The representative production-presentation pipelines are now implemented:
 
 No new progression system, weapon catalog or campaign region was added as part of this milestone.
 
-### Acceptance gate
+### Acceptance — 2026-09-30
 
-The implementation is ready for local acceptance. Before marking the milestone **PASSED**, local Play-mode review must confirm:
-- hub, Command Board, Garage and Workshop feel visually cohesive,
-- survivor/platform silhouettes read clearly at normal phone scale,
-- the three battlefield environment families remain readable behind gameplay,
-- active platform damage states are understandable,
-- projectile roles and Spotter preview remain distinguishable,
-- impact VFX are satisfying without obscuring the result,
-- procedural audio cues are audible, distinct and not fatiguing,
-- no portrait UI overlap/regression was introduced,
-- normal campaign flow remains intact.
+Milestone 3 is accepted for progression. The presentation branch was merged after local testing exposed and the branch fixed GDScript parser/type-inference regressions; the user then explicitly directed development to continue from merged `main`.
 
-The connected GitHub environment cannot run the Godot editor/runtime, so runtime acceptance must not be fabricated.
+The representative visual/audio language is now the baseline for additional content. New regions should extend this language rather than replacing it with unrelated presentation.
 
 ### Rule
 
-Do not batch a large sprite/audio catalog yet. The representative visual/audio pipelines must first pass local playtesting. After acceptance, Milestone 4 may scale the proven language into additional content.
+Scale the proven visual/audio language deliberately. New content still needs a gameplay reason to exist; do not batch a large asset catalog merely because the presentation gate has passed.
 ---
 
 ## Milestone 4 — Content Expansion
 
+**Status: ACTIVE — FOUR-MISSION SUBURBS SLICE IMPLEMENTED, LOCAL ACCEPTANCE PENDING**
+
 ### Goal
 Scale proven systems without diluting readability.
+
+### Current implementation slice
+
+The first expansion batch deliberately proves three new content axes without adding a broad catalog:
+- **Suburbs** begins as a second campaign-region presentation with its own low residential/commercial silhouette language.
+- **Dead Air** introduces a mission objective that can be won by disabling a destructible signal relay; incapacitating the enemy is no longer the only valid victory condition.
+- **Crossroads** returns to crew defeat but introduces an elevated displacement-focused enemy problem.
+- Mission data now carries an explicit objective mode and enemy tactic.
+- Enemy tactics currently include balanced, breacher and displacer behavior; non-balanced tactics are surfaced in battle messaging so the distinction is readable.
+- The signal relay reuses the existing projectile/damage/VFX pipeline and can be damaged directly or by Shock pressure.
+- Existing completed Outskirts saves reconcile into the new route through the established next-mission unlock pass.
+
+The second Content Expansion batch adds the first post-Pickup platform tier:
+- **Improvised Technical** unlocks after Crossroads for 190 Salvage,
+- one support-module slot,
+- **Twin Field Rack** carries Bolt + Slug + Shock together,
+- **Stabilizer Rig** cuts crew displacement by 55% while retaining the normal one-specialist rack,
+- Workshop, battle briefing, Fort Knocks and platform visuals expose the trade-off,
+- Garage presentation has been tightened to fit four platform tiers without portrait overlap,
+- Fort Knocks gains a heavier-fabrication stage after Crossroads.
+
+The third Content Expansion batch extends Suburbs to four missions with a second objective family:
+- **Loaded Up** introduces a protected Salvage Load; victory requires clearing the raiders while the load survives,
+- **Hot Cargo** repeats the protected-objective rule beside a live power cell so the player's own Shock/hazard choices can cause collateral damage,
+- `MissionDefinition` now supports `protect_salvage` plus Salvage Load placement/durability,
+- **Raider** enemy tactics deliberately redirect fire toward the protected objective,
+- direct shots, Shock pressure and power-cell surges all use the same damage pipeline against the Salvage Load,
+- destroying the load is an immediate mission defeat even when the player survivor remains alive,
+- inspection shows Salvage durability and live-cell state together,
+- clearing the current four-mission Suburbs slice adds a secured storage bay to Fort Knocks.
+
+This remains a representative Content Expansion slice, not the full Milestone 4 catalog.
+
+### Current acceptance gate
+
+Before scaling Milestone 4 further, local Play-mode review should confirm:
+- **Dead Air** ends when the relay is disabled even if the defender is still alive,
+- killing the Dead Air defender first does not prematurely end the relay objective,
+- **Breacher** behavior creates noticeably more cover pressure,
+- **Displacer** behavior creates noticeably more Shock/position pressure,
+- the Suburbs battlefield reads differently from Outskirts without obscuring gameplay,
+- Improvised Technical unlocks after Crossroads and can be bought with the intended campaign economy,
+- **Twin Field Rack** visibly enables Bolt + Slug + Shock in one campaign battle,
+- **Stabilizer Rig** produces a clearly perceptible reduction in player displacement,
+- switching Technical modules restores the correct mutually exclusive trade-off,
+- **Loaded Up** fails when the protected Salvage Load is destroyed and wins only when the raiders are cleared with the load intact,
+- Raider behavior visibly redirects meaningful fire toward the protected objective,
+- player direct fire and Shock pressure can also damage the protected load,
+- **Hot Cargo** makes the nearby live cell a genuine collateral-risk decision rather than decorative hazard placement,
+- Garage/Workshop remain readable with no portrait overlap,
+- Fort Knocks visibly reflects both the Technical foothold and the later secured-storage progression stage.
+
+Do not expand beyond the current four Suburbs missions or add another platform tier until these distinctions survive local playtesting.
 
 Possible expansion:
 - additional campaign regions,

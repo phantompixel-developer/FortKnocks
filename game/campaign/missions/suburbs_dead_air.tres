@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "suburbs_dead_air"
+display_name = "Dead Air"
+test_focus = "SUBURBS • RELAY OBJECTIVE"
+briefing = "A roadside crew is coordinating the next block from a salvaged service relay. Their fighter is a threat, but the route opens the moment the relay goes dark. Decide whether to break the defender, strip the relay with Heavy Slug, or use Shock pressure around the elevated position."
+objective_text = "DISABLE THE SIGNAL RELAY"
+objective_mode = "disable_relay"
+campaign_order = 7
+salvage_reward = 80
+next_mission_id = "suburbs_crossroads"
+feature_preview_enabled = true
+feature_preview_position = Vector2(1450, 820)
+feature_preview_text = "PRIMARY TARGET • SIGNAL RELAY"
+player_position = Vector2(300, 1040)
+player_cover_position = Vector2(520, 1000)
+enemy_position = Vector2(1870, 1040)
+enemy_cover_position = Vector2(1650, 1000)
+roadblock_enabled = false
+power_cell_enabled = false
+collapsible_barrier_enabled = true
+collapsible_barrier_position = Vector2(1090, 900)
+signal_relay_enabled = true
+signal_relay_position = Vector2(1450, 850)
+signal_relay_health = 120
+enemy_tactic = "breacher"
+platform_rects = Array[Rect2]([Rect2(1320, 850, 300, 180)])
+visual_variant = 3

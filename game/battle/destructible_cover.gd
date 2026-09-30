@@ -126,6 +126,8 @@ func _draw() -> void:
 		_draw_sedan_cabin(shell, outline, half_width, body_top)
 	elif _visual_profile == 2:
 		_draw_pickup_cabin(shell, outline, half_width, body_top)
+	elif _visual_profile == 3:
+		_draw_technical_cabin(shell, outline, half_width, body_top)
 	else:
 		_draw_compact_cabin(shell, outline, body_top)
 
@@ -258,6 +260,48 @@ func _draw_pickup_cabin(shell: Color, outline: Color, half_width: float, body_to
 			draw_rect(rect, Color("655943"))
 			draw_rect(Rect2(rect.position + Vector2(4, 4), rect.size - Vector2(8, 8)), Color("796b4d"))
 			draw_line(rect.position + Vector2(4, rect.size.y * 0.5), rect.position + Vector2(rect.size.x - 4, rect.size.y * 0.5), Color("4b4437"), 3.0)
+
+func _draw_technical_cabin(shell: Color, outline: Color, half_width: float, body_top: float) -> void:
+	# Reinforced pickup-derived silhouette: armored cab, support cage and dedicated rear mount.
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(-half_width + 36.0, body_top + 1.0),
+			Vector2(-half_width + 78.0, body_top - 58.0),
+			Vector2(-24.0, body_top - 58.0),
+			Vector2(20.0, body_top + 1.0),
+		]),
+		PackedColorArray([outline])
+	)
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(-half_width + 48.0, body_top - 4.0),
+			Vector2(-half_width + 86.0, body_top - 47.0),
+			Vector2(-30.0, body_top - 47.0),
+			Vector2(9.0, body_top - 4.0),
+		]),
+		PackedColorArray([shell.lightened(0.05)])
+	)
+	draw_rect(Rect2(-half_width + 91.0, body_top - 41.0, half_width + 58.0, 31.0), Color("3f5550"))
+	draw_rect(Rect2(37.0, body_top + 3.0, half_width - 48.0, 28.0), shell.darkened(0.16))
+	draw_line(Vector2(35.0, body_top - 4.0), Vector2(35.0, body_top - 76.0), outline, 8.0)
+	draw_line(Vector2(35.0, body_top - 74.0), Vector2(half_width - 30.0, body_top - 74.0), outline, 7.0)
+	draw_line(Vector2(half_width - 30.0, body_top - 74.0), Vector2(half_width - 30.0, body_top + 2.0), outline, 8.0)
+	draw_rect(Rect2(-half_width + 12.0, body_top + 18.0, 82.0, 18.0), Color("5a493d"))
+	draw_line(Vector2(-half_width + 24.0, body_top + 34.0), Vector2(-half_width + 42.0, body_top + 19.0), Color("d4aa55"), 5.0)
+	draw_line(Vector2(-half_width + 45.0, body_top + 34.0), Vector2(-half_width + 63.0, body_top + 19.0), Color("a45f42"), 5.0)
+
+	if _module_id == "twin_field_rack":
+		draw_rect(Rect2(58.0, body_top - 47.0, 38.0, 58.0), outline)
+		draw_rect(Rect2(63.0, body_top - 42.0, 28.0, 48.0), Color("5d655f"))
+		draw_rect(Rect2(105.0, body_top - 47.0, 38.0, 58.0), outline)
+		draw_rect(Rect2(110.0, body_top - 42.0, 28.0, 48.0), Color("47655f"))
+		draw_circle(Vector2(77.0, body_top - 31.0), 5.0, Color("d4aa55"))
+		draw_circle(Vector2(124.0, body_top - 31.0), 5.0, Color("77b6bf"))
+	elif _module_id == "stabilizer_rig":
+		draw_line(Vector2(66.0, body_top + 7.0), Vector2(92.0, body_top + 45.0), outline, 8.0)
+		draw_line(Vector2(half_width - 60.0, body_top + 7.0), Vector2(half_width - 88.0, body_top + 45.0), outline, 8.0)
+		draw_rect(Rect2(83.0, body_top + 40.0, 38.0, 7.0), Color("667168"))
+		draw_rect(Rect2(half_width - 105.0, body_top + 40.0, 38.0, 7.0), Color("667168"))
 
 func _draw_rubble() -> void:
 	var rubble := body_color.darkened(0.42)

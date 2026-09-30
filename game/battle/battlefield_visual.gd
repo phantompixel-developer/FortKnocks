@@ -12,7 +12,7 @@ const SCRAP_STACK_OFFSETS: Array[Vector2] = [
 var _variant := 0
 
 func configure_variant(value: int) -> void:
-	_variant = clampi(value, 0, 2)
+	_variant = clampi(value, 0, 3)
 	queue_redraw()
 
 func _draw() -> void:
@@ -24,6 +24,8 @@ func _draw() -> void:
 			_draw_overpass_backdrop()
 		2:
 			_draw_salvage_backdrop()
+		3:
+			_draw_suburbs_backdrop()
 		_:
 			_draw_city_backdrop()
 
@@ -102,6 +104,34 @@ func _draw_overpass_backdrop() -> void:
 	for x in range(60, 1050, 250):
 		draw_rect(Rect2(x, 760, 170, 170), Color("424f4a"))
 		draw_rect(Rect2(x + 22, 796, 34, 64), Color("29332f"))
+
+func _draw_suburbs_backdrop() -> void:
+	# Low residential/commercial edge: repeated roofs, retaining walls and utility clutter.
+	for x in range(40, 2110, 300):
+		draw_rect(Rect2(x, 770, 242, 160), Color("46534e"))
+		draw_polygon(
+			PackedVector2Array([
+				Vector2(x - 12, 770),
+				Vector2(x + 112, 694),
+				Vector2(x + 254, 770),
+			]),
+			PackedColorArray([Color("59635c")])
+		)
+		draw_rect(Rect2(x + 28, 818, 54, 112), Color("2b3531"))
+		draw_rect(Rect2(x + 118, 808, 82, 50), Color("51645f"))
+		draw_line(Vector2(x + 122, 870), Vector2(x + 198, 870), Color("8f5540"), 7.0)
+
+	draw_rect(Rect2(0, 900, WORLD_WIDTH, 30), Color("566059"))
+	for x in range(90, 2110, 240):
+		draw_line(Vector2(x, 900), Vector2(x + 28, 864), Color("303a35"), 8.0)
+		draw_line(Vector2(x + 28, 864), Vector2(x + 56, 900), Color("303a35"), 8.0)
+
+	# Broken bus-stop / service shelter silhouettes make the region read differently from Outskirts.
+	draw_line(Vector2(1260, 886), Vector2(1260, 742), Color("2d3733"), 10.0)
+	draw_line(Vector2(1460, 886), Vector2(1460, 742), Color("2d3733"), 10.0)
+	draw_line(Vector2(1248, 748), Vector2(1472, 748), Color("2d3733"), 12.0)
+	draw_rect(Rect2(1290, 772, 132, 74), Color("40534e", 0.82))
+	draw_line(Vector2(1302, 834), Vector2(1408, 784), Color("77b6bf", 0.22), 5.0)
 
 func _draw_salvage_backdrop() -> void:
 	# Stacked stripped shells and crane silhouettes distinguish the depot/scrap route.

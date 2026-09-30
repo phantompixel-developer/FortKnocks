@@ -195,6 +195,44 @@ The Progression Shell contains every structural element required by the Mileston
 
 Do not expand this shell further by default. Additional platforms, modules, crew systems, missions, and progression depth belong to later content milestones after production identity is established.
 
+## Milestone 4 — Improvised Technical capability proof
+
+The first post-Pickup platform tier is now implemented as a capability choice rather than a simple durability upgrade.
+
+**Improvised Technical**
+- unlocks after **Suburbs Crossroads**,
+- costs **190 Salvage**,
+- base profile: **300 cover durability / 345-wide cover**,
+- one support/module slot,
+- reinforced pickup-derived silhouette in battle and Fort Knocks.
+
+Its support slot has two mutually exclusive modules at **55 Salvage** each:
+- **Twin Field Rack** — carries Scrap Bolt, Heavy Slug and Shock Capsule together. The player gives up the normal one-specialist constraint in exchange for weapon flexibility.
+- **Stabilizer Rig** — retains the normal Scrap Bolt + one-specialist field rack but reduces crew displacement by **55%**. This directly counters pressure/displacement-heavy encounters.
+
+The choice is therefore **versatility vs positional stability**, not one larger durability number.
+
+The existing save format already stores generic platform/module IDs, so this content does not require a schema migration. The active module continues to flow through App into Battle; gameplay systems do not read save data directly.
+
+Economy check:
+- all ten current first-clear rewards total 770 Salvage,
+- Sedan + Pickup + both Pickup modules cost 290 Salvage,
+- a player who bought all prior optional progression still has enough campaign-earned Salvage after Crossroads to buy the 190-Salvage Technical and one 55-Salvage Technical module without replay farming.
+
+Fort Knocks gains a fourth presentation stage after Crossroads (the first two Suburbs clears), showing heavier fabrication capability. After Loaded Up and Hot Cargo are also cleared, a fifth stage adds a secured Salvage storage bay. The hub progression readout switches from Outskirts completion to the active four-mission Suburbs slice once the player moves beyond mission six.
+
+## Milestone 4 — Protected Suburbs supply line
+
+The Suburbs route now contains four connected missions after the six Outskirts encounters:
+1. Dead Air — 80 Salvage — disable the signal relay.
+2. Crossroads — 90 Salvage — clear a displacement-focused crew.
+3. Loaded Up — 95 Salvage — protect recovered Salvage while clearing raiders.
+4. Hot Cargo — 110 Salvage — protect the load beside a live power cell where collateral damage is a real risk.
+
+The protected Salvage pair creates a defensive objective without introducing a second currency or separate escort subsystem. The protected load uses normal durability/damage rules, and Raider AI can target it directly. Player shots, Shock pressure, and power-cell surges can also damage it.
+
+Clearing all four current Suburbs missions adds secured storage to Fort Knocks, making the recovered supply line visible in the hub rather than only increasing the Salvage number.
+
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
 - Fort Knocks home/hub shell,

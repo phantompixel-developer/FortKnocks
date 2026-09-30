@@ -104,7 +104,7 @@ func _on_module_requested(module_id: String) -> void:
 		definition.display_name.to_upper(),
 		definition.purchase_cost,
 	]
-	_hub_notice = "PICKUP UTILITY FITTED • %s" % definition.display_name.to_upper()
+	_hub_notice = "PLATFORM MODULE FITTED • %s" % definition.display_name.to_upper()
 	_show_workshop()
 
 func _on_platform_requested(platform_id: String) -> void:
@@ -155,7 +155,12 @@ func _start_mission(mission: MissionDefinition) -> void:
 	var platform := PlatformCatalogScript.by_id(platform_id)
 	var module_id := save_service.equipped_module_id(platform_id)
 	var module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
-	var weapon_ids: Array[String] = ["scrap_bolt", save_service.specialist_weapon_id()]
+	var weapon_ids: Array[String] = ["scrap_bolt"]
+	if module != null and module.carry_both_specialists:
+		weapon_ids.append("heavy_slug")
+		weapon_ids.append("shock_capsule")
+	else:
+		weapon_ids.append(save_service.specialist_weapon_id())
 	battle.call("prepare_for_campaign", mission, platform, module, weapon_ids)
 	battle.connect("battle_completed", Callable(self, "_on_battle_completed"))
 	battle.connect("exit_requested", Callable(self, "_on_battle_exit_requested"))

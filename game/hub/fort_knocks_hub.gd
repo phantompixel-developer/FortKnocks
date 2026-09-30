@@ -37,7 +37,10 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	subtitle_label.text = _progress_subtitle(completed.size())
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
-	progress_label.text = "OUTSKIRTS  %d/6 CLEARED" % mini(completed.size(), 6)
+	if completed.size() > 6:
+		progress_label.text = "SUBURBS  %d/4 CLEARED" % mini(completed.size() - 6, 4)
+	else:
+		progress_label.text = "OUTSKIRTS  %d/6 CLEARED" % mini(completed.size(), 6)
 	platform_label.text = "ACTIVE PLATFORM\n%s" % _platform_display_name(platform_id)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
@@ -50,10 +53,18 @@ func _platform_display_name(platform_id: String) -> String:
 			return "OLD SEDAN / ESTATE"
 		"pickup":
 			return "PICKUP"
+		"improvised_technical":
+			return "IMPROVISED TECHNICAL"
 		_:
 			return platform_id.replace("_", " ").to_upper()
 
 func _progress_subtitle(completed_count: int) -> String:
+	if completed_count >= 10:
+		return "SUBURBS SUPPLY LINE • SECURED STORES EXPANDING"
+	if completed_count >= 8:
+		return "SUBURBS FOOTHOLD • HEAVIER FABRICATION ONLINE"
+	if completed_count >= 7:
+		return "SUBURBS FOOTHOLD • PUSHING BEYOND THE OUTSKIRTS"
 	if completed_count >= 6:
 		return "OUTSKIRTS SECURED • FORTIFIED AND OPERATING"
 	if completed_count >= 4:

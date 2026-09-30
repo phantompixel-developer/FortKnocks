@@ -146,8 +146,11 @@ The combat prototype now supports multiple greybox encounters through `MissionDe
 - central roadblock presence/position,
 - unstable power-cell presence/position,
 - collapsible scrap-gate presence/position,
-- greybox backdrop variant,
-- objective label,
+- signal-relay presence/position/durability,
+- protected Salvage Load presence/position/durability,
+- backdrop variant,
+- objective label and objective mode,
+- enemy tactic,
 - authored tactical-feature preview position/text used before the enemy reveal.
 
 At the start of a proof encounter, the camera may briefly frame the mission-defined tactical feature before the enemy preview. This is presentation metadata, not a mission-specific combat rule.
@@ -173,14 +176,17 @@ The encounter-proof rule is to reuse the same combat system across different geo
 Enemy AI remains intentionally lightweight but is no longer a stateless calculator.
 
 It now:
-- chooses Heavy Slug frequently while player cover survives,
-- may use Shock Capsule once the player is exposed,
-- otherwise uses Scrap Bolt,
+- uses a mission-defined tactic: **balanced**, **breacher**, or **displacer**,
+- balanced retains the original mixed projectile behavior,
+- breacher strongly favors Heavy Slug while cover survives,
+- displacer strongly favors Shock Capsule and positional pressure,
+- raider behavior can deliberately target an authored protected objective instead of always targeting the player/cover,
+- surfaces non-balanced tactics in mission/turn messaging so behavior is legible rather than hidden,
 - stores a small launch-speed correction per weapon after genuine short/long ground misses,
 - nudges the next shot in the opposite direction of the previous error,
 - retains small random variance so it does not become deterministic.
 
-This is an aiming opponent, not a strategic campaign AI.
+This remains an aiming opponent, not a strategic campaign AI. New tactics should primarily change shot priorities and player planning rather than gain unfair accuracy.
 
 ## Projectile outcomes
 A projectile definition can combine:
@@ -195,9 +201,25 @@ A projectile definition can combine:
 New weapons should change decisions, not only increase damage numbers.
 
 ## Victory
-Initial slice: incapacitate the enemy combatant.
+The default objective remains **incapacitate the enemy combatant**.
 
-Later missions may introduce objective variants such as destroying a specified module, surviving a turn count, protecting cargo, or defeating a boss. These are extensions, not slice requirements.
+Milestone 4 currently proves two alternate objective modes.
+
+**Disable relay**
+- Victory occurs when the authored SignalRelay is destroyed while the player remains alive.
+- The enemy survivor may still be active.
+- If the enemy is incapacitated first, the mission continues without enemy turns until the relay is disabled.
+
+**Protect Salvage**
+- A SalvageLoad is authored into the encounter with explicit durability.
+- Victory requires incapacitating the enemy while the load remains intact.
+- Destruction of the load is an immediate defeat even if the player survivor is still alive.
+- Raider AI may deliberately target the load.
+- Player direct shots, Shock pressure and nearby power-cell surges can also damage it, so collateral discipline matters.
+
+Both objective targets intentionally reuse the existing projectile/damage/VFX pipeline rather than creating special damage systems. The battle result/save flow remains unchanged.
+
+Future objective modes such as survive-turn-count or boss/module objectives should still be added one representative case at a time.
 
 ## Physics policy
 Use deterministic-enough, controlled 2D physics and clamp extreme outcomes. Spectacle must not compromise readability. Only objects designed to react should participate in costly dynamic simulation.

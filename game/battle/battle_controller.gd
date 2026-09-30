@@ -22,6 +22,8 @@ const HeavySlug := preload("res://game/weapons/heavy_slug.tres")
 const ShockCapsule := preload("res://game/weapons/shock_capsule.tres")
 const ArenaPlatformScript := preload("res://game/battle/arena_platform.gd")
 const CollapsibleBarrierScript := preload("res://game/battle/collapsible_barrier.gd")
+const SignalRelayScript := preload("res://game/battle/signal_relay.gd")
+const SalvageLoadScript := preload("res://game/battle/salvage_load.gd")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
@@ -97,6 +99,8 @@ var _selected_weapon: WeaponDefinition
 var _feedback_tween: Tween
 var _current_mission: MissionDefinition
 var _collapsible_barrier: CollapsibleBarrier
+var _signal_relay: SignalRelay
+var _salvage_load: SalvageLoad
 var _missions: Array[MissionDefinition] = []
 var _campaign_managed := false
 var _prepared_mission: MissionDefinition
@@ -229,7 +233,7 @@ func _build_encounter_picker() -> void:
 		child.queue_free()
 
 	for index in range(_missions.size()):
-		var mission := _missions[index]
+		var mission: MissionDefinition = _missions[index]
 		var button := Button.new()
 		button.custom_minimum_size = Vector2(0.0, 74.0)
 		button.text = "%d  %s\n%s" % [index + 1, mission.display_name.to_upper(), mission.test_focus]
@@ -273,6 +277,10 @@ func _begin_mission(definition: MissionDefinition) -> void:
 
 func _configure_mission(definition: MissionDefinition) -> void:
 	player.global_position = definition.player_position
+	var player_knockback_multiplier: float = 1.0
+	if _player_module != null:
+		player_knockback_multiplier = _player_module.crew_knockback_multiplier
+	player.configure_knockback_multiplier(player_knockback_multiplier)
 	player_cover.global_position = definition.player_cover_position
 	if _player_platform != null:
 		player_cover.configure_platform(_player_platform, _player_module)
@@ -303,6 +311,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		child.queue_free()
 
 	_collapsible_barrier = null
+	_signal_relay = null
+	_salvage_load = null
 	for rect in definition.platform_rects:
 		var platform := ArenaPlatformScript.new() as ArenaPlatform
 		if platform == null:
@@ -316,6 +326,22 @@ func _configure_mission(definition: MissionDefinition) -> void:
 			_collapsible_barrier.position = definition.collapsible_barrier_position
 			_collapsible_barrier.collapsed.connect(_on_collapsible_barrier_collapsed)
 			encounter_geometry.add_child(_collapsible_barrier)
+
+	if definition.signal_relay_enabled:
+		_signal_relay = SignalRelayScript.new() as SignalRelay
+		if _signal_relay != null:
+			_signal_relay.position = definition.signal_relay_position
+			_signal_relay.max_health = maxi(1, definition.signal_relay_health)
+			_signal_relay.destroyed.connect(_on_signal_relay_destroyed)
+			encounter_geometry.add_child(_signal_relay)
+
+	if definition.salvage_load_enabled:
+		_salvage_load = SalvageLoadScript.new() as SalvageLoad
+		if _salvage_load != null:
+			_salvage_load.position = definition.salvage_load_position
+			_salvage_load.max_health = maxi(1, definition.salvage_load_health)
+			_salvage_load.destroyed.connect(_on_salvage_load_destroyed)
+			encounter_geometry.add_child(_salvage_load)
 
 	if battlefield_visual.has_method("configure_variant"):
 		battlefield_visual.call("configure_variant", definition.visual_variant)
@@ -520,8 +546,8 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 		return
 
 	phase = Phase.PLAYER_AIM
-	inspect_button.visible = true
-	enemy_locator_label.visible = true
+	inspect_button.visible = enemy.is_alive()
+	enemy_locator_label.visible = enemy.is_alive()
 	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
 	target_card.visible = false
@@ -533,11 +559,14 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	_update_weapon_buttons()
 	_update_last_shot_display()
 	_update_enemy_locator()
-	hint_label.text = (
-		"SPOTTER ACTIVE • denser trajectory preview"
-		if _spotter_preview_active()
-		else "Pull back to aim • release to fire"
-	)
+	if not enemy.is_alive() and _current_mission != null and _current_mission.objective_mode == "disable_relay":
+		hint_label.text = "Enemy down • disable the relay to finish"
+	else:
+		hint_label.text = (
+			"SPOTTER ACTIVE • denser trajectory preview"
+			if _spotter_preview_active()
+			else "Pull back to aim • release to fire"
+		)
 
 func _spotter_preview_active() -> bool:
 	return (
@@ -546,45 +575,62 @@ func _spotter_preview_active() -> bool:
 	)
 
 func _inspect_enemy() -> void:
-	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
+	if phase != Phase.PLAYER_AIM or _dragging:
+		return
+
+	if _is_inspecting:
+		_return_from_enemy_inspection()
 		return
 
 	_is_inspecting = true
-	inspect_button.disabled = true
+	inspect_button.text = "RETURN TO SHOOTER"
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = true
 	_update_target_card()
 	_set_weapon_buttons_enabled(false)
-	var previous_hint := hint_label.text
 
-	hint_label.text = "Inspecting enemy position"
-	camera_director.focus_x(enemy.global_position.x, 0.30)
-	await get_tree().create_timer(0.52).timeout
-	if phase != Phase.PLAYER_AIM:
-		_is_inspecting = false
+	hint_label.text = "Inspect enemy position • return when ready"
+	camera_director.focus_x(enemy.global_position.x, 0.36)
+
+func _return_from_enemy_inspection() -> void:
+	if not _is_inspecting or phase != Phase.PLAYER_AIM:
 		return
 
+	inspect_button.disabled = true
 	hint_label.text = "Returning to your shooter"
-	camera_director.focus_x(player.global_position.x, 0.34)
-	await get_tree().create_timer(0.38).timeout
+	camera_director.focus_x(player.global_position.x, 0.38)
+	await get_tree().create_timer(0.42).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
+		inspect_button.disabled = false
+		inspect_button.text = "INSPECT ENEMY"
 		return
 
-	hint_label.text = previous_hint
+	_is_inspecting = false
 	inspect_button.disabled = false
-	enemy_locator_label.visible = true
+	inspect_button.text = "INSPECT ENEMY"
+	enemy_locator_label.visible = enemy.is_alive()
 	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
 	target_card.visible = false
 	_update_enemy_locator()
 	_set_weapon_buttons_enabled(true)
-	_is_inspecting = false
+	hint_label.text = (
+		"SPOTTER ACTIVE • denser trajectory preview"
+		if _spotter_preview_active()
+		else "Pull back to aim • release to fire"
+	)
 
 func _start_enemy_turn() -> void:
 	if _check_game_over():
+		return
+	if not enemy.is_alive():
+		phase = Phase.SETTLE
+		hint_label.text = "Enemy down — finish the mission objective"
+		await get_tree().create_timer(0.35).timeout
+		_start_player_turn(false)
 		return
 
 	phase = Phase.ENEMY_THINKING
@@ -598,7 +644,7 @@ func _start_enemy_turn() -> void:
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	turn_label.text = "ENEMY TURN"
-	hint_label.text = "Enemy is choosing a shot"
+	hint_label.text = _enemy_tactic_turn_hint()
 	camera_director.focus_x(enemy.global_position.x, 0.42)
 
 	await get_tree().create_timer(0.72).timeout
@@ -613,14 +659,70 @@ func _start_enemy_turn() -> void:
 	hint_label.text = "Enemy fires %s" % enemy_weapon.display_name
 	_fire_projectile(enemy, velocity, enemy_weapon)
 
+func _enemy_tactic_turn_hint() -> String:
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	match tactic:
+		"breacher":
+			return "Breacher crew is pressuring your cover"
+		"displacer":
+			return "Displacer crew is setting up a pressure shot"
+		"raider":
+			return "Raider crew is targeting the Salvage load"
+		_:
+			return "Enemy is choosing a shot"
+
+func _enemy_tactic_brief() -> String:
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	match tactic:
+		"breacher":
+			return "BREACHER • HEAVY COVER PRESSURE"
+		"displacer":
+			return "DISPLACER • SHOCK / POSITION PRESSURE"
+		"raider":
+			return "RAIDER • OBJECTIVE PRESSURE"
+		_:
+			return "BALANCED"
+
 func _choose_enemy_weapon() -> WeaponDefinition:
-	if not player_cover.is_destroyed and randf() < 0.68:
-		return HeavySlug as WeaponDefinition
-	if player_cover.is_destroyed and randf() < 0.46:
-		return ShockCapsule as WeaponDefinition
-	return ScrapBolt as WeaponDefinition
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	match tactic:
+		"breacher":
+			if not player_cover.is_destroyed and randf() < 0.86:
+				return HeavySlug as WeaponDefinition
+			if randf() < 0.30:
+				return ShockCapsule as WeaponDefinition
+			return ScrapBolt as WeaponDefinition
+		"displacer":
+			if randf() < 0.68:
+				return ShockCapsule as WeaponDefinition
+			if not player_cover.is_destroyed and randf() < 0.42:
+				return HeavySlug as WeaponDefinition
+			return ScrapBolt as WeaponDefinition
+		"raider":
+			if randf() < 0.64:
+				return HeavySlug as WeaponDefinition
+			if randf() < 0.22:
+				return ShockCapsule as WeaponDefinition
+			return ScrapBolt as WeaponDefinition
+		_:
+			if not player_cover.is_destroyed and randf() < 0.68:
+				return HeavySlug as WeaponDefinition
+			if player_cover.is_destroyed and randf() < 0.46:
+				return ShockCapsule as WeaponDefinition
+			return ScrapBolt as WeaponDefinition
 
 func _choose_enemy_target(weapon: WeaponDefinition) -> Vector2:
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	if (
+		tactic == "raider"
+		and _salvage_load != null
+		and is_instance_valid(_salvage_load)
+		and not _salvage_load.is_destroyed
+		and randf() < 0.76
+	):
+		if weapon.id == "shock_capsule":
+			return _salvage_load.global_position + Vector2(-45.0, -20.0)
+		return _salvage_load.global_position + Vector2(0.0, -42.0)
 	if weapon.id == "heavy_slug" and not player_cover.is_destroyed:
 		return player_cover.global_position + Vector2(0.0, -30.0)
 	if weapon.id == "shock_capsule":
@@ -730,6 +832,32 @@ func _on_projectile_resolved(
 			_show_feedback("SCRAP GATE HIT")
 			hint_label.text = "The gate is still standing"
 			camera_director.impact_impulse(0.62, direction)
+	elif hit_body is SignalRelay:
+		_play_audio(&"hit_metal")
+		var relay: SignalRelay = hit_body as SignalRelay
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
+		_spawn_damage_popup(impact_position + Vector2(0.0, -120.0), "-%d RELAY" % damage_amount, Color("8fcfd0"))
+		if relay.is_destroyed:
+			_show_feedback("RELAY OFFLINE")
+			hint_label.text = "Signal relay disabled"
+			camera_director.impact_impulse(1.0, direction)
+		else:
+			_show_feedback("RELAY HIT")
+			hint_label.text = relay.status_text()
+			camera_director.impact_impulse(0.72, direction)
+	elif hit_body is SalvageLoad:
+		_play_audio(&"hit_metal")
+		var salvage: SalvageLoad = hit_body as SalvageLoad
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
+		_spawn_damage_popup(impact_position + Vector2(0.0, -95.0), "-%d SALVAGE" % damage_amount, Color("e4bd78"))
+		if salvage.is_destroyed:
+			_show_feedback("SALVAGE LOST")
+			hint_label.text = "Protected Salvage destroyed"
+			camera_director.impact_impulse(1.0, direction)
+		else:
+			_show_feedback("SALVAGE HIT")
+			hint_label.text = salvage.status_text()
+			camera_director.impact_impulse(0.72, direction)
 	elif hit_body is UnstablePowerCell:
 		_show_feedback("POWER CELL HIT")
 		hint_label.text = "The unstable cell discharged"
@@ -788,6 +916,10 @@ func _shot_result_name(hit_body: Node) -> String:
 		return "CELL"
 	if hit_body is CollapsibleBarrier:
 		return "GATE"
+	if hit_body is SignalRelay:
+		return "RELAY"
+	if hit_body is SalvageLoad:
+		return "SALVAGE"
 	if hit_body is CentralRoadblock:
 		return "ROADBLOCK"
 	if hit_body.is_in_group("ground_surface"):
@@ -815,6 +947,10 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 		candidates.append(power_cell)
 	if _collapsible_barrier != null and is_instance_valid(_collapsible_barrier) and not _collapsible_barrier.is_collapsed:
 		candidates.append(_collapsible_barrier)
+	if _signal_relay != null and is_instance_valid(_signal_relay) and not _signal_relay.is_destroyed:
+		candidates.append(_signal_relay)
+	if _salvage_load != null and is_instance_valid(_salvage_load) and not _salvage_load.is_destroyed:
+		candidates.append(_salvage_load)
 
 	for target in candidates:
 		if not is_instance_valid(target):
@@ -841,11 +977,31 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -95.0), "-%d PULSE" % pulse_damage, Color("9dc8d4"))
 		elif target is CollapsibleBarrier:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -110.0), "-%d GATE" % pulse_damage, Color("9dc8d4"))
+		elif target is SignalRelay:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -125.0), "-%d RELAY" % pulse_damage, Color("8fcfd0"))
+		elif target is SalvageLoad:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -105.0), "-%d SALVAGE" % pulse_damage, Color("e4bd78"))
 
 func _on_collapsible_barrier_collapsed(world_position: Vector2) -> void:
 	if _active_shooter == player:
 		_player_environment_events += 1
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, 1.0)
+
+func _on_signal_relay_destroyed(world_position: Vector2) -> void:
+	if _active_shooter == player:
+		_player_environment_events += 1
+	_play_audio(&"surge")
+	_spawn_impact_effect(world_position + Vector2(0.0, -90.0), ImpactEffect.Kind.PULSE, 1.0)
+	camera_director.stop_follow_at(world_position, 0.08)
+	_show_feedback("RELAY OFFLINE")
+	hint_label.text = "Objective complete — relay disabled"
+
+func _on_salvage_load_destroyed(world_position: Vector2) -> void:
+	_play_audio(&"hit_metal")
+	_spawn_impact_effect(world_position + Vector2(0.0, -50.0), ImpactEffect.Kind.COVER, 1.15)
+	camera_director.stop_follow_at(world_position, 0.08)
+	_show_feedback("SALVAGE LOST")
+	hint_label.text = "Protected Salvage destroyed"
 
 func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: int, force: float) -> void:
 	_play_audio(&"surge")
@@ -862,6 +1018,8 @@ func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: i
 	targets.append(enemy)
 	targets.append(player_cover)
 	targets.append(enemy_cover)
+	if _salvage_load != null and is_instance_valid(_salvage_load) and not _salvage_load.is_destroyed:
+		targets.append(_salvage_load)
 	for target in targets:
 		var distance := target.global_position.distance_to(world_position)
 		if distance > radius:
@@ -878,6 +1036,8 @@ func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: i
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -125.0), "-%d SURGE" % applied_damage, Color("7bc7df"))
 		elif target is DestructibleCover:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -95.0), "-%d SURGE" % applied_damage, Color("91bfcd"))
+		elif target is SalvageLoad:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -100.0), "-%d SALVAGE" % applied_damage, Color("e4bd78"))
 
 func _update_enemy_correction(impact_position: Vector2, hit_body: Node, weapon: WeaponDefinition) -> void:
 	if weapon == null or not _enemy_speed_correction.has(weapon.id):
@@ -950,8 +1110,33 @@ func _calculate_enemy_velocity(origin: Vector2, target: Vector2, weapon: WeaponD
 	var direction := signf(target.x - origin.x)
 	return Vector2(direction * speed * cos_theta, -speed * sin(theta))
 
+func _objective_completed() -> bool:
+	if _current_mission != null:
+		match _current_mission.objective_mode:
+			"disable_relay":
+				return _signal_relay != null and is_instance_valid(_signal_relay) and _signal_relay.is_destroyed
+			"protect_salvage":
+				return (
+					not enemy.is_alive()
+					and _salvage_load != null
+					and is_instance_valid(_salvage_load)
+					and not _salvage_load.is_destroyed
+				)
+	return not enemy.is_alive()
+
+func _objective_failed() -> bool:
+	return (
+		_current_mission != null
+		and _current_mission.objective_mode == "protect_salvage"
+		and _salvage_load != null
+		and is_instance_valid(_salvage_load)
+		and _salvage_load.is_destroyed
+	)
+
 func _check_game_over() -> bool:
-	if enemy.is_alive() and player.is_alive():
+	var victory: bool = player.is_alive() and _objective_completed()
+	var defeat: bool = not player.is_alive() or _objective_failed()
+	if not victory and not defeat:
 		return false
 
 	phase = Phase.GAME_OVER
@@ -968,24 +1153,44 @@ func _check_game_over() -> bool:
 	restart_button.visible = true
 	change_encounter_button.visible = true
 
-	if player.is_alive():
+	if victory:
 		turn_label.text = "YOU WIN"
-		hint_label.text = "Enemy survivor incapacitated"
 		result_title_label.text = "VICTORY"
-		camera_director.focus_x(enemy.global_position.x, 0.35)
+		if _current_mission != null and _current_mission.objective_mode == "disable_relay":
+			hint_label.text = "Signal relay disabled — route opened"
+			if _signal_relay != null and is_instance_valid(_signal_relay):
+				camera_director.focus_x(_signal_relay.global_position.x, 0.35)
+			else:
+				camera_director.focus_x(enemy.global_position.x, 0.35)
+		elif _current_mission != null and _current_mission.objective_mode == "protect_salvage":
+			hint_label.text = "Raiders cleared — Salvage secured"
+			if _salvage_load != null and is_instance_valid(_salvage_load):
+				camera_director.focus_x(_salvage_load.global_position.x, 0.35)
+			else:
+				camera_director.focus_x(enemy.global_position.x, 0.35)
+		else:
+			hint_label.text = "Enemy survivor incapacitated"
+			camera_director.focus_x(enemy.global_position.x, 0.35)
 	else:
 		turn_label.text = "DEFEAT"
-		hint_label.text = "Your survivor was incapacitated"
 		result_title_label.text = "DEFEAT"
-		camera_director.focus_x(player.global_position.x, 0.35)
+		if _objective_failed():
+			hint_label.text = "Protected Salvage was destroyed"
+			if _salvage_load != null and is_instance_valid(_salvage_load):
+				camera_director.focus_x(_salvage_load.global_position.x, 0.35)
+			else:
+				camera_director.focus_x(player.global_position.x, 0.35)
+		else:
+			hint_label.text = "Your survivor was incapacitated"
+			camera_director.focus_x(player.global_position.x, 0.35)
 
 	_update_result_card()
 
 	if not _completion_emitted:
-		_play_audio(&"victory" if player.is_alive() else &"defeat")
+		_play_audio(&"victory" if victory else &"defeat")
 		_completion_emitted = true
 		battle_completed.emit({
-			"victory": player.is_alive(),
+			"victory": victory,
 			"mission_id": _current_mission.id if _current_mission != null else "",
 			"shots": _player_shots_fired,
 			"direct_hits": _player_direct_hits,
@@ -1019,8 +1224,13 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 		]
 		if _player_module != null:
 			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
-		if _campaign_weapon_ids.size() >= 2:
-			var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
+			if _player_module.crew_knockback_multiplier < 1.0:
+				var reduction_percent: int = int(round((1.0 - _player_module.crew_knockback_multiplier) * 100.0))
+				briefing += " • %d%% LESS DISPLACEMENT" % reduction_percent
+		if _campaign_weapon_ids.has("heavy_slug") and _campaign_weapon_ids.has("shock_capsule"):
+			briefing += "\nFIELD RACK: BOLT + SLUG + SHOCK"
+		elif _campaign_weapon_ids.size() >= 2:
+			var specialist: String = "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
 			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
 	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
@@ -1042,7 +1252,7 @@ func _update_result_card() -> void:
 	]
 	var takeaway := _encounter_takeaway()
 	if _campaign_managed:
-		if not player.is_alive():
+		if not player.is_alive() or _objective_failed():
 			result_takeaway_label.text = "NO SALVAGE RECOVERED\n%s" % takeaway
 		elif _progression_reward > 0:
 			result_takeaway_label.text = "+%d SALVAGE SECURED\n%s" % [_progression_reward, takeaway]
@@ -1052,6 +1262,13 @@ func _update_result_card() -> void:
 		result_takeaway_label.text = takeaway
 
 func _encounter_takeaway() -> String:
+	if _current_mission != null and _current_mission.objective_mode == "protect_salvage":
+		if _objective_failed():
+			return "The protected load became the enemy win condition."
+		if _objective_completed():
+			return "Defence mattered: the Salvage survived while the raiders were cleared."
+	if _current_mission != null and _current_mission.objective_mode == "disable_relay" and _objective_completed():
+		return "Target priority mattered: the relay, not the defender, decided the mission."
 	if _player_environment_events > 0:
 		return "Environment interaction mattered in this run."
 	if _player_cover_hits > _player_direct_hits:
@@ -1095,7 +1312,19 @@ func _update_target_card() -> void:
 		_:
 			target_cover_label.text = "COVER: RUBBLE"
 
-	if _current_mission != null and _current_mission.power_cell_enabled:
+	if _salvage_load != null and is_instance_valid(_salvage_load):
+		if _current_mission != null and _current_mission.power_cell_enabled:
+			var cell_state: String = "SPENT" if power_cell.is_discharged else "ACTIVE"
+			target_hazard_label.text = "SALVAGE %d/%d • CELL %s" % [
+				_salvage_load.health,
+				_salvage_load.max_health,
+				cell_state,
+			]
+		else:
+			target_hazard_label.text = _salvage_load.status_text()
+	elif _signal_relay != null and is_instance_valid(_signal_relay):
+		target_hazard_label.text = _signal_relay.status_text()
+	elif _current_mission != null and _current_mission.power_cell_enabled:
 		target_hazard_label.text = "POWER CELL: SPENT" if power_cell.is_discharged else "POWER CELL: ACTIVE"
 	elif _collapsible_barrier != null and is_instance_valid(_collapsible_barrier):
 		target_hazard_label.text = _collapsible_barrier.status_text()

@@ -91,8 +91,8 @@ The original one-projectile vertical slice has been surpassed. Current `main` no
 Exact rules live in `combat_design.md` and `portrait_ux.md`.
 
 ## Current milestone
-Combat Prototype V1, Encounter Proof and the Progression Shell have passed local acceptance.
+Combat Prototype V1, Encounter Proof, Progression Shell and Identity / Production Presentation have passed their gates.
 
-**Milestone 3 — Identity / Production Presentation** now has its representative implementation complete and is awaiting local Play-mode acceptance. The game has a shared Fort Knocks visual language, first-region Outskirts presentation, survivor/platform direction, cohesive UI, audio/VFX proof and lightweight world context.
+**Milestone 4 — Content Expansion** is active. The current representative slice extends the campaign into four Suburbs missions with relay destruction, protected-Salvage defense, mission-defined enemy tactics, and the first post-Pickup platform: the Improvised Technical. Twin Field Rack versus Stabilizer Rig proves weapon versatility versus positional stability, while Loaded Up / Hot Cargo prove that the enemy can pressure a mission asset instead of only the player.
 
-Do not expand into additional regions, large weapon catalogs or deeper crew systems until the Milestone 3 presentation gate is accepted. See `implementation_roadmap.md`.
+Do not expand beyond the current four Suburbs missions or add another platform tier until local playtesting shows that relay priority, protected-objective pressure, Raider/Breacher/Displacer behavior, and the Technical module trade-off are clearly distinguishable in play. See `implementation_roadmap.md`.

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlatformModuleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/platforms/platform_module_definition.gd" id="1_module"]
+
+[resource]
+script = ExtResource("1_module")
+id = "stabilizer_rig"
+display_name = "Stabilizer Rig"
+tactical_summary = "55% less crew displacement • stability over weapon flexibility"
+purchase_cost = 55
+compatible_platform_ids = Array[String](["improvised_technical"])
+carry_both_specialists = false
+crew_knockback_multiplier = 0.45
