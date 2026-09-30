@@ -97,7 +97,7 @@ var _missions: Array[MissionDefinition] = []
 var _player_shots_fired := 0
 var _player_direct_hits := 0
 var _player_cover_hits := 0
-var _player_environment_hits := 0
+var _player_environment_events := 0
 var _weapon_shots := {
 	"scrap_bolt": 0,
 	"heavy_slug": 0,
@@ -413,6 +413,13 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	turn_label.text = "YOUR TURN"
 
 	if show_enemy_preview:
+		if _current_mission != null and _current_mission.feature_preview_enabled:
+			hint_label.text = _current_mission.feature_preview_text
+			camera_director.focus_x(_current_mission.feature_preview_position.x, 0.28)
+			await get_tree().create_timer(0.58).timeout
+			if phase == Phase.GAME_OVER:
+				return
+
 		hint_label.text = "Enemy position"
 		target_card.visible = true
 		_update_target_card()
@@ -664,8 +671,6 @@ func _record_player_shot(impact_position: Vector2, hit_body: Node) -> void:
 		_player_direct_hits += 1
 	elif hit_body is DestructibleCover:
 		_player_cover_hits += 1
-	elif hit_body is UnstablePowerCell or hit_body is CollapsibleBarrier or hit_body is CentralRoadblock:
-		_player_environment_hits += 1
 
 	if hit_body == null:
 		last_impact_marker.clear_marker()
@@ -738,9 +743,13 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -110.0), "-%d GATE" % pulse_damage, Color("9dc8d4"))
 
 func _on_collapsible_barrier_collapsed(world_position: Vector2) -> void:
+	if _active_shooter == player:
+		_player_environment_events += 1
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, 1.0)
 
 func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: int, force: float) -> void:
+	if _active_shooter == player:
+		_player_environment_events += 1
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.PULSE, 1.45)
 	camera_director.stop_follow_at(world_position, 0.08)
 	camera_director.impact_impulse(1.2, 1.0)
@@ -876,7 +885,7 @@ func _reset_encounter_metrics() -> void:
 	_player_shots_fired = 0
 	_player_direct_hits = 0
 	_player_cover_hits = 0
-	_player_environment_hits = 0
+	_player_environment_events = 0
 	_weapon_shots["scrap_bolt"] = 0
 	_weapon_shots["heavy_slug"] = 0
 	_weapon_shots["shock_capsule"] = 0
@@ -893,11 +902,11 @@ func _update_result_card() -> void:
 		return
 
 	result_encounter_label.text = _current_mission.display_name.to_upper()
-	result_stats_label.text = "SHOTS %d • DIRECT %d\nCOVER %d • ENVIRONMENT %d\nBOLT %d • SLUG %d • SHOCK %d" % [
+	result_stats_label.text = "SHOTS %d • DIRECT %d\nCOVER %d • ENV EVENTS %d\nBOLT %d • SLUG %d • SHOCK %d" % [
 		_player_shots_fired,
 		_player_direct_hits,
 		_player_cover_hits,
-		_player_environment_hits,
+		_player_environment_events,
 		int(_weapon_shots["scrap_bolt"]),
 		int(_weapon_shots["heavy_slug"]),
 		int(_weapon_shots["shock_capsule"]),
@@ -905,7 +914,7 @@ func _update_result_card() -> void:
 	result_takeaway_label.text = _encounter_takeaway()
 
 func _encounter_takeaway() -> String:
-	if _player_environment_hits > 0:
+	if _player_environment_events > 0:
 		return "Environment interaction mattered in this run."
 	if _player_cover_hits > _player_direct_hits:
 		return "This run leaned on breaking protection before crew damage."
