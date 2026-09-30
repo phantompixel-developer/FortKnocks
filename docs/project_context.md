@@ -144,7 +144,7 @@ The Pickup capability proof and short Outskirts campaign expansion are now imple
 - Pickup base battle profile is 260 cover durability / 320-wide cover.
 - `CombatPlatformDefinition.utility_slot_count` now expresses utility capacity; Pickup has one slot while Compact/Sedan have none.
 - Workshop offers two Pickup-compatible modules at 40 Salvage each:
-  - **Spotter Rack** — +4 partial trajectory-preview points.
+  - **Spotter Rack** — denser visible trajectory sampling plus four highlighted continuation points.
   - **Ballast Crates** — +80 cover durability.
 - Only one module is active per platform; module ownership/equipment persists and modules can be swapped after purchase.
 - Pickup and its equipped module are visible both in Fort Knocks and during battle.
