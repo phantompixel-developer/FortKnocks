@@ -5,6 +5,7 @@ signal command_board_requested
 signal garage_requested
 signal workshop_requested
 
+@onready var hub_visual: FortKnocksHubVisual = $Visual
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var progress_label: Label = $TopBar/ProgressLabel
 @onready var platform_label: Label = $StatusCard/PlatformLabel
@@ -22,11 +23,13 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	var campaign := save_snapshot.get("campaign", {}) as Dictionary
 	var inventory := save_snapshot.get("inventory", {}) as Dictionary
 	var completed := campaign.get("completed_missions", []) as Array
+	var platform_id := str(inventory.get("platform_id", "run_down_compact"))
+	hub_visual.configure(platform_id)
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 	progress_label.text = "OUTSKIRTS  %d/3 CLEARED" % mini(completed.size(), 3)
 	platform_label.text = "ACTIVE PLATFORM\n%s" % _platform_display_name(
-		str(inventory.get("platform_id", "run_down_compact"))
+		platform_id
 	)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
