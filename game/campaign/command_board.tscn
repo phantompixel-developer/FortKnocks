@@ -1,0 +1,114 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/command_board.gd" id="1_board"]
+
+[node name="CommandBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_board")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.18, 0.205, 0.19, 1)
+
+[node name="Header" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 38.0
+offset_right = 688.0
+offset_bottom = 150.0
+color = Color(0.08, 0.095, 0.087, 0.94)
+
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 14.0
+offset_right = 636.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 28
+text = "COMMAND BOARD"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Header"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 62.0
+offset_right = 632.0
+offset_bottom = 92.0
+theme_override_font_sizes/font_size = 15
+text = "OUTSKIRTS RUNS • CLEAR A ROUTE FOR FORT KNOCKS"
+horizontal_alignment = 1
+
+[node name="TopBar" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 174.0
+offset_right = 668.0
+offset_bottom = 230.0
+color = Color(0.09, 0.105, 0.095, 0.9)
+
+[node name="SalvageLabel" type="Label" parent="TopBar"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 598.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 18
+text = "SALVAGE  0"
+horizontal_alignment = 1
+
+[node name="MissionPanel" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 256.0
+offset_right = 668.0
+offset_bottom = 1042.0
+color = Color(0.08, 0.095, 0.087, 0.88)
+
+[node name="SectionTitle" type="Label" parent="MissionPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 592.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 20
+text = "AVAILABLE ROUTES"
+horizontal_alignment = 1
+
+[node name="MissionList" type="VBoxContainer" parent="MissionPanel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 82.0
+offset_right = 586.0
+offset_bottom = 742.0
+theme_override_constants/separation = 20
+
+[node name="Footer" type="Label" parent="."]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 1062.0
+offset_right = 648.0
+offset_bottom = 1114.0
+theme_override_font_sizes/font_size = 14
+text = "Clear a mission once to recover its Salvage and open the next route."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 188.0
+offset_top = 1142.0
+offset_right = 532.0
+offset_bottom = 1222.0
+theme_override_font_sizes/font_size = 20
+text = "BACK TO FORT KNOCKS"
