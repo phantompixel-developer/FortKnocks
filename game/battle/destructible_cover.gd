@@ -13,22 +13,28 @@ var is_destroyed := false
 var _reaction_tween: Tween
 var _body_size := Vector2(240.0, 95.0)
 var _visual_profile := 0
+var _module_id := ""
 
 func _ready() -> void:
 	health = max_health
 	_sync_body_size_from_collision()
 	queue_redraw()
 
-func configure_platform(definition: CombatPlatformDefinition) -> void:
+func configure_platform(
+	definition: CombatPlatformDefinition,
+	module_definition: PlatformModuleDefinition = null
+) -> void:
 	if definition == null:
 		return
 
-	max_health = maxi(1, definition.cover_health)
+	var health_bonus := module_definition.cover_health_bonus if module_definition != null else 0
+	max_health = maxi(1, definition.cover_health + health_bonus)
 	health = max_health
 	is_destroyed = false
 	body_color = definition.cover_color
 	_body_size = definition.cover_size
 	_visual_profile = definition.visual_profile
+	_module_id = module_definition.id if module_definition != null else ""
 	collision_layer = 1
 	collision_mask = 1
 
@@ -198,6 +204,14 @@ func _draw_pickup_cabin(shell: Color, outline: Color, half_width: float, body_to
 		PackedColorArray([shell.lightened(0.06)])
 	)
 	draw_rect(Rect2(44.0, body_top + 5.0, half_width - 54.0, 18.0), shell.darkened(0.08))
+
+	if _module_id == "spotter_rack":
+		draw_line(Vector2(72.0, body_top + 2.0), Vector2(72.0, body_top - 58.0), outline, 7.0)
+		draw_line(Vector2(72.0, body_top - 52.0), Vector2(112.0, body_top - 68.0), outline, 6.0)
+		draw_circle(Vector2(118.0, body_top - 70.0), 12.0, Color("798a84"))
+	elif _module_id == "ballast_crates":
+		draw_rect(Rect2(54.0, body_top - 20.0, 58.0, 34.0), Color("5f5946"))
+		draw_rect(Rect2(116.0, body_top - 14.0, 48.0, 28.0), Color("70654d"))
 
 func _draw_rubble() -> void:
 	var rubble := body_color.darkened(0.4)
