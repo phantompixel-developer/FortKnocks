@@ -38,7 +38,7 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 	if completed.size() > 6:
-		progress_label.text = "SUBURBS  %d/2 CLEARED" % mini(completed.size() - 6, 2)
+		progress_label.text = "SUBURBS  %d/4 CLEARED" % mini(completed.size() - 6, 4)
 	else:
 		progress_label.text = "OUTSKIRTS  %d/6 CLEARED" % mini(completed.size(), 6)
 	platform_label.text = "ACTIVE PLATFORM\n%s" % _platform_display_name(platform_id)
