@@ -77,60 +77,53 @@ text = "ACTIVE\nRUN-DOWN COMPACT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="NoticeLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 72.0
+offset_top = 210.0
+offset_right = 648.0
+offset_bottom = 250.0
+theme_override_font_sizes/font_size = 16
+text = "PLATFORM ACQUIRED"
+horizontal_alignment = 1
+
 [node name="ProgressionCard" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 92.0
+offset_left = 72.0
 offset_top = 470.0
-offset_right = 628.0
-offset_bottom = 860.0
+offset_right = 648.0
+offset_bottom = 1008.0
 color = Color(0.10, 0.115, 0.105, 0.9)
 
 [node name="Title" type="Label" parent="ProgressionCard"]
 layout_mode = 0
 offset_left = 24.0
-offset_top = 22.0
-offset_right = 512.0
-offset_bottom = 56.0
+offset_top = 20.0
+offset_right = 552.0
+offset_bottom = 54.0
 theme_override_font_sizes/font_size = 18
 text = "PLATFORM PATH"
 horizontal_alignment = 1
 
-[node name="Compact" type="Label" parent="ProgressionCard"]
+[node name="PlatformList" type="VBoxContainer" parent="ProgressionCard"]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 88.0
-offset_right = 504.0
-offset_bottom = 132.0
-theme_override_font_sizes/font_size = 18
-text = "1  RUN-DOWN COMPACT     ACTIVE"
+offset_left = 28.0
+offset_top = 76.0
+offset_right = 548.0
+offset_bottom = 404.0
+theme_override_constants/separation = 12
 
-[node name="Sedan" type="Label" parent="ProgressionCard"]
+[node name="DetailLabel" type="Label" parent="ProgressionCard"]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 168.0
-offset_right = 504.0
-offset_bottom = 212.0
-theme_override_font_sizes/font_size = 18
-text = "2  OLD SEDAN / ESTATE   LOCKED"
-
-[node name="Pickup" type="Label" parent="ProgressionCard"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 248.0
-offset_right = 504.0
-offset_bottom = 292.0
-theme_override_font_sizes/font_size = 18
-text = "3  PICKUP                LOCKED"
-
-[node name="Note" type="Label" parent="ProgressionCard"]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 320.0
-offset_right = 502.0
-offset_bottom = 366.0
+offset_left = 30.0
+offset_top = 426.0
+offset_right = 546.0
+offset_bottom = 510.0
 theme_override_font_sizes/font_size = 14
-text = "Upgrade costs and platform combat differences come in the next progression batch."
+text = "Platform trade-off information."
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="BackButton" type="Button" parent="."]
