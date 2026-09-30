@@ -219,7 +219,7 @@ Scale the proven visual/audio language deliberately. New content still needs a g
 
 ## Milestone 4 — Content Expansion
 
-**Status: ACTIVE — SUBURBS + TECHNICAL CAPABILITY SLICE IN IMPLEMENTATION**
+**Status: ACTIVE — SUBURBS + TECHNICAL CAPABILITY SLICE IMPLEMENTED, LOCAL ACCEPTANCE PENDING**
 
 ### Goal
 Scale proven systems without diluting readability.
@@ -244,7 +244,24 @@ The second Content Expansion batch now adds the first post-Pickup platform tier:
 - Garage presentation has been tightened to fit four platform tiers without portrait overlap,
 - Fort Knocks gains a Suburbs-complete fabrication stage.
 
-This remains a representative Content Expansion slice, not the full Milestone 4 catalog. Local playtesting must confirm that relay priority, enemy tactics, and the Technical's **versatility vs stability** choice are all clearly perceptible before more Suburbs missions or platform tiers are authored.
+This remains a representative Content Expansion slice, not the full Milestone 4 catalog.
+
+### Current acceptance gate
+
+Before scaling Milestone 4 further, local Play-mode review should confirm:
+- **Dead Air** ends when the relay is disabled even if the defender is still alive,
+- killing the Dead Air defender first does not prematurely end the relay objective,
+- **Breacher** behavior creates noticeably more cover pressure,
+- **Displacer** behavior creates noticeably more Shock/position pressure,
+- the Suburbs battlefield reads differently from Outskirts without obscuring gameplay,
+- Improvised Technical unlocks after Crossroads and can be bought with the intended campaign economy,
+- **Twin Field Rack** visibly enables Bolt + Slug + Shock in one campaign battle,
+- **Stabilizer Rig** produces a clearly perceptible reduction in player displacement,
+- switching Technical modules restores the correct mutually exclusive trade-off,
+- Garage/Workshop remain readable with no portrait overlap,
+- Fort Knocks visibly reflects the Technical/Suburbs progression stage.
+
+Do not author more Suburbs missions or another platform tier until these distinctions survive local playtesting.
 
 Possible expansion:
 - additional campaign regions,
