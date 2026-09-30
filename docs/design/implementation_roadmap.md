@@ -219,7 +219,7 @@ Scale the proven visual/audio language deliberately. New content still needs a g
 
 ## Milestone 4 — Content Expansion
 
-**Status: ACTIVE — FIRST SUBURBS SLICE IN IMPLEMENTATION**
+**Status: ACTIVE — SUBURBS + TECHNICAL CAPABILITY SLICE IN IMPLEMENTATION**
 
 ### Goal
 Scale proven systems without diluting readability.
@@ -235,7 +235,16 @@ The first expansion batch deliberately proves three new content axes without add
 - The signal relay reuses the existing projectile/damage/VFX pipeline and can be damaged directly or by Shock pressure.
 - Existing completed Outskirts saves reconcile into the new route through the established next-mission unlock pass.
 
-This is a representative Content Expansion slice, not the full Milestone 4 catalog. Local playtesting must confirm that relay priority and enemy tactics create visibly different decisions before more Suburbs missions are authored.
+The second Content Expansion batch now adds the first post-Pickup platform tier:
+- **Improvised Technical** unlocks after Crossroads for 190 Salvage,
+- one support-module slot,
+- **Twin Field Rack** carries Bolt + Slug + Shock together,
+- **Stabilizer Rig** cuts crew displacement by 55% while retaining the normal one-specialist rack,
+- Workshop, battle briefing, Fort Knocks and platform visuals expose the trade-off,
+- Garage presentation has been tightened to fit four platform tiers without portrait overlap,
+- Fort Knocks gains a Suburbs-complete fabrication stage.
+
+This remains a representative Content Expansion slice, not the full Milestone 4 catalog. Local playtesting must confirm that relay priority, enemy tactics, and the Technical's **versatility vs stability** choice are all clearly perceptible before more Suburbs missions or platform tiers are authored.
 
 Possible expansion:
 - additional campaign regions,
