@@ -127,7 +127,18 @@ Current foundation:
 - active platform begins as `run_down_compact`,
 - battle remains independently runnable as an Encounter Proof/development scene, but campaign launches bypass its internal development selector.
 
-The next Progression Shell work should make Salvage create a meaningful combat-platform progression decision rather than expanding combat content.
+The first meaningful Salvage/platform progression choice is now implemented:
+
+- Run-down Compact: starting platform, 150 cover durability, 240-wide cover profile.
+- Old Sedan / Estate: unlocks after High Ground, costs 80 Salvage, 230 cover durability, 300-wide cover profile.
+- The first two mission rewards total 85 Salvage, deliberately funding the first purchase before Scrap Gate.
+- Purchased platforms persist in `owned_platform_ids`; owned platforms can be re-equipped without another cost.
+- Equipped platform data changes the actual player cover collision/visual profile in battle.
+- Battle HUD shows live player cover durability and mission briefing identifies the equipped platform.
+- Fort Knocks visibly improves its garage corner and vehicle silhouette when the Sedan is equipped.
+- Pickup exists as data/Garage preview only; it is intentionally not purchasable until its first utility/module gameplay is implemented.
+
+The next Progression Shell work should prove the Pickup as the first platform that adds a new capability/slot, then extend the Outskirts campaign beyond the three original Encounter Proof missions.
 
 ## Portrait UX decisions
 
