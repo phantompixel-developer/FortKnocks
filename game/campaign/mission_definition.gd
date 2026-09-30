@@ -7,6 +7,11 @@ extends Resource
 @export_multiline var briefing := ""
 @export var objective_text := "INCAPACITATE ENEMY"
 
+@export_group("Tactical preview")
+@export var feature_preview_enabled := false
+@export var feature_preview_position := Vector2(1080.0, 900.0)
+@export var feature_preview_text := "KEY BATTLEFIELD FEATURE"
+
 @export_group("Combatant positions")
 @export var player_position := Vector2(300.0, 1040.0)
 @export var player_cover_position := Vector2(520.0, 1000.0)
