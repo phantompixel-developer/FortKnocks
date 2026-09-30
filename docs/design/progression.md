@@ -137,7 +137,37 @@ The second Progression Shell batch now makes Salvage meaningful through the firs
 
 The 80-Salvage price is intentionally aligned with the first two Outskirts rewards: Roadblock Trial (35) + High Ground (50) = 85. This creates a natural first purchase decision before Scrap Gate without requiring replay farming.
 
-The Progression Shell is still not complete. The next platform step should prove the Pickup's first module/utility choice rather than merely add more durability.
+The third Progression Shell batch now proves the Pickup as the first capability-changing platform:
+
+- **Pickup** unlocks after clearing **Broken Span** and costs **130 Salvage**.
+- Pickup base battle profile: **260 cover durability / 320-wide cover**.
+- The Pickup has exactly **one utility-bed slot** in this proof.
+- Two mutually exclusive utility modules are available in Workshop once the Pickup is owned and equipped:
+  - **Spotter Rack** — 40 Salvage; adds four points to the partial trajectory preview.
+  - **Ballast Crates** — 40 Salvage; adds 80 cover durability.
+- Owned modules can be swapped freely; only the equipped module affects battle.
+- Pickup/module state is visible in Fort Knocks and in the battle mission brief.
+
+The economy is intentionally staged:
+- after buying the 80-Salvage Sedan, clearing Scrap Gate leaves 75 Salvage,
+- Broken Span awards 65, bringing the player to 140,
+- Pickup costs 130, leaving 10,
+- Depot Line awards 75, bringing the player to 85,
+- either first module costs 40 before the Outskirts Checkpoint.
+
+This means the new choices are funded by campaign progress rather than replay farming.
+
+The Outskirts campaign now contains six connected encounters:
+1. Roadblock Trial — 35 Salvage.
+2. High Ground — 50 Salvage.
+3. Scrap Gate — 70 Salvage.
+4. Broken Span — 65 Salvage.
+5. Depot Line — 75 Salvage.
+6. Outskirts Checkpoint — 100 Salvage.
+
+The last three deliberately reuse proven combat pieces in new combinations rather than introducing another weapon or combat subsystem. Existing saves that already cleared Scrap Gate reconcile forward and unlock Broken Span automatically.
+
+The Progression Shell still needs local acceptance of the Pickup/module decision and the full six-route loop before the milestone can be considered passed.
 
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
