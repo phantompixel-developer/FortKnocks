@@ -72,8 +72,8 @@ func _rebuild_platform_list() -> void:
 			action = "NEED %d SALVAGE" % definition.purchase_cost
 
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 104.0)
-		button.add_theme_font_size_override("font_size", 15)
+		button.custom_minimum_size = Vector2(0.0, 82.0)
+		button.add_theme_font_size_override("font_size", 14)
 		button.disabled = not enabled
 		button.text = "%s\n%s\n%s" % [
 			definition.display_name.to_upper(),
