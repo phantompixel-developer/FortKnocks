@@ -27,7 +27,7 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	hub_visual.configure(platform_id)
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
-	progress_label.text = "OUTSKIRTS  %d/3 CLEARED" % mini(completed.size(), 3)
+	progress_label.text = "OUTSKIRTS  %d/6 CLEARED" % mini(completed.size(), 6)
 	platform_label.text = "ACTIVE PLATFORM\n%s" % _platform_display_name(
 		platform_id
 	)
