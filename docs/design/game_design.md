@@ -93,6 +93,6 @@ Exact rules live in `combat_design.md` and `portrait_ux.md`.
 ## Current milestone
 Combat Prototype V1, Encounter Proof, Progression Shell and Identity / Production Presentation have passed their gates.
 
-**Milestone 4 — Content Expansion** is active. The first representative slice extends the campaign into Suburbs with a destructible signal-relay objective and mission-defined enemy tactics. This is intended to prove that expanded content can change target priority and defensive planning without adding a large weapon or progression catalog.
+**Milestone 4 — Content Expansion** is active. The current representative slice extends the campaign into Suburbs with a destructible signal-relay objective, mission-defined enemy tactics, and the first post-Pickup platform: the Improvised Technical. Its mutually exclusive Twin Field Rack and Stabilizer Rig prove a new progression decision—weapon versatility versus positional stability—without adding a large weapon catalog or a second progression currency.
 
-Do not scale Suburbs into a long mission list until local playtesting shows that the relay objective and breacher/displacer behaviors are clearly distinguishable in play. See `implementation_roadmap.md`.
+Do not scale Suburbs into a long mission list or add another platform tier until local playtesting shows that the relay objective, breacher/displacer behaviors, and Technical module trade-off are clearly distinguishable in play. See `implementation_roadmap.md`.
