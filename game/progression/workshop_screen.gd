@@ -38,21 +38,22 @@ func _rebuild_modules(platform_id: String) -> void:
 		child.queue_free()
 
 	var inventory := _snapshot.get("inventory", {}) as Dictionary
-	var owned_platforms := inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
 	var owned_modules := inventory.get("owned_module_ids", []) as Array
 	var equipped := inventory.get("equipped_module_by_platform", {}) as Dictionary
 	var salvage := int(inventory.get("salvage", 0))
+	var platform := PlatformCatalogScript.by_id(platform_id)
 
-	if not owned_platforms.has("pickup"):
-		utility_note.text = "Recover the Pickup through the Outskirts route before utility modules become available."
+	if platform == null or platform.utility_slot_count <= 0:
+		utility_note.text = "The active platform has no utility slot. Progress to the Pickup to configure field utility."
 		return
 
-	if platform_id != "pickup":
-		utility_note.text = "Equip the Pickup in the Garage to configure its utility bed."
+	var compatible_modules := PlatformModuleCatalogScript.for_platform(platform_id)
+	if compatible_modules.is_empty():
+		utility_note.text = "No utility modules are available for this platform yet."
 		return
 
-	var active_module_id := str(equipped.get("pickup", ""))
-	for definition in PlatformModuleCatalogScript.for_platform("pickup"):
+	var active_module_id := str(equipped.get(platform_id, ""))
+	for definition in compatible_modules:
 		var is_owned := owned_modules.has(definition.id)
 		var is_active := active_module_id == definition.id
 		var action := ""
@@ -81,7 +82,7 @@ func _rebuild_modules(platform_id: String) -> void:
 		button.pressed.connect(_request_module.bind(definition.id))
 		module_list.add_child(button)
 
-	utility_note.text = "One Pickup utility slot. Choose precision or protection; owned modules can be swapped freely."
+	utility_note.text = "%d utility slot. Choose one active module; owned modules can be swapped freely." % platform.utility_slot_count
 
 func _request_module(module_id: String) -> void:
 	module_requested.emit(module_id)
