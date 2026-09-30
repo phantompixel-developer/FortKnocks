@@ -24,7 +24,9 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	var inventory := save_snapshot.get("inventory", {}) as Dictionary
 	var completed := campaign.get("completed_missions", []) as Array
 	var platform_id := str(inventory.get("platform_id", "run_down_compact"))
-	hub_visual.configure(platform_id)
+	var equipped_modules := inventory.get("equipped_module_by_platform", {}) as Dictionary
+	var module_id := str(equipped_modules.get(platform_id, ""))
+	hub_visual.configure(platform_id, module_id)
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 	progress_label.text = "OUTSKIRTS  %d/6 CLEARED" % mini(completed.size(), 6)
