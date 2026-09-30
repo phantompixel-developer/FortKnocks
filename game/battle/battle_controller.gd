@@ -564,42 +564,53 @@ func _spotter_preview_active() -> bool:
 	)
 
 func _inspect_enemy() -> void:
-	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
+	if phase != Phase.PLAYER_AIM or _dragging:
+		return
+
+	if _is_inspecting:
+		_return_from_enemy_inspection()
 		return
 
 	_is_inspecting = true
-	inspect_button.disabled = true
+	inspect_button.text = "RETURN TO SHOOTER"
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = true
 	_update_target_card()
 	_set_weapon_buttons_enabled(false)
-	var previous_hint := hint_label.text
 
-	hint_label.text = "Inspecting enemy position"
-	camera_director.focus_x(enemy.global_position.x, 0.30)
-	await get_tree().create_timer(0.52).timeout
-	if phase != Phase.PLAYER_AIM:
-		_is_inspecting = false
+	hint_label.text = "Inspect enemy position • return when ready"
+	camera_director.focus_x(enemy.global_position.x, 0.36)
+
+func _return_from_enemy_inspection() -> void:
+	if not _is_inspecting or phase != Phase.PLAYER_AIM:
 		return
 
+	inspect_button.disabled = true
 	hint_label.text = "Returning to your shooter"
-	camera_director.focus_x(player.global_position.x, 0.34)
-	await get_tree().create_timer(0.38).timeout
+	camera_director.focus_x(player.global_position.x, 0.38)
+	await get_tree().create_timer(0.42).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
+		inspect_button.disabled = false
+		inspect_button.text = "INSPECT ENEMY"
 		return
 
-	hint_label.text = previous_hint
+	_is_inspecting = false
 	inspect_button.disabled = false
-	enemy_locator_label.visible = true
+	inspect_button.text = "INSPECT ENEMY"
+	enemy_locator_label.visible = enemy.is_alive()
 	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
 	target_card.visible = false
 	_update_enemy_locator()
 	_set_weapon_buttons_enabled(true)
-	_is_inspecting = false
+	hint_label.text = (
+		"SPOTTER ACTIVE • denser trajectory preview"
+		if _spotter_preview_active()
+		else "Pull back to aim • release to fire"
+	)
 
 func _start_enemy_turn() -> void:
 	if _check_game_over():
