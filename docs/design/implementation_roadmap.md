@@ -112,14 +112,16 @@ The first Progression Shell foundation now includes:
 - sequential mission unlocks,
 - battle result → progression update contract,
 - Garage and Workshop shell screens,
-- explicit local `save_version = 1` persistence.
+- explicit local `save_version = 1` persistence,
+- first live Salvage purchase/equip flow,
+- Old Sedan / Estate unlock after High Ground for 80 Salvage,
+- equipped-platform cover durability/geometry applied in battle,
+- visible Fort Knocks garage/platform change after equipping the Sedan.
 
 The current three proven encounters are being reused as the initial Outskirts campaign seed. This is enough to validate the loop before expanding to the target 4–6 missions plus checkpoint encounter.
 
 **Still required before Milestone 2 passes:**
-- a meaningful use for Salvage,
-- at least the first real platform progression choice,
-- combat consequences for that progression choice,
+- the Pickup as the first platform that introduces a new utility/module capability rather than another cover-only upgrade,
 - expansion of the short campaign beyond the three proof encounters,
 - visible Fort Knocks change tied to progression,
 - local playtest acceptance of persistence and the full hub → battle → reward → hub loop.
