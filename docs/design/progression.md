@@ -143,7 +143,7 @@ The third Progression Shell batch now proves the Pickup as the first capability-
 - Pickup base battle profile: **260 cover durability / 320-wide cover**.
 - The Pickup has exactly **one utility-bed slot** in this proof.
 - Two mutually exclusive utility modules are available in Workshop once the Pickup is owned and equipped:
-  - **Spotter Rack** — 40 Salvage; adds four points to the partial trajectory preview.
+  - **Spotter Rack** — 40 Salvage; turns the normal sparse arc into a visibly denser precision preview across the same on-screen curve, plus four highlighted continuation points beyond the normal horizon.
   - **Ballast Crates** — 40 Salvage; adds 80 cover durability.
 - Owned modules can be swapped freely; only the equipped module affects battle.
 - Pickup/module state is visible in Fort Knocks and in the battle mission brief.
