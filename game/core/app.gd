@@ -8,6 +8,7 @@ const WorkshopScene := preload("res://game/progression/workshop_screen.tscn")
 const BattleScene := preload("res://game/battle/battle.tscn")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
+const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 
 @onready var save_service: SaveService = $SaveService
 @onready var current_screen: Node = $CurrentScreen
@@ -15,8 +16,10 @@ const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd
 var _active_mission: MissionDefinition
 var _hub_notice := ""
 var _garage_notice := ""
+var _workshop_notice := ""
 
 func _ready() -> void:
+	_reconcile_campaign_unlocks()
 	_show_hub()
 
 func _show_hub() -> void:
@@ -47,7 +50,41 @@ func _show_workshop() -> void:
 	var workshop := WorkshopScene.instantiate() as WorkshopScreen
 	_replace_screen(workshop)
 	workshop.back_requested.connect(_show_hub)
-	workshop.configure(save_service.snapshot())
+	workshop.module_requested.connect(_on_module_requested)
+	workshop.configure(save_service.snapshot(), _workshop_notice)
+	_workshop_notice = ""
+
+func _reconcile_campaign_unlocks() -> void:
+	for mission_id in save_service.completed_missions():
+		var mission := EncounterCatalogScript.by_id(str(mission_id))
+		if mission != null and not mission.next_mission_id.is_empty():
+			save_service.unlock_mission(mission.next_mission_id)
+
+func _on_module_requested(module_id: String) -> void:
+	var platform_id := save_service.current_platform_id()
+	var definition := PlatformModuleCatalogScript.by_id(module_id)
+	if definition == null or not definition.supports_platform(platform_id):
+		return
+
+	if save_service.owns_module(module_id):
+		if save_service.equip_module(platform_id, module_id):
+			_workshop_notice = "%s EQUIPPED" % definition.display_name.to_upper()
+			_hub_notice = "WORKSHOP UPDATED • %s ACTIVE" % definition.display_name.to_upper()
+			_show_workshop()
+		return
+
+	if not save_service.purchase_module(module_id, definition.purchase_cost):
+		_workshop_notice = "NOT ENOUGH SALVAGE"
+		_show_workshop()
+		return
+
+	save_service.equip_module(platform_id, module_id)
+	_workshop_notice = "%s BUILT • -%d SALVAGE" % [
+		definition.display_name.to_upper(),
+		definition.purchase_cost,
+	]
+	_hub_notice = "PICKUP UTILITY FITTED • %s" % definition.display_name.to_upper()
+	_show_workshop()
 
 func _on_platform_requested(platform_id: String) -> void:
 	var definition := PlatformCatalogScript.by_id(platform_id)
@@ -89,8 +126,11 @@ func _start_mission(mission: MissionDefinition) -> void:
 		push_error("Battle scene could not be instantiated.")
 		return
 
-	var platform := PlatformCatalogScript.by_id(save_service.current_platform_id())
-	battle.call("prepare_for_campaign", mission, platform)
+	var platform_id := save_service.current_platform_id()
+	var platform := PlatformCatalogScript.by_id(platform_id)
+	var module_id := save_service.equipped_module_id(platform_id)
+	var module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
+	battle.call("prepare_for_campaign", mission, platform, module)
 	battle.connect("battle_completed", Callable(self, "_on_battle_completed"))
 	battle.connect("exit_requested", Callable(self, "_on_battle_exit_requested"))
 	battle.connect("rematch_requested", Callable(self, "_on_battle_rematch_requested"))
