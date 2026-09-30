@@ -132,7 +132,10 @@ The combat prototype now supports multiple greybox encounters through `MissionDe
 - unstable power-cell presence/position,
 - collapsible scrap-gate presence/position,
 - greybox backdrop variant,
-- objective label.
+- objective label,
+- authored tactical-feature preview position/text used before the enemy reveal.
+
+At the start of a proof encounter, the camera may briefly frame the mission-defined tactical feature before the enemy preview. This is presentation metadata, not a mission-specific combat rule.
 
 The current proof set is:
 - **Roadblock Trial** — baseline obstruction, cover, road bounces, and unstable power cell.
