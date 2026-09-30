@@ -32,7 +32,8 @@ Current v1 shape:
     "platform_id": "run_down_compact",
     "owned_platform_ids": ["run_down_compact"],
     "owned_module_ids": [],
-    "equipped_module_by_platform": {}
+    "equipped_module_by_platform": {},
+    "specialist_weapon_id": "heavy_slug"
   },
   "crew": {},
   "settings": {}
@@ -67,7 +68,14 @@ Workshop module persistence now adds:
 - `owned_module_ids` — permanently built utility modules,
 - `equipped_module_by_platform` — one selected module ID per platform.
 
-Existing pre-release v1 saves that predate these fields are normalized safely without a schema-version bump. Campaign reconciliation also walks already-completed mission definitions and unlocks any newly added `next_mission_id`, allowing saves that had already cleared Scrap Gate to continue into Broken Span without reset or replay.
+Existing pre-release v1 saves that predate these fields are normalized safely without a schema-version bump.
+
+The v1 inventory also persists `specialist_weapon_id`:
+- valid values are `heavy_slug` or `shock_capsule`,
+- missing/invalid values normalize to `heavy_slug`,
+- Scrap Bolt is implicit as the permanent core campaign round and therefore does not need a separate persisted slot.
+
+Campaign reconciliation also walks already-completed mission definitions and unlocks any newly added `next_mission_id`, allowing saves that had already cleared Scrap Gate to continue into Broken Span without reset or replay.
 
 ## App ownership
 
