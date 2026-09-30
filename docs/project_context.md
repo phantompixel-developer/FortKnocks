@@ -102,6 +102,8 @@ It now includes:
   - raised-player scrap-gate trial.
 - Reusable greybox elevation geometry driven by mission data.
 - Second authored environmental interaction: a collapsible scrap gate that becomes a low obstruction when destroyed.
+- Compact per-encounter mission brief and post-battle evaluation report for Encounter Proof playtesting.
+- Weapon-role explanation moved to a compact upper card that appears/disappears with the weapon-choice tray; the lower deck is now aim data only.
 
 The Encounter Proof implementation exists, but Milestone 1B is not considered passed until local repeated playtesting confirms the layouts create meaningfully different decisions.
 
