@@ -615,7 +615,7 @@ func _start_enemy_turn() -> void:
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	turn_label.text = "ENEMY TURN"
-	hint_label.text = "Enemy is choosing a shot"
+	hint_label.text = _enemy_tactic_turn_hint()
 	camera_director.focus_x(enemy.global_position.x, 0.42)
 
 	await get_tree().create_timer(0.72).timeout
@@ -629,6 +629,26 @@ func _start_enemy_turn() -> void:
 	var velocity := _calculate_enemy_velocity(origin, target, enemy_weapon)
 	hint_label.text = "Enemy fires %s" % enemy_weapon.display_name
 	_fire_projectile(enemy, velocity, enemy_weapon)
+
+func _enemy_tactic_turn_hint() -> String:
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	match tactic:
+		"breacher":
+			return "Breacher crew is pressuring your cover"
+		"displacer":
+			return "Displacer crew is setting up a pressure shot"
+		_:
+			return "Enemy is choosing a shot"
+
+func _enemy_tactic_brief() -> String:
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	match tactic:
+		"breacher":
+			return "BREACHER • HEAVY COVER PRESSURE"
+		"displacer":
+			return "DISPLACER • SHOCK / POSITION PRESSURE"
+		_:
+			return "BALANCED"
 
 func _choose_enemy_weapon() -> WeaponDefinition:
 	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
@@ -1094,6 +1114,8 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 		if _campaign_weapon_ids.size() >= 2:
 			var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
 			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
+	if definition.enemy_tactic != "balanced":
+		briefing += "\nENEMY TACTIC: %s" % _enemy_tactic_brief()
 	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
 	mission_brief_card.visible = true
