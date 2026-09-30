@@ -48,23 +48,84 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
-	var body_color := accent_color if health > 0 else Color("555555")
-	var outline := Color("252827")
+	var alive := health > 0
+	var cloth := accent_color if alive else Color("4b504d")
+	var outline := Color("171b1a")
+	var leather := Color("4a3b31")
+	var metal := Color("5d6762")
+	var skin := Color("c89d78") if alive else Color("686c68")
+	var scarf := accent_color.lightened(0.18) if alive else Color("5c605d")
 
-	draw_line(Vector2(-10, -35), Vector2(-18, 0), outline, 10.0)
-	draw_line(Vector2(10, -35), Vector2(18, 0), outline, 10.0)
-	draw_line(Vector2(0, -92), Vector2(0, -32), outline, 26.0)
-	draw_line(Vector2(0, -90), Vector2(0, -35), body_color, 18.0)
+	# Backpack and scavenged shoulder plate make the survivor silhouette readable
+	# at phone size without increasing the collision footprint.
+	var backpack_x := -27.0 if facing > 0 else 3.0
+	var backpack_inner_x := -24.0 if facing > 0 else 6.0
+	draw_rect(Rect2(backpack_x, -94, 24, 54), outline)
+	draw_rect(Rect2(backpack_inner_x, -90, 18, 45), leather)
+	draw_circle(Vector2(-15.0 * facing, -82), 13.0, outline)
+	draw_circle(Vector2(-15.0 * facing, -82), 9.0, metal)
 
-	draw_line(Vector2(-2, -76), Vector2(38 * facing, -62), outline, 11.0)
-	draw_line(Vector2(-2, -76), Vector2(38 * facing, -62), body_color, 7.0)
-	draw_line(Vector2(28 * facing, -67), Vector2(65 * facing, -77), Color("373c39"), 9.0)
+	# Boots / legs.
+	draw_line(Vector2(-10, -36), Vector2(-18, 0), outline, 13.0)
+	draw_line(Vector2(10, -36), Vector2(18, 0), outline, 13.0)
+	draw_line(Vector2(-10, -36), Vector2(-18, -2), Color("313633"), 7.0)
+	draw_line(Vector2(10, -36), Vector2(18, -2), Color("313633"), 7.0)
+	draw_line(Vector2(-25, 0), Vector2(-9, 0), outline, 8.0)
+	draw_line(Vector2(9, 0), Vector2(27, 0), outline, 8.0)
 
-	draw_circle(Vector2(0, -112), 23.0, outline)
-	draw_circle(Vector2(0, -112), 18.0, Color("d8b691"))
+	# Layered coat / torso.
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(-20, -98),
+			Vector2(20, -98),
+			Vector2(29, -38),
+			Vector2(13, -27),
+			Vector2(-17, -30),
+			Vector2(-28, -42),
+		]),
+		PackedColorArray([outline])
+	)
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(-15, -93),
+			Vector2(15, -93),
+			Vector2(22, -43),
+			Vector2(10, -35),
+			Vector2(-12, -37),
+			Vector2(-21, -46),
+		]),
+		PackedColorArray([cloth.darkened(0.08)])
+	)
+	draw_line(Vector2(-3, -90), Vector2(-4, -40), Color(cloth.lightened(0.18), 0.75), 3.0)
 
-	draw_rect(Rect2(Vector2(-24 if facing > 0 else 5, -86), Vector2(19, 42)), Color("596057"))
+	# Sling and arm bracing the improvised launcher.
+	draw_line(Vector2(-17 * facing, -88), Vector2(18 * facing, -43), leather, 7.0)
+	draw_line(Vector2(-3, -78), Vector2(38 * facing, -62), outline, 13.0)
+	draw_line(Vector2(-3, -78), Vector2(38 * facing, -62), cloth.lightened(0.05), 7.0)
+	draw_circle(Vector2(35 * facing, -63), 6.0, skin)
+	draw_line(Vector2(28 * facing, -67), Vector2(68 * facing, -79), outline, 12.0)
+	draw_line(Vector2(31 * facing, -67), Vector2(65 * facing, -77), Color("3b443f"), 7.0)
+	var launcher_plate_x := 48.0 if facing > 0 else -62.0
+	draw_rect(Rect2(launcher_plate_x, -84, 14, 9), Color("6e5d43"))
 
-	draw_rect(Rect2(-34, -158, 68, 8), Color("2d302f"))
+	# Head, scarf, scavenged cap and eye mark.
+	draw_circle(Vector2(0, -116), 25.0, outline)
+	draw_circle(Vector2(0, -116), 19.0, skin)
+	draw_rect(Rect2(-22, -104, 44, 11), scarf)
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(-23, -132),
+			Vector2(-8, -144),
+			Vector2(18, -139),
+			Vector2(24, -127),
+			Vector2(-18, -126),
+		]),
+		PackedColorArray([Color("343b37")])
+	)
+	draw_line(Vector2(-2 * facing, -120), Vector2(11 * facing, -120), Color("202523"), 4.0)
+	draw_circle(Vector2(9 * facing, -120), 2.5, Color("d7b85e"))
+
+	# Readable health strip uses the same hazard accent as the wider UI.
+	draw_rect(Rect2(-36, -166, 72, 10), outline)
 	var ratio := float(health) / float(max_health)
-	draw_rect(Rect2(-32, -156, 64.0 * ratio, 4), Color("d6d0a0"))
+	draw_rect(Rect2(-33, -163, 66.0 * ratio, 4), Color("d4aa55") if alive else Color("5c625e"))

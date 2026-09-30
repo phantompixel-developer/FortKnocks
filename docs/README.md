@@ -22,7 +22,8 @@ Chat history and model memory are useful context, but exact rules that affect im
 - **Combat rules and current prototype mechanics:** `design/combat_design.md`
 - **Portrait interaction and HUD:** `design/portrait_ux.md`
 - **Progression / hub / campaign growth:** `design/progression.md`
-- **Art direction:** `design/art_direction.md`
+- **Art direction / visual production pipeline:** `design/art_direction.md`
+- **Audio / music direction:** `design/audio_direction.md`
 - **Implementation sequence and milestone gates:** `design/implementation_roadmap.md`
 - **Application/battle architecture:** `architecture/architecture.md`
 - **Camera:** `architecture/camera_architecture.md`

@@ -5,6 +5,7 @@ signal back_requested
 signal platform_requested(platform_id: String)
 
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
+const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var current_label: Label = $CurrentCard/CurrentLabel
@@ -16,7 +17,15 @@ const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd
 var _snapshot: Dictionary = {}
 
 func _ready() -> void:
-	back_button.pressed.connect(func() -> void: back_requested.emit())
+	ThemeScript.apply(self)
+	ThemeScript.style_card($TopBar)
+	ThemeScript.style_card($CurrentCard, 1)
+	ThemeScript.style_card($ProgressionCard)
+	$Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	back_button.pressed.connect(func() -> void:
+		_play_ui(&"ui_back")
+		back_requested.emit()
+	)
 
 func configure(save_snapshot: Dictionary, notice := "") -> void:
 	_snapshot = save_snapshot.duplicate(true)
@@ -71,10 +80,11 @@ func _rebuild_platform_list() -> void:
 			definition.tactical_summary,
 			action,
 		]
+		ThemeScript.mark_active(button, is_active)
 		button.pressed.connect(_request_platform.bind(definition.id))
 		platform_list.add_child(button)
 
-	detail_label.text = "Sedan trade-off: stronger, wider cover protects longer but occupies more of the shallow firing line."
+	detail_label.text = "Protection is physical: stronger platforms last longer, but a wider silhouette also occupies more of the shallow firing line."
 
 func _request_platform(platform_id: String) -> void:
 	platform_requested.emit(platform_id)
@@ -82,3 +92,8 @@ func _request_platform(platform_id: String) -> void:
 func _platform_display_name(platform_id: String) -> String:
 	var definition := PlatformCatalogScript.by_id(platform_id)
 	return definition.display_name.to_upper() if definition != null else platform_id.replace("_", " ").to_upper()
+
+func _play_ui(cue: StringName) -> void:
+	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
+	if audio != null and audio.has_method("play_cue"):
+		audio.call("play_cue", cue)

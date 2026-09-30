@@ -12,7 +12,6 @@ var _reaction_tween: Tween
 
 func _ready() -> void:
 	health = max_health
-
 	var collision_shape := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
 	shape.size = Vector2(60.0, 260.0)
@@ -23,10 +22,8 @@ func _ready() -> void:
 func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	if is_collapsed:
 		return
-
 	health = maxi(0, health - damage)
 	_play_hit_reaction(impulse)
-
 	if health <= 0:
 		_collapse(impulse)
 	else:
@@ -40,7 +37,6 @@ func status_text() -> String:
 func _collapse(impulse: Vector2) -> void:
 	if is_collapsed:
 		return
-
 	is_collapsed = true
 	var start_position := global_position
 	var direction := signf(impulse.x)
@@ -59,29 +55,46 @@ func _collapse(impulse: Vector2) -> void:
 func _play_hit_reaction(impulse: Vector2) -> void:
 	if _reaction_tween != null and _reaction_tween.is_running():
 		_reaction_tween.kill()
-
 	var direction := signf(impulse.x)
 	if is_zero_approx(direction):
 		direction = 1.0
-
 	modulate = Color(1.35, 1.18, 0.86, 1.0)
 	_reaction_tween = create_tween()
 	_reaction_tween.tween_property(self, "modulate", Color.WHITE, 0.18)
 
 func _draw() -> void:
-	var frame := Color("343936")
-	var metal := Color("777267")
-	var warning := Color("c2a45e")
+	var outline := Color("171c1b")
+	var frame := Color("2b3531")
+	var panel_a := Color("657069")
+	var panel_b := Color("545e58")
+	var rust := Color("8f5540")
+	var hazard := Color("d4aa55")
 
-	draw_rect(Rect2(-30, -130, 60, 260), frame)
-	draw_rect(Rect2(-22, -122, 44, 244), metal)
-	draw_line(Vector2(-20, -88), Vector2(20, -48), frame, 8.0)
-	draw_line(Vector2(20, -48), Vector2(-20, -8), frame, 8.0)
-	draw_line(Vector2(-20, -8), Vector2(20, 32), frame, 8.0)
-	draw_line(Vector2(20, 32), Vector2(-20, 72), frame, 8.0)
-	draw_rect(Rect2(-22, 88, 44, 18), warning)
+	# Welded frame.
+	draw_rect(Rect2(-32, -132, 64, 264), outline)
+	draw_rect(Rect2(-25, -125, 50, 250), frame)
+
+	# Mismatched corrugated panels show that the gate is built from found material.
+	for i in range(5):
+		var top := -119.0 + float(i) * 48.0
+		var panel_color := panel_a if i % 2 == 0 else panel_b
+		draw_rect(Rect2(-20, top, 40, 42), panel_color)
+		for x in [-12.0, 0.0, 12.0]:
+			draw_line(Vector2(x, top + 2), Vector2(x, top + 40), panel_color.lightened(0.10), 2.0)
+
+	# Cross-braces remain visually legible when the gate rotates down.
+	draw_line(Vector2(-21, -105), Vector2(21, 94), outline, 9.0)
+	draw_line(Vector2(21, -105), Vector2(-21, 94), Color("3e4843"), 7.0)
+	draw_line(Vector2(-23, -44), Vector2(23, -44), rust, 6.0)
+	draw_line(Vector2(-23, 45), Vector2(23, 45), rust, 6.0)
+
+	# Painted knock-mark / hazard identifier.
+	draw_line(Vector2(-18, 83), Vector2(2, 61), hazard, 8.0)
+	draw_line(Vector2(1, 87), Vector2(21, 65), rust, 8.0)
+	for p in [Vector2(-21, -115), Vector2(21, -115), Vector2(-21, 115), Vector2(21, 115)]:
+		draw_circle(p, 4.0, Color("9a8a65"))
 
 	if not is_collapsed:
 		var ratio := float(health) / float(max_health)
-		draw_rect(Rect2(-26, -148, 52, 8), Color("252927"))
-		draw_rect(Rect2(-24, -146, 48.0 * ratio, 4), warning)
+		draw_rect(Rect2(-28, -151, 56, 10), outline)
+		draw_rect(Rect2(-25, -148, 50.0 * ratio, 4), hazard)

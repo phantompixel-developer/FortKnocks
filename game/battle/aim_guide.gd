@@ -39,35 +39,33 @@ func _draw() -> void:
 	if not _active:
 		return
 
-	# Virtual tension line shows the finger pulling opposite the firing direction.
-	draw_line(Vector2.ZERO, _pullback_offset, Color(0.32, 0.30, 0.25, 0.82), 5.0, true)
-	draw_circle(_pullback_offset, 16.0, Color(0.86, 0.78, 0.52, 0.92))
-	draw_circle(_pullback_offset, 8.0, Color(0.27, 0.27, 0.24, 0.96))
+	draw_line(Vector2.ZERO, _pullback_offset, Color("33413c", 0.90), 7.0, true)
+	draw_circle(_pullback_offset, 18.0, Color("171c1b", 0.96))
+	draw_circle(_pullback_offset, 13.0, Color("d4aa55", 0.94))
+	draw_circle(_pullback_offset, 6.0, Color("303a35", 0.98))
 
-	# Baseline preview: nine sparse gold markers. This remains deliberately partial.
 	for i in range(1, BASE_PREVIEW_STEPS + 1):
 		var t := float(i) * SAMPLE_INTERVAL
 		var point := _trajectory_point(t)
-		var radius := maxf(2.8, 5.5 - float(i) * 0.28)
-		draw_circle(point, radius, Color(0.95, 0.92, 0.70, 0.84))
+		var radius := maxf(2.8, 5.6 - float(i) * 0.28)
+		draw_circle(point, radius + 2.0, Color("171c1b", 0.42))
+		draw_circle(point, radius, Color("eadca9", 0.90))
 
 	if not has_precision_preview():
 		return
 
-	# Spotter Rack adds visible information inside the existing portrait view:
-	# midpoint samples make the known section of the curve denser instead of
-	# placing the whole advantage off-screen.
 	for i in range(1, BASE_PREVIEW_STEPS):
 		var t := (float(i) + 0.5) * SAMPLE_INTERVAL
 		var point := _trajectory_point(t)
-		draw_circle(point, 2.8, Color(0.61, 0.84, 0.88, 0.78))
+		draw_circle(point, 4.5, Color("171c1b", 0.36))
+		draw_circle(point, 2.7, Color("77b6bf", 0.88))
 
-	# It also adds a short highlighted continuation beyond the normal horizon.
 	var extension_steps := _preview_steps - BASE_PREVIEW_STEPS
 	for extension_index in range(1, extension_steps + 1):
 		var sample_index := BASE_PREVIEW_STEPS + extension_index
 		var t := float(sample_index) * SAMPLE_INTERVAL
 		var point := _trajectory_point(t)
-		draw_circle(point, 3.5, Color(0.61, 0.84, 0.88, 0.88))
+		draw_circle(point, 5.2, Color("171c1b", 0.36))
+		draw_circle(point, 3.5, Color("77b6bf", 0.94))
 		if extension_index == extension_steps:
-			draw_arc(point, 7.0, 0.0, TAU, 20, Color(0.74, 0.93, 0.95, 0.82), 1.8, true)
+			draw_arc(point, 8.0, 0.0, TAU, 20, Color("c5eeee", 0.88), 2.0, true)

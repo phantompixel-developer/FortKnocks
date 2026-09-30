@@ -11,6 +11,7 @@ const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd
 const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 
 @onready var save_service: SaveService = $SaveService
+@onready var audio_director: FortKnocksAudioDirector = $AudioDirector
 @onready var current_screen: Node = $CurrentScreen
 
 var _active_mission: MissionDefinition
@@ -23,6 +24,7 @@ func _ready() -> void:
 	_show_hub()
 
 func _show_hub() -> void:
+	audio_director.set_context(&"hub")
 	var hub := HubScene.instantiate() as FortKnocksHub
 	_replace_screen(hub)
 	hub.command_board_requested.connect(_show_command_board)
@@ -32,6 +34,8 @@ func _show_hub() -> void:
 	_hub_notice = ""
 
 func _show_command_board() -> void:
+	audio_director.play_cue(&"ui_confirm")
+	audio_director.set_context(&"menu")
 	var board := CommandBoardScene.instantiate() as CommandBoardScreen
 	_replace_screen(board)
 	board.mission_selected.connect(_start_mission)
@@ -39,6 +43,8 @@ func _show_command_board() -> void:
 	board.configure(save_service.snapshot())
 
 func _show_garage() -> void:
+	audio_director.play_cue(&"ui_confirm")
+	audio_director.set_context(&"menu")
 	var garage := GarageScene.instantiate() as GarageScreen
 	_replace_screen(garage)
 	garage.back_requested.connect(_show_hub)
@@ -47,6 +53,8 @@ func _show_garage() -> void:
 	_garage_notice = ""
 
 func _show_workshop() -> void:
+	audio_director.play_cue(&"ui_confirm")
+	audio_director.set_context(&"menu")
 	var workshop := WorkshopScene.instantiate() as WorkshopScreen
 	_replace_screen(workshop)
 	workshop.back_requested.connect(_show_hub)
@@ -65,6 +73,7 @@ func _on_specialist_weapon_requested(weapon_id: String) -> void:
 	if not save_service.set_specialist_weapon(weapon_id):
 		return
 
+	audio_director.play_cue(&"ui_confirm")
 	var display_name := "HEAVY SLUG" if weapon_id == "heavy_slug" else "SHOCK CAPSULE"
 	_workshop_notice = "%s SET AS SPECIALIST" % display_name
 	_hub_notice = "FIELD RACK UPDATED • BOLT + %s" % display_name
@@ -78,6 +87,7 @@ func _on_module_requested(module_id: String) -> void:
 
 	if save_service.owns_module(module_id):
 		if save_service.equip_module(platform_id, module_id):
+			audio_director.play_cue(&"ui_confirm")
 			_workshop_notice = "%s EQUIPPED" % definition.display_name.to_upper()
 			_hub_notice = "WORKSHOP UPDATED • %s ACTIVE" % definition.display_name.to_upper()
 			_show_workshop()
@@ -88,6 +98,7 @@ func _on_module_requested(module_id: String) -> void:
 		_show_workshop()
 		return
 
+	audio_director.play_cue(&"ui_confirm")
 	save_service.equip_module(platform_id, module_id)
 	_workshop_notice = "%s BUILT • -%d SALVAGE" % [
 		definition.display_name.to_upper(),
@@ -108,6 +119,7 @@ func _on_platform_requested(platform_id: String) -> void:
 
 	if save_service.owns_platform(platform_id):
 		if save_service.equip_platform(platform_id):
+			audio_director.play_cue(&"ui_confirm")
 			_garage_notice = "%s EQUIPPED" % definition.display_name.to_upper()
 			_hub_notice = "GARAGE UPDATED • %s ACTIVE" % definition.display_name.to_upper()
 		_show_garage()
@@ -118,6 +130,7 @@ func _on_platform_requested(platform_id: String) -> void:
 		_show_garage()
 		return
 
+	audio_director.play_cue(&"ui_confirm")
 	save_service.equip_platform(platform_id)
 	_garage_notice = "%s ACQUIRED • -%d SALVAGE" % [
 		definition.display_name.to_upper(),
@@ -131,6 +144,8 @@ func _start_mission(mission: MissionDefinition) -> void:
 		return
 
 	_active_mission = mission
+	audio_director.play_cue(&"ui_confirm")
+	audio_director.set_context(&"battle")
 	var battle := BattleScene.instantiate()
 	if battle == null:
 		push_error("Battle scene could not be instantiated.")
@@ -176,6 +191,7 @@ func _on_battle_completed(result: Dictionary) -> void:
 		_hub_notice = "RUN FAILED • NO SALVAGE RECOVERED"
 
 func _on_battle_exit_requested() -> void:
+	audio_director.play_cue(&"ui_back")
 	_active_mission = null
 	_show_hub()
 

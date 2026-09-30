@@ -5,6 +5,8 @@ signal command_board_requested
 signal garage_requested
 signal workshop_requested
 
+const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+
 @onready var hub_visual: FortKnocksHubVisual = $Visual
 @onready var subtitle_label: Label = $Subtitle
 @onready var salvage_label: Label = $TopBar/SalvageLabel
@@ -16,6 +18,10 @@ signal workshop_requested
 @onready var workshop_button: Button = $Actions/WorkshopButton
 
 func _ready() -> void:
+	ThemeScript.apply(self)
+	ThemeScript.style_card($TopBar)
+	ThemeScript.style_card($StatusCard, 1)
+	$Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	command_board_button.pressed.connect(func() -> void: command_board_requested.emit())
 	garage_button.pressed.connect(func() -> void: garage_requested.emit())
 	workshop_button.pressed.connect(func() -> void: workshop_requested.emit())
@@ -32,9 +38,7 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 	progress_label.text = "OUTSKIRTS  %d/6 CLEARED" % mini(completed.size(), 6)
-	platform_label.text = "ACTIVE PLATFORM\n%s" % _platform_display_name(
-		platform_id
-	)
+	platform_label.text = "ACTIVE PLATFORM\n%s" % _platform_display_name(platform_id)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
 
@@ -48,7 +52,6 @@ func _platform_display_name(platform_id: String) -> String:
 			return "PICKUP"
 		_:
 			return platform_id.replace("_", " ").to_upper()
-
 
 func _progress_subtitle(completed_count: int) -> String:
 	if completed_count >= 6:

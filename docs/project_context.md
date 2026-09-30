@@ -111,9 +111,9 @@ Milestone 2 — Progression Shell is now accepted through local playtesting. The
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
 
-## Current Progression Shell foundation
+## Current progression baseline
 
-Milestone 2 is now under implementation.
+Milestone 2 is complete and locally accepted.
 
 Current foundation:
 - the project boots into a greybox Fort Knocks hub through a root App scene,
@@ -162,7 +162,20 @@ Milestone 2 implementation scope is now structurally complete:
 
 Local playtesting on 2026-09-30 accepted the Progression Shell, including the revised Spotter Rack precision-preview readability. **Milestone 2 is passed.**
 
-Do not add another major progression/combat system by default. The active milestone is now **Milestone 3 — Identity / Production Presentation**: production survivor/platform/environment direction, cohesive UI skin, audio/VFX, faction/world presentation, and visible Fort Knocks identity around the proven gameplay.
+Do not add another major progression/combat system by default.
+
+Milestone 3 — Identity / Production Presentation now has a representative implementation complete on the current development branch and is awaiting local Play-mode acceptance. It establishes:
+- a central Fort Knocks palette/UI theme,
+- a scavenger-survivor silhouette direction,
+- distinct salvage-built Compact/Sedan/Pickup presentation,
+- first-region Outskirts environment language,
+- stronger Fort Knocks hub identity,
+- the provisional two-slash knock-mark visual identifier,
+- cohesive aim/projectile/impact VFX,
+- procedural ambience and gameplay cue timing,
+- lightweight in-world framing for the six Outskirts missions.
+
+Exact visual rules belong in `docs/design/art_direction.md`; audio/music rules belong in `docs/design/audio_direction.md`. Do not batch a large production asset library until this representative pass is locally accepted.
 
 ## Portrait UX decisions
 
@@ -301,7 +314,7 @@ Milestone order is deliberate:
 1. **Combat Prototype V1 — PASSED** — aiming, camera, impact, destruction, projectile roles, enemy response, and portrait readability accepted through local playtesting.
 2. **Encounter Proof — PASSED** — multiple greybox layouts and environmental interactions accepted as creating repeatable tactical decisions.
 3. **Progression Shell — PASSED** — Fort Knocks hub, six-route Outskirts campaign, Salvage, platform/module/loadout progression, save data and visible hub growth accepted through local playtesting.
-4. **Identity / Production Art — ACTIVE** — survivor, vehicle, environment, UI, audio, VFX, faction/world presentation.
+4. **Identity / Production Presentation — IMPLEMENTATION COMPLETE, ACCEPTANCE PENDING** — representative survivor, platform, environment, UI, audio, VFX and world-identity pipelines are implemented; local Play-mode review is the remaining gate.
 5. **Content Expansion / Shipping** — mission variety, balance, performance, device validation, Android/iOS release work.
 
 Do not skip a milestone because later systems are more exciting. See `docs/design/implementation_roadmap.md`.

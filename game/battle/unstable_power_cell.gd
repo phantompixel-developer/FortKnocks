@@ -13,7 +13,6 @@ var _reaction_tween: Tween
 func apply_hit(_damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	if is_discharged:
 		return
-
 	is_discharged = true
 	collision_layer = 0
 	collision_mask = 0
@@ -25,11 +24,9 @@ func apply_hit(_damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 func _play_hit_reaction(impulse: Vector2) -> void:
 	if _reaction_tween != null and _reaction_tween.is_running():
 		_reaction_tween.kill()
-
 	var direction := signf(impulse.x)
 	if is_zero_approx(direction):
 		direction = 1.0
-
 	modulate = Color(1.35, 1.45, 1.65, 1.0)
 	rotation = deg_to_rad(4.0 * direction)
 	_reaction_tween = create_tween()
@@ -42,21 +39,42 @@ func _draw() -> void:
 		_draw_spent_cell()
 		return
 
-	var outline := Color("292b29")
-	draw_rect(Rect2(-27, -58, 54, 92), outline)
-	draw_rect(Rect2(-23, -54, 46, 84), Color("455f72"))
-	draw_rect(Rect2(-23, -22, 46, 11), Color("90c5d9"))
-	draw_rect(Rect2(-23, 4, 46, 9), Color("90c5d9"))
-	draw_rect(Rect2(-15, -66, 30, 12), outline)
-	draw_circle(Vector2(0, -10), 8.0, Color("c4edf1"))
-	draw_line(Vector2(-12, -42), Vector2(14, -30), Color("2c414f"), 4.0)
-	draw_line(Vector2(8, 16), Vector2(-13, 25), Color("2c414f"), 4.0)
+	var outline := Color("171c1b")
+	var casing := Color("344741")
+	var tank := Color("4e716d")
+	var cold := Color("77b6bf")
+	var hazard := Color("d4aa55")
+	var rust := Color("8f5540")
+
+	# Salvaged industrial capacitor: twin pressure cans held in a welded carrier.
+	draw_rect(Rect2(-31, -60, 62, 96), outline)
+	draw_rect(Rect2(-26, -55, 52, 86), casing)
+	draw_rect(Rect2(-20, -49, 16, 72), tank)
+	draw_rect(Rect2(4, -49, 16, 72), tank.lightened(0.05))
+	draw_line(Vector2(-12, -47), Vector2(-12, 20), cold, 4.0)
+	draw_line(Vector2(12, -47), Vector2(12, 20), cold, 4.0)
+	draw_rect(Rect2(-19, -66, 38, 13), outline)
+	draw_rect(Rect2(-15, -63, 30, 7), rust)
+
+	# Live charge window and warning paint.
+	draw_circle(Vector2(0, -12), 13.0, outline)
+	draw_circle(Vector2(0, -12), 8.0, cold)
+	draw_circle(Vector2(0, -12), 4.0, Color("dff5f1"))
+	draw_line(Vector2(-24, 6), Vector2(-4, -14), hazard, 7.0)
+	draw_line(Vector2(4, 28), Vector2(24, 8), rust, 7.0)
+	draw_line(Vector2(-25, 34), Vector2(-38, 48), Color("303b37"), 5.0)
+	draw_line(Vector2(25, 34), Vector2(38, 48), Color("303b37"), 5.0)
+	draw_circle(Vector2(0, -12), 24.0, Color(cold, 0.10))
 
 func _draw_spent_cell() -> void:
+	var outline := Color("171c1b")
+	var shell := Color("313b37")
 	var points := PackedVector2Array()
 	for i in range(24):
 		var angle := TAU * float(i) / 24.0
-		points.append(Vector2(cos(angle) * 44.0, sin(angle) * 12.0))
-	draw_colored_polygon(points, Color("343a3c"))
-	draw_line(Vector2(-24, -1), Vector2(-4, -25), Color("4c5559"), 7.0)
-	draw_line(Vector2(10, -2), Vector2(31, -18), Color("4c5559"), 6.0)
+		points.append(Vector2(cos(angle) * 46.0, sin(angle) * 13.0))
+	draw_colored_polygon(points, shell)
+	draw_line(Vector2(-28, -1), Vector2(-7, -28), outline, 8.0)
+	draw_line(Vector2(8, -3), Vector2(33, -20), Color("48544e"), 7.0)
+	draw_line(Vector2(-18, 5), Vector2(18, -7), Color("8f5540", 0.64), 5.0)
+	draw_circle(Vector2(25, -15), 5.0, Color("77b6bf", 0.20))
