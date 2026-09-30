@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CombatPlatformDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/platforms/combat_platform_definition.gd" id="1_platform"]
+
+[resource]
+script = ExtResource("1_platform")
+id = "improvised_technical"
+display_name = "Improvised Technical"
+tactical_summary = "Reinforced support mount • choose full rack or anti-displacement rig"
+purchase_cost = 190
+unlock_after_mission_id = "suburbs_crossroads"
+purchasable = true
+utility_slot_count = 1
+cover_health = 300
+cover_size = Vector2(345, 116)
+cover_color = Color(0.30, 0.37, 0.34, 1)
+visual_profile = 3
