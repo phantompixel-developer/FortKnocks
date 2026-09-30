@@ -51,6 +51,7 @@ func _show_workshop() -> void:
 	_replace_screen(workshop)
 	workshop.back_requested.connect(_show_hub)
 	workshop.module_requested.connect(_on_module_requested)
+	workshop.specialist_weapon_requested.connect(_on_specialist_weapon_requested)
 	workshop.configure(save_service.snapshot(), _workshop_notice)
 	_workshop_notice = ""
 
@@ -59,6 +60,15 @@ func _reconcile_campaign_unlocks() -> void:
 		var mission := EncounterCatalogScript.by_id(str(mission_id))
 		if mission != null and not mission.next_mission_id.is_empty():
 			save_service.unlock_mission(mission.next_mission_id)
+
+func _on_specialist_weapon_requested(weapon_id: String) -> void:
+	if not save_service.set_specialist_weapon(weapon_id):
+		return
+
+	var display_name := "HEAVY SLUG" if weapon_id == "heavy_slug" else "SHOCK CAPSULE"
+	_workshop_notice = "%s SET AS SPECIALIST" % display_name
+	_hub_notice = "FIELD RACK UPDATED • BOLT + %s" % display_name
+	_show_workshop()
 
 func _on_module_requested(module_id: String) -> void:
 	var platform_id := save_service.current_platform_id()
@@ -130,7 +140,8 @@ func _start_mission(mission: MissionDefinition) -> void:
 	var platform := PlatformCatalogScript.by_id(platform_id)
 	var module_id := save_service.equipped_module_id(platform_id)
 	var module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
-	battle.call("prepare_for_campaign", mission, platform, module)
+	var weapon_ids: Array[String] = ["scrap_bolt", save_service.specialist_weapon_id()]
+	battle.call("prepare_for_campaign", mission, platform, module, weapon_ids)
 	battle.connect("battle_completed", Callable(self, "_on_battle_completed"))
 	battle.connect("exit_requested", Callable(self, "_on_battle_exit_requested"))
 	battle.connect("rematch_requested", Callable(self, "_on_battle_rematch_requested"))
