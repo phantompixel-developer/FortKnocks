@@ -666,6 +666,8 @@ func _enemy_tactic_turn_hint() -> String:
 			return "Breacher crew is pressuring your cover"
 		"displacer":
 			return "Displacer crew is setting up a pressure shot"
+		"raider":
+			return "Raider crew is targeting the Salvage load"
 		_:
 			return "Enemy is choosing a shot"
 
@@ -676,6 +678,8 @@ func _enemy_tactic_brief() -> String:
 			return "BREACHER • HEAVY COVER PRESSURE"
 		"displacer":
 			return "DISPLACER • SHOCK / POSITION PRESSURE"
+		"raider":
+			return "RAIDER • OBJECTIVE PRESSURE"
 		_:
 			return "BALANCED"
 
@@ -694,6 +698,12 @@ func _choose_enemy_weapon() -> WeaponDefinition:
 			if not player_cover.is_destroyed and randf() < 0.42:
 				return HeavySlug as WeaponDefinition
 			return ScrapBolt as WeaponDefinition
+		"raider":
+			if randf() < 0.64:
+				return HeavySlug as WeaponDefinition
+			if randf() < 0.22:
+				return ShockCapsule as WeaponDefinition
+			return ScrapBolt as WeaponDefinition
 		_:
 			if not player_cover.is_destroyed and randf() < 0.68:
 				return HeavySlug as WeaponDefinition
@@ -702,6 +712,17 @@ func _choose_enemy_weapon() -> WeaponDefinition:
 			return ScrapBolt as WeaponDefinition
 
 func _choose_enemy_target(weapon: WeaponDefinition) -> Vector2:
+	var tactic: String = _current_mission.enemy_tactic if _current_mission != null else "balanced"
+	if (
+		tactic == "raider"
+		and _salvage_load != null
+		and is_instance_valid(_salvage_load)
+		and not _salvage_load.is_destroyed
+		and randf() < 0.76
+	):
+		if weapon.id == "shock_capsule":
+			return _salvage_load.global_position + Vector2(-45.0, -20.0)
+		return _salvage_load.global_position + Vector2(0.0, -42.0)
 	if weapon.id == "heavy_slug" and not player_cover.is_destroyed:
 		return player_cover.global_position + Vector2(0.0, -30.0)
 	if weapon.id == "shock_capsule":
