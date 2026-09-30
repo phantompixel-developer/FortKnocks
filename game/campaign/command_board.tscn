@@ -84,13 +84,18 @@ theme_override_font_sizes/font_size = 20
 text = "AVAILABLE ROUTES"
 horizontal_alignment = 1
 
-[node name="MissionList" type="VBoxContainer" parent="MissionPanel"]
+[node name="MissionScroll" type="ScrollContainer" parent="MissionPanel"]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 82.0
-offset_right = 586.0
-offset_bottom = 742.0
-theme_override_constants/separation = 20
+offset_left = 24.0
+offset_top = 78.0
+offset_right = 592.0
+offset_bottom = 748.0
+horizontal_scroll_mode = 0
+
+[node name="MissionList" type="VBoxContainer" parent="MissionPanel/MissionScroll"]
+layout_mode = 2
+custom_minimum_size = Vector2(544, 0)
+theme_override_constants/separation = 16
 
 [node name="Footer" type="Label" parent="."]
 layout_mode = 0
