@@ -69,7 +69,7 @@ offset_top = 14.0
 offset_right = 634.0
 offset_bottom = 46.0
 theme_override_font_sizes/font_size = 17
-text = "OUTSKIRTS  0/3 CLEARED"
+text = "OUTSKIRTS  0/6 CLEARED"
 horizontal_alignment = 2
 
 [node name="StatusCard" type="ColorRect" parent="."]
