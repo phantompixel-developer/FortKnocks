@@ -1,5 +1,9 @@
 extends Node2D
 
+signal battle_completed(result: Dictionary)
+signal exit_requested
+signal rematch_requested
+
 enum Phase {
 	INTRO,
 	PLAYER_AIM,
@@ -93,6 +97,10 @@ var _feedback_tween: Tween
 var _current_mission: MissionDefinition
 var _collapsible_barrier: CollapsibleBarrier
 var _missions: Array[MissionDefinition] = []
+var _campaign_managed := false
+var _prepared_mission: MissionDefinition
+var _completion_emitted := false
+var _progression_reward := 0
 
 var _player_shots_fired := 0
 var _player_direct_hits := 0
@@ -117,6 +125,15 @@ var _enemy_speed_correction := {
 	"shock_capsule": 1.0,
 }
 var _enemy_target_x := 0.0
+
+func prepare_for_campaign(definition: MissionDefinition) -> void:
+	_campaign_managed = true
+	_prepared_mission = definition
+
+func set_progression_reward(amount: int) -> void:
+	_progression_reward = maxi(0, amount)
+	if result_card != null and result_card.visible:
+		_update_result_card()
 
 func _ready() -> void:
 	_selected_weapon = ScrapBolt as WeaponDefinition
@@ -154,6 +171,14 @@ func _ready() -> void:
 	_set_weapon_buttons_enabled(false)
 	_update_last_shot_display()
 	_update_hud()
+
+	if _campaign_managed and _prepared_mission != null:
+		encounter_picker.visible = false
+		restart_button.text = "REMATCH"
+		change_encounter_button.text = "FORT KNOCKS"
+		call_deferred("_begin_mission", _prepared_mission)
+		return
+
 	_show_encounter_picker()
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		var pending_id := str(get_tree().root.get_meta(PENDING_MISSION_META))
@@ -200,10 +225,14 @@ func _mission_for_id(mission_id: String) -> MissionDefinition:
 	return null
 
 func _begin_mission(definition: MissionDefinition) -> void:
-	if definition == null or not encounter_picker.visible:
+	if definition == null:
+		return
+	if not _campaign_managed and not encounter_picker.visible:
 		return
 
 	_current_mission = definition
+	_completion_emitted = false
+	_progression_reward = 0
 	_reset_encounter_metrics()
 	_configure_mission(definition)
 	encounter_picker.visible = false
@@ -879,6 +908,19 @@ func _check_game_over() -> bool:
 		camera_director.focus_x(player.global_position.x, 0.35)
 
 	_update_result_card()
+
+	if not _completion_emitted:
+		_completion_emitted = true
+		battle_completed.emit({
+			"victory": player.is_alive(),
+			"mission_id": _current_mission.id if _current_mission != null else "",
+			"shots": _player_shots_fired,
+			"direct_hits": _player_direct_hits,
+			"cover_hits": _player_cover_hits,
+			"environment_events": _player_environment_events,
+			"weapon_shots": _weapon_shots.duplicate(true),
+		})
+
 	return true
 
 func _reset_encounter_metrics() -> void:
@@ -911,7 +953,16 @@ func _update_result_card() -> void:
 		int(_weapon_shots["heavy_slug"]),
 		int(_weapon_shots["shock_capsule"]),
 	]
-	result_takeaway_label.text = _encounter_takeaway()
+	var takeaway := _encounter_takeaway()
+	if _campaign_managed:
+		if not player.is_alive():
+			result_takeaway_label.text = "NO SALVAGE RECOVERED\n%s" % takeaway
+		elif _progression_reward > 0:
+			result_takeaway_label.text = "+%d SALVAGE SECURED\n%s" % [_progression_reward, takeaway]
+		else:
+			result_takeaway_label.text = "ROUTE ALREADY CLEARED • NO NEW SALVAGE\n%s" % takeaway
+	else:
+		result_takeaway_label.text = takeaway
 
 func _encounter_takeaway() -> String:
 	if _player_environment_events > 0:
@@ -970,11 +1021,19 @@ func _update_enemy_locator() -> void:
 	enemy_locator_label.text = "ENEMY %s  ~%dm" % [arrow, approximate_metres]
 
 func _restart() -> void:
+	if _campaign_managed:
+		rematch_requested.emit()
+		return
+
 	if _current_mission != null:
 		get_tree().root.set_meta(PENDING_MISSION_META, _current_mission.id)
 	get_tree().reload_current_scene()
 
 func _change_encounter() -> void:
+	if _campaign_managed:
+		exit_requested.emit()
+		return
+
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()
