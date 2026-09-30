@@ -231,7 +231,7 @@ func _build_encounter_picker() -> void:
 		child.queue_free()
 
 	for index in range(_missions.size()):
-		var mission := _missions[index]
+		var mission: MissionDefinition = _missions[index]
 		var button := Button.new()
 		button.custom_minimum_size = Vector2(0.0, 74.0)
 		button.text = "%d  %s\n%s" % [index + 1, mission.display_name.to_upper(), mission.test_focus]
