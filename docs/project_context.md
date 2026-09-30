@@ -138,7 +138,21 @@ The first meaningful Salvage/platform progression choice is now implemented:
 - Fort Knocks visibly improves its garage corner and vehicle silhouette when the Sedan is equipped.
 - Pickup exists as data/Garage preview only; it is intentionally not purchasable until its first utility/module gameplay is implemented.
 
-The next Progression Shell work should prove the Pickup as the first platform that adds a new capability/slot, then extend the Outskirts campaign beyond the three original Encounter Proof missions.
+The Pickup capability proof and short Outskirts campaign expansion are now implemented:
+
+- Pickup unlocks after **Broken Span** and costs **130 Salvage**.
+- Pickup base battle profile is 260 cover durability / 320-wide cover.
+- `CombatPlatformDefinition.utility_slot_count` now expresses utility capacity; Pickup has one slot while Compact/Sedan have none.
+- Workshop offers two Pickup-compatible modules at 40 Salvage each:
+  - **Spotter Rack** — +4 partial trajectory-preview points.
+  - **Ballast Crates** — +80 cover durability.
+- Only one module is active per platform; module ownership/equipment persists and modules can be swapped after purchase.
+- Pickup and its equipped module are visible both in Fort Knocks and during battle.
+- The Outskirts campaign now contains six sequential encounters ending in **Outskirts Checkpoint**:
+  Roadblock Trial → High Ground → Scrap Gate → Broken Span → Depot Line → Outskirts Checkpoint.
+- Existing pre-release saves reconcile completed missions to newly added next-route unlocks, so prior Scrap Gate clears automatically expose Broken Span.
+
+Milestone 2 is now close to its gate. The next decision should follow local playtesting of Pickup precision-vs-protection, six-route pacing, and Fort Knocks progression rather than adding another major system by default.
 
 ## Portrait UX decisions
 
