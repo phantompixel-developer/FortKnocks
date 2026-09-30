@@ -1040,8 +1040,8 @@ func _check_game_over() -> bool:
 			hint_label.text = "Signal relay disabled — route opened"
 			if _signal_relay != null and is_instance_valid(_signal_relay):
 				camera_director.focus_x(_signal_relay.global_position.x, 0.35)
-		else:
-			camera_director.focus_x(enemy.global_position.x, 0.35)
+			else:
+				camera_director.focus_x(enemy.global_position.x, 0.35)
 		else:
 			hint_label.text = "Enemy survivor incapacitated"
 			camera_director.focus_x(enemy.global_position.x, 0.35)
