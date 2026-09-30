@@ -1122,7 +1122,7 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
 			if _player_module.crew_knockback_multiplier < 1.0:
 				var reduction_percent: int = int(round((1.0 - _player_module.crew_knockback_multiplier) * 100.0))
-				briefing += "\nSTABILITY: %d%% LESS DISPLACEMENT" % reduction_percent
+				briefing += " • %d%% LESS DISPLACEMENT" % reduction_percent
 		if _campaign_weapon_ids.has("heavy_slug") and _campaign_weapon_ids.has("shock_capsule"):
 			briefing += "\nFIELD RACK: BOLT + SLUG + SHOCK"
 		elif _campaign_weapon_ids.size() >= 2:
