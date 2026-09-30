@@ -106,7 +106,7 @@ func _tone(
 		var t := float(i) / float(MIX_RATE)
 		var progress := clampf(t / duration, 0.0, 1.0)
 		var current_frequency := maxf(28.0, frequency + sweep * progress)
-		var envelope := pow(1.0 - progress, decay_power)
+		var envelope: float = pow(1.0 - progress, decay_power)
 		var tone := sin(TAU_F * current_frequency * t)
 		var harmonic := sin(TAU_F * current_frequency * 2.03 * t) * 0.28
 		var texture := sin(TAU_F * 1733.0 * t) * sin(TAU_F * 91.0 * t)
