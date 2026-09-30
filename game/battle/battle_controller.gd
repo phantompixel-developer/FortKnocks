@@ -100,6 +100,7 @@ var _missions: Array[MissionDefinition] = []
 var _campaign_managed := false
 var _prepared_mission: MissionDefinition
 var _player_platform: CombatPlatformDefinition
+var _player_module: PlatformModuleDefinition
 var _completion_emitted := false
 var _progression_reward := 0
 
@@ -129,11 +130,13 @@ var _enemy_target_x := 0.0
 
 func prepare_for_campaign(
 	definition: MissionDefinition,
-	platform_definition: CombatPlatformDefinition
+	platform_definition: CombatPlatformDefinition,
+	module_definition: PlatformModuleDefinition = null
 ) -> void:
 	_campaign_managed = true
 	_prepared_mission = definition
 	_player_platform = platform_definition
+	_player_module = module_definition
 
 func set_progression_reward(amount: int) -> void:
 	_progression_reward = maxi(0, amount)
@@ -262,7 +265,11 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	player.global_position = definition.player_position
 	player_cover.global_position = definition.player_cover_position
 	if _player_platform != null:
-		player_cover.configure_platform(_player_platform)
+		player_cover.configure_platform(_player_platform, _player_module)
+	var preview_steps := 9
+	if _player_module != null:
+		preview_steps += _player_module.trajectory_preview_steps_bonus
+	aim_guide.set_preview_steps(preview_steps)
 	enemy.global_position = definition.enemy_position
 	enemy_cover.global_position = definition.enemy_cover_position
 
@@ -945,10 +952,15 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 	mission_brief_focus.text = definition.test_focus
 	var briefing := definition.briefing
 	if _campaign_managed and _player_platform != null:
+		var effective_cover := _player_platform.cover_health
+		if _player_module != null:
+			effective_cover += _player_module.cover_health_bonus
 		briefing += "\n\nPLATFORM: %s • %d COVER" % [
 			_player_platform.display_name.to_upper(),
-			_player_platform.cover_health,
+			effective_cover,
 		]
+		if _player_module != null:
+			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
 	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
 	mission_brief_card.visible = true
