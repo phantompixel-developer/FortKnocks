@@ -167,12 +167,12 @@ mouse_filter = 2
 
 [node name="InspectButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 240.0
+offset_left = 500.0
 offset_top = 164.0
-offset_right = 480.0
+offset_right = 696.0
 offset_bottom = 216.0
 mouse_filter = 0
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 15
 text = "INSPECT ENEMY"
 
 [node name="EnemyLocatorLabel" type="Label" parent="HUD/Root"]
@@ -236,66 +236,76 @@ toggle_mode = true
 theme_override_font_sizes/font_size = 14
 text = "SHOCK"
 
-[node name="ControlDeck" type="ColorRect" parent="HUD/Root"]
+[node name="WeaponInfoCard" type="ColorRect" parent="HUD/Root"]
+visible = false
 layout_mode = 0
-offset_left = 74.0
-offset_top = 926.0
-offset_right = 646.0
-offset_bottom = 1098.0
+offset_left = 176.0
+offset_top = 164.0
+offset_right = 482.0
+offset_bottom = 230.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.9)
 
-[node name="WeaponNameLabel" type="Label" parent="HUD/Root/ControlDeck"]
+[node name="WeaponNameLabel" type="Label" parent="HUD/Root/WeaponInfoCard"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 10.0
-offset_right = 554.0
-offset_bottom = 36.0
-theme_override_font_sizes/font_size = 20
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 294.0
+offset_bottom = 32.0
+theme_override_font_sizes/font_size = 17
 text = "SCRAP BOLT"
 horizontal_alignment = 1
 mouse_filter = 2
 
-[node name="WeaponRoleLabel" type="Label" parent="HUD/Root/ControlDeck"]
+[node name="WeaponRoleLabel" type="Label" parent="HUD/Root/WeaponInfoCard"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 38.0
-offset_right = 554.0
-offset_bottom = 60.0
-theme_override_font_sizes/font_size = 14
+offset_left = 10.0
+offset_top = 36.0
+offset_right = 296.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 12
 text = "BALANCED • 2 ROAD BOUNCES"
 horizontal_alignment = 1
 mouse_filter = 2
 
+[node name="ControlDeck" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 1090.0
+offset_right = 612.0
+offset_bottom = 1168.0
+mouse_filter = 2
+color = Color(0.105, 0.115, 0.108, 0.88)
+
 [node name="PowerLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 74.0
-offset_right = 246.0
-offset_bottom = 110.0
-theme_override_font_sizes/font_size = 22
+offset_left = 18.0
+offset_top = 10.0
+offset_right = 226.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
 text = "POWER —"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="AngleLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 326.0
-offset_top = 74.0
-offset_right = 546.0
-offset_bottom = 110.0
-theme_override_font_sizes/font_size = 22
+offset_left = 278.0
+offset_top = 10.0
+offset_right = 486.0
+offset_bottom = 40.0
+theme_override_font_sizes/font_size = 20
 text = "ANGLE —"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="LastShotLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 124.0
-offset_right = 552.0
-offset_bottom = 152.0
-theme_override_font_sizes/font_size = 14
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 488.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 13
 text = "LAST SHOT —"
 horizontal_alignment = 1
 mouse_filter = 2
@@ -357,14 +367,70 @@ mouse_filter = 2
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 70.0
-offset_top = 1120.0
+offset_top = 1182.0
 offset_right = 650.0
-offset_bottom = 1180.0
+offset_bottom = 1244.0
 theme_override_font_sizes/font_size = 17
 text = "Preparing battle..."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+mouse_filter = 2
+
+[node name="MissionBriefCard" type="ColorRect" parent="HUD/Root"]
+visible = false
+layout_mode = 0
+offset_left = 92.0
+offset_top = 330.0
+offset_right = 628.0
+offset_bottom = 610.0
+mouse_filter = 2
+color = Color(0.085, 0.095, 0.09, 0.95)
+
+[node name="Title" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 512.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 26
+text = "ROADBLOCK TRIAL"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Focus" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 72.0
+offset_right = 512.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 17
+text = "LONG RANGE • BANK SHOTS"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Briefing" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 122.0
+offset_right = 502.0
+offset_bottom = 206.0
+theme_override_font_sizes/font_size = 16
+text = "Encounter briefing"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="Objective" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 224.0
+offset_right = 502.0
+offset_bottom = 258.0
+theme_override_font_sizes/font_size = 14
+text = "OBJECTIVE: INCAPACITATE ENEMY"
+horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="EncounterPicker" type="ColorRect" parent="HUD/Root"]
@@ -419,12 +485,68 @@ text = "Same combat rules • different geometry and interactions"
 horizontal_alignment = 1
 mouse_filter = 2
 
+[node name="ResultCard" type="ColorRect" parent="HUD/Root"]
+visible = false
+layout_mode = 0
+offset_left = 90.0
+offset_top = 356.0
+offset_right = 630.0
+offset_bottom = 796.0
+mouse_filter = 2
+color = Color(0.085, 0.095, 0.09, 0.96)
+
+[node name="Title" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 22.0
+offset_right = 512.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 28
+text = "VICTORY"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="EncounterName" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 76.0
+offset_right = 510.0
+offset_bottom = 106.0
+theme_override_font_sizes/font_size = 16
+text = "ROADBLOCK TRIAL"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Stats" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 126.0
+offset_right = 500.0
+offset_bottom = 270.0
+theme_override_font_sizes/font_size = 16
+text = "SHOTS 0 • DIRECT 0\nCOVER 0 • ENVIRONMENT 0\nBOLT 0 • SLUG 0 • SHOCK 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="Takeaway" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 286.0
+offset_right = 498.0
+offset_bottom = 332.0
+theme_override_font_sizes/font_size = 14
+text = "Compare weapon choices across encounters."
+horizontal_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
 [node name="RestartButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 205.0
-offset_top = 610.0
-offset_right = 515.0
-offset_bottom = 678.0
+offset_left = 180.0
+offset_top = 700.0
+offset_right = 350.0
+offset_bottom = 764.0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 22
 text = "RESTART"
@@ -432,9 +554,9 @@ text = "RESTART"
 [node name="ChangeEncounterButton" type="Button" parent="HUD/Root"]
 visible = false
 layout_mode = 0
-offset_left = 205.0
-offset_top = 696.0
-offset_right = 515.0
+offset_left = 370.0
+offset_top = 700.0
+offset_right = 540.0
 offset_bottom = 764.0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 20
