@@ -4,7 +4,7 @@ extends RigidBody2D
 signal bounced(world_position: Vector2, bounce_number: int, remaining_bounces: int)
 signal resolved(impact_position: Vector2, hit_body: Node, impact_velocity: Vector2, damage_amount: int, weapon: WeaponDefinition)
 
-const MAX_TRAIL_POINTS := 16
+const MAX_TRAIL_POINTS := 20
 
 var weapon: WeaponDefinition
 var _source_body: PhysicsBody2D
@@ -41,7 +41,7 @@ func _physics_process(_delta: float) -> void:
 	if _resolved:
 		return
 
-	if _trail_world_points.is_empty() or _trail_world_points[-1].distance_to(global_position) >= 18.0:
+	if _trail_world_points.is_empty() or _trail_world_points[-1].distance_to(global_position) >= 16.0:
 		_trail_world_points.append(global_position)
 		if _trail_world_points.size() > MAX_TRAIL_POINTS:
 			_trail_world_points.pop_front()
@@ -115,8 +115,8 @@ func _resolve(body: Node, applied_damage: int) -> void:
 	queue_free()
 
 func _draw() -> void:
-	var projectile_color := Color("f2df85")
-	var trail_color := Color(0.91, 0.82, 0.53, 0.58)
+	var projectile_color := Color("d4aa55")
+	var trail_color := Color(0.83, 0.67, 0.33, 0.62)
 	if weapon != null:
 		projectile_color = weapon.projectile_color
 		trail_color = weapon.trail_color
@@ -125,7 +125,24 @@ func _draw() -> void:
 		var local_points := PackedVector2Array()
 		for world_point in _trail_world_points:
 			local_points.append(to_local(world_point))
-		draw_polyline(local_points, trail_color, 7.0, true)
+		draw_polyline(local_points, Color(trail_color, trail_color.a * 0.28), 12.0, true)
+		draw_polyline(local_points, Color(trail_color, minf(1.0, trail_color.a + 0.18)), 4.0, true)
 
-	draw_circle(Vector2.ZERO, 13.0, projectile_color)
-	draw_circle(Vector2.ZERO, 7.0, Color("454944"))
+	if weapon != null and weapon.id == "heavy_slug":
+		draw_circle(Vector2.ZERO, 15.0, Color("171c1b"))
+		draw_circle(Vector2.ZERO, 11.0, projectile_color)
+		draw_rect(Rect2(-4, -15, 8, 30), projectile_color.lightened(0.18))
+	elif weapon != null and weapon.id == "shock_capsule":
+		draw_circle(Vector2.ZERO, 16.0, Color("171c1b"))
+		draw_circle(Vector2.ZERO, 12.0, projectile_color)
+		draw_arc(Vector2.ZERO, 8.0, 0.0, TAU, 18, Color("dff5f1"), 3.0, true)
+		draw_circle(Vector2.ZERO, 4.0, Color("dff5f1"))
+	else:
+		draw_polygon(
+			PackedVector2Array([Vector2(-14, 0), Vector2(-5, -10), Vector2(12, -7), Vector2(14, 6), Vector2(-5, 10)]),
+			PackedColorArray([Color("171c1b")])
+		)
+		draw_polygon(
+			PackedVector2Array([Vector2(-10, 0), Vector2(-3, -6), Vector2(9, -4), Vector2(10, 4), Vector2(-3, 6)]),
+			PackedColorArray([projectile_color])
+		)

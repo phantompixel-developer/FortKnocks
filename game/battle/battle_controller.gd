@@ -23,6 +23,7 @@ const ShockCapsule := preload("res://game/weapons/shock_capsule.tres")
 const ArenaPlatformScript := preload("res://game/battle/arena_platform.gd")
 const CollapsibleBarrierScript := preload("res://game/battle/collapsible_barrier.gd")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
+const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
@@ -147,6 +148,12 @@ func set_progression_reward(amount: int) -> void:
 		_update_result_card()
 
 func _ready() -> void:
+	ThemeScript.apply($HUD/Root)
+	for card in [weapon_tray, weapon_info_card, control_deck, target_card, mission_brief_card, encounter_picker, result_card]:
+		ThemeScript.style_card(card)
+	ThemeScript.style_card(mission_brief_card, 1)
+	ThemeScript.style_card(result_card, 1)
+	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	_selected_weapon = ScrapBolt as WeaponDefinition
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
@@ -643,6 +650,7 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	_active_shooter = shooter
 	aim_guide.clear()
 	hint_label.text = "%s away" % weapon.display_name
+	_play_audio(_fire_cue(weapon))
 
 	var projectile := ProjectileScene.instantiate() as BattleProjectile
 	if projectile == null:
@@ -657,6 +665,7 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	camera_director.follow(projectile)
 
 func _on_projectile_bounced(world_position: Vector2, bounce_number: int, remaining_bounces: int) -> void:
+	_play_audio(&"ricochet")
 	var strength := 0.64 if bounce_number == 1 else 0.52
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, strength)
 	_show_feedback("RICOCHET %d/2" % bounce_number)
@@ -682,18 +691,21 @@ func _on_projectile_resolved(
 	var impact_strength := clampf(impact_velocity.length() / 1050.0, 0.45, 1.15)
 
 	if weapon != null and weapon.blast_radius > 0.0 and hit_body != null:
+		_play_audio(&"surge")
 		_apply_weapon_pulse(impact_position, weapon, hit_body)
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.PULSE, 1.15)
 		camera_director.impact_impulse(1.0, direction)
 		_show_feedback("SHOCK PULSE")
 		hint_label.text = "Pressure pulse affected nearby targets"
 	elif hit_body is Combatant:
+		_play_audio(&"hit_crew")
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.CREW, impact_strength)
 		_spawn_damage_popup(impact_position + Vector2(0.0, -90.0), "-%d" % damage_amount, Color("ef9b84"))
 		_show_feedback("DIRECT HIT")
 		camera_director.impact_impulse(1.0, direction)
 		hint_label.text = "Direct hit"
 	elif hit_body is DestructibleCover:
+		_play_audio(&"hit_metal")
 		var cover := hit_body as DestructibleCover
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
 		_spawn_damage_popup(impact_position + Vector2(0.0, -70.0), "-%d COVER" % damage_amount, Color("e4bd78"))
@@ -706,6 +718,7 @@ func _on_projectile_resolved(
 			hint_label.text = "Cover damaged"
 			camera_director.impact_impulse(0.72, direction)
 	elif hit_body is CollapsibleBarrier:
+		_play_audio(&"hit_metal")
 		var gate := hit_body as CollapsibleBarrier
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
 		_spawn_damage_popup(impact_position + Vector2(0.0, -80.0), "-%d GATE" % damage_amount, Color("d6b36f"))
@@ -835,6 +848,7 @@ func _on_collapsible_barrier_collapsed(world_position: Vector2) -> void:
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, 1.0)
 
 func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: int, force: float) -> void:
+	_play_audio(&"surge")
 	if _active_shooter == player:
 		_player_environment_events += 1
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.PULSE, 1.45)
@@ -968,6 +982,7 @@ func _check_game_over() -> bool:
 	_update_result_card()
 
 	if not _completion_emitted:
+		_play_audio(&"victory" if player.is_alive() else &"defeat")
 		_completion_emitted = true
 		battle_completed.emit({
 			"victory": player.is_alive(),
@@ -1114,3 +1129,20 @@ func _change_encounter() -> void:
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()
+
+
+func _fire_cue(weapon: WeaponDefinition) -> StringName:
+	if weapon == null:
+		return &"fire"
+	match weapon.id:
+		"heavy_slug":
+			return &"fire_heavy"
+		"shock_capsule":
+			return &"fire_shock"
+		_:
+			return &"fire"
+
+func _play_audio(cue: StringName) -> void:
+	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
+	if audio != null and audio.has_method("play_cue"):
+		audio.call("play_cue", cue)
