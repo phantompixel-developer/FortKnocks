@@ -45,16 +45,26 @@ Weapon selection lives in a compact top-left tray beneath the player health area
 
 The tray is deliberately outside the lower aiming deck and central projectile corridor. It is visible while choosing a shot, but auto-hides as soon as the player begins the pull-back gesture. If the pull is cancelled before firing, the tray returns.
 
+### Weapon info card
+The selected weapon name and one-line tactical role live in a compact card in the upper HUD, beside the weapon tray rather than over the shooter.
+
+The weapon info card and weapon tray are one visibility unit:
+- both appear while choosing a projectile,
+- both hide as soon as pull-back aiming begins,
+- both restore if the pull is cancelled,
+- both remain hidden during inspection, projectile flight, enemy turns, and result states.
+
+This keeps weapon explanation available at decision time without occupying the lower gameplay area.
+
 ### Aim deck
-The lower control deck contains only:
-1. selected weapon name,
-2. one-line tactical role,
-3. power and angle,
-4. previous-shot readout.
+The lower control deck is deliberately small and contains only:
+1. power,
+2. angle,
+3. previous-shot readout.
 
-Long weapon descriptions do not appear in the live battle HUD. The underlying Resource may retain a full description for menus/help later.
+It sits below the combat subject rather than covering the survivor. Long weapon descriptions do not appear in the live battle HUD. The underlying Resource may retain a full description for menus/help later.
 
-Transient battle messages live in a separate status strip beneath the deck. This prevents weapon selection, power/angle, and turn feedback from competing for the same space.
+Transient battle messages remain separate from both selection and aim data.
 
 ### Tactical inspect card
 During enemy inspection, the weapon tray and aim deck are hidden and replaced by a temporary target card showing:
@@ -67,6 +77,14 @@ The target card exists only during inspection/initial enemy preview and must not
 The off-screen enemy cue is intentionally approximate (direction plus rounded distance) so it restores spatial context without becoming a precise minimap.
 
 Avoid covering the central play space with controls. Player-selection controls should prefer edge/sky regions over the road and likely projectile path.
+
+## Encounter brief and result report
+Encounter Proof uses two development-facing cards:
+
+- **Mission brief** — briefly shows encounter name, test focus, briefing, and objective before the enemy preview.
+- **Encounter report** — on victory/defeat shows player shot count, direct hits, cover hits, environment hits, and BOLT/SLUG/SHOCK usage before Restart or Choose Encounter.
+
+These surfaces exist to evaluate whether different greybox layouts actually change player decisions. They are not the final campaign mission screen or progression-results design.
 
 ## Enemy inspection
 Provide a fast player-controlled **Inspect Enemy** action during the player's aiming phase. It pans to the opponent, briefly holds the enemy/cover position, then returns to the shooter. The player's selected power, angle, and trajectory state must remain intact; inspection is information gathering, not an aim reset.
