@@ -58,7 +58,7 @@ func _draw_perimeter() -> void:
 	# Corrugated fence with mismatched panels and the diagonal knock-mark motif.
 	draw_rect(Rect2(28, 598, 664, 58), Color("1f2724"))
 	for x in range(36, 688, 46):
-		var panel := Color("4f5a54") if (x / 46) as int % 2 == 0 else Color("596159")
+		var panel := Color("4f5a54") if int(x / 46) % 2 == 0 else Color("596159")
 		draw_rect(Rect2(x, 606, 38, 42), panel)
 		draw_line(Vector2(x + 8, 608), Vector2(x + 8, 646), Color("69736b"), 3.0)
 	for x in [126.0, 336.0, 548.0]:

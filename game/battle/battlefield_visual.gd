@@ -75,7 +75,7 @@ func _draw_city_backdrop() -> void:
 		draw_rect(Rect2(x + 28, 814, 58, 116), Color("29332f"))
 		draw_rect(Rect2(x + 116, 812, 82, 48), Color("51645f"))
 		draw_line(Vector2(x + 116, 870), Vector2(x + 196, 870), Color("a45f42"), 8.0)
-		if (x / 320) as int % 2 == 0:
+		if int(x / 320) % 2 == 0:
 			draw_rect(Rect2(x + 132, 724, 58, 18), Color("d4aa55", 0.52))
 
 func _draw_overpass_backdrop() -> void:
@@ -130,5 +130,5 @@ func _draw_foreground_dressing() -> void:
 	for x in range(92, 2140, 255):
 		draw_circle(Vector2(x, 918), 15, Color("414b46"))
 		draw_circle(Vector2(x + 22, 923), 10, Color("363f3b"))
-		if (x / 255) as int % 3 == 0:
+		if int(x / 255) % 3 == 0:
 			draw_line(Vector2(x + 34, 925), Vector2(x + 70, 900), Color("7d513e"), 5.0)
