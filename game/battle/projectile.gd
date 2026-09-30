@@ -92,7 +92,7 @@ func _can_ground_bounce() -> bool:
 func _damage_for_body(body: Node) -> int:
 	if weapon == null:
 		return 50
-	if body is DestructibleCover or body is CollapsibleBarrier:
+	if body is DestructibleCover or body is CollapsibleBarrier or body is SignalRelay:
 		return weapon.cover_damage
 	return weapon.direct_damage
 
