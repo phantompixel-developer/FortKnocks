@@ -531,8 +531,8 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 		return
 
 	phase = Phase.PLAYER_AIM
-	inspect_button.visible = true
-	enemy_locator_label.visible = true
+	inspect_button.visible = enemy.is_alive()
+	enemy_locator_label.visible = enemy.is_alive()
 	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
 	target_card.visible = false
