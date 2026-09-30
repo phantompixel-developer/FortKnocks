@@ -344,7 +344,11 @@ func _begin_drag(screen_position: Vector2) -> void:
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
 	angle_label.text = "ANGLE —"
-	hint_label.text = "%s • pull back to aim" % _selected_weapon.display_name
+	hint_label.text = (
+		"%s • SPOTTER PRECISION PREVIEW" % _selected_weapon.display_name
+		if _spotter_preview_active()
+		else "%s • pull back to aim" % _selected_weapon.display_name
+	)
 
 func _update_drag(screen_position: Vector2) -> void:
 	if not _dragging:
@@ -522,7 +526,17 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	_update_weapon_buttons()
 	_update_last_shot_display()
 	_update_enemy_locator()
-	hint_label.text = "Pull back to aim • release to fire"
+	hint_label.text = (
+		"SPOTTER ACTIVE • denser trajectory preview"
+		if _spotter_preview_active()
+		else "Pull back to aim • release to fire"
+	)
+
+func _spotter_preview_active() -> bool:
+	return (
+		_player_module != null
+		and _player_module.trajectory_preview_steps_bonus > 0
+	)
 
 func _inspect_enemy() -> void:
 	if phase != Phase.PLAYER_AIM or _dragging or _is_inspecting:
