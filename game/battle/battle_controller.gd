@@ -1111,13 +1111,31 @@ func _calculate_enemy_velocity(origin: Vector2, target: Vector2, weapon: WeaponD
 	return Vector2(direction * speed * cos_theta, -speed * sin(theta))
 
 func _objective_completed() -> bool:
-	if _current_mission != null and _current_mission.objective_mode == "disable_relay":
-		return _signal_relay != null and is_instance_valid(_signal_relay) and _signal_relay.is_destroyed
+	if _current_mission != null:
+		match _current_mission.objective_mode:
+			"disable_relay":
+				return _signal_relay != null and is_instance_valid(_signal_relay) and _signal_relay.is_destroyed
+			"protect_salvage":
+				return (
+					not enemy.is_alive()
+					and _salvage_load != null
+					and is_instance_valid(_salvage_load)
+					and not _salvage_load.is_destroyed
+				)
 	return not enemy.is_alive()
+
+func _objective_failed() -> bool:
+	return (
+		_current_mission != null
+		and _current_mission.objective_mode == "protect_salvage"
+		and _salvage_load != null
+		and is_instance_valid(_salvage_load)
+		and _salvage_load.is_destroyed
+	)
 
 func _check_game_over() -> bool:
 	var victory: bool = player.is_alive() and _objective_completed()
-	var defeat: bool = not player.is_alive()
+	var defeat: bool = not player.is_alive() or _objective_failed()
 	if not victory and not defeat:
 		return false
 
@@ -1144,14 +1162,27 @@ func _check_game_over() -> bool:
 				camera_director.focus_x(_signal_relay.global_position.x, 0.35)
 			else:
 				camera_director.focus_x(enemy.global_position.x, 0.35)
+		elif _current_mission != null and _current_mission.objective_mode == "protect_salvage":
+			hint_label.text = "Raiders cleared — Salvage secured"
+			if _salvage_load != null and is_instance_valid(_salvage_load):
+				camera_director.focus_x(_salvage_load.global_position.x, 0.35)
+			else:
+				camera_director.focus_x(enemy.global_position.x, 0.35)
 		else:
 			hint_label.text = "Enemy survivor incapacitated"
 			camera_director.focus_x(enemy.global_position.x, 0.35)
 	else:
 		turn_label.text = "DEFEAT"
-		hint_label.text = "Your survivor was incapacitated"
 		result_title_label.text = "DEFEAT"
-		camera_director.focus_x(player.global_position.x, 0.35)
+		if _objective_failed():
+			hint_label.text = "Protected Salvage was destroyed"
+			if _salvage_load != null and is_instance_valid(_salvage_load):
+				camera_director.focus_x(_salvage_load.global_position.x, 0.35)
+			else:
+				camera_director.focus_x(player.global_position.x, 0.35)
+		else:
+			hint_label.text = "Your survivor was incapacitated"
+			camera_director.focus_x(player.global_position.x, 0.35)
 
 	_update_result_card()
 
@@ -1221,7 +1252,7 @@ func _update_result_card() -> void:
 	]
 	var takeaway := _encounter_takeaway()
 	if _campaign_managed:
-		if not player.is_alive():
+		if not player.is_alive() or _objective_failed():
 			result_takeaway_label.text = "NO SALVAGE RECOVERED\n%s" % takeaway
 		elif _progression_reward > 0:
 			result_takeaway_label.text = "+%d SALVAGE SECURED\n%s" % [_progression_reward, takeaway]
@@ -1231,6 +1262,11 @@ func _update_result_card() -> void:
 		result_takeaway_label.text = takeaway
 
 func _encounter_takeaway() -> String:
+	if _current_mission != null and _current_mission.objective_mode == "protect_salvage":
+		if _objective_failed():
+			return "The protected load became the enemy win condition."
+		if _objective_completed():
+			return "Defence mattered: the Salvage survived while the raiders were cleared."
 	if _current_mission != null and _current_mission.objective_mode == "disable_relay" and _objective_completed():
 		return "Target priority mattered: the relay, not the defender, decided the mission."
 	if _player_environment_events > 0:
@@ -1276,7 +1312,9 @@ func _update_target_card() -> void:
 		_:
 			target_cover_label.text = "COVER: RUBBLE"
 
-	if _signal_relay != null and is_instance_valid(_signal_relay):
+	if _salvage_load != null and is_instance_valid(_salvage_load):
+		target_hazard_label.text = _salvage_load.status_text()
+	elif _signal_relay != null and is_instance_valid(_signal_relay):
 		target_hazard_label.text = _signal_relay.status_text()
 	elif _current_mission != null and _current_mission.power_cell_enabled:
 		target_hazard_label.text = "POWER CELL: SPENT" if power_cell.is_discharged else "POWER CELL: ACTIVE"
