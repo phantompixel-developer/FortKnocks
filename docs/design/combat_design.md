@@ -38,6 +38,21 @@ The player's next aiming turn may show the previous shot as a compact learning a
 
 The marker is hidden during projectile flight and enemy turns, then restored for the next player aiming phase. This supports deliberate correction without providing a solved trajectory or exact automatic targeting.
 
+## Campaign field rack
+
+Campaign progression constrains the player's carried projectile set without changing the underlying weapon rules:
+
+- **Scrap Bolt** is always carried as the core round.
+- The player selects exactly one specialist in Workshop:
+  - **Heavy Slug** for cover-breaking / force,
+  - **Shock Capsule** for radial displacement / environmental pressure.
+- Switching specialist has no Salvage cost.
+- Campaign battles expose only Scrap Bolt plus the selected specialist in the weapon tray.
+- Enemy AI retains access to its existing weapon-selection logic.
+- Standalone Encounter Proof keeps all three player weapons visible for development testing.
+
+This is a loadout-capacity decision, not a weapon-upgrade tree.
+
 ## Initial tactical weapon set
 The prototype proves three distinct shot roles. These are not a final inventory.
 
