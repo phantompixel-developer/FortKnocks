@@ -105,6 +105,28 @@ Working region escalation:
 
 These names/order are provisional. The durable design goal is escalation from desperate scavenging and civilian cover toward organised factions, heavy protection, complex environments, and recovered old-world technology.
 
+## Current Progression Shell foundation
+
+The first implementation batch now establishes the application loop around the proven combat.
+
+Implemented foundation:
+- Press Play opens an early greybox **Fort Knocks hub**, not the battle scene.
+- The hub presents current Salvage, Outskirts completion, active platform, Command Board, Garage, and Workshop.
+- **Command Board** reads campaign state and launches mission definitions.
+- The three accepted Encounter Proof missions currently seed the first campaign path:
+  1. Roadblock Trial — first-clear reward: **35 Salvage**.
+  2. High Ground — first-clear reward: **50 Salvage**.
+  3. Scrap Gate — first-clear reward: **70 Salvage**.
+- Clearing a route once unlocks the next route.
+- Cleared routes remain replayable but do not grant repeat Salvage in this foundation.
+- Defeat grants no Salvage and no unlock.
+- Battle reports a structured result to `App`; battle does not mutate progression directly.
+- Garage currently exposes the active **run-down compact** and previews the sedan/estate and pickup path.
+- Workshop currently exposes the three proven projectile roles without an upgrade economy.
+- Versioned local save state persists campaign completion/unlocks, Salvage, and current platform ID.
+
+This is deliberately a **foundation**, not the completed Milestone 2 economy. The next progression batch should make Salvage purchase a meaningful platform capability/choice rather than adding more menus.
+
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
 - Fort Knocks home/hub shell,
