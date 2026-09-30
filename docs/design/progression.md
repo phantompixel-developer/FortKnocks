@@ -189,7 +189,11 @@ Fort Knocks now changes from campaign completion as well as equipped platform:
 
 Platform/utility visuals layer on top of this campaign-state growth, so base progression is no longer represented only by vehicle selection.
 
-The Progression Shell now contains every structural element required by the Milestone 2 build list. It should not be expanded further by default. The remaining gate is local playtest acceptance of the full six-route campaign, platform/module decisions, field-rack decision, persistence, and visible Fort Knocks growth.
+The Progression Shell contains every structural element required by the Milestone 2 build list.
+
+**Accepted on 2026-09-30.** Local playtesting confirmed the six-route campaign loop, persistence, platform purchases/equipment, Pickup utility choice, specialist field rack, visible Fort Knocks growth, and the revised Spotter Rack precision-preview readability are sufficient to close Milestone 2.
+
+Do not expand this shell further by default. Additional platforms, modules, crew systems, missions, and progression depth belong to later content milestones after production identity is established.
 
 ## Small progression-shell target
 When the combat and encounter gates are passed, the first progression implementation should remain small:
