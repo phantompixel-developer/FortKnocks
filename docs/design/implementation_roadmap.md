@@ -116,15 +116,21 @@ The first Progression Shell foundation now includes:
 - first live Salvage purchase/equip flow,
 - Old Sedan / Estate unlock after High Ground for 80 Salvage,
 - equipped-platform cover durability/geometry applied in battle,
-- visible Fort Knocks garage/platform change after equipping the Sedan.
+- visible Fort Knocks garage/platform change after equipping the Sedan,
+- Pickup unlock/purchase/equip flow,
+- one Pickup utility slot with Spotter Rack vs Ballast Crates,
+- utility effects applied in battle,
+- six connected Outskirts encounters ending in a checkpoint-style combined-tactics mission,
+- campaign reconciliation for older pre-release saves when the route expands,
+- Pickup and equipped utility shown in Fort Knocks.
 
-The current three proven encounters are being reused as the initial Outskirts campaign seed. This is enough to validate the loop before expanding to the target 4–6 missions plus checkpoint encounter.
+The current Outskirts route now meets the intended 4–6 mission plus checkpoint scale without adding speculative combat systems.
 
 **Still required before Milestone 2 passes:**
-- the Pickup as the first platform that introduces a new utility/module capability rather than another cover-only upgrade,
-- expansion of the short campaign beyond the three proof encounters,
-- visible Fort Knocks change tied to progression,
-- local playtest acceptance of persistence and the full hub → battle → reward → hub loop.
+- local playtest acceptance of the Pickup precision-vs-protection choice,
+- local playtest acceptance of the six-route campaign/economy pacing,
+- confirmation that Fort Knocks visual progression feels meaningfully connected to platform growth,
+- decide whether the current Workshop projectile presentation is sufficient for this milestone or whether one small projectile/loadout progression choice is still needed.
 
 ### Campaign scope
 Start small: approximately 4–6 connected missions plus a checkpoint/boss-style encounter is enough to prove progression. Do not author dozens of missions yet.
