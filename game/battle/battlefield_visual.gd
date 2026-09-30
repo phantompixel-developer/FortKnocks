@@ -12,7 +12,7 @@ const SCRAP_STACK_OFFSETS: Array[Vector2] = [
 var _variant := 0
 
 func configure_variant(value: int) -> void:
-	_variant = clampi(value, 0, 2)
+	_variant = clampi(value, 0, 3)
 	queue_redraw()
 
 func _draw() -> void:
