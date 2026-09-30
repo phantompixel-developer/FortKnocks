@@ -53,6 +53,52 @@ func owned_platform_ids() -> Array:
 func owns_platform(platform_id: String) -> bool:
 	return owned_platform_ids().has(platform_id)
 
+func owned_module_ids() -> Array:
+	var inventory := _data.get("inventory", {}) as Dictionary
+	return (inventory.get("owned_module_ids", []) as Array).duplicate()
+
+func owns_module(module_id: String) -> bool:
+	return owned_module_ids().has(module_id)
+
+func equipped_module_id(platform_id: String) -> String:
+	var inventory := _data.get("inventory", {}) as Dictionary
+	var equipped := inventory.get("equipped_module_by_platform", {}) as Dictionary
+	return str(equipped.get(platform_id, ""))
+
+func purchase_module(module_id: String, cost: int) -> bool:
+	if module_id.is_empty() or cost < 0:
+		return false
+
+	var inventory := _data.get("inventory", {}) as Dictionary
+	var owned := inventory.get("owned_module_ids", []) as Array
+	if owned.has(module_id):
+		return true
+
+	var current_salvage := int(inventory.get("salvage", 0))
+	if current_salvage < cost:
+		return false
+
+	inventory["salvage"] = current_salvage - cost
+	owned.append(module_id)
+	inventory["owned_module_ids"] = owned
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
+func equip_module(platform_id: String, module_id: String) -> bool:
+	if not owns_platform(platform_id) or not owns_module(module_id):
+		return false
+
+	var inventory := _data.get("inventory", {}) as Dictionary
+	var equipped := inventory.get("equipped_module_by_platform", {}) as Dictionary
+	equipped[platform_id] = module_id
+	inventory["equipped_module_by_platform"] = equipped
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
 func purchase_platform(platform_id: String, cost: int) -> bool:
 	if platform_id.is_empty() or cost < 0:
 		return false
@@ -102,6 +148,22 @@ func is_mission_completed(mission_id: String) -> bool:
 func is_mission_unlocked(mission_id: String) -> bool:
 	return unlocked_missions().has(mission_id)
 
+func unlock_mission(mission_id: String) -> bool:
+	if mission_id.is_empty():
+		return false
+
+	var campaign := _data.get("campaign", {}) as Dictionary
+	var unlocked := campaign.get("unlocked_missions", [STARTING_MISSION_ID]) as Array
+	if unlocked.has(mission_id):
+		return false
+
+	unlocked.append(mission_id)
+	campaign["unlocked_missions"] = unlocked
+	_data["campaign"] = campaign
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
 func complete_mission(
 	mission_id: String,
 	salvage_reward: int,
@@ -145,6 +207,8 @@ func _default_data() -> Dictionary:
 			"salvage": 0,
 			"platform_id": "run_down_compact",
 			"owned_platform_ids": ["run_down_compact"],
+			"owned_module_ids": [],
+			"equipped_module_by_platform": {},
 		},
 		"crew": {},
 		"settings": {},
@@ -196,6 +260,11 @@ func _normalize() -> void:
 		inventory["platform_id"] = "run_down_compact"
 	if not owned_platforms.has(str(inventory["platform_id"])):
 		inventory["platform_id"] = "run_down_compact"
+
+	if typeof(inventory.get("owned_module_ids", null)) != TYPE_ARRAY:
+		inventory["owned_module_ids"] = []
+	if typeof(inventory.get("equipped_module_by_platform", null)) != TYPE_DICTIONARY:
+		inventory["equipped_module_by_platform"] = {}
 
 	inventory["owned_platform_ids"] = owned_platforms
 	_data["save_version"] = CURRENT_SAVE_VERSION
