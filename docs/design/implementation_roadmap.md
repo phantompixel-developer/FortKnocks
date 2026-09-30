@@ -122,15 +122,21 @@ The first Progression Shell foundation now includes:
 - utility effects applied in battle,
 - six connected Outskirts encounters ending in a checkpoint-style combined-tactics mission,
 - campaign reconciliation for older pre-release saves when the route expands,
-- Pickup and equipped utility shown in Fort Knocks.
+- Pickup and equipped utility shown in Fort Knocks,
+- campaign field rack: Scrap Bolt + one selected specialist (Heavy Slug or Shock Capsule),
+- specialist choice persisted and applied only to campaign battles,
+- four Fort Knocks visual stages driven by Outskirts completion in addition to platform/utility visuals.
 
-The current Outskirts route now meets the intended 4–6 mission plus checkpoint scale without adding speculative combat systems.
+The current Outskirts route now meets the intended 4–6 mission plus checkpoint scale without adding speculative combat systems. Existing projectile roles are now integrated into a real loadout choice rather than only listed in Workshop.
+
+**Milestone 2 implementation scope is now structurally complete.**
 
 **Still required before Milestone 2 passes:**
 - local playtest acceptance of the Pickup precision-vs-protection choice,
+- local playtest acceptance of Heavy Slug vs Shock Capsule as the specialist-slot decision,
 - local playtest acceptance of the six-route campaign/economy pacing,
-- confirmation that Fort Knocks visual progression feels meaningfully connected to platform growth,
-- decide whether the current Workshop projectile presentation is sufficient for this milestone or whether one small projectile/loadout progression choice is still needed.
+- confirmation that Fort Knocks' completion-driven visual stages read as meaningful growth,
+- persistence validation across restart for campaign, platforms, modules, specialist loadout, and Salvage.
 
 ### Campaign scope
 Start small: approximately 4–6 connected missions plus a checkpoint/boss-style encounter is enough to prove progression. Do not author dozens of missions yet.
