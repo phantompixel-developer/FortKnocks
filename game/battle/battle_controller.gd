@@ -23,6 +23,7 @@ const ShockCapsule := preload("res://game/weapons/shock_capsule.tres")
 const ArenaPlatformScript := preload("res://game/battle/arena_platform.gd")
 const CollapsibleBarrierScript := preload("res://game/battle/collapsible_barrier.gd")
 const SignalRelayScript := preload("res://game/battle/signal_relay.gd")
+const SalvageLoadScript := preload("res://game/battle/salvage_load.gd")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
@@ -99,6 +100,7 @@ var _feedback_tween: Tween
 var _current_mission: MissionDefinition
 var _collapsible_barrier: CollapsibleBarrier
 var _signal_relay: SignalRelay
+var _salvage_load: SalvageLoad
 var _missions: Array[MissionDefinition] = []
 var _campaign_managed := false
 var _prepared_mission: MissionDefinition
@@ -310,6 +312,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 
 	_collapsible_barrier = null
 	_signal_relay = null
+	_salvage_load = null
 	for rect in definition.platform_rects:
 		var platform := ArenaPlatformScript.new() as ArenaPlatform
 		if platform == null:
@@ -331,6 +334,14 @@ func _configure_mission(definition: MissionDefinition) -> void:
 			_signal_relay.max_health = maxi(1, definition.signal_relay_health)
 			_signal_relay.destroyed.connect(_on_signal_relay_destroyed)
 			encounter_geometry.add_child(_signal_relay)
+
+	if definition.salvage_load_enabled:
+		_salvage_load = SalvageLoadScript.new() as SalvageLoad
+		if _salvage_load != null:
+			_salvage_load.position = definition.salvage_load_position
+			_salvage_load.max_health = maxi(1, definition.salvage_load_health)
+			_salvage_load.destroyed.connect(_on_salvage_load_destroyed)
+			encounter_geometry.add_child(_salvage_load)
 
 	if battlefield_visual.has_method("configure_variant"):
 		battlefield_visual.call("configure_variant", definition.visual_variant)
