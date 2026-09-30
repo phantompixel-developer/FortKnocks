@@ -152,7 +152,15 @@ The Pickup capability proof and short Outskirts campaign expansion are now imple
   Roadblock Trial → High Ground → Scrap Gate → Broken Span → Depot Line → Outskirts Checkpoint.
 - Existing pre-release saves reconcile completed missions to newly added next-route unlocks, so prior Scrap Gate clears automatically expose Broken Span.
 
-Milestone 2 is now close to its gate. The next decision should follow local playtesting of Pickup precision-vs-protection, six-route pacing, and Fort Knocks progression rather than adding another major system by default.
+Milestone 2 implementation scope is now structurally complete:
+
+- campaign field rack is live: Scrap Bolt + one Workshop-selected specialist (Heavy Slug or Shock Capsule),
+- specialist choice persists and campaign battles expose only those two player weapons,
+- standalone Encounter Proof retains all three weapons,
+- Fort Knocks now has completion-driven visual stages at 0–1, 2–3, 4–5, and 6 Outskirts clears,
+- platform and utility visuals layer on top of those base-growth stages.
+
+Do not add another major progression/combat system by default. The next decision should follow local playtesting of Pickup precision-vs-protection, specialist loadout choice, six-route pacing, persistence, and visible Fort Knocks growth. If accepted, Milestone 2 should be closed and work should move to Milestone 3 — Identity / Production Presentation.
 
 ## Portrait UX decisions
 
