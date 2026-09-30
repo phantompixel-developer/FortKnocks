@@ -29,7 +29,8 @@ Current v1 shape:
   },
   "inventory": {
     "salvage": 0,
-    "platform_id": "run_down_compact"
+    "platform_id": "run_down_compact",
+    "owned_platform_ids": ["run_down_compact"]
   },
   "crew": {},
   "settings": {}
@@ -52,12 +53,13 @@ These rules exist to prove campaign progression without introducing a grind/farm
 
 ## Inventory foundation
 
-The only live progression inventory values are:
+The live progression inventory values are:
 
 - `salvage` — the single general progression resource.
-- `platform_id` — currently `run_down_compact`.
+- `platform_id` — the currently equipped combat platform.
+- `owned_platform_ids` — permanently acquired platform definitions.
 
-Garage purchase/equip behavior is not implemented yet. The field exists because the first three combat-platform families are the next meaningful progression step.
+Garage purchase/equip behavior is now live for the first platform upgrade. Purchasing deducts Salvage once, records ownership, and equipment changes persist independently. Existing v1 saves that predate `owned_platform_ids` are normalized to own `run_down_compact` without requiring a schema-version bump because this field was added during the same pre-release v1 foundation phase.
 
 ## App ownership
 
