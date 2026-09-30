@@ -22,6 +22,7 @@ CombatPlatform
 - purchase cost,
 - campaign unlock requirement,
 - whether the platform is currently purchasable,
+- utility-slot capacity,
 - cover durability,
 - cover collision/visual size,
 - cover colour/profile.
@@ -29,7 +30,7 @@ CombatPlatform
 The first live definitions are:
 - `run_down_compact` — 150 cover / 240-wide profile,
 - `old_sedan` — 230 cover / 300-wide profile / 80 Salvage,
-- `pickup` — 260 cover / 320-wide profile / 130 Salvage / one utility slot.
+- `pickup` — 260 cover / 320-wide profile / 130 Salvage / `utility_slot_count = 1`.
 
 Do not add mass classes, crew slots, module slots, or damage-zone schemas until the next platform actually needs them.
 
