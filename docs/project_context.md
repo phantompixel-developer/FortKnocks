@@ -192,9 +192,18 @@ The next Milestone 4 batch adds the **Improvised Technical** after Suburbs Cross
 - **Twin Field Rack**: Bolt + Heavy Slug + Shock Capsule in the same campaign battle,
 - **Stabilizer Rig**: 55% less crew displacement while retaining the one-specialist field-rack rule,
 - distinct Technical presentation in battle and Fort Knocks,
-- a fourth Fort Knocks growth stage after both current Suburbs missions are cleared.
+- a heavier-fabrication Fort Knocks stage after Crossroads.
 
-The current test is now broader than encounter variety: local playtesting should confirm that alternate objectives, enemy tactics, and the Technical's versatility-vs-stability choice are all strategically legible before the Suburbs route or platform ladder expands further.
+The next Suburbs batch extends the route to four missions:
+- **Loaded Up** protects a destructible Salvage Load while clearing a Raider crew,
+- **Hot Cargo** repeats the objective beside a live power cell so the player's own environmental choices can threaten the load,
+- **Raider** tactics can redirect enemy fire toward the protected objective,
+- Salvage Load destruction is an immediate defeat even when the survivor remains alive,
+- the protected load accepts normal direct, Shock-pulse, and power-surge damage,
+- completing all four current Suburbs missions adds a secured storage bay to Fort Knocks,
+- the hub now reports Suburbs progress as 0–4 clears after Outskirts.
+
+The current test is now broader than encounter variety: local playtesting should confirm that alternate objectives, enemy tactics, protected-objective pressure, and the Technical's versatility-vs-stability choice are all strategically legible before the Suburbs route or platform ladder expands further.
 
 ## Portrait UX decisions
 
@@ -334,7 +343,7 @@ Milestone order is deliberate:
 2. **Encounter Proof — PASSED** — multiple greybox layouts and environmental interactions accepted as creating repeatable tactical decisions.
 3. **Progression Shell — PASSED** — Fort Knocks hub, six-route Outskirts campaign, Salvage, platform/module/loadout progression, save data and visible hub growth accepted through local playtesting.
 4. **Identity / Production Presentation — PASSED** — representative survivor, platform, environment, UI, audio, VFX and world-identity pipelines are merged and accepted as the content baseline.
-5. **Content Expansion — ACTIVE** — first Suburbs slice adds alternate objectives and readable enemy tactics before broader content scaling.
+5. **Content Expansion — ACTIVE** — four-mission Suburbs slice now proves relay destruction, protected-objective defense, readable enemy tactics, and the Improvised Technical trade-off before broader content scaling.
 6. **Mobile Shipping — FUTURE** — balance, performance, device validation, Android/iOS release work.
 
 Do not skip a milestone because later systems are more exciting. See `docs/design/implementation_roadmap.md`.
