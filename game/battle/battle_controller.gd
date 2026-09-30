@@ -446,6 +446,16 @@ func _update_weapon_button_visibility() -> void:
 	heavy_slug_button.visible = _is_weapon_allowed(HeavySlug as WeaponDefinition)
 	shock_capsule_button.visible = _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
+	if _campaign_managed and not _campaign_weapon_ids.is_empty():
+		weapon_tray.offset_bottom = 308.0
+		if shock_capsule_button.visible and not heavy_slug_button.visible:
+			shock_capsule_button.offset_top = 92.0
+			shock_capsule_button.offset_bottom = 134.0
+	else:
+		weapon_tray.offset_bottom = 358.0
+		shock_capsule_button.offset_top = 144.0
+		shock_capsule_button.offset_bottom = 186.0
+
 func _set_weapon_choice_ui_visible(is_visible: bool) -> void:
 	weapon_tray.visible = is_visible
 	weapon_info_card.visible = is_visible
