@@ -3,6 +3,11 @@ extends Node2D
 const WORLD_WIDTH := 2160.0
 const WORLD_HEIGHT := 1280.0
 const ROAD_TOP := 930.0
+const SCRAP_STACK_OFFSETS: Array[Vector2] = [
+	Vector2(0, 0),
+	Vector2(32, -44),
+	Vector2(86, -9),
+]
 
 var _variant := 0
 
@@ -109,8 +114,8 @@ func _draw_salvage_backdrop() -> void:
 	draw_line(Vector2(955, 640), Vector2(820, 760), Color("303a36"), 10.0)
 
 func _draw_scrap_stack(origin: Vector2) -> void:
-	for offset in [Vector2(0, 0), Vector2(32, -44), Vector2(86, -9)]:
-		var p := origin + offset
+	for offset in SCRAP_STACK_OFFSETS:
+		var p: Vector2 = origin + offset
 		draw_rect(Rect2(p.x, p.y - 48, 132, 42), Color("4b5550"))
 		draw_circle(Vector2(p.x + 28, p.y - 4), 18.0, Color("252c29"))
 		draw_circle(Vector2(p.x + 105, p.y - 4), 18.0, Color("252c29"))
