@@ -107,7 +107,7 @@ It now includes:
 
 Local playtesting on 2026-09-30 confirmed that the combat loop and the three Encounter Proof layouts feel good and create sufficiently distinct firing problems. **Combat Prototype V1 and Milestone 1B — Encounter Proof are accepted as passed.**
 
-The active development milestone is now **Milestone 2 — Progression Shell**. New work should connect the proven battles into the smallest complete Fort Knocks game loop rather than continuing to expand the combat prototype with speculative weapons, encounters, or modifiers.
+Milestone 2 — Progression Shell is now accepted through local playtesting. The active development milestone is **Milestone 3 — Identity / Production Presentation**. New work should improve the visual/audio/world identity of the proven game rather than expanding the Progression Shell with speculative systems.
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
 
@@ -160,7 +160,9 @@ Milestone 2 implementation scope is now structurally complete:
 - Fort Knocks now has completion-driven visual stages at 0–1, 2–3, 4–5, and 6 Outskirts clears,
 - platform and utility visuals layer on top of those base-growth stages.
 
-Do not add another major progression/combat system by default. The next decision should follow local playtesting of Pickup precision-vs-protection, specialist loadout choice, six-route pacing, persistence, and visible Fort Knocks growth. If accepted, Milestone 2 should be closed and work should move to Milestone 3 — Identity / Production Presentation.
+Local playtesting on 2026-09-30 accepted the Progression Shell, including the revised Spotter Rack precision-preview readability. **Milestone 2 is passed.**
+
+Do not add another major progression/combat system by default. The active milestone is now **Milestone 3 — Identity / Production Presentation**: production survivor/platform/environment direction, cohesive UI skin, audio/VFX, faction/world presentation, and visible Fort Knocks identity around the proven gameplay.
 
 ## Portrait UX decisions
 
@@ -298,8 +300,8 @@ Milestone order is deliberate:
 
 1. **Combat Prototype V1 — PASSED** — aiming, camera, impact, destruction, projectile roles, enemy response, and portrait readability accepted through local playtesting.
 2. **Encounter Proof — PASSED** — multiple greybox layouts and environmental interactions accepted as creating repeatable tactical decisions.
-3. **Progression Shell — ACTIVE** — Fort Knocks hub, short campaign path, Salvage, small platform progression, save data.
-4. **Identity / Production Art** — survivor, vehicle, environment, UI, audio, VFX, faction/world presentation.
+3. **Progression Shell — PASSED** — Fort Knocks hub, six-route Outskirts campaign, Salvage, platform/module/loadout progression, save data and visible hub growth accepted through local playtesting.
+4. **Identity / Production Art — ACTIVE** — survivor, vehicle, environment, UI, audio, VFX, faction/world presentation.
 5. **Content Expansion / Shipping** — mission variety, balance, performance, device validation, Android/iOS release work.
 
 Do not skip a milestone because later systems are more exciting. See `docs/design/implementation_roadmap.md`.
