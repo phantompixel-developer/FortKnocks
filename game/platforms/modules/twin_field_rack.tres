@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PlatformModuleDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/platforms/platform_module_definition.gd" id="1_module"]
+
+[resource]
+script = ExtResource("1_module")
+id = "twin_field_rack"
+display_name = "Twin Field Rack"
+tactical_summary = "Carry Heavy Slug + Shock Capsule together • versatility over stability"
+purchase_cost = 55
+compatible_platform_ids = Array[String](["improvised_technical"])
+carry_both_specialists = true
+crew_knockback_multiplier = 1.0
