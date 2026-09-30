@@ -81,7 +81,7 @@ The proof set demonstrated:
 
 ## Milestone 2 — Progression Shell
 
-**Status: ACTIVE**
+**Status: PASSED**
 
 ### Goal
 Connect proven battles into the smallest complete game loop.
@@ -129,14 +129,23 @@ The first Progression Shell foundation now includes:
 
 The current Outskirts route now meets the intended 4–6 mission plus checkpoint scale without adding speculative combat systems. Existing projectile roles are now integrated into a real loadout choice rather than only listed in Workshop.
 
-**Milestone 2 implementation scope is now structurally complete.**
+**Milestone 2 implementation scope is complete and accepted.**
 
-**Still required before Milestone 2 passes:**
-- local playtest acceptance of the Pickup precision-vs-protection choice,
-- local playtest acceptance of Heavy Slug vs Shock Capsule as the specialist-slot decision,
-- local playtest acceptance of the six-route campaign/economy pacing,
-- confirmation that Fort Knocks' completion-driven visual stages read as meaningful growth,
-- persistence validation across restart for campaign, platforms, modules, specialist loadout, and Salvage.
+### Local acceptance — 2026-09-30
+
+Local playtesting confirmed the Progression Shell is ready to advance:
+- hub → Command Board → battle → reward → hub flow works,
+- campaign progress and Salvage persist,
+- Sedan and Pickup ownership/equip progression works,
+- Pickup utility modules persist and materially alter battle,
+- Spotter Rack now has a clearly perceptible precision-preview advantage over the normal trajectory guide,
+- Ballast Crates provide the intended protection alternative,
+- specialist field-rack selection works,
+- six-route Outskirts progression is usable,
+- Fort Knocks visibly changes as campaign/platform progression advances.
+
+### Gate
+**Passed.** Do not continue expanding the Progression Shell by default. New work should move to Milestone 3 and improve identity/presentation around the now-proven systems.
 
 ### Campaign scope
 Start small: approximately 4–6 connected missions plus a checkpoint/boss-style encounter is enough to prove progression. Do not author dozens of missions yet.
@@ -162,6 +171,8 @@ Progression should cause meaningful decisions and visible Fort Knocks transforma
 ---
 
 ## Milestone 3 — Identity / Production Presentation
+
+**Status: ACTIVE**
 
 ### Goal
 Turn the proven game into recognisably **Fort Knocks**.
