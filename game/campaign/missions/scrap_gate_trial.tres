@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "scrap_gate_trial"
+display_name = "Scrap Gate"
+test_focus = "SHORT RANGE • BREAKABLE GATE"
+briefing = "A closer enemy position sits behind a reinforced scrap gate while your firing point is raised. Judge the shorter power window, break the gate, or work around it."
+objective_text = "INCAPACITATE ENEMY"
+feature_preview_enabled = true
+feature_preview_position = Vector2(1050, 900)
+feature_preview_text = "COLLAPSIBLE SCRAP GATE • BREAK OR ARC OVER"
+player_position = Vector2(310, 945)
+player_cover_position = Vector2(530, 905)
+enemy_position = Vector2(1510, 1040)
+enemy_cover_position = Vector2(1340, 1000)
+roadblock_enabled = false
+roadblock_position = Vector2(1080, 958)
+power_cell_enabled = false
+power_cell_position = Vector2(1715, 1028)
+collapsible_barrier_enabled = true
+collapsible_barrier_position = Vector2(1050, 900)
+platform_rects = Array[Rect2]([Rect2(150, 945, 560, 90)])
+visual_variant = 2

@@ -16,13 +16,21 @@ const DamagePopupScript := preload("res://game/battle/damage_popup.gd")
 const ScrapBolt := preload("res://game/weapons/scrap_bolt.tres")
 const HeavySlug := preload("res://game/weapons/heavy_slug.tres")
 const ShockCapsule := preload("res://game/weapons/shock_capsule.tres")
+const ArenaPlatformScript := preload("res://game/battle/arena_platform.gd")
+const CollapsibleBarrierScript := preload("res://game/battle/collapsible_barrier.gd")
+const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
 const MIN_SPEED := 520.0
 const MAX_SPEED := 1380.0
+const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 
 @onready var camera_director: BattleCameraDirector = $CameraDirector
+@onready var world: Node2D = $World
+@onready var battlefield_visual: Node2D = $World/BattlefieldVisual
+@onready var roadblock: CentralRoadblock = $World/CentralRoadblock
+@onready var encounter_geometry: Node2D = $World/EncounterGeometry
 @onready var player: Combatant = $World/Player
 @onready var enemy: Combatant = $World/Enemy
 @onready var player_cover: DestructibleCover = $World/PlayerCover
@@ -41,20 +49,36 @@ const MAX_SPEED := 1380.0
 @onready var hint_label: Label = $HUD/Root/HintLabel
 @onready var inspect_button: Button = $HUD/Root/InspectButton
 @onready var weapon_tray: ColorRect = $HUD/Root/WeaponTray
+@onready var weapon_info_card: ColorRect = $HUD/Root/WeaponInfoCard
 @onready var control_deck: ColorRect = $HUD/Root/ControlDeck
 @onready var target_card: ColorRect = $HUD/Root/TargetCard
+@onready var target_title_label: Label = $HUD/Root/TargetCard/Title
 @onready var target_enemy_label: Label = $HUD/Root/TargetCard/EnemyInfoLabel
 @onready var target_cover_label: Label = $HUD/Root/TargetCard/CoverInfoLabel
 @onready var target_hazard_label: Label = $HUD/Root/TargetCard/HazardInfoLabel
-@onready var weapon_name_label: Label = $HUD/Root/ControlDeck/WeaponNameLabel
-@onready var weapon_role_label: Label = $HUD/Root/ControlDeck/WeaponRoleLabel
+@onready var weapon_name_label: Label = $HUD/Root/WeaponInfoCard/WeaponNameLabel
+@onready var weapon_role_label: Label = $HUD/Root/WeaponInfoCard/WeaponRoleLabel
 @onready var power_label: Label = $HUD/Root/ControlDeck/PowerLabel
 @onready var angle_label: Label = $HUD/Root/ControlDeck/AngleLabel
 @onready var last_shot_label: Label = $HUD/Root/ControlDeck/LastShotLabel
 @onready var scrap_bolt_button: Button = $HUD/Root/WeaponTray/ScrapBolt
 @onready var heavy_slug_button: Button = $HUD/Root/WeaponTray/HeavySlug
 @onready var shock_capsule_button: Button = $HUD/Root/WeaponTray/ShockCapsule
+@onready var mission_brief_card: ColorRect = $HUD/Root/MissionBriefCard
+@onready var mission_brief_title: Label = $HUD/Root/MissionBriefCard/Title
+@onready var mission_brief_focus: Label = $HUD/Root/MissionBriefCard/Focus
+@onready var mission_brief_text: Label = $HUD/Root/MissionBriefCard/Briefing
+@onready var mission_brief_objective: Label = $HUD/Root/MissionBriefCard/Objective
+@onready var encounter_picker: ColorRect = $HUD/Root/EncounterPicker
+@onready var picker_briefing_label: Label = $HUD/Root/EncounterPicker/BriefingLabel
+@onready var mission_button_list: VBoxContainer = $HUD/Root/EncounterPicker/MissionButtons
+@onready var result_card: ColorRect = $HUD/Root/ResultCard
+@onready var result_title_label: Label = $HUD/Root/ResultCard/Title
+@onready var result_encounter_label: Label = $HUD/Root/ResultCard/EncounterName
+@onready var result_stats_label: Label = $HUD/Root/ResultCard/Stats
+@onready var result_takeaway_label: Label = $HUD/Root/ResultCard/Takeaway
 @onready var restart_button: Button = $HUD/Root/RestartButton
+@onready var change_encounter_button: Button = $HUD/Root/ChangeEncounterButton
 
 var phase := Phase.INTRO
 var _dragging := false
@@ -66,6 +90,19 @@ var _is_inspecting := false
 var _active_shooter: Combatant
 var _selected_weapon: WeaponDefinition
 var _feedback_tween: Tween
+var _current_mission: MissionDefinition
+var _collapsible_barrier: CollapsibleBarrier
+var _missions: Array[MissionDefinition] = []
+
+var _player_shots_fired := 0
+var _player_direct_hits := 0
+var _player_cover_hits := 0
+var _player_environment_events := 0
+var _weapon_shots := {
+	"scrap_bolt": 0,
+	"heavy_slug": 0,
+	"shock_capsule": 0,
+}
 
 var _pending_player_power := 0.0
 var _pending_player_angle := 0.0
@@ -83,6 +120,7 @@ var _enemy_target_x := 0.0
 
 func _ready() -> void:
 	_selected_weapon = ScrapBolt as WeaponDefinition
+	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
@@ -91,24 +129,142 @@ func _ready() -> void:
 	heavy_slug_button.pressed.connect(func() -> void: _select_weapon(HeavySlug as WeaponDefinition))
 	shock_capsule_button.pressed.connect(func() -> void: _select_weapon(ShockCapsule as WeaponDefinition))
 	restart_button.pressed.connect(_restart)
+	change_encounter_button.pressed.connect(_change_encounter)
 
+	world.visible = false
+	health_label.visible = false
+	enemy_health_label.visible = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
+	weapon_info_card.visible = false
 	control_deck.visible = false
 	target_card.visible = false
+	mission_brief_card.visible = false
+	encounter_picker.visible = true
+	result_card.visible = false
 	restart_button.visible = false
+	change_encounter_button.visible = false
 	feedback_label.visible = false
 	last_impact_marker.clear_marker()
 
+	_build_encounter_picker()
 	_update_weapon_panel()
 	_update_weapon_buttons()
 	_set_weapon_buttons_enabled(false)
 	_update_last_shot_display()
 	_update_hud()
+	_show_encounter_picker()
+	if get_tree().root.has_meta(PENDING_MISSION_META):
+		var pending_id := str(get_tree().root.get_meta(PENDING_MISSION_META))
+		get_tree().root.remove_meta(PENDING_MISSION_META)
+		if not pending_id.is_empty():
+			call_deferred("_resume_pending_mission", pending_id)
+
+func _show_encounter_picker() -> void:
+	phase = Phase.INTRO
+	world.visible = false
+	encounter_picker.visible = true
+	mission_brief_card.visible = false
+	result_card.visible = false
+	restart_button.visible = false
+	change_encounter_button.visible = false
+	health_label.visible = false
+	enemy_health_label.visible = false
+	turn_label.text = "ENCOUNTER PROOF"
+	picker_briefing_label.text = "Choose one of %d greybox battle problems. Each uses the same weapons and combat rules." % _missions.size()
+	hint_label.text = "Select an encounter to begin"
+
+func _resume_pending_mission(mission_id: String) -> void:
+	var definition := _mission_for_id(mission_id)
+	if definition != null:
+		_begin_mission(definition)
+
+func _build_encounter_picker() -> void:
+	for child in mission_button_list.get_children():
+		child.queue_free()
+
+	for index in range(_missions.size()):
+		var mission := _missions[index]
+		var button := Button.new()
+		button.custom_minimum_size = Vector2(0.0, 74.0)
+		button.text = "%d  %s\n%s" % [index + 1, mission.display_name.to_upper(), mission.test_focus]
+		button.add_theme_font_size_override("font_size", 16)
+		button.pressed.connect(_begin_mission.bind(mission))
+		mission_button_list.add_child(button)
+
+func _mission_for_id(mission_id: String) -> MissionDefinition:
+	for mission in _missions:
+		if mission.id == mission_id:
+			return mission
+	return null
+
+func _begin_mission(definition: MissionDefinition) -> void:
+	if definition == null or not encounter_picker.visible:
+		return
+
+	_current_mission = definition
+	_reset_encounter_metrics()
+	_configure_mission(definition)
+	encounter_picker.visible = false
+	result_card.visible = false
+	restart_button.visible = false
+	change_encounter_button.visible = false
+	world.visible = true
+	health_label.visible = true
+	enemy_health_label.visible = true
+	turn_label.text = definition.display_name.to_upper()
+	hint_label.text = definition.briefing
+	_update_hud()
+	_show_mission_brief(definition)
 
 	await get_tree().process_frame
+	await get_tree().create_timer(1.15).timeout
+	mission_brief_card.visible = false
 	_start_player_turn(true)
+
+func _configure_mission(definition: MissionDefinition) -> void:
+	player.global_position = definition.player_position
+	player_cover.global_position = definition.player_cover_position
+	enemy.global_position = definition.enemy_position
+	enemy_cover.global_position = definition.enemy_cover_position
+
+	roadblock.global_position = definition.roadblock_position
+	roadblock.visible = definition.roadblock_enabled
+	roadblock.collision_layer = 1 if definition.roadblock_enabled else 0
+	roadblock.collision_mask = 1 if definition.roadblock_enabled else 0
+	var roadblock_shape := roadblock.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if roadblock_shape != null:
+		roadblock_shape.disabled = not definition.roadblock_enabled
+
+	power_cell.global_position = definition.power_cell_position
+	power_cell.visible = definition.power_cell_enabled
+	power_cell.collision_layer = 1 if definition.power_cell_enabled else 0
+	power_cell.collision_mask = 1 if definition.power_cell_enabled else 0
+	var power_cell_shape := power_cell.get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if power_cell_shape != null:
+		power_cell_shape.disabled = not definition.power_cell_enabled
+
+	for child in encounter_geometry.get_children():
+		child.queue_free()
+
+	_collapsible_barrier = null
+	for rect in definition.platform_rects:
+		var platform := ArenaPlatformScript.new() as ArenaPlatform
+		if platform == null:
+			continue
+		platform.configure(rect)
+		encounter_geometry.add_child(platform)
+
+	if definition.collapsible_barrier_enabled:
+		_collapsible_barrier = CollapsibleBarrierScript.new() as CollapsibleBarrier
+		if _collapsible_barrier != null:
+			_collapsible_barrier.position = definition.collapsible_barrier_position
+			_collapsible_barrier.collapsed.connect(_on_collapsible_barrier_collapsed)
+			encounter_geometry.add_child(_collapsible_barrier)
+
+	if battlefield_visual.has_method("configure_variant"):
+		battlefield_visual.call("configure_variant", definition.visual_variant)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if phase != Phase.PLAYER_AIM or _is_inspecting:
@@ -135,7 +291,7 @@ func _begin_drag(screen_position: Vector2) -> void:
 
 	_dragging = true
 	_drag_start = screen_position
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
 	inspect_button.visible = false
 	_aim_power = 0.0
 	_aim_angle_degrees = 0.0
@@ -180,7 +336,7 @@ func _end_drag(screen_position: Vector2) -> void:
 
 	if _aim_power * MAX_DRAG < MIN_FIRE_DRAG:
 		aim_guide.clear()
-		weapon_tray.visible = true
+		_set_weapon_choice_ui_visible(true)
 		inspect_button.visible = true
 		power_label.text = "POWER —"
 		angle_label.text = "ANGLE —"
@@ -228,6 +384,10 @@ func _update_weapon_buttons() -> void:
 	heavy_slug_button.button_pressed = _selected_weapon.id == "heavy_slug"
 	shock_capsule_button.button_pressed = _selected_weapon.id == "shock_capsule"
 
+func _set_weapon_choice_ui_visible(is_visible: bool) -> void:
+	weapon_tray.visible = is_visible
+	weapon_info_card.visible = is_visible
+
 func _set_weapon_buttons_enabled(enabled: bool) -> void:
 	scrap_bolt_button.disabled = not enabled
 	heavy_slug_button.disabled = not enabled
@@ -242,7 +402,7 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	inspect_button.visible = false
 	inspect_button.disabled = false
 	enemy_locator_label.visible = false
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = false
 	_set_weapon_buttons_enabled(false)
@@ -253,6 +413,13 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	turn_label.text = "YOUR TURN"
 
 	if show_enemy_preview:
+		if _current_mission != null and _current_mission.feature_preview_enabled:
+			hint_label.text = _current_mission.feature_preview_text
+			camera_director.focus_x(_current_mission.feature_preview_position.x, 0.28)
+			await get_tree().create_timer(0.58).timeout
+			if phase == Phase.GAME_OVER:
+				return
+
 		hint_label.text = "Enemy position"
 		target_card.visible = true
 		_update_target_card()
@@ -271,7 +438,7 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	phase = Phase.PLAYER_AIM
 	inspect_button.visible = true
 	enemy_locator_label.visible = true
-	weapon_tray.visible = true
+	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
 	target_card.visible = false
 	if last_impact_marker.has_valid_marker:
@@ -291,7 +458,7 @@ func _inspect_enemy() -> void:
 	_is_inspecting = true
 	inspect_button.disabled = true
 	enemy_locator_label.visible = false
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = true
 	_update_target_card()
@@ -315,7 +482,7 @@ func _inspect_enemy() -> void:
 	hint_label.text = previous_hint
 	inspect_button.disabled = false
 	enemy_locator_label.visible = true
-	weapon_tray.visible = true
+	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
 	target_card.visible = false
 	_update_enemy_locator()
@@ -330,7 +497,7 @@ func _start_enemy_turn() -> void:
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = false
 	last_impact_marker.visible = false
@@ -373,12 +540,15 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	if shooter == player:
 		_pending_player_power = _aim_power
 		_pending_player_angle = _aim_angle_degrees
+		_player_shots_fired += 1
+		if weapon != null and _weapon_shots.has(weapon.id):
+			_weapon_shots[weapon.id] = int(_weapon_shots[weapon.id]) + 1
 
 	phase = Phase.PROJECTILE_FLIGHT
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = false
 	last_impact_marker.visible = false
@@ -448,6 +618,18 @@ func _on_projectile_resolved(
 			_show_feedback("COVER HIT")
 			hint_label.text = "Cover damaged"
 			camera_director.impact_impulse(0.72, direction)
+	elif hit_body is CollapsibleBarrier:
+		var gate := hit_body as CollapsibleBarrier
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
+		_spawn_damage_popup(impact_position + Vector2(0.0, -80.0), "-%d GATE" % damage_amount, Color("d6b36f"))
+		if gate.is_collapsed:
+			_show_feedback("SCRAP GATE DOWN")
+			hint_label.text = "The firing line changed"
+			camera_director.impact_impulse(0.9, direction)
+		else:
+			_show_feedback("SCRAP GATE HIT")
+			hint_label.text = "The gate is still standing"
+			camera_director.impact_impulse(0.62, direction)
 	elif hit_body is UnstablePowerCell:
 		_show_feedback("POWER CELL HIT")
 		hint_label.text = "The unstable cell discharged"
@@ -485,6 +667,11 @@ func _record_player_shot(impact_position: Vector2, hit_body: Node) -> void:
 	_last_player_angle = _pending_player_angle
 	_last_player_result = _shot_result_name(hit_body)
 
+	if hit_body is Combatant:
+		_player_direct_hits += 1
+	elif hit_body is DestructibleCover:
+		_player_cover_hits += 1
+
 	if hit_body == null:
 		last_impact_marker.clear_marker()
 	else:
@@ -499,6 +686,8 @@ func _shot_result_name(hit_body: Node) -> String:
 		return "COVER"
 	if hit_body is UnstablePowerCell:
 		return "CELL"
+	if hit_body is CollapsibleBarrier:
+		return "GATE"
 	if hit_body is CentralRoadblock:
 		return "ROADBLOCK"
 	if hit_body.is_in_group("ground_surface"):
@@ -522,8 +711,10 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 	candidates.append(enemy)
 	candidates.append(player_cover)
 	candidates.append(enemy_cover)
-	if not power_cell.is_discharged:
+	if _current_mission != null and _current_mission.power_cell_enabled and not power_cell.is_discharged:
 		candidates.append(power_cell)
+	if _collapsible_barrier != null and is_instance_valid(_collapsible_barrier) and not _collapsible_barrier.is_collapsed:
+		candidates.append(_collapsible_barrier)
 
 	for target in candidates:
 		if not is_instance_valid(target):
@@ -548,8 +739,17 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -120.0), "-%d PULSE" % pulse_damage, Color("8fcfe2"))
 		elif target is DestructibleCover:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -95.0), "-%d PULSE" % pulse_damage, Color("9dc8d4"))
+		elif target is CollapsibleBarrier:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -110.0), "-%d GATE" % pulse_damage, Color("9dc8d4"))
+
+func _on_collapsible_barrier_collapsed(world_position: Vector2) -> void:
+	if _active_shooter == player:
+		_player_environment_events += 1
+	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, 1.0)
 
 func _on_power_cell_discharged(world_position: Vector2, radius: float, damage: int, force: float) -> void:
+	if _active_shooter == player:
+		_player_environment_events += 1
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.PULSE, 1.45)
 	camera_director.stop_follow_at(world_position, 0.08)
 	camera_director.impact_impulse(1.2, 1.0)
@@ -657,24 +857,74 @@ func _check_game_over() -> bool:
 	_is_inspecting = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
-	weapon_tray.visible = false
+	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
 	target_card.visible = false
 	last_impact_marker.visible = false
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
+	result_card.visible = true
 	restart_button.visible = true
+	change_encounter_button.visible = true
 
 	if player.is_alive():
 		turn_label.text = "YOU WIN"
 		hint_label.text = "Enemy survivor incapacitated"
+		result_title_label.text = "VICTORY"
 		camera_director.focus_x(enemy.global_position.x, 0.35)
 	else:
 		turn_label.text = "DEFEAT"
 		hint_label.text = "Your survivor was incapacitated"
+		result_title_label.text = "DEFEAT"
 		camera_director.focus_x(player.global_position.x, 0.35)
 
+	_update_result_card()
 	return true
+
+func _reset_encounter_metrics() -> void:
+	_player_shots_fired = 0
+	_player_direct_hits = 0
+	_player_cover_hits = 0
+	_player_environment_events = 0
+	_weapon_shots["scrap_bolt"] = 0
+	_weapon_shots["heavy_slug"] = 0
+	_weapon_shots["shock_capsule"] = 0
+
+func _show_mission_brief(definition: MissionDefinition) -> void:
+	mission_brief_title.text = definition.display_name.to_upper()
+	mission_brief_focus.text = definition.test_focus
+	mission_brief_text.text = definition.briefing
+	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
+	mission_brief_card.visible = true
+
+func _update_result_card() -> void:
+	if _current_mission == null:
+		return
+
+	result_encounter_label.text = _current_mission.display_name.to_upper()
+	result_stats_label.text = "SHOTS %d • DIRECT %d\nCOVER %d • ENV EVENTS %d\nBOLT %d • SLUG %d • SHOCK %d" % [
+		_player_shots_fired,
+		_player_direct_hits,
+		_player_cover_hits,
+		_player_environment_events,
+		int(_weapon_shots["scrap_bolt"]),
+		int(_weapon_shots["heavy_slug"]),
+		int(_weapon_shots["shock_capsule"]),
+	]
+	result_takeaway_label.text = _encounter_takeaway()
+
+func _encounter_takeaway() -> String:
+	if _player_environment_events > 0:
+		return "Environment interaction mattered in this run."
+	if _player_cover_hits > _player_direct_hits:
+		return "This run leaned on breaking protection before crew damage."
+	if int(_weapon_shots["scrap_bolt"]) > int(_weapon_shots["heavy_slug"]) + int(_weapon_shots["shock_capsule"]):
+		return "This run leaned heavily on Scrap Bolt trajectory play."
+	if int(_weapon_shots["heavy_slug"]) > int(_weapon_shots["scrap_bolt"]):
+		return "This run leaned toward cover-breaking force."
+	if int(_weapon_shots["shock_capsule"]) > 0:
+		return "Shock Capsule contributed to the firing solution."
+	return "Compare this result with another encounter."
 
 func _on_health_changed(_current: int, _maximum: int) -> void:
 	_update_hud()
@@ -688,6 +938,7 @@ func _update_hud() -> void:
 		_update_target_card()
 
 func _update_target_card() -> void:
+	target_title_label.text = _current_mission.objective_text if _current_mission != null else "TARGET STATUS"
 	target_enemy_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
 
 	var stage := enemy_cover.get_damage_stage()
@@ -701,7 +952,12 @@ func _update_target_card() -> void:
 		_:
 			target_cover_label.text = "COVER: RUBBLE"
 
-	target_hazard_label.text = "POWER CELL: SPENT" if power_cell.is_discharged else "POWER CELL: ACTIVE"
+	if _current_mission != null and _current_mission.power_cell_enabled:
+		target_hazard_label.text = "POWER CELL: SPENT" if power_cell.is_discharged else "POWER CELL: ACTIVE"
+	elif _collapsible_barrier != null and is_instance_valid(_collapsible_barrier):
+		target_hazard_label.text = _collapsible_barrier.status_text()
+	else:
+		target_hazard_label.text = "ENVIRONMENT: NO ACTIVE HAZARD"
 
 func _update_enemy_locator() -> void:
 	if not enemy.is_alive():
@@ -714,4 +970,11 @@ func _update_enemy_locator() -> void:
 	enemy_locator_label.text = "ENEMY %s  ~%dm" % [arrow, approximate_metres]
 
 func _restart() -> void:
+	if _current_mission != null:
+		get_tree().root.set_meta(PENDING_MISSION_META, _current_mission.id)
+	get_tree().reload_current_scene()
+
+func _change_encounter() -> void:
+	if get_tree().root.has_meta(PENDING_MISSION_META):
+		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()

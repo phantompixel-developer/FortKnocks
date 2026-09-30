@@ -122,6 +122,38 @@ The discharge:
 
 This is the first proof that a Fort Knocks arena can contain tactical targets beyond the opposing survivor.
 
+## Encounter-proof authoring
+
+The combat prototype now supports multiple greybox encounters through `MissionDefinition` resources. Encounter data may change:
+- player and enemy positions,
+- cover positions,
+- reusable raised-platform rectangles,
+- central roadblock presence/position,
+- unstable power-cell presence/position,
+- collapsible scrap-gate presence/position,
+- greybox backdrop variant,
+- objective label,
+- authored tactical-feature preview position/text used before the enemy reveal.
+
+At the start of a proof encounter, the camera may briefly frame the mission-defined tactical feature before the enemy preview. This is presentation metadata, not a mission-specific combat rule.
+
+The current proof set is:
+- **Roadblock Trial** — baseline obstruction, cover, road bounces, and unstable power cell.
+- **High Ground** — enemy and cover on a raised service deck, forcing elevation-aware shots.
+- **Scrap Gate** — raised player firing position plus a destructible vertical gate that can be knocked down to change the firing line.
+
+These are greybox test encounters, not final campaign missions or world canon.
+
+### Collapsible scrap gate
+The scrap gate is an authored environment target rather than general destruction simulation.
+- It blocks trajectories while standing.
+- It has a small explicit durability pool.
+- Weapons use their existing cover-damage values against it, so Heavy Slug gains another tactical use without adding a new projectile.
+- When depleted, it falls into a low horizontal obstruction instead of disappearing, changing rather than deleting the geometry.
+- Shock Capsule pressure can also contribute damage if the gate lies inside the pulse radius.
+
+The encounter-proof rule is to reuse the same combat system across different geometry. Do not solve each mission by adding mission-specific weapons or controller exceptions.
+
 ## Enemy AI
 Enemy AI remains intentionally lightweight but is no longer a stateless calculator.
 

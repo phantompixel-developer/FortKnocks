@@ -22,17 +22,19 @@ Prove that one battle is enjoyable repeatedly in portrait orientation.
 - enemy turn and non-perfect aiming behavior,
 - win / lose / restart.
 
-### Current status
-Late prototype / validation. The merged build already contains the required foundation, but the milestone should be declared complete only after local playtesting confirms:
-- aiming feels intuitive,
-- portrait HUD is comfortable,
-- projectile outcomes are satisfying,
-- cover/environment interaction creates decisions,
-- enemy turns feel fair,
-- repeated battles do not feel mechanically flat.
+### Status — PASSED
+Accepted through local playtesting on 2026-09-30. The player confirmed the combat and encounter experience feels good enough to move forward.
+
+Validated foundation:
+- aiming is usable and understandable,
+- portrait HUD no longer obstructs the shooter,
+- projectile outcomes and feedback are readable,
+- cover/environment interactions create tactical choices,
+- enemy turns are functional enough for the current milestone,
+- repeated battles support continued play.
 
 ### Gate
-Do not begin full progression systems merely because the code supports them. The combat loop must first receive explicit playtest acceptance.
+**Passed.** Combat no longer blocks Progression Shell work. Continue to fix regressions when found, but do not keep expanding the prototype merely to avoid moving on.
 
 ---
 
@@ -49,18 +51,37 @@ Prove the combat system supports multiple interesting battle problems, not just 
 - basic mission-definition data to load layouts/objectives,
 - test short/long/high-arc/bank-shot situations.
 
-### Questions to answer
-- Do different layouts change the best projectile/approach?
-- Does destruction open new firing lines?
-- Is the camera robust across layout variation?
-- Can a designer/AI author another encounter without rewriting battle code?
+### Current implementation status
+The first Encounter Proof implementation now provides:
+- three selectable greybox encounter definitions,
+- baseline, enemy-high-ground, and raised-player layouts,
+- reusable authored elevation geometry,
+- optional roadblock and power-cell placement from mission data,
+- a second environmental interaction: a collapsible scrap gate,
+- touch-first encounter selection from the normal Play flow,
+- compact mission brief before each proof encounter,
+- mission-defined camera preview of the encounter's defining tactical feature,
+- end-of-battle encounter report with shot/direct/cover counts, meaningful environment-event count, and weapon-use counts for comparison,
+- restart-current-encounter and choose-another-encounter paths,
+- weapon-selection explanation moved out of the lower combat area and synchronized with the weapon tray.
+
+### Status — PASSED
+Accepted through local playtesting on 2026-09-30.
+
+The proof set demonstrated:
+- different layouts change angle, power, and useful projectile choices,
+- destruction can open or alter firing lines,
+- the camera remains usable across the tested range/elevation variation,
+- new encounters can be authored primarily through `MissionDefinition` content and reusable encounter pieces rather than rewriting battle rules.
 
 ### Gate
-Do not build a long campaign until encounter authoring is repeatable.
+**Passed.** Encounter authoring is repeatable enough to begin the Progression Shell. Keep the current three proof encounters as development references; do not expand the greybox catalog without a progression/content need.
 
 ---
 
 ## Milestone 2 — Progression Shell
+
+**Status: ACTIVE**
 
 ### Goal
 Connect proven battles into the smallest complete game loop.

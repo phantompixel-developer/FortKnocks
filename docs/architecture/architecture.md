@@ -123,14 +123,22 @@ Do not create a global manager for every subsystem.
 ## Data model
 Existing / expected Resources:
 - `WeaponDefinition` — current projectile-role configuration.
+- `MissionDefinition` — current encounter layout/objective configuration.
 - ProjectileDefinition — add only if projectile data outgrows WeaponDefinition.
 - CrewDefinition.
 - CombatPlatformDefinition.
 - ModuleDefinition.
-- MissionDefinition.
 - RegionDefinition.
 
 Implementation should favor composition over deep inheritance.
+
+## Encounter authoring
+
+`MissionDefinition` owns stable encounter data; it does not own battle rules. The current definition supplies combatant/cover positions, optional authored obstacles/interactions, reusable greybox platform rectangles, a backdrop variant, objective/test-focus text, and an optional tactical-feature preview position/text.
+
+`BattleController` currently applies the selected definition because encounter loading is still small and has one caller. Do not create a separate global mission manager merely to move these assignments elsewhere.
+
+Reusable runtime arena pieces such as `ArenaPlatform` and `CollapsibleBarrier` must remain generic. Encounter resources are registered through the small campaign-side `EncounterCatalog`; the battle selector builds itself from that catalog. Adding a new encounter may update content registration, but should not require mission-ID conditionals in battle, projectile, or damage rules.
 
 ## Save compatibility
 Save data must carry an explicit version once persistence is introduced. Migration belongs in the save layer; gameplay systems should not silently reinterpret old saves.

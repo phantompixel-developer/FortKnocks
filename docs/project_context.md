@@ -95,6 +95,19 @@ It now includes:
 - Interactive unstable salvaged power cell.
 - Enemy AI that chooses among projectile roles and makes small per-projectile range corrections after misses.
 - Win / defeat / restart.
+- Touch-first greybox encounter selector for Encounter Proof.
+- Three mission-defined layouts using the same combat rules:
+  - baseline roadblock trial,
+  - enemy high-ground trial,
+  - raised-player scrap-gate trial.
+- Reusable greybox elevation geometry driven by mission data.
+- Second authored environmental interaction: a collapsible scrap gate that becomes a low obstruction when destroyed.
+- Compact per-encounter mission brief and post-battle evaluation report for Encounter Proof playtesting.
+- Weapon-role explanation moved to a compact upper card that appears/disappears with the weapon-choice tray; the lower deck is now aim data only.
+
+Local playtesting on 2026-09-30 confirmed that the combat loop and the three Encounter Proof layouts feel good and create sufficiently distinct firing problems. **Combat Prototype V1 and Milestone 1B — Encounter Proof are accepted as passed.**
+
+The active development milestone is now **Milestone 2 — Progression Shell**. New work should connect the proven battles into the smallest complete Fort Knocks game loop rather than continuing to expand the combat prototype with speculative weapons, encounters, or modifiers.
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
 
@@ -232,9 +245,9 @@ The architectural target is described in `docs/architecture/architecture.md`.
 
 Milestone order is deliberate:
 
-1. **Combat Prototype V1** — prove aiming, camera, impact, destruction, projectile roles, enemy response, and portrait readability.
-2. **Encounter Proof** — prove that multiple greybox layouts and environmental interactions create repeatable tactical decisions.
-3. **Progression Shell** — Fort Knocks hub, short campaign path, Salvage, small platform progression, save data.
+1. **Combat Prototype V1 — PASSED** — aiming, camera, impact, destruction, projectile roles, enemy response, and portrait readability accepted through local playtesting.
+2. **Encounter Proof — PASSED** — multiple greybox layouts and environmental interactions accepted as creating repeatable tactical decisions.
+3. **Progression Shell — ACTIVE** — Fort Knocks hub, short campaign path, Salvage, small platform progression, save data.
 4. **Identity / Production Art** — survivor, vehicle, environment, UI, audio, VFX, faction/world presentation.
 5. **Content Expansion / Shipping** — mission variety, balance, performance, device validation, Android/iOS release work.
 
