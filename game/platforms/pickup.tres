@@ -6,10 +6,10 @@
 script = ExtResource("1_platform")
 id = "pickup"
 display_name = "Pickup"
-tactical_summary = "Utility bed • first module position • next progression proof"
-purchase_cost = 140
-unlock_after_mission_id = "scrap_gate_trial"
-purchasable = false
+tactical_summary = "Utility bed • one module slot • wide durable cover"
+purchase_cost = 130
+unlock_after_mission_id = "broken_span"
+purchasable = true
 cover_health = 260
 cover_size = Vector2(320, 110)
 cover_color = Color(0.31, 0.36, 0.32, 1)
