@@ -79,6 +79,13 @@ Crew variants should be created through readable silhouette/equipment difference
 
 ## Combat-platform direction
 
+The first four platform families should remain readable by silhouette before detail:
+- **Run-down Compact** — small civilian shell, patched and vulnerable.
+- **Old Sedan / Estate** — longer civilian mass and wider protection.
+- **Pickup** — open rear utility bed and obvious module space.
+- **Improvised Technical** — pickup-derived but visibly reinforced, with a support cage/mount and heavier fabrication. The active Technical module should be visible: paired rack hardware for Twin Field Rack, ground-brace/jack language for Stabilizer Rig.
+
+
 Early platforms are still recognisably civilian:
 - **Run-down Compact** — small, vulnerable, patched.
 - **Old Sedan / Estate** — longer protection profile and more substantial cabin.
