@@ -7,12 +7,14 @@ const GarageScene := preload("res://game/progression/garage_screen.tscn")
 const WorkshopScene := preload("res://game/progression/workshop_screen.tscn")
 const BattleScene := preload("res://game/battle/battle.tscn")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
+const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
 
 @onready var save_service: SaveService = $SaveService
 @onready var current_screen: Node = $CurrentScreen
 
 var _active_mission: MissionDefinition
 var _hub_notice := ""
+var _garage_notice := ""
 
 func _ready() -> void:
 	_show_hub()
@@ -37,13 +39,45 @@ func _show_garage() -> void:
 	var garage := GarageScene.instantiate() as GarageScreen
 	_replace_screen(garage)
 	garage.back_requested.connect(_show_hub)
-	garage.configure(save_service.snapshot())
+	garage.platform_requested.connect(_on_platform_requested)
+	garage.configure(save_service.snapshot(), _garage_notice)
+	_garage_notice = ""
 
 func _show_workshop() -> void:
 	var workshop := WorkshopScene.instantiate() as WorkshopScreen
 	_replace_screen(workshop)
 	workshop.back_requested.connect(_show_hub)
 	workshop.configure(save_service.snapshot())
+
+func _on_platform_requested(platform_id: String) -> void:
+	var definition := PlatformCatalogScript.by_id(platform_id)
+	if definition == null:
+		return
+
+	var completed := save_service.completed_missions()
+	var unlocked := definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
+	if not unlocked or not definition.purchasable:
+		return
+
+	if save_service.owns_platform(platform_id):
+		if save_service.equip_platform(platform_id):
+			_garage_notice = "%s EQUIPPED" % definition.display_name.to_upper()
+			_hub_notice = "GARAGE UPDATED • %s ACTIVE" % definition.display_name.to_upper()
+		_show_garage()
+		return
+
+	if not save_service.purchase_platform(platform_id, definition.purchase_cost):
+		_garage_notice = "NOT ENOUGH SALVAGE"
+		_show_garage()
+		return
+
+	save_service.equip_platform(platform_id)
+	_garage_notice = "%s ACQUIRED • -%d SALVAGE" % [
+		definition.display_name.to_upper(),
+		definition.purchase_cost,
+	]
+	_hub_notice = "GARAGE UPGRADE COMPLETE • %s ACTIVE" % definition.display_name.to_upper()
+	_show_garage()
 
 func _start_mission(mission: MissionDefinition) -> void:
 	if mission == null:
@@ -55,7 +89,8 @@ func _start_mission(mission: MissionDefinition) -> void:
 		push_error("Battle scene could not be instantiated.")
 		return
 
-	battle.call("prepare_for_campaign", mission)
+	var platform := PlatformCatalogScript.by_id(save_service.current_platform_id())
+	battle.call("prepare_for_campaign", mission, platform)
 	battle.connect("battle_completed", Callable(self, "_on_battle_completed"))
 	battle.connect("exit_requested", Callable(self, "_on_battle_exit_requested"))
 	battle.connect("rematch_requested", Callable(self, "_on_battle_rematch_requested"))
