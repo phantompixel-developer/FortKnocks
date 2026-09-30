@@ -38,9 +38,9 @@ func _rebuild() -> void:
 	var completed := campaign.get("completed_missions", []) as Array
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 
-	var missions := EncounterCatalogScript.all()
+	var missions: Array[MissionDefinition] = EncounterCatalogScript.all()
 	for index in range(missions.size()):
-		var mission := missions[index]
+		var mission: MissionDefinition = missions[index]
 		var is_unlocked := unlocked.has(mission.id)
 		var is_completed := completed.has(mission.id)
 
