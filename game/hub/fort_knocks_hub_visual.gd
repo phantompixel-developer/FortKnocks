@@ -58,7 +58,7 @@ func _draw_workshop() -> void:
 	draw_line(Vector2(84, 714), Vector2(84, 862), Color("2f3632"), 9.0)
 	draw_line(Vector2(307, 714), Vector2(307, 862), Color("2f3632"), 9.0)
 
-	if _platform_id == "old_sedan":
+	if _platform_id == "old_sedan" or _platform_id == "pickup":
 		# Buying the first platform upgrade visibly improves the garage corner.
 		draw_rect(Rect2(350, 686, 316, 18), Color("454d48"))
 		draw_line(Vector2(366, 686), Vector2(366, 874), Color("343b37"), 12.0)
