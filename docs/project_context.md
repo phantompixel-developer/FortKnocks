@@ -186,7 +186,15 @@ Milestone 4's first development slice now extends the campaign into **Suburbs** 
 - **Crossroads**, an elevated displacement-focused crew encounter,
 - automatic unlock reconciliation from already-completed Outskirts Checkpoint saves.
 
-This slice is intentionally small. It should prove that alternate objectives and enemy tactics are readable and strategically meaningful before the Suburbs route is expanded further.
+The next Milestone 4 batch adds the **Improvised Technical** after Suburbs Crossroads:
+- 190 Salvage, 300 cover durability, 345-wide profile,
+- one active support module,
+- **Twin Field Rack**: Bolt + Heavy Slug + Shock Capsule in the same campaign battle,
+- **Stabilizer Rig**: 55% less crew displacement while retaining the one-specialist field-rack rule,
+- distinct Technical presentation in battle and Fort Knocks,
+- a fourth Fort Knocks growth stage after both current Suburbs missions are cleared.
+
+The current test is now broader than encounter variety: local playtesting should confirm that alternate objectives, enemy tactics, and the Technical's versatility-vs-stability choice are all strategically legible before the Suburbs route or platform ladder expands further.
 
 ## Portrait UX decisions
 
