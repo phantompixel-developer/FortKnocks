@@ -275,6 +275,10 @@ func _begin_mission(definition: MissionDefinition) -> void:
 
 func _configure_mission(definition: MissionDefinition) -> void:
 	player.global_position = definition.player_position
+	var player_knockback_multiplier: float = 1.0
+	if _player_module != null:
+		player_knockback_multiplier = _player_module.crew_knockback_multiplier
+	player.configure_knockback_multiplier(player_knockback_multiplier)
 	player_cover.global_position = definition.player_cover_position
 	if _player_platform != null:
 		player_cover.configure_platform(_player_platform, _player_module)
@@ -1116,8 +1120,10 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 		]
 		if _player_module != null:
 			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
-		if _campaign_weapon_ids.size() >= 2:
-			var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
+		if _campaign_weapon_ids.has("heavy_slug") and _campaign_weapon_ids.has("shock_capsule"):
+			briefing += "\nFIELD RACK: BOLT + SLUG + SHOCK"
+		elif _campaign_weapon_ids.size() >= 2:
+			var specialist: String = "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
 			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
 	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
