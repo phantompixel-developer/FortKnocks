@@ -97,7 +97,7 @@ Encounter Proof uses two development-facing cards:
 These surfaces exist to evaluate whether different greybox layouts actually change player decisions. They are not the final campaign mission screen or progression-results design.
 
 ## Enemy inspection
-Provide a fast player-controlled **Inspect Enemy** action during the player's aiming phase. It pans to the opponent, briefly holds the enemy/cover position, then returns to the shooter. The player's selected power, angle, and trajectory state must remain intact; inspection is information gathering, not an aim reset.
+Provide a player-controlled **Inspect Enemy** action during the player's aiming phase. It pans to the opponent and stays there until the player explicitly taps **Return to Shooter**. Do not auto-return on a short timer: the player must have enough time to read enemy position, cover, elevation, and hazards. The player's selected power, angle, and trajectory state must remain intact; inspection is information gathering, not an aim reset.
 
 ## Projectile flight
 After firing:
