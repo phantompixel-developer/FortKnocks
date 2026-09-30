@@ -544,11 +544,14 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	_update_weapon_buttons()
 	_update_last_shot_display()
 	_update_enemy_locator()
-	hint_label.text = (
-		"SPOTTER ACTIVE • denser trajectory preview"
-		if _spotter_preview_active()
-		else "Pull back to aim • release to fire"
-	)
+	if not enemy.is_alive() and _current_mission != null and _current_mission.objective_mode == "disable_relay":
+		hint_label.text = "Enemy down • disable the relay to finish"
+	else:
+		hint_label.text = (
+			"SPOTTER ACTIVE • denser trajectory preview"
+			if _spotter_preview_active()
+			else "Pull back to aim • release to fire"
+		)
 
 func _spotter_preview_active() -> bool:
 	return (
@@ -853,6 +856,8 @@ func _shot_result_name(hit_body: Node) -> String:
 		return "CELL"
 	if hit_body is CollapsibleBarrier:
 		return "GATE"
+	if hit_body is SignalRelay:
+		return "RELAY"
 	if hit_body is CentralRoadblock:
 		return "ROADBLOCK"
 	if hit_body.is_in_group("ground_surface"):
@@ -1114,8 +1119,6 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 		if _campaign_weapon_ids.size() >= 2:
 			var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
 			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
-	if definition.enemy_tactic != "balanced":
-		briefing += "\nENEMY TACTIC: %s" % _enemy_tactic_brief()
 	mission_brief_text.text = briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
 	mission_brief_card.visible = true
@@ -1146,6 +1149,8 @@ func _update_result_card() -> void:
 		result_takeaway_label.text = takeaway
 
 func _encounter_takeaway() -> String:
+	if _current_mission != null and _current_mission.objective_mode == "disable_relay" and _objective_completed():
+		return "Target priority mattered: the relay, not the defender, decided the mission."
 	if _player_environment_events > 0:
 		return "Environment interaction mattered in this run."
 	if _player_cover_hits > _player_direct_hits:
