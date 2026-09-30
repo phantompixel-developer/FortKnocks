@@ -1,0 +1,143 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_garage"]
+
+[node name="Garage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_garage")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.17, 0.19, 0.18, 1)
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 46.0
+offset_right = 660.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 32
+text = "GARAGE"
+horizontal_alignment = 1
+
+[node name="TopBar" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 126.0
+offset_right = 648.0
+offset_bottom = 184.0
+color = Color(0.08, 0.095, 0.087, 0.92)
+
+[node name="SalvageLabel" type="Label" parent="TopBar"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 13.0
+offset_right = 556.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 18
+text = "SALVAGE  0"
+horizontal_alignment = 1
+
+[node name="CurrentCard" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 246.0
+offset_right = 628.0
+offset_bottom = 434.0
+color = Color(0.10, 0.115, 0.105, 0.94)
+
+[node name="Header" type="Label" parent="CurrentCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 512.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 18
+text = "COMBAT PLATFORM"
+horizontal_alignment = 1
+
+[node name="CurrentLabel" type="Label" parent="CurrentCard"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 72.0
+offset_right = 508.0
+offset_bottom = 146.0
+theme_override_font_sizes/font_size = 24
+text = "ACTIVE\nRUN-DOWN COMPACT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressionCard" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 470.0
+offset_right = 628.0
+offset_bottom = 860.0
+color = Color(0.10, 0.115, 0.105, 0.9)
+
+[node name="Title" type="Label" parent="ProgressionCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 512.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 18
+text = "PLATFORM PATH"
+horizontal_alignment = 1
+
+[node name="Compact" type="Label" parent="ProgressionCard"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 88.0
+offset_right = 504.0
+offset_bottom = 132.0
+theme_override_font_sizes/font_size = 18
+text = "1  RUN-DOWN COMPACT     ACTIVE"
+
+[node name="Sedan" type="Label" parent="ProgressionCard"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 168.0
+offset_right = 504.0
+offset_bottom = 212.0
+theme_override_font_sizes/font_size = 18
+text = "2  OLD SEDAN / ESTATE   LOCKED"
+
+[node name="Pickup" type="Label" parent="ProgressionCard"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 248.0
+offset_right = 504.0
+offset_bottom = 292.0
+theme_override_font_sizes/font_size = 18
+text = "3  PICKUP                LOCKED"
+
+[node name="Note" type="Label" parent="ProgressionCard"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 320.0
+offset_right = 502.0
+offset_bottom = 366.0
+theme_override_font_sizes/font_size = 14
+text = "Upgrade costs and platform combat differences come in the next progression batch."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 1128.0
+offset_right = 530.0
+offset_bottom = 1212.0
+theme_override_font_sizes/font_size = 20
+text = "BACK TO FORT KNOCKS"
