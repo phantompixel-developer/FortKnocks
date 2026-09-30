@@ -101,6 +101,29 @@ Connect proven battles into the smallest complete game loop.
 - existing projectile roles integrated into progression/loadout,
 - explicit versioned save format.
 
+### Current implementation status
+
+The first Progression Shell foundation now includes:
+- root App / CurrentScreen game flow,
+- greybox Fort Knocks hub,
+- Command Board,
+- campaign-managed battle launch/return,
+- first-clear Salvage rewards,
+- sequential mission unlocks,
+- battle result → progression update contract,
+- Garage and Workshop shell screens,
+- explicit local `save_version = 1` persistence.
+
+The current three proven encounters are being reused as the initial Outskirts campaign seed. This is enough to validate the loop before expanding to the target 4–6 missions plus checkpoint encounter.
+
+**Still required before Milestone 2 passes:**
+- a meaningful use for Salvage,
+- at least the first real platform progression choice,
+- combat consequences for that progression choice,
+- expansion of the short campaign beyond the three proof encounters,
+- visible Fort Knocks change tied to progression,
+- local playtest acceptance of persistence and the full hub → battle → reward → hub loop.
+
 ### Campaign scope
 Start small: approximately 4–6 connected missions plus a checkpoint/boss-style encounter is enough to prove progression. Do not author dozens of missions yet.
 
