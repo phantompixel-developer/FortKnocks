@@ -57,7 +57,10 @@ The first Encounter Proof implementation now provides:
 - optional roadblock and power-cell placement from mission data,
 - a second environmental interaction: a collapsible scrap gate,
 - touch-first encounter selection from the normal Play flow,
-- restart-current-encounter and choose-another-encounter paths.
+- compact mission brief before each proof encounter,
+- end-of-battle encounter report with shot/outcome/weapon-use counts for comparison,
+- restart-current-encounter and choose-another-encounter paths,
+- weapon-selection explanation moved out of the lower combat area and synchronized with the weapon tray.
 
 This implements the test harness and content needed for the milestone. It does **not** pass the gate by itself; local repeated playtesting must still answer the questions below.
 
