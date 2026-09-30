@@ -19,113 +19,123 @@ func configure(platform_id: String, module_id := "", completed_missions := 0) ->
 	queue_redraw()
 
 func _draw() -> void:
-	# Early Fort Knocks: intentionally makeshift and readable rather than polished.
-	draw_rect(Rect2(0, 0, 720, 1280), Color("9da9a4"))
-	draw_rect(Rect2(0, 660, 720, 620), Color("545a55"))
-
-	# Distant broken skyline.
-	for building in [
-		Rect2(20, 340, 120, 320),
-		Rect2(165, 420, 95, 240),
-		Rect2(285, 300, 145, 360),
-		Rect2(465, 390, 105, 270),
-		Rect2(590, 325, 110, 335),
-	]:
-		draw_rect(building, Color("6a746f"))
-
-	# Corrugated perimeter.
-	draw_rect(Rect2(34, 610, 652, 38), Color("3d4541"))
-	for x in range(42, 684, 46):
-		draw_line(Vector2(x, 612), Vector2(x, 646), Color("757b72"), 6.0)
-
+	_draw_atmosphere()
+	_draw_distant_outskirts()
+	_draw_perimeter()
 	_draw_campaign_progress()
 	_draw_workshop()
 	_draw_active_platform()
-
-	# Scrap pile and camp fire.
-	for offset in [Vector2(380, 910), Vector2(414, 924), Vector2(448, 904), Vector2(478, 928)]:
-		draw_circle(offset, 24, Color("6b6d63"))
-	draw_circle(Vector2(205, 930), 23, Color("c28a4b"))
-	draw_circle(Vector2(205, 930), 11, Color("e2ba65"))
-
+	_draw_scrapyard_and_fire()
 	_draw_gate_and_watch()
 
+func _draw_atmosphere() -> void:
+	draw_rect(Rect2(0, 0, 720, 1280), Color("71847d"))
+	draw_rect(Rect2(0, 0, 720, 300), Color("667b74"))
+	draw_circle(Vector2(588, 202), 66.0, Color("d4c790", 0.30))
+	draw_rect(Rect2(0, 650, 720, 630), Color("2f3733"))
+	draw_rect(Rect2(0, 650, 720, 25), Color("48534d"))
+
+func _draw_distant_outskirts() -> void:
+	for building in [
+		Rect2(0, 372, 116, 278),
+		Rect2(132, 438, 96, 212),
+		Rect2(252, 330, 140, 320),
+		Rect2(418, 414, 108, 236),
+		Rect2(548, 350, 172, 300),
+	]:
+		draw_rect(building, Color("4d5f58"))
+	for building in [
+		Rect2(18, 500, 145, 150),
+		Rect2(188, 532, 118, 118),
+		Rect2(338, 476, 155, 174),
+		Rect2(526, 512, 128, 138),
+	]:
+		draw_rect(building, Color("42514b"))
+	draw_line(Vector2(610, 648), Vector2(610, 410), Color("34413c"), 9.0)
+	draw_line(Vector2(568, 450), Vector2(653, 450), Color("34413c"), 7.0)
+
+func _draw_perimeter() -> void:
+	# Corrugated fence with mismatched panels and the diagonal knock-mark motif.
+	draw_rect(Rect2(28, 598, 664, 58), Color("1f2724"))
+	for x in range(36, 688, 46):
+		var panel := Color("4f5a54") if (x / 46) as int % 2 == 0 else Color("596159")
+		draw_rect(Rect2(x, 606, 38, 42), panel)
+		draw_line(Vector2(x + 8, 608), Vector2(x + 8, 646), Color("69736b"), 3.0)
+	for x in [126.0, 336.0, 548.0]:
+		draw_line(Vector2(x, 644), Vector2(x + 30, 608), Color("d4aa55", 0.75), 7.0)
+		draw_line(Vector2(x + 20, 644), Vector2(x + 50, 608), Color("a45f42", 0.70), 7.0)
 
 func _draw_campaign_progress() -> void:
 	if _campaign_stage >= 1:
-		# Organised storage replaces loose survival clutter after early wins.
-		draw_rect(Rect2(18, 666, 42, 150), Color("353d39"))
-		draw_rect(Rect2(22, 680, 34, 18), Color("77796d"))
-		draw_rect(Rect2(22, 716, 34, 18), Color("67695e"))
-		draw_rect(Rect2(22, 752, 34, 18), Color("77796d"))
-		for offset in [Vector2(320, 894), Vector2(350, 902), Vector2(378, 890)]:
-			draw_rect(Rect2(offset, Vector2(26, 24)), Color("686252"))
+		# Organised racks and marked salvage bins replace loose survival clutter.
+		draw_rect(Rect2(18, 680, 50, 154), Color("202825"))
+		for y in [694.0, 734.0, 774.0]:
+			draw_rect(Rect2(24, y, 38, 25), Color("6d6653"))
+			draw_line(Vector2(29, y + 4), Vector2(56, y + 20), Color("d4aa55", 0.55), 4.0)
+		for offset in [Vector2(318, 900), Vector2(351, 910), Vector2(386, 896)]:
+			draw_rect(Rect2(offset, Vector2(28, 25)), Color("655b47"))
 
 	if _campaign_stage >= 2:
-		# Generator and permanent lighting show the camp becoming operational.
-		draw_rect(Rect2(282, 858, 88, 56), Color("3c4540"))
-		draw_circle(Vector2(300, 916), 13, Color("2b302e"))
-		draw_circle(Vector2(352, 916), 13, Color("2b302e"))
-		draw_line(Vector2(326, 858), Vector2(326, 826), Color("343b37"), 7.0)
-		draw_circle(Vector2(326, 820), 9, Color("d7bd72"))
-		draw_line(Vector2(624, 610), Vector2(624, 500), Color("343b37"), 9.0)
-		draw_line(Vector2(588, 508), Vector2(660, 508), Color("343b37"), 9.0)
-		draw_circle(Vector2(600, 520), 10, Color("d7bd72"))
-		draw_circle(Vector2(648, 520), 10, Color("d7bd72"))
+		# Generator, permanent work lights and cable runs make the base visibly operational.
+		draw_rect(Rect2(276, 848, 96, 60), Color("27312d"))
+		draw_rect(Rect2(284, 856, 80, 35), Color("596158"))
+		draw_circle(Vector2(295, 914), 13, Color("171c1b"))
+		draw_circle(Vector2(352, 914), 13, Color("171c1b"))
+		draw_line(Vector2(326, 850), Vector2(326, 814), Color("26312d"), 8.0)
+		draw_circle(Vector2(326, 808), 11, Color("d4aa55"))
+		draw_circle(Vector2(326, 808), 22, Color("d4aa55", 0.12))
+		draw_line(Vector2(626, 604), Vector2(626, 492), Color("28332f"), 10.0)
+		draw_line(Vector2(586, 502), Vector2(668, 502), Color("28332f"), 8.0)
+		for x in [597.0, 657.0]:
+			draw_circle(Vector2(x, 516), 10, Color("d4aa55"))
+			draw_circle(Vector2(x, 516), 19, Color("d4aa55", 0.11))
 
 	if _campaign_stage >= 3:
-		# Cleared Outskirts: reinforced perimeter and command mast.
-		draw_rect(Rect2(32, 596, 656, 16), Color("2f3733"))
-		draw_line(Vector2(542, 598), Vector2(542, 456), Color("303834"), 10.0)
-		draw_line(Vector2(542, 468), Vector2(580, 486), Color("303834"), 5.0)
-		draw_line(Vector2(542, 486), Vector2(510, 503), Color("303834"), 5.0)
-		draw_circle(Vector2(542, 452), 8, Color("d7bd72"))
+		# Outskirts secured: the improvised camp has become a deliberate defensive site.
+		draw_rect(Rect2(28, 584, 664, 17), Color("1c2421"))
+		draw_line(Vector2(530, 590), Vector2(530, 414), Color("202a26"), 11.0)
+		draw_line(Vector2(530, 430), Vector2(574, 452), Color("202a26"), 6.0)
+		draw_line(Vector2(530, 454), Vector2(492, 476), Color("202a26"), 6.0)
+		draw_circle(Vector2(530, 410), 9.0, Color("d4aa55"))
+		draw_arc(Vector2(530, 410), 28.0, -2.6, -0.5, 18, Color("d4aa55", 0.35), 3.0, true)
 
 func _draw_gate_and_watch() -> void:
-	var post_color := Color("363d39")
-	var cross_color := Color("4c544f")
-	var post_width := 26.0
-	if _campaign_stage >= 3:
-		post_color = Color("2e3632")
-		cross_color = Color("60685f")
-		post_width = 34.0
+	var post_color := Color("222b27") if _campaign_stage < 3 else Color("19211e")
+	var brace_color := Color("4e5a53") if _campaign_stage < 3 else Color("667168")
+	var post_width := 28.0 if _campaign_stage < 3 else 36.0
+	draw_rect(Rect2(72, 898, post_width, 178), post_color)
+	draw_rect(Rect2(312, 898, post_width, 178), post_color)
+	draw_line(Vector2(86, 900), Vector2(326, 900), brace_color, 14.0 if _campaign_stage < 3 else 20.0)
+	draw_line(Vector2(94, 936), Vector2(310, 1017), brace_color, 8.0)
+	draw_line(Vector2(310, 936), Vector2(94, 1017), brace_color, 8.0)
+	# Two slash marks become the base's simple painted identifier.
+	draw_line(Vector2(176, 965), Vector2(204, 928), Color("d4aa55"), 9.0)
+	draw_line(Vector2(198, 970), Vector2(226, 933), Color("a45f42"), 9.0)
 
-	draw_rect(Rect2(70, 900, post_width, 170), post_color)
-	draw_rect(Rect2(310, 900, post_width, 170), post_color)
-	draw_line(Vector2(84, 900), Vector2(323, 900), cross_color, 12.0 if _campaign_stage < 3 else 18.0)
-
-	if _campaign_stage >= 2:
-		draw_line(Vector2(92, 932), Vector2(310, 1018), Color("555f58"), 7.0)
-		draw_line(Vector2(310, 932), Vector2(92, 1018), Color("555f58"), 7.0)
-
-	draw_rect(Rect2(612, 655, 22, 182), Color("3b423e"))
-	draw_rect(Rect2(580, 646, 86, 18), Color("3b423e"))
-	if _campaign_stage >= 2:
-		draw_rect(Rect2(590, 618, 66, 28), Color("4b534e"))
-		draw_line(Vector2(622, 618), Vector2(622, 574), Color("3a423e"), 7.0)
+	draw_rect(Rect2(608, 652, 24, 184), Color("222b27"))
+	draw_rect(Rect2(574, 642, 92, 20), Color("222b27"))
+	draw_rect(Rect2(584, 612, 72, 30), Color("394640"))
+	draw_line(Vector2(620, 612), Vector2(620, 566), Color("27312d"), 8.0)
+	draw_circle(Vector2(620, 560), 8, Color("687a72"))
 
 func _draw_workshop() -> void:
-	draw_rect(Rect2(70, 710, 250, 145), Color("3c4540"))
+	draw_rect(Rect2(72, 708, 250, 148), Color("26312d"))
 	draw_polygon(
-		PackedVector2Array([
-			Vector2(54, 714),
-			Vector2(197, 650),
-			Vector2(340, 714),
-		]),
-		PackedColorArray([Color("756f58")])
+		PackedVector2Array([Vector2(54, 712), Vector2(197, 644), Vector2(344, 712)]),
+		PackedColorArray([Color("655d49")])
 	)
-	draw_line(Vector2(84, 714), Vector2(84, 862), Color("2f3632"), 9.0)
-	draw_line(Vector2(307, 714), Vector2(307, 862), Color("2f3632"), 9.0)
+	draw_line(Vector2(86, 710), Vector2(86, 862), Color("1b231f"), 10.0)
+	draw_line(Vector2(307, 710), Vector2(307, 862), Color("1b231f"), 10.0)
+	draw_rect(Rect2(104, 776, 188, 18), Color("4a544e"))
+	for x in [122.0, 168.0, 214.0, 260.0]:
+		draw_line(Vector2(x, 782), Vector2(x + 18, 756), Color("d4aa55", 0.45), 4.0)
 
 	if _platform_id == "old_sedan" or _platform_id == "pickup":
-		# Buying the first platform upgrade visibly improves the garage corner.
-		draw_rect(Rect2(350, 686, 316, 18), Color("454d48"))
-		draw_line(Vector2(366, 686), Vector2(366, 874), Color("343b37"), 12.0)
-		draw_line(Vector2(648, 686), Vector2(648, 874), Color("343b37"), 12.0)
-		draw_rect(Rect2(370, 708, 274, 16), Color("74786c"))
-		draw_rect(Rect2(82, 818, 212, 18), Color("686b61"))
-		for x in [105.0, 154.0, 203.0, 252.0]:
-			draw_rect(Rect2(x, 780, 26, 34), Color("61665f"))
+		draw_rect(Rect2(348, 680, 318, 20), Color("26312d"))
+		draw_line(Vector2(364, 680), Vector2(364, 876), Color("202824"), 13.0)
+		draw_line(Vector2(650, 680), Vector2(650, 876), Color("202824"), 13.0)
+		draw_rect(Rect2(374, 706, 270, 15), Color("6a7165"))
+		draw_line(Vector2(386, 721), Vector2(620, 721), Color("a45f42", 0.42), 4.0)
 
 func _draw_active_platform() -> void:
 	if _platform_id == "pickup":
@@ -136,57 +146,63 @@ func _draw_active_platform() -> void:
 		_draw_compact()
 
 func _draw_compact() -> void:
-	draw_rect(Rect2(405, 780, 220, 74), Color("66544a"))
-	draw_rect(Rect2(448, 742, 118, 48), Color("66544a"))
-	draw_circle(Vector2(454, 858), 28, Color("292d2b"))
-	draw_circle(Vector2(582, 858), 28, Color("292d2b"))
-	draw_line(Vector2(470, 750), Vector2(540, 750), Color("8b918a"), 5.0)
-
+	var shell := Color("70513f")
+	draw_rect(Rect2(402, 782, 226, 72), Color("171c1b"))
+	draw_rect(Rect2(408, 788, 214, 58), shell)
+	draw_polygon(
+		PackedVector2Array([Vector2(448, 788), Vector2(470, 744), Vector2(558, 744), Vector2(586, 788)]),
+		PackedColorArray([shell.lightened(0.05)])
+	)
+	draw_rect(Rect2(479, 751, 66, 28), Color("445a55"))
+	_draw_hub_wheels(454, 584, 858)
+	draw_line(Vector2(528, 792), Vector2(548, 770), Color("d4aa55"), 6.0)
+	draw_line(Vector2(548, 792), Vector2(568, 770), Color("a45f42"), 6.0)
 
 func _draw_pickup() -> void:
-	var shell := Color("4f5e54")
-	draw_rect(Rect2(360, 778, 294, 80), shell)
+	var shell := Color("4d655d")
+	draw_rect(Rect2(356, 780, 302, 78), Color("171c1b"))
+	draw_rect(Rect2(362, 786, 290, 64), shell)
 	draw_polygon(
-		PackedVector2Array([
-			Vector2(382, 778),
-			Vector2(420, 730),
-			Vector2(520, 730),
-			Vector2(552, 778),
-		]),
-		PackedColorArray([shell.lightened(0.06)])
+		PackedVector2Array([Vector2(382, 786), Vector2(421, 733), Vector2(520, 733), Vector2(558, 786)]),
+		PackedColorArray([shell.lightened(0.055)])
 	)
-	draw_rect(Rect2(438, 739, 58, 30), Color("526965"))
-	draw_rect(Rect2(558, 790, 78, 40), shell.darkened(0.08))
-	draw_circle(Vector2(416, 862), 31, Color("292d2b"))
-	draw_circle(Vector2(604, 862), 31, Color("292d2b"))
-	draw_circle(Vector2(416, 862), 15, Color("686d67"))
-	draw_circle(Vector2(604, 862), 15, Color("686d67"))
+	draw_rect(Rect2(438, 741, 58, 31), Color("435b56"))
+	draw_rect(Rect2(560, 798, 82, 35), shell.darkened(0.12))
+	_draw_hub_wheels(416, 606, 862)
 
 	if _module_id == "spotter_rack":
-		draw_line(Vector2(586, 790), Vector2(586, 724), Color("343b37"), 8.0)
-		draw_line(Vector2(586, 728), Vector2(620, 712), Color("343b37"), 6.0)
-		draw_circle(Vector2(626, 710), 12, Color("798a84"))
+		draw_line(Vector2(586, 795), Vector2(586, 724), Color("202824"), 9.0)
+		draw_line(Vector2(586, 730), Vector2(621, 711), Color("202824"), 7.0)
+		draw_circle(Vector2(628, 708), 13, Color("6c9589"))
+		draw_circle(Vector2(628, 708), 6, Color("b7ddd4"))
 	elif _module_id == "ballast_crates":
-		draw_rect(Rect2(552, 754, 42, 32), Color("675d46"))
-		draw_rect(Rect2(598, 760, 36, 26), Color("75694d"))
+		draw_rect(Rect2(548, 756, 47, 34), Color("655a43"))
+		draw_rect(Rect2(599, 762, 39, 28), Color("77684b"))
 
 func _draw_sedan() -> void:
-	var shell := Color("596258")
-	draw_rect(Rect2(372, 778, 278, 78), shell)
+	var shell := Color("56675f")
+	draw_rect(Rect2(368, 780, 286, 76), Color("171c1b"))
+	draw_rect(Rect2(374, 786, 274, 62), shell)
 	draw_polygon(
-		PackedVector2Array([
-			Vector2(410, 778),
-			Vector2(454, 732),
-			Vector2(585, 732),
-			Vector2(624, 778),
-		]),
-		PackedColorArray([shell.lightened(0.06)])
+		PackedVector2Array([Vector2(408, 786), Vector2(454, 733), Vector2(586, 733), Vector2(626, 786)]),
+		PackedColorArray([shell.lightened(0.05)])
 	)
-	draw_rect(Rect2(462, 740, 54, 30), Color("526965"))
-	draw_rect(Rect2(524, 740, 52, 30), Color("526965"))
-	draw_line(Vector2(520, 736), Vector2(520, 778), Color("303634"), 5.0)
-	draw_circle(Vector2(426, 860), 30, Color("292d2b"))
-	draw_circle(Vector2(598, 860), 30, Color("292d2b"))
-	draw_circle(Vector2(426, 860), 15, Color("686d67"))
-	draw_circle(Vector2(598, 860), 15, Color("686d67"))
-	draw_line(Vector2(388, 795), Vector2(406, 788), Color("9b9e8c"), 4.0)
+	draw_rect(Rect2(462, 742, 53, 29), Color("435b56"))
+	draw_rect(Rect2(523, 742, 53, 29), Color("4b625d"))
+	draw_line(Vector2(519, 736), Vector2(519, 786), Color("202824"), 5.0)
+	_draw_hub_wheels(427, 600, 860)
+	draw_line(Vector2(388, 804), Vector2(412, 794), Color("d4aa55", 0.65), 5.0)
+
+func _draw_hub_wheels(left_x: float, right_x: float, y: float) -> void:
+	for x in [left_x, right_x]:
+		draw_circle(Vector2(x, y), 31.0, Color("171c1b"))
+		draw_circle(Vector2(x, y), 15.0, Color("606961"))
+		draw_circle(Vector2(x, y), 6.0, Color("8a8063"))
+
+func _draw_scrapyard_and_fire() -> void:
+	for offset in [Vector2(388, 914), Vector2(422, 928), Vector2(456, 910), Vector2(488, 930)]:
+		draw_circle(offset, 24, Color("4d544e"))
+		draw_line(offset + Vector2(-14, 8), offset + Vector2(15, -7), Color("85513f"), 5.0)
+	draw_circle(Vector2(208, 932), 24, Color("9d5e40", 0.62))
+	draw_circle(Vector2(208, 927), 14, Color("d4aa55", 0.88))
+	draw_circle(Vector2(208, 922), 7, Color("f1d98b", 0.88))
