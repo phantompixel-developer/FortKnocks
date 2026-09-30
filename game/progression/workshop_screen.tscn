@@ -70,39 +70,60 @@ color = Color(0.10, 0.105, 0.09, 0.94)
 [node name="Header" type="Label" parent="LoadoutCard"]
 layout_mode = 0
 offset_left = 24.0
-offset_top = 18.0
+offset_top = 16.0
 offset_right = 552.0
-offset_bottom = 50.0
+offset_bottom = 48.0
 theme_override_font_sizes/font_size = 18
-text = "FIELD LOADOUT • PROVEN PROJECTILES"
+text = "FIELD LOADOUT"
 horizontal_alignment = 1
 
-[node name="Bolt" type="Label" parent="LoadoutCard"]
+[node name="CoreLabel" type="Label" parent="LoadoutCard"]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 74.0
-offset_right = 548.0
-offset_bottom = 122.0
-theme_override_font_sizes/font_size = 16
-text = "SCRAP BOLT — balanced • two road bounces"
+offset_left = 26.0
+offset_top = 58.0
+offset_right = 550.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 14
+text = "CORE ROUND: SCRAP BOLT • always carried"
+horizontal_alignment = 1
 
-[node name="Slug" type="Label" parent="LoadoutCard"]
+[node name="SpecialistLabel" type="Label" parent="LoadoutCard"]
 layout_mode = 0
-offset_left = 28.0
+offset_left = 26.0
+offset_top = 96.0
+offset_right = 550.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 15
+text = "FIELD RACK: SCRAP BOLT + HEAVY SLUG"
+horizontal_alignment = 1
+
+[node name="HeavyButton" type="Button" parent="LoadoutCard"]
+layout_mode = 0
+offset_left = 32.0
 offset_top = 146.0
-offset_right = 548.0
-offset_bottom = 194.0
-theme_override_font_sizes/font_size = 16
-text = "HEAVY SLUG — cover breaker • high force"
+offset_right = 272.0
+offset_bottom = 284.0
+theme_override_font_sizes/font_size = 14
+text = "HEAVY SLUG\nCover breaker • high force\nACTIVE SPECIALIST"
 
-[node name="Shock" type="Label" parent="LoadoutCard"]
+[node name="ShockButton" type="Button" parent="LoadoutCard"]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 218.0
-offset_right = 548.0
-offset_bottom = 266.0
-theme_override_font_sizes/font_size = 16
-text = "SHOCK CAPSULE — radial pulse • displacement"
+offset_left = 304.0
+offset_top = 146.0
+offset_right = 544.0
+offset_bottom = 284.0
+theme_override_font_sizes/font_size = 14
+text = "SHOCK CAPSULE\nRadial pulse • displacement\nEQUIP SPECIALIST"
+
+[node name="RuleLabel" type="Label" parent="LoadoutCard"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 292.0
+offset_right = 546.0
+offset_bottom = 322.0
+theme_override_font_sizes/font_size = 13
+text = "Campaign rack: Scrap Bolt + one specialist. Switch freely between runs."
+horizontal_alignment = 1
 
 [node name="UtilityCard" type="ColorRect" parent="."]
 layout_mode = 0
