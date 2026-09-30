@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="MissionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/campaign/mission_definition.gd" id="1_mission"]
+
+[resource]
+script = ExtResource("1_mission")
+id = "suburbs_crossroads"
+display_name = "Crossroads"
+test_focus = "SUBURBS • DISPLACEMENT CREW"
+briefing = "The next crew has taken an elevated junction and relies on pressure weapons instead of simply chewing through cover. Their position punishes passive defence: read the raised firing line, use the live cell if it helps, and keep enough control of your position to answer back."
+objective_text = "CLEAR THE CROSSROADS"
+objective_mode = "incapacitate_enemy"
+campaign_order = 8
+salvage_reward = 90
+next_mission_id = ""
+feature_preview_enabled = true
+feature_preview_position = Vector2(1740, 820)
+feature_preview_text = "ELEVATED CREW • PRESSURE-WEAPON THREAT"
+player_position = Vector2(300, 1040)
+player_cover_position = Vector2(520, 1000)
+enemy_position = Vector2(1840, 790)
+enemy_cover_position = Vector2(1600, 780)
+roadblock_enabled = true
+roadblock_position = Vector2(1010, 958)
+power_cell_enabled = true
+power_cell_position = Vector2(1320, 1028)
+collapsible_barrier_enabled = false
+signal_relay_enabled = false
+enemy_tactic = "displacer"
+platform_rects = Array[Rect2]([Rect2(1470, 830, 500, 200)])
+visual_variant = 3
