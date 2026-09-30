@@ -111,6 +111,24 @@ The active development milestone is now **Milestone 2 — Progression Shell**. N
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
 
+## Current Progression Shell foundation
+
+Milestone 2 is now under implementation.
+
+Current foundation:
+- the project boots into a greybox Fort Knocks hub through a root App scene,
+- Command Board launches campaign-managed battles,
+- Roadblock Trial → High Ground → Scrap Gate currently form the initial sequential Outskirts route,
+- first clears award 35 / 50 / 70 Salvage respectively,
+- first clear unlocks the next route,
+- replayed cleared routes grant no additional Salvage,
+- local versioned save state persists progression to `user://fort_knocks_save.json`,
+- Garage and Workshop exist as shell screens,
+- active platform begins as `run_down_compact`,
+- battle remains independently runnable as an Encounter Proof/development scene, but campaign launches bypass its internal development selector.
+
+The next Progression Shell work should make Salvage create a meaningful combat-platform progression decision rather than expanding combat content.
+
 ## Portrait UX decisions
 
 Portrait mode is architecture, not a crop of a landscape game.
