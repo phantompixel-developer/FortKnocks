@@ -59,6 +59,8 @@ func _platform_display_name(platform_id: String) -> String:
 			return platform_id.replace("_", " ").to_upper()
 
 func _progress_subtitle(completed_count: int) -> String:
+	if completed_count >= 10:
+		return "SUBURBS SUPPLY LINE • SECURED STORES EXPANDING"
 	if completed_count >= 8:
 		return "SUBURBS FOOTHOLD • HEAVIER FABRICATION ONLINE"
 	if completed_count >= 7:
