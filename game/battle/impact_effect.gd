@@ -9,7 +9,7 @@ enum Kind {
 }
 
 const LIFETIME := 0.62
-const SPARK_DIRECTIONS := [
+const SPARK_DIRECTIONS: Array[Vector2] = [
 	Vector2(-0.96, -0.26),
 	Vector2(-0.72, -0.70),
 	Vector2(-0.34, -0.95),
