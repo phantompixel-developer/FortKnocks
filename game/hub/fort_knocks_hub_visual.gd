@@ -8,7 +8,9 @@ var _campaign_stage := 0
 func configure(platform_id: String, module_id := "", completed_missions := 0) -> void:
 	_platform_id = platform_id
 	_module_id = module_id
-	if completed_missions >= 8:
+	if completed_missions >= 10:
+		_campaign_stage = 5
+	elif completed_missions >= 8:
 		_campaign_stage = 4
 	elif completed_missions >= 6:
 		_campaign_stage = 3
@@ -110,6 +112,16 @@ func _draw_campaign_progress() -> void:
 		draw_rect(Rect2(468, 706, 96, 28), Color("4f5b55"))
 		draw_line(Vector2(480, 730), Vector2(550, 710), Color("d4aa55", 0.52), 5.0)
 		draw_circle(Vector2(586, 718), 9.0, Color("77b6bf"))
+
+	if _campaign_stage >= 5:
+		# Protected Suburbs supply line: recovered loads now have a deliberate secured storage bay.
+		draw_rect(Rect2(18, 846, 164, 18), Color("202824"))
+		draw_line(Vector2(30, 850), Vector2(30, 944), Color("26312d"), 10.0)
+		draw_line(Vector2(170, 850), Vector2(170, 944), Color("26312d"), 10.0)
+		draw_line(Vector2(36, 870), Vector2(164, 870), Color("6b6653"), 7.0)
+		for crate in [Rect2(42, 886, 46, 34), Rect2(92, 890, 54, 30), Rect2(64, 923, 62, 28)]:
+			draw_rect(crate, Color("655b47"))
+			draw_line(crate.position + Vector2(5, 5), crate.end - Vector2(5, 5), Color("d4aa55", 0.42), 4.0)
 
 func _draw_gate_and_watch() -> void:
 	var post_color := Color("222b27") if _campaign_stage < 3 else Color("19211e")
