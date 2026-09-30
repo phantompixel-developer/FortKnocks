@@ -107,7 +107,7 @@ It now includes:
 
 Local playtesting on 2026-09-30 confirmed that the combat loop and the three Encounter Proof layouts feel good and create sufficiently distinct firing problems. **Combat Prototype V1 and Milestone 1B — Encounter Proof are accepted as passed.**
 
-Milestone 2 — Progression Shell is now accepted through local playtesting. The active development milestone is **Milestone 3 — Identity / Production Presentation**. New work should improve the visual/audio/world identity of the proven game rather than expanding the Progression Shell with speculative systems.
+Milestones 1, 1B, 2 and 3 are accepted. The active development milestone is **Milestone 4 — Content Expansion**. New content must create a new tactical or progression decision rather than merely adding larger numbers or cosmetic volume.
 
 Exact combat rules belong in `docs/design/combat_design.md`; exact portrait interaction belongs in `docs/design/portrait_ux.md`.
 
@@ -164,7 +164,7 @@ Local playtesting on 2026-09-30 accepted the Progression Shell, including the re
 
 Do not add another major progression/combat system by default.
 
-Milestone 3 — Identity / Production Presentation now has a representative implementation complete on the current development branch and is awaiting local Play-mode acceptance. It establishes:
+Milestone 3 — Identity / Production Presentation is merged and accepted. It establishes:
 - a central Fort Knocks palette/UI theme,
 - a scavenger-survivor silhouette direction,
 - distinct salvage-built Compact/Sedan/Pickup presentation,
@@ -175,7 +175,18 @@ Milestone 3 — Identity / Production Presentation now has a representative impl
 - procedural ambience and gameplay cue timing,
 - lightweight in-world framing for the six Outskirts missions.
 
-Exact visual rules belong in `docs/design/art_direction.md`; audio/music rules belong in `docs/design/audio_direction.md`. Do not batch a large production asset library until this representative pass is locally accepted.
+Exact visual rules belong in `docs/design/art_direction.md`; audio/music rules belong in `docs/design/audio_direction.md`.
+
+Milestone 4's first development slice now extends the campaign into **Suburbs** with:
+- a second-region battlefield presentation,
+- a destructible signal-relay mission target,
+- an explicit `objective_mode` in mission data,
+- balanced / breacher / displacer enemy-tactic data,
+- **Dead Air**, where disabling the relay wins even if the defender is still active,
+- **Crossroads**, an elevated displacement-focused crew encounter,
+- automatic unlock reconciliation from already-completed Outskirts Checkpoint saves.
+
+This slice is intentionally small. It should prove that alternate objectives and enemy tactics are readable and strategically meaningful before the Suburbs route is expanded further.
 
 ## Portrait UX decisions
 
@@ -314,8 +325,9 @@ Milestone order is deliberate:
 1. **Combat Prototype V1 — PASSED** — aiming, camera, impact, destruction, projectile roles, enemy response, and portrait readability accepted through local playtesting.
 2. **Encounter Proof — PASSED** — multiple greybox layouts and environmental interactions accepted as creating repeatable tactical decisions.
 3. **Progression Shell — PASSED** — Fort Knocks hub, six-route Outskirts campaign, Salvage, platform/module/loadout progression, save data and visible hub growth accepted through local playtesting.
-4. **Identity / Production Presentation — IMPLEMENTATION COMPLETE, ACCEPTANCE PENDING** — representative survivor, platform, environment, UI, audio, VFX and world-identity pipelines are implemented; local Play-mode review is the remaining gate.
-5. **Content Expansion / Shipping** — mission variety, balance, performance, device validation, Android/iOS release work.
+4. **Identity / Production Presentation — PASSED** — representative survivor, platform, environment, UI, audio, VFX and world-identity pipelines are merged and accepted as the content baseline.
+5. **Content Expansion — ACTIVE** — first Suburbs slice adds alternate objectives and readable enemy tactics before broader content scaling.
+6. **Mobile Shipping — FUTURE** — balance, performance, device validation, Android/iOS release work.
 
 Do not skip a milestone because later systems are more exciting. See `docs/design/implementation_roadmap.md`.
 
