@@ -134,7 +134,7 @@ Implementation should favor composition over deep inheritance.
 
 ## Encounter authoring
 
-`MissionDefinition` owns stable encounter data; it does not own battle rules. The current definition supplies combatant/cover positions, optional authored obstacles/interactions, reusable greybox platform rectangles, a backdrop variant, and the objective label.
+`MissionDefinition` owns stable encounter data; it does not own battle rules. The current definition supplies combatant/cover positions, optional authored obstacles/interactions, reusable greybox platform rectangles, a backdrop variant, objective/test-focus text, and an optional tactical-feature preview position/text.
 
 `BattleController` currently applies the selected definition because encounter loading is still small and has one caller. Do not create a separate global mission manager merely to move these assignments elsewhere.
 
