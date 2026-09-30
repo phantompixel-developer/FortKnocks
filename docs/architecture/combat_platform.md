@@ -59,7 +59,7 @@ Zones can transition between authored states, detach prepared pieces, alter coll
 `PlatformModuleDefinition` now exists for the first utility-slot proof.
 
 Current Pickup modules:
-- `spotter_rack` — +4 partial trajectory-preview points,
+- `spotter_rack` — denser midpoint trajectory sampling across the normal visible arc + 4 highlighted continuation points,
 - `ballast_crates` — +80 cover durability.
 
 Both cost 40 Salvage and support only `pickup`. The Pickup has one active utility slot in this milestone, so the player chooses precision or protection rather than stacking both effects.
