@@ -172,7 +172,7 @@ Progression should cause meaningful decisions and visible Fort Knocks transforma
 
 ## Milestone 3 — Identity / Production Presentation
 
-**Status: IMPLEMENTATION COMPLETE — LOCAL ACCEPTANCE PENDING**
+**Status: PASSED**
 
 ### Goal
 Turn the proven game into recognisably **Fort Knocks**.
@@ -206,30 +206,36 @@ The representative production-presentation pipelines are now implemented:
 
 No new progression system, weapon catalog or campaign region was added as part of this milestone.
 
-### Acceptance gate
+### Acceptance — 2026-09-30
 
-The implementation is ready for local acceptance. Before marking the milestone **PASSED**, local Play-mode review must confirm:
-- hub, Command Board, Garage and Workshop feel visually cohesive,
-- survivor/platform silhouettes read clearly at normal phone scale,
-- the three battlefield environment families remain readable behind gameplay,
-- active platform damage states are understandable,
-- projectile roles and Spotter preview remain distinguishable,
-- impact VFX are satisfying without obscuring the result,
-- procedural audio cues are audible, distinct and not fatiguing,
-- no portrait UI overlap/regression was introduced,
-- normal campaign flow remains intact.
+Milestone 3 is accepted for progression. The presentation branch was merged after local testing exposed and the branch fixed GDScript parser/type-inference regressions; the user then explicitly directed development to continue from merged `main`.
 
-The connected GitHub environment cannot run the Godot editor/runtime, so runtime acceptance must not be fabricated.
+The representative visual/audio language is now the baseline for additional content. New regions should extend this language rather than replacing it with unrelated presentation.
 
 ### Rule
 
-Do not batch a large sprite/audio catalog yet. The representative visual/audio pipelines must first pass local playtesting. After acceptance, Milestone 4 may scale the proven language into additional content.
+Scale the proven visual/audio language deliberately. New content still needs a gameplay reason to exist; do not batch a large asset catalog merely because the presentation gate has passed.
 ---
 
 ## Milestone 4 — Content Expansion
 
+**Status: ACTIVE — FIRST SUBURBS SLICE IN IMPLEMENTATION**
+
 ### Goal
 Scale proven systems without diluting readability.
+
+### Current implementation slice
+
+The first expansion batch deliberately proves three new content axes without adding a broad catalog:
+- **Suburbs** begins as a second campaign-region presentation with its own low residential/commercial silhouette language.
+- **Dead Air** introduces a mission objective that can be won by disabling a destructible signal relay; incapacitating the enemy is no longer the only valid victory condition.
+- **Crossroads** returns to crew defeat but introduces an elevated displacement-focused enemy problem.
+- Mission data now carries an explicit objective mode and enemy tactic.
+- Enemy tactics currently include balanced, breacher and displacer behavior; non-balanced tactics are surfaced in battle messaging so the distinction is readable.
+- The signal relay reuses the existing projectile/damage/VFX pipeline and can be damaged directly or by Shock pressure.
+- Existing completed Outskirts saves reconcile into the new route through the established next-mission unlock pass.
+
+This is a representative Content Expansion slice, not the full Milestone 4 catalog. Local playtesting must confirm that relay priority and enemy tactics create visibly different decisions before more Suburbs missions are authored.
 
 Possible expansion:
 - additional campaign regions,
