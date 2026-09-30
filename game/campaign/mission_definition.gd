@@ -6,6 +6,7 @@ extends Resource
 @export var test_focus := "BASELINE"
 @export_multiline var briefing := ""
 @export var objective_text := "INCAPACITATE ENEMY"
+@export_enum("incapacitate_enemy", "disable_relay") var objective_mode: String = "incapacitate_enemy"
 
 @export_group("Campaign progression")
 @export var campaign_order := 0
@@ -30,7 +31,13 @@ extends Resource
 @export var power_cell_position := Vector2(1715.0, 1028.0)
 @export var collapsible_barrier_enabled := false
 @export var collapsible_barrier_position := Vector2(1220.0, 900.0)
+@export var signal_relay_enabled: bool = false
+@export var signal_relay_position: Vector2 = Vector2(1450.0, 1000.0)
+@export var signal_relay_health: int = 120
+
+@export_group("Enemy tactics")
+@export_enum("balanced", "breacher", "displacer") var enemy_tactic: String = "balanced"
 
 @export_group("Greybox geometry")
 @export var platform_rects: Array[Rect2] = []
-@export_range(0, 2, 1) var visual_variant := 0
+@export_range(0, 3, 1) var visual_variant := 0
