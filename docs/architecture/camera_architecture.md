@@ -9,7 +9,7 @@ A dedicated `CameraDirector` owns battle-camera state and transitions. Aim, proj
 - **ENEMY_PREVIEW** — frames opponent and important nearby cover.
 - **TRAVEL_TO_ACTIVE** — moves to the active combatant.
 - **AIM** — stable framing that preserves touch/trajectory readability.
-- **INSPECT_ENEMY** — temporary player-requested enemy view.
+- **INSPECT_ENEMY** — player-requested enemy view that persists until explicit return.
 - **PROJECTILE_FOLLOW** — follows the fired projectile with bounded smoothing.
 - **IMPACT** — frames impact, target reaction, and limited camera impulse.
 - **SETTLE** — holds enough context to understand destruction/status changes.
@@ -19,7 +19,7 @@ An overview state may be added only if encounters require it.
 ## State rules
 - Camera state is explicit; avoid scattered tweens from unrelated scripts.
 - Transitions must be interruptible where UX requires it.
-- Returning from inspect restores the previous aim context.
+- Returning from inspect is player-triggered and restores the previous aim context.
 - Repetitive preview/travel durations should shorten after the first reveal of an encounter.
 - Camera shake/impulse is presentation only and must never obscure essential targeting information.
 - Projectile follow should look ahead enough to reveal impact rather than centering blindly on the projectile.
