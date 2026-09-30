@@ -29,7 +29,7 @@ CombatPlatform
 The first live definitions are:
 - `run_down_compact` — 150 cover / 240-wide profile,
 - `old_sedan` — 230 cover / 300-wide profile / 80 Salvage,
-- `pickup` — data/preview only until its module gameplay is implemented.
+- `pickup` — 260 cover / 320-wide profile / 130 Salvage / one utility slot.
 
 Do not add mass classes, crew slots, module slots, or damage-zone schemas until the next platform actually needs them.
 
@@ -55,7 +55,17 @@ Avoid arbitrary mesh/sprite destruction simulation. Platforms expose authored zo
 Zones can transition between authored states, detach prepared pieces, alter collision, disable modules, or pass damage to crew according to defined rules.
 
 ## Modules
-Modules are compositional upgrades. A module can provide a capability, protection, resource bonus, or trade-off. The platform should not hardcode every module type.
+`PlatformModuleDefinition` now exists for the first utility-slot proof.
+
+Current Pickup modules:
+- `spotter_rack` — +4 partial trajectory-preview points,
+- `ballast_crates` — +80 cover durability.
+
+Both cost 40 Salvage and support only `pickup`. The Pickup has one active utility slot in this milestone, so the player chooses precision or protection rather than stacking both effects.
+
+Module ownership/equipment is persisted separately from platform ownership. Battle receives the equipped module from `App`; modules do not read save data themselves.
+
+This is the first compositional module seam. Do not generalize into a large equipment framework until a later platform needs additional slot types.
 
 ## Crew slots
 Crew position affects exposure and available actions. A slot should define its anchor/cover relationship; character logic should not contain vehicle-specific coordinates.
