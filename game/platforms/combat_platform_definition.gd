@@ -7,6 +7,7 @@ extends Resource
 @export var purchase_cost := 0
 @export var unlock_after_mission_id := ""
 @export var purchasable := true
+@export_range(0, 3, 1) var utility_slot_count := 0
 
 @export_group("Battle profile")
 @export var cover_health := 150
