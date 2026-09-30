@@ -65,6 +65,25 @@ func equipped_module_id(platform_id: String) -> String:
 	var equipped := inventory.get("equipped_module_by_platform", {}) as Dictionary
 	return str(equipped.get(platform_id, ""))
 
+func specialist_weapon_id() -> String:
+	var inventory := _data.get("inventory", {}) as Dictionary
+	var weapon_id := str(inventory.get("specialist_weapon_id", "heavy_slug"))
+	return weapon_id if weapon_id in ["heavy_slug", "shock_capsule"] else "heavy_slug"
+
+func set_specialist_weapon(weapon_id: String) -> bool:
+	if weapon_id not in ["heavy_slug", "shock_capsule"]:
+		return false
+
+	var inventory := _data.get("inventory", {}) as Dictionary
+	if str(inventory.get("specialist_weapon_id", "")) == weapon_id:
+		return true
+
+	inventory["specialist_weapon_id"] = weapon_id
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
 func purchase_module(module_id: String, cost: int) -> bool:
 	if module_id.is_empty() or cost < 0:
 		return false
@@ -209,6 +228,7 @@ func _default_data() -> Dictionary:
 			"owned_platform_ids": ["run_down_compact"],
 			"owned_module_ids": [],
 			"equipped_module_by_platform": {},
+			"specialist_weapon_id": "heavy_slug",
 		},
 		"crew": {},
 		"settings": {},
@@ -265,6 +285,8 @@ func _normalize() -> void:
 		inventory["owned_module_ids"] = []
 	if typeof(inventory.get("equipped_module_by_platform", null)) != TYPE_DICTIONARY:
 		inventory["equipped_module_by_platform"] = {}
+	if str(inventory.get("specialist_weapon_id", "")) not in ["heavy_slug", "shock_capsule"]:
+		inventory["specialist_weapon_id"] = "heavy_slug"
 
 	inventory["owned_platform_ids"] = owned_platforms
 	_data["save_version"] = CURRENT_SAVE_VERSION
