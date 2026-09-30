@@ -219,7 +219,7 @@ Scale the proven visual/audio language deliberately. New content still needs a g
 
 ## Milestone 4 — Content Expansion
 
-**Status: ACTIVE — SUBURBS + TECHNICAL CAPABILITY SLICE IMPLEMENTED, LOCAL ACCEPTANCE PENDING**
+**Status: ACTIVE — FOUR-MISSION SUBURBS SLICE IMPLEMENTED, LOCAL ACCEPTANCE PENDING**
 
 ### Goal
 Scale proven systems without diluting readability.
@@ -235,14 +235,24 @@ The first expansion batch deliberately proves three new content axes without add
 - The signal relay reuses the existing projectile/damage/VFX pipeline and can be damaged directly or by Shock pressure.
 - Existing completed Outskirts saves reconcile into the new route through the established next-mission unlock pass.
 
-The second Content Expansion batch now adds the first post-Pickup platform tier:
+The second Content Expansion batch adds the first post-Pickup platform tier:
 - **Improvised Technical** unlocks after Crossroads for 190 Salvage,
 - one support-module slot,
 - **Twin Field Rack** carries Bolt + Slug + Shock together,
 - **Stabilizer Rig** cuts crew displacement by 55% while retaining the normal one-specialist rack,
 - Workshop, battle briefing, Fort Knocks and platform visuals expose the trade-off,
 - Garage presentation has been tightened to fit four platform tiers without portrait overlap,
-- Fort Knocks gains a Suburbs-complete fabrication stage.
+- Fort Knocks gains a heavier-fabrication stage after Crossroads.
+
+The third Content Expansion batch extends Suburbs to four missions with a second objective family:
+- **Loaded Up** introduces a protected Salvage Load; victory requires clearing the raiders while the load survives,
+- **Hot Cargo** repeats the protected-objective rule beside a live power cell so the player's own Shock/hazard choices can cause collateral damage,
+- `MissionDefinition` now supports `protect_salvage` plus Salvage Load placement/durability,
+- **Raider** enemy tactics deliberately redirect fire toward the protected objective,
+- direct shots, Shock pressure and power-cell surges all use the same damage pipeline against the Salvage Load,
+- destroying the load is an immediate mission defeat even when the player survivor remains alive,
+- inspection shows Salvage durability and live-cell state together,
+- clearing the current four-mission Suburbs slice adds a secured storage bay to Fort Knocks.
 
 This remains a representative Content Expansion slice, not the full Milestone 4 catalog.
 
@@ -258,10 +268,14 @@ Before scaling Milestone 4 further, local Play-mode review should confirm:
 - **Twin Field Rack** visibly enables Bolt + Slug + Shock in one campaign battle,
 - **Stabilizer Rig** produces a clearly perceptible reduction in player displacement,
 - switching Technical modules restores the correct mutually exclusive trade-off,
+- **Loaded Up** fails when the protected Salvage Load is destroyed and wins only when the raiders are cleared with the load intact,
+- Raider behavior visibly redirects meaningful fire toward the protected objective,
+- player direct fire and Shock pressure can also damage the protected load,
+- **Hot Cargo** makes the nearby live cell a genuine collateral-risk decision rather than decorative hazard placement,
 - Garage/Workshop remain readable with no portrait overlap,
-- Fort Knocks visibly reflects the Technical/Suburbs progression stage.
+- Fort Knocks visibly reflects both the Technical foothold and the later secured-storage progression stage.
 
-Do not author more Suburbs missions or another platform tier until these distinctions survive local playtesting.
+Do not expand beyond the current four Suburbs missions or add another platform tier until these distinctions survive local playtesting.
 
 Possible expansion:
 - additional campaign regions,
