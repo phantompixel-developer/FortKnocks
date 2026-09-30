@@ -58,7 +58,8 @@ The first Encounter Proof implementation now provides:
 - a second environmental interaction: a collapsible scrap gate,
 - touch-first encounter selection from the normal Play flow,
 - compact mission brief before each proof encounter,
-- end-of-battle encounter report with shot/outcome/weapon-use counts for comparison,
+- mission-defined camera preview of the encounter's defining tactical feature,
+- end-of-battle encounter report with shot/direct/cover counts, meaningful environment-event count, and weapon-use counts for comparison,
 - restart-current-encounter and choose-another-encounter paths,
 - weapon-selection explanation moved out of the lower combat area and synchronized with the weapon tray.
 
