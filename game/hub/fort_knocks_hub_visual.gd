@@ -2,9 +2,11 @@ class_name FortKnocksHubVisual
 extends Node2D
 
 var _platform_id := "run_down_compact"
+var _module_id := ""
 
-func configure(platform_id: String) -> void:
+func configure(platform_id: String, module_id := "") -> void:
 	_platform_id = platform_id
+	_module_id = module_id
 	queue_redraw()
 
 func _draw() -> void:
@@ -67,7 +69,9 @@ func _draw_workshop() -> void:
 			draw_rect(Rect2(x, 780, 26, 34), Color("61665f"))
 
 func _draw_active_platform() -> void:
-	if _platform_id == "old_sedan":
+	if _platform_id == "pickup":
+		_draw_pickup()
+	elif _platform_id == "old_sedan":
 		_draw_sedan()
 	else:
 		_draw_compact()
@@ -78,6 +82,34 @@ func _draw_compact() -> void:
 	draw_circle(Vector2(454, 858), 28, Color("292d2b"))
 	draw_circle(Vector2(582, 858), 28, Color("292d2b"))
 	draw_line(Vector2(470, 750), Vector2(540, 750), Color("8b918a"), 5.0)
+
+
+func _draw_pickup() -> void:
+	var shell := Color("4f5e54")
+	draw_rect(Rect2(360, 778, 294, 80), shell)
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(382, 778),
+			Vector2(420, 730),
+			Vector2(520, 730),
+			Vector2(552, 778),
+		]),
+		PackedColorArray([shell.lightened(0.06)])
+	)
+	draw_rect(Rect2(438, 739, 58, 30), Color("526965"))
+	draw_rect(Rect2(558, 790, 78, 40), shell.darkened(0.08))
+	draw_circle(Vector2(416, 862), 31, Color("292d2b"))
+	draw_circle(Vector2(604, 862), 31, Color("292d2b"))
+	draw_circle(Vector2(416, 862), 15, Color("686d67"))
+	draw_circle(Vector2(604, 862), 15, Color("686d67"))
+
+	if _module_id == "spotter_rack":
+		draw_line(Vector2(586, 790), Vector2(586, 724), Color("343b37"), 8.0)
+		draw_line(Vector2(586, 728), Vector2(620, 712), Color("343b37"), 6.0)
+		draw_circle(Vector2(626, 710), 12, Color("798a84"))
+	elif _module_id == "ballast_crates":
+		draw_rect(Rect2(552, 754, 42, 32), Color("675d46"))
+		draw_rect(Rect2(598, 760, 36, 26), Color("75694d"))
 
 func _draw_sedan() -> void:
 	var shell := Color("596258")
