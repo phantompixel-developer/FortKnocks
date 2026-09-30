@@ -3,10 +3,19 @@ extends Node2D
 
 var _platform_id := "run_down_compact"
 var _module_id := ""
+var _campaign_stage := 0
 
-func configure(platform_id: String, module_id := "") -> void:
+func configure(platform_id: String, module_id := "", completed_missions := 0) -> void:
 	_platform_id = platform_id
 	_module_id = module_id
+	if completed_missions >= 6:
+		_campaign_stage = 3
+	elif completed_missions >= 4:
+		_campaign_stage = 2
+	elif completed_missions >= 2:
+		_campaign_stage = 1
+	else:
+		_campaign_stage = 0
 	queue_redraw()
 
 func _draw() -> void:
@@ -29,6 +38,7 @@ func _draw() -> void:
 	for x in range(42, 684, 46):
 		draw_line(Vector2(x, 612), Vector2(x, 646), Color("757b72"), 6.0)
 
+	_draw_campaign_progress()
 	_draw_workshop()
 	_draw_active_platform()
 
@@ -38,12 +48,61 @@ func _draw() -> void:
 	draw_circle(Vector2(205, 930), 23, Color("c28a4b"))
 	draw_circle(Vector2(205, 930), 11, Color("e2ba65"))
 
-	# Rough gate and watch post imply future visual progression.
-	draw_rect(Rect2(70, 900, 26, 170), Color("363d39"))
-	draw_rect(Rect2(310, 900, 26, 170), Color("363d39"))
-	draw_line(Vector2(84, 900), Vector2(323, 900), Color("4c544f"), 12.0)
+	_draw_gate_and_watch()
+
+
+func _draw_campaign_progress() -> void:
+	if _campaign_stage >= 1:
+		# Organised storage replaces loose survival clutter after early wins.
+		draw_rect(Rect2(18, 666, 42, 150), Color("353d39"))
+		draw_rect(Rect2(22, 680, 34, 18), Color("77796d"))
+		draw_rect(Rect2(22, 716, 34, 18), Color("67695e"))
+		draw_rect(Rect2(22, 752, 34, 18), Color("77796d"))
+		for offset in [Vector2(320, 894), Vector2(350, 902), Vector2(378, 890)]:
+			draw_rect(Rect2(offset, Vector2(26, 24)), Color("686252"))
+
+	if _campaign_stage >= 2:
+		# Generator and permanent lighting show the camp becoming operational.
+		draw_rect(Rect2(282, 858, 88, 56), Color("3c4540"))
+		draw_circle(Vector2(300, 916), 13, Color("2b302e"))
+		draw_circle(Vector2(352, 916), 13, Color("2b302e"))
+		draw_line(Vector2(326, 858), Vector2(326, 826), Color("343b37"), 7.0)
+		draw_circle(Vector2(326, 820), 9, Color("d7bd72"))
+		draw_line(Vector2(624, 610), Vector2(624, 500), Color("343b37"), 9.0)
+		draw_line(Vector2(588, 508), Vector2(660, 508), Color("343b37"), 9.0)
+		draw_circle(Vector2(600, 520), 10, Color("d7bd72"))
+		draw_circle(Vector2(648, 520), 10, Color("d7bd72"))
+
+	if _campaign_stage >= 3:
+		# Cleared Outskirts: reinforced perimeter and command mast.
+		draw_rect(Rect2(32, 596, 656, 16), Color("2f3733"))
+		draw_line(Vector2(542, 598), Vector2(542, 456), Color("303834"), 10.0)
+		draw_line(Vector2(542, 468), Vector2(580, 486), Color("303834"), 5.0)
+		draw_line(Vector2(542, 486), Vector2(510, 503), Color("303834"), 5.0)
+		draw_circle(Vector2(542, 452), 8, Color("d7bd72"))
+
+func _draw_gate_and_watch() -> void:
+	var post_color := Color("363d39")
+	var cross_color := Color("4c544f")
+	var post_width := 26.0
+	if _campaign_stage >= 3:
+		post_color = Color("2e3632")
+		cross_color = Color("60685f")
+		post_width = 34.0
+
+	draw_rect(Rect2(70, 900, post_width, 170), post_color)
+	draw_rect(Rect2(310, 900, post_width, 170), post_color)
+	draw_line(Vector2(84, 900), Vector2(323, 900), cross_color, 12.0 if _campaign_stage < 3 else 18.0)
+
+	if _campaign_stage >= 2:
+		draw_line(Vector2(92, 932), Vector2(310, 1018), Color("555f58"), 7.0)
+		draw_line(Vector2(310, 932), Vector2(92, 1018), Color("555f58"), 7.0)
+
 	draw_rect(Rect2(612, 655, 22, 182), Color("3b423e"))
 	draw_rect(Rect2(580, 646, 86, 18), Color("3b423e"))
+	if _campaign_stage >= 2:
+		draw_rect(Rect2(590, 618, 66, 28), Color("4b534e"))
+		draw_line(Vector2(622, 618), Vector2(622, 574), Color("3a423e"), 7.0)
 
 func _draw_workshop() -> void:
 	draw_rect(Rect2(70, 710, 250, 145), Color("3c4540"))
