@@ -8,9 +8,10 @@ Codex/Claude should be able to understand, implement, validate, and review work 
 2. Create a narrowly named branch.
 3. Read `AGENTS.md`, `docs/README.md`, and `docs/project_context.md`.
 4. Read the task-relevant canonical design/architecture documents.
-5. Check `docs/design/implementation_roadmap.md` before expanding scope.
-6. Inspect existing implementation before proposing new architecture.
-7. Implement the smallest coherent milestone-sized task.
+5. For any visual/UI/environment/platform/presentation task, read `docs/design/visual_reference.md` and the active visual production plan before changing presentation.
+6. Check `docs/design/implementation_roadmap.md` before expanding scope.
+7. Inspect existing implementation before proposing new architecture.
+8. Implement the smallest coherent milestone-sized task.
 8. Run available headless validation/tests.
 9. Review the diff for accidental scope growth.
 10. Update canonical documentation when durable rules changed.
