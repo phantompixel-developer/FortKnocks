@@ -1,7 +1,8 @@
 # Fort Knocks — Visual Production Pass 1
 
 **Branch:** `feat/locked-visual-direction-production-pass`
-**Primary reference:** `docs/design/visual_reference.md`
+**Primary reference:** `docs/design/visual_reference.md`  
+**Production asset manifest:** `docs/design/visual_asset_manifest.md`
 
 ## Objective
 
