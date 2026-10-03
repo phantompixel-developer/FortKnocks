@@ -2,7 +2,9 @@
 
 ## Target
 
-**Stylised gritty 2D salvage-war illustration**: readable and characterful at phone size rather than photorealistic, grimdark, military-simulator, or generic zombie imagery.
+**High-quality stylised gritty 2D salvage-war illustration**: polished enough to read as a finished commercial mobile game while remaining readable at phone size rather than photorealistic, grimdark, military-simulator, or generic zombie imagery.
+
+The **locked primary visual reference** is `docs/design/visual_reference.md` with the companion image at `docs/design/reference/fort_knocks_primary_visual_reference.svg`. Future visual work must treat that reference as the target, not merely inspiration.
 
 The first production-presentation pass establishes an independent Fort Knocks visual language built from:
 - welded civilian machinery,
@@ -36,6 +38,21 @@ They appear on:
 - selected salvage/roadside props.
 
 This is a visual identifier, not a final faction logo. It can evolve later, but new work should not introduce a conflicting player emblem casually.
+
+## Production finish
+
+The current procedural/vector presentation was useful to prove gameplay and identity, but it is **not the final quality bar**.
+
+Production presentation should move toward:
+- authored/generated standalone 2D assets rather than relying on primitive shapes for hero visuals,
+- painterly/cel-shaded surfaces with controlled texture,
+- directional warm light and cooler functional accents,
+- atmospheric far/mid/foreground separation,
+- darker near-camera foreground framing inspired by the approved secondary concept,
+- richer vehicles, props and structures while retaining clean silhouettes,
+- cohesive UI plates that feel designed rather than default controls.
+
+Procedural drawing remains appropriate for dynamic VFX, guides, debug/proof visuals and selected scalable motifs where it still looks competitive.
 
 ## Visual principles
 
@@ -196,7 +213,7 @@ The Milestone 3 representative pipeline is deliberately lightweight and reposito
 3. Keep collision and visual code independent.
 4. Reuse the central palette/theme.
 5. Approve the representative object/category before adding more variants.
-6. Only replace procedural shapes with external authored sprites/atlases when that replacement clearly improves quality without harming readability/performance.
+6. Replace procedural hero/environment shapes with authored sprites/atlases when doing so moves the game materially toward the locked production reference without harming readability/performance.
 7. Record source/provenance for every external production asset.
 
 This prevents expensive art batching before the visual language is proven.
