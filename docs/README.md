@@ -50,3 +50,12 @@ Documents should distinguish:
 - **Provisional / working** — useful direction that is not yet a permanent content commitment.
 
 Do not silently promote provisional names, balance values, faction concepts, or content counts into permanent canon.
+
+## Locked visual direction
+
+For any presentation, UI, environment, character, combat-platform or art task, read:
+- `docs/design/visual_reference.md` — authoritative visual target and change-control rules.
+- `docs/design/reference/fort_knocks_primary_visual_reference.svg` — locked concept-board reference.
+- `docs/design/visual_production_pass_1.md` — current implementation sequence.
+
+These references control visual direction but do not override canonical gameplay/system scope.
