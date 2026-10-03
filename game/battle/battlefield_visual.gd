@@ -33,12 +33,16 @@ func _draw() -> void:
 	_draw_foreground_dressing()
 
 func _draw_atmosphere() -> void:
-	draw_rect(Rect2(0, 0, WORLD_WIDTH, WORLD_HEIGHT), Color("7f918a"))
-	draw_rect(Rect2(0, 0, WORLD_WIDTH, 260), Color("71857f"))
-	draw_rect(Rect2(0, 260, WORLD_WIDTH, 250), Color("87978f"))
-	draw_circle(Vector2(1780, 184), 92.0, Color("d2c797", 0.34))
-	for y in [318.0, 402.0, 492.0]:
-		draw_line(Vector2(0, y), Vector2(WORLD_WIDTH, y + 24.0), Color("b7beb0", 0.11), 28.0)
+	# Locked visual reference: warm cinematic horizon with cooler upper atmosphere.
+	draw_rect(Rect2(0, 0, WORLD_WIDTH, WORLD_HEIGHT), Color("6f8792"))
+	draw_rect(Rect2(0, 0, WORLD_WIDTH, 220), Color("517286"))
+	draw_rect(Rect2(0, 220, WORLD_WIDTH, 210), Color("9b7767"))
+	draw_rect(Rect2(0, 430, WORLD_WIDTH, 255), Color("c7784b"))
+	draw_rect(Rect2(0, 610, WORLD_WIDTH, 320), Color("8d6b54"))
+	draw_circle(Vector2(1780, 204), 100.0, Color("f4c56c", 0.68))
+	draw_circle(Vector2(1780, 204), 146.0, Color("ed9a53", 0.10))
+	for y in [330.0, 430.0, 540.0]:
+		draw_line(Vector2(0, y), Vector2(WORLD_WIDTH, y + 24.0), Color("f2d4ad", 0.09), 34.0)
 
 func _draw_far_outskirts() -> void:
 	# Two non-colliding silhouette layers create 2.5D depth while gameplay stays 2D.
@@ -52,7 +56,7 @@ func _draw_far_outskirts() -> void:
 		Rect2(1660, 520, 210, 410),
 		Rect2(1910, 575, 250, 355),
 	]:
-		draw_rect(rect, Color("596963"))
+		draw_rect(rect, Color("53636a"))
 	for rect in [
 		Rect2(45, 650, 190, 280),
 		Rect2(265, 700, 150, 230),
@@ -63,7 +67,7 @@ func _draw_far_outskirts() -> void:
 		Rect2(1510, 625, 240, 305),
 		Rect2(1810, 680, 220, 250),
 	]:
-		draw_rect(rect, Color("4d5b56"))
+		draw_rect(rect, Color("44545a"))
 
 	# Utility poles repeat across the campaign and become a recognisable Outskirts motif.
 	for x in range(140, 2140, 390):
@@ -152,18 +156,46 @@ func _draw_scrap_stack(origin: Vector2) -> void:
 		draw_line(Vector2(p.x + 18, p.y - 42), Vector2(p.x + 112, p.y - 13), Color("85513f"), 6.0)
 
 func _draw_road() -> void:
-	draw_rect(Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP), Color("262c2a"))
-	draw_rect(Rect2(0, ROAD_TOP, WORLD_WIDTH, 20), Color("59635d"))
-	draw_rect(Rect2(0, ROAD_TOP + 20, WORLD_WIDTH, 22), Color("343a37"))
+	draw_rect(Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP), Color("252728"))
+	draw_rect(Rect2(0, ROAD_TOP, WORLD_WIDTH, 20), Color("756b5b"))
+	draw_rect(Rect2(0, ROAD_TOP + 20, WORLD_WIDTH, 22), Color("3c3c38"))
 	for x in range(50, 2140, 188):
-		draw_rect(Rect2(x, 1118, 106, 10), Color("d4aa55", 0.68))
+		draw_rect(Rect2(x, 1118, 106, 10), Color("dca948", 0.72))
 	for x in range(30, 2140, 310):
-		draw_line(Vector2(x, 1008), Vector2(x + 66, 1028), Color("171c1b", 0.72), 5.0)
-		draw_line(Vector2(x + 64, 1028), Vector2(x + 44, 1066), Color("171c1b", 0.72), 4.0)
+		draw_line(Vector2(x, 1008), Vector2(x + 66, 1028), Color("111820", 0.74), 5.0)
+		draw_line(Vector2(x + 64, 1028), Vector2(x + 44, 1066), Color("111820", 0.74), 4.0)
+	# Warm edge dust separates the gameplay road from the background without
+	# changing any collision or trajectory geometry.
+	draw_line(Vector2(0, ROAD_TOP + 44), Vector2(WORLD_WIDTH, ROAD_TOP + 44), Color("c9824f", 0.14), 18.0)
 
 func _draw_foreground_dressing() -> void:
+	# Approved secondary-reference treatment: darker near-camera framing creates
+	# depth while remaining behind all gameplay actors and projectile visuals.
 	for x in range(92, 2140, 255):
 		draw_circle(Vector2(x, 918), 15, Color("414b46"))
 		draw_circle(Vector2(x + 22, 923), 10, Color("363f3b"))
 		if int(x / 255) % 3 == 0:
-			draw_line(Vector2(x + 34, 925), Vector2(x + 70, 900), Color("7d513e"), 5.0)
+			draw_line(Vector2(x + 34, 925), Vector2(x + 70, 900), Color("91563c"), 5.0)
+
+	# Near-camera concrete, wreck and scrub silhouettes. Keep these low so the
+	# launch subject, trajectory corridor and authored interactives stay clear.
+	for x in range(-40, 2180, 360):
+		draw_polygon(
+			PackedVector2Array([
+				Vector2(x, 1280),
+				Vector2(x + 18, 1214),
+				Vector2(x + 82, 1188),
+				Vector2(x + 156, 1202),
+				Vector2(x + 214, 1168),
+				Vector2(x + 290, 1204),
+				Vector2(x + 352, 1280),
+			]),
+			PackedColorArray([Color("111820", 0.96)])
+		)
+		draw_line(Vector2(x + 56, 1232), Vector2(x + 116, 1188), Color("684838"), 8.0)
+		draw_line(Vector2(x + 222, 1220), Vector2(x + 258, 1176), Color("2e3b35"), 7.0)
+		draw_circle(Vector2(x + 286, 1218), 25.0, Color("0c1115"))
+
+	# Small warm accents prevent the foreground from reading as a flat black bar.
+	for x in range(150, 2100, 520):
+		draw_circle(Vector2(x, 1218), 7.0, Color("c66f3c", 0.48))
