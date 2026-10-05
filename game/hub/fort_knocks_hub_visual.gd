@@ -2,6 +2,9 @@ class_name FortKnocksHubVisual
 extends Node2D
 
 const COMPACT_TEXTURE: Texture2D = preload("res://assets/art/production/vehicles/run_down_compact.svg")
+const HUB_SKY_FAR: Texture2D = preload("res://assets/art/production/hub/hub_sky_far.svg")
+const HUB_MID_STRUCTURES: Texture2D = preload("res://assets/art/production/hub/hub_mid_structures.svg")
+const HUB_FOREGROUND: Texture2D = preload("res://assets/art/production/hub/hub_foreground.svg")
 
 var _platform_id := "run_down_compact"
 var _module_id := ""
@@ -25,14 +28,23 @@ func configure(platform_id: String, module_id := "", completed_missions := 0) ->
 	queue_redraw()
 
 func _draw() -> void:
-	_draw_atmosphere()
-	_draw_distant_outskirts()
+	_draw_production_backdrop()
 	_draw_perimeter()
 	_draw_campaign_progress()
 	_draw_workshop()
 	_draw_active_platform()
 	_draw_scrapyard_and_fire()
 	_draw_gate_and_watch()
+	_draw_production_foreground()
+
+func _draw_production_backdrop() -> void:
+	draw_texture_rect(HUB_SKY_FAR, Rect2(0, 0, 720, 1280), false)
+	draw_texture_rect(HUB_MID_STRUCTURES, Rect2(0, 0, 720, 1280), false)
+
+func _draw_production_foreground() -> void:
+	# Low near-camera framing only. Dynamic platform, settlement upgrades and
+	# navigation remain separate so progression never gets baked into the art.
+	draw_texture_rect(HUB_FOREGROUND, Rect2(0, 0, 720, 1280), false)
 
 func _draw_atmosphere() -> void:
 	# Same warm/cool lighting language as the locked production reference.
