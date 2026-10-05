@@ -923,9 +923,18 @@ Implemented:
 6. static ten-mission landmark/objective coverage validation (local phone-scale Play validation still required).
 
 ## Batch D — Reference-level rendering finish
-Run one representative high-fidelity art pilot before batch-upgrading the asset library.
+**IMPLEMENTED on `feat/visual-polish-d-reference-finish-pilot`.**
 
-Only after Batch D is approved should the production pipeline scale that rendering finish broadly.
+Implemented representative high-fidelity finish across:
+- Run-down Compact,
+- Fort Knocks survivor,
+- Hub mid structures,
+- Outskirts midground,
+- industrial panel/button UI family.
+
+The reusable recipe is canonical in `docs/design/reference_finish_pilot.md`.
+
+This completes the planned A→D remediation implementation. Local Godot/device acceptance remains the gate before broad finish propagation or starting Highways.
 
 ---
 
@@ -958,3 +967,17 @@ This audit is complete when:
 - implementation begins on a fresh remediation batch from this branch or a follow-up branch as directed by the project owner.
 
 The next recommended implementation target is **Batch A — Campaign presentation foundation**.
+
+
+## Remediation implementation status — 2026-10-05
+
+All four audit-driven batches are now implemented as a stacked branch sequence:
+
+1. `feat/visual-polish-a-campaign-foundation`
+2. `feat/visual-polish-b-meta-screens`
+3. `feat/visual-polish-c-battle-parity`
+4. `feat/visual-polish-d-reference-finish-pilot`
+
+The implementation phase is complete.
+
+Next gate: local Play/device validation of the combined stack against the locked visual reference. Do not start Highways until that combined acceptance is complete.
