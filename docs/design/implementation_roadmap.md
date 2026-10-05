@@ -295,6 +295,11 @@ Highest-priority remediation:
 
 Milestone 4 therefore remains active, but **visual/current-content acceptance is now a gate before further region expansion**.
 
+All four audit remediation batches (A–D) are now implemented across the stacked visual-polish branches. The remaining gate is **combined local Play/device validation**, not additional speculative implementation.
+
+Do not begin Highways until the combined stack has been reviewed in normal Play against `docs/design/visual_reference.md`.
+
+
 
 Possible expansion:
 - additional campaign regions,
