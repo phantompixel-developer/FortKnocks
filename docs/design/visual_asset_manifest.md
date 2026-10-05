@@ -203,7 +203,7 @@ They require stronger value/silhouette than the environment.
 
 Do **not** generate all assets at once.
 
-First approval set — **IMPLEMENTED, awaiting local Play acceptance**:
+First approval set — **IMPLEMENTED, ACCEPTED AND MERGED TO MAIN (PR #10)**:
 1. **Hub layered background set** — authored sky/far, mid-structure and low foreground layers integrated behind dynamic settlement progression.
 2. **Run-down Compact production vehicle family** — one authored source reused across Hub / Garage / player Battle.
 3. **Outskirts environment set** — authored sky/far, midground, road and approved dark foreground layers integrated for Outskirts variants.
@@ -254,7 +254,7 @@ This proves the intended separation between production art and gameplay geometry
 
 ## Representative gate implementation — 2026-10-05
 
-The representative production set is now complete in code/assets and should be judged in local Play before expanding the art batch.
+The representative production set was accepted in local Play and merged to `main` as the first visual-production checkpoint.
 
 Key separation rules are proven:
 - Hub environment art is static layered presentation while settlement progression remains dynamic.
