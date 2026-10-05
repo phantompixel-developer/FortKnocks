@@ -27,4 +27,11 @@
  <rect x="1985" y="402" width="22" height="218"/>
 </g>
 <path d="M0 730 C380 685 750 725 1080 692 S1800 710 2160 668 L2160 930 L0 930Z" fill="#35464d"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M0 512 C310 468 650 518 970 486 S1510 468 1820 520 S2050 486 2160 494" stroke="#f0d4b2" stroke-width="20" opacity=".035"/>
+<path d="M70 582 H278 M350 556 H528 M620 580 H868 M935 544 H1154 M1236 571 H1414 M1510 541 H1748 M1840 574 H2100" stroke="#d49668" stroke-width="3" opacity=".11"/>
+<path d="M0 718 C420 684 790 724 1110 695 S1810 708 2160 674" stroke="#21363b" stroke-width="8" opacity=".24"/>
+<g stroke="#303f44" stroke-width="3" opacity=".28"><path d="M250 620 V520 M1188 620 V514 M1742 620 V536"/></g>
+</g>
 </svg>

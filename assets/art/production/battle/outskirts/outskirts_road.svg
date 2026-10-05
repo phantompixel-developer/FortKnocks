@@ -17,4 +17,12 @@
 <!-- patched asphalt -->
 <g fill="#313537" opacity=".82"><path d="M265 80 h180 l-20 62 -142 10 -34-38Z"/><path d="M910 205 h214 l-28 82 -174-6 -34-42Z"/><path d="M1650 82 h185 l-18 66 -146 10 -38-40Z"/></g>
 <g fill="#605749" opacity=".5"><circle cx="680" cy="112" r="8"/><circle cx="710" cy="132" r="5"/><circle cx="1340" cy="220" r="7"/><circle cx="1388" cy="202" r="5"/><circle cx="2020" cy="95" r="8"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M0 14 H2160" stroke="#d29a63" stroke-width="4" opacity=".18"/>
+<path d="M0 338 H2160" stroke="#0d1417" stroke-width="11" opacity=".58"/>
+<path d="M290 92 l32 -5 M386 132 l28 -5 M934 222 l36 -4 M1088 260 l30 -4 M1688 94 l32 -4 M1808 130 l28 -5" stroke="#b15c40" stroke-width="3" opacity=".34"/>
+<path d="M96 52 H240 M730 54 H900 M1460 52 H1630 M1980 52 H2120" stroke="#c8a579" stroke-width="2.5" opacity=".18"/>
+<g fill="#1b2021" stroke="none" opacity=".42"><circle cx="544" cy="276" r="4"/><circle cx="1288" cy="96" r="3"/><circle cx="1450" cy="286" r="4"/><circle cx="2086" cy="248" r="3"/></g>
+</g>
 </svg>

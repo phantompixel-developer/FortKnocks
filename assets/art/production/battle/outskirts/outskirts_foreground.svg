@@ -24,4 +24,11 @@
 <g stroke="#8b5942" stroke-width="5"><path d="M68 252 L92 206 M86 258 L124 218 M774 256 L800 208 M1910 250 L1938 204"/></g>
 <!-- restrained warm accents -->
 <g fill="#bb6842" opacity=".62"><circle cx="430" cy="302" r="7"/><circle cx="1045" cy="304" r="6"/><circle cx="1575" cy="300" r="7"/><circle cx="2070" cy="292" r="6"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M184 276 L222 230 H338 M1194 288 L1232 248 H1342 M24 302 L72 246 M1854 302 L1908 244" stroke="#bd754e" stroke-width="3.5" opacity=".24"/>
+<path d="M0 342 H2160" stroke="#05090b" stroke-width="16" opacity=".75"/>
+<path d="M230 248 l18 -4 M326 270 l15 -3 M1216 268 l16 -4 M1362 284 l15 -3 M1890 278 l16 -4" stroke="#9f503a" stroke-width="3" opacity=".52"/>
+<path d="M548 248 l16 -8 M894 260 l16 -8 M1650 256 l17 -8" stroke="#536c60" stroke-width="2.5" opacity=".24"/>
+</g>
 </svg>
