@@ -1,6 +1,11 @@
 class_name SignalRelay
 extends StaticBody2D
 
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const RELAY_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay.svg"
+
+var _production_texture: Texture2D
+
 signal destroyed(world_position: Vector2)
 
 @export var max_health: int = 120
@@ -67,6 +72,13 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
+	if not is_destroyed:
+		if _production_texture == null:
+			_production_texture = ProductionArtScript.texture_from_svg(RELAY_TEXTURE_PATH)
+		if _production_texture != null:
+			_draw_production_relay()
+			return
+
 	var outline: Color = Color("171c1b")
 	var frame: Color = Color("303a35")
 	var panel: Color = Color("59645e")
@@ -103,3 +115,17 @@ func _draw() -> void:
 	var ratio: float = float(health) / float(max_health)
 	draw_rect(Rect2(-46, -235, 92, 10), outline)
 	draw_rect(Rect2(-42, -232, 84.0 * ratio, 4), cold)
+
+
+func _draw_production_relay() -> void:
+	draw_texture_rect(
+		_production_texture,
+		Rect2(-90.0, -270.0, 180.0, 280.0),
+		false
+	)
+
+	var outline := Color("111719")
+	var cold := Color("77b6bf")
+	var ratio: float = float(health) / float(max_health)
+	draw_rect(Rect2(-46, -287, 92, 10), outline)
+	draw_rect(Rect2(-42, -284, 84.0 * ratio, 4), cold)
