@@ -45,3 +45,28 @@ Source-level QA completed after consolidation:
 - modified runtime GDScript contains no direct `.svg` preload usage.
 
 These checks establish source/architecture completion only. Normal Godot Play and device review remain mandatory before declaring visual acceptance, because repository inspection cannot prove final phone-scale composition, touch comfort, rendered SVG quality, import behavior, frame pacing or device safe-area behavior.
+
+
+## Screenshot-driven correction pass — 2026-10-05
+
+A second visual correction pass was performed after reviewing real 360×640 Godot Play screenshots against the locked visual reference board. The screenshots exposed a gap that source-only inspection understated: the previous build was structurally aligned but still read as a flat, sparse vector prototype rather than the dense cinematic 2D/2.5D target.
+
+Changes in this pass:
+- **Garage:** enlarged the selected platform so the vehicle owns the bay; reduced empty framing; corrected notice placement; preserved Compact unchanged because its silhouette already reads correctly.
+- **Old Sedan / Estate:** rebuilt as a longer, rugged estate/wagon with a distinct roofline, roof rack, luggage, four-door/cargo read, larger stance and salvage repairs. It must no longer resemble a stretched Compact.
+- **Pickup:** rebuilt as a lifted, heavier utility pickup with a clearer cab/bed split, roll/utility rack, cargo, bull bar and larger tyres.
+- **Fort Knocks Hub:** replaced the tall vertical menu stack with a compact bottom navigation dock, reduced the dark screen wash, enlarged the active platform and rebuilt the authored settlement mid-layer with scaffolding, multi-level fabrication space, tarps, command/lookout structure, warm practical lighting and stronger sunset depth.
+- **Outskirts:** strengthened the warm sunset atmosphere and rebuilt the roadside midground with more varied modern civilian structures, signage remnants, utility infrastructure, wrecks, vegetation and material breakup while preserving the projectile corridor.
+- **Workshop:** moved from three equal weapon thumbnails toward one large selected specialist hero plus the permanent Scrap Bolt; added dedicated projectile hero art and gave hardware more of the screen.
+- **Command Board:** increased physical-planning-board detail with pinned location-photo scraps, cord/annotation language and more readable route-order controls.
+
+Reference guardrail remains unchanged:
+- modern post-collapse salvage world,
+- grounded civilian infrastructure,
+- warm cinematic light,
+- layered 2.5D depth,
+- dark industrial UI,
+- strong phone-scale silhouettes,
+- no sci-fi/fantasy/zombie/nautical drift.
+
+This pass is source-complete only. It must be reviewed again in Godot Play using the same screenshot set before visual acceptance. If the rendered frames still do not approach the reference, the remaining gap should be treated as art-production quality rather than solved by further UI rearrangement alone.
