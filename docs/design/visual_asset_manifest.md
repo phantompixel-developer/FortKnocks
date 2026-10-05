@@ -328,3 +328,32 @@ Architecture rule:
 
 Reference lock:
 This batch follows `docs/design/visual_reference.md`. It introduces a new **region identity**, not a new game-wide art style.
+
+
+## Combat hero completion batch — 2026-10-05
+
+Implemented on `feat/visual-production-batch-2`.
+
+Authored current combat hero presentation now covers:
+- Fort Knocks survivor,
+- rival survivor,
+- all four current Fort Knocks platform families,
+- rival cover vehicle,
+- concrete roadblock,
+- collapsible scrap gate,
+- unstable power cell + spent state,
+- Signal Relay + destroyed state,
+- protected Salvage Load + destroyed state.
+
+Identity separation:
+- Fort Knocks keeps hazard-yellow / rust knock-mark language,
+- rival presentation uses muted olive / oxidised steel / rust and no Fort Knocks identifier,
+- both remain grounded civilian-salvage designs from the same collapsed modern world.
+
+Gameplay separation:
+- textures do not define collision,
+- survivor textures do not define projectile launch origins,
+- damage/destruction state is driven by existing gameplay state,
+- gate rotation/collapse and cell discharge remain unchanged.
+
+Reference authority remains `docs/design/visual_reference.md`.
