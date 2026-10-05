@@ -57,6 +57,7 @@ For any presentation, UI, environment, character, combat-platform or art task, r
 - `docs/design/visual_reference.md` — authoritative visual target and change-control rules.
 - `docs/design/reference/fort_knocks_primary_visual_reference.svg` — locked concept-board reference.
 - `docs/design/visual_production_pass_4.md` — completed combat-hero production pass.
-- `docs/design/current_game_visual_audit.md` — active whole-game visual audit and ranked remediation plan.
+- `docs/design/current_game_visual_audit.md` — completed whole-game visual audit and A–D remediation record.
+- `docs/design/reference_finish_pilot.md` — approved reusable rendering-finish recipe beneath the locked primary concept.
 
 These references control visual direction but do not override canonical gameplay/system scope.
