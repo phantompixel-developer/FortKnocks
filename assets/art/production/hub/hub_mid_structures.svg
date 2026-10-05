@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+<!-- background settlement shells; dynamic progression is drawn separately -->
+<g stroke="#11191d" stroke-width="7" stroke-linejoin="round">
+ <path d="M10 650 L10 548 54 510 190 510 228 548 228 650Z" fill="#36464d"/>
+ <path d="M250 650 L250 522 302 472 454 472 506 522 506 650Z" fill="#3b4c52"/>
+ <path d="M532 650 L532 552 572 520 700 520 718 552 718 650Z" fill="#33434a"/>
+</g>
+<!-- corrugated roofs -->
+<path d="M-4 538 L232 538 L207 572 L20 572Z" fill="#675a4c" stroke="#162126" stroke-width="6"/>
+<path d="M232 510 L524 510 L492 548 L264 548Z" fill="#52656a" stroke="#162126" stroke-width="6"/>
+<path d="M516 544 L724 544 L700 578 L540 578Z" fill="#695748" stroke="#162126" stroke-width="6"/>
+<g stroke="#b96b43" stroke-width="3" opacity=".48"><path d="M26 544 L60 570 M74 544 L108 570 M286 516 L326 545 M340 516 L380 545 M566 550 L598 575 M614 550 L646 575"/></g>
+<!-- open bays / workshop glow -->
+<rect x="56" y="584" width="118" height="66" fill="#192329"/><rect x="74" y="596" width="82" height="54" fill="#b96b42" opacity=".2"/>
+<rect x="306" y="554" width="142" height="96" fill="#172127"/><circle cx="378" cy="576" r="44" fill="#efa04d" opacity=".08"/>
+<rect x="574" y="588" width="94" height="62" fill="#182328"/>
+<!-- scaffolding -->
+<g stroke="#25333a" stroke-width="9"><path d="M22 650 V482 M202 650 V490 M22 500 H202 M42 520 L184 638 M184 520 L42 638"/><path d="M534 650 V496 M694 650 V496 M540 516 H688"/></g>
+<!-- scrap signage without baked UI text -->
+<rect x="274" y="494" width="74" height="22" rx="3" fill="#1a2429" stroke="#6e7776" stroke-width="3"/><path d="M286 504 H335" stroke="#e7ad3c" stroke-width="4" opacity=".62"/>
+</svg>
