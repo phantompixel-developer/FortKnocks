@@ -385,7 +385,7 @@ layout_mode = 0
 offset_left = 92.0
 offset_top = 270.0
 offset_right = 628.0
-offset_bottom = 710.0
+offset_bottom = 742.0
 mouse_filter = 2
 color = Color(0.085, 0.095, 0.09, 0.95)
 
@@ -437,12 +437,25 @@ vertical_alignment = 1
 autowrap_mode = 2
 mouse_filter = 2
 
+[node name="Loadout" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 330.0
+offset_right = 502.0
+offset_bottom = 366.0
+theme_override_font_sizes/font_size = 13
+text = "LOADOUT • RUN-DOWN COMPACT • BOLT + SLUG"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
 [node name="Objective" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
 offset_left = 34.0
-offset_top = 338.0
+offset_top = 374.0
 offset_right = 502.0
-offset_bottom = 372.0
+offset_bottom = 404.0
 theme_override_font_sizes/font_size = 15
 text = "OBJECTIVE: INCAPACITATE ENEMY"
 horizontal_alignment = 1
@@ -451,9 +464,9 @@ mouse_filter = 2
 [node name="BeginRunButton" type="Button" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
 offset_left = 138.0
-offset_top = 386.0
+offset_top = 414.0
 offset_right = 398.0
-offset_bottom = 432.0
+offset_bottom = 460.0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 18
 text = "BEGIN RUN"
