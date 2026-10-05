@@ -1,6 +1,11 @@
 class_name SalvageLoad
 extends StaticBody2D
 
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const SALVAGE_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/salvage_load.svg"
+
+var _production_texture: Texture2D
+
 signal destroyed(world_position: Vector2)
 
 @export var max_health: int = 150
@@ -67,6 +72,13 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
+	if not is_destroyed:
+		if _production_texture == null:
+			_production_texture = ProductionArtScript.texture_from_svg(SALVAGE_TEXTURE_PATH)
+		if _production_texture != null:
+			_draw_production_salvage()
+			return
+
 	var outline: Color = Color("171c1b")
 	var crate: Color = Color("665b46")
 	var metal: Color = Color("58635d")
@@ -101,3 +113,17 @@ func _draw() -> void:
 	var ratio: float = float(health) / float(max_health)
 	draw_rect(Rect2(-72, -91, 144, 10), outline)
 	draw_rect(Rect2(-68, -88, 136.0 * ratio, 4), hazard)
+
+
+func _draw_production_salvage() -> void:
+	draw_texture_rect(
+		_production_texture,
+		Rect2(-110.0, -137.0, 220.0, 141.0),
+		false
+	)
+
+	var outline := Color("111719")
+	var hazard := Color("e7ad3c")
+	var ratio: float = float(health) / float(max_health)
+	draw_rect(Rect2(-72, -151, 144, 10), outline)
+	draw_rect(Rect2(-68, -148, 136.0 * ratio, 4), hazard)
