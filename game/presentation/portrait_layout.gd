@@ -67,5 +67,5 @@ static func _apply_shift(control: Control, shift: Vector2) -> void:
 		return
 	if not control.has_meta(META_BASE_POSITION):
 		control.set_meta(META_BASE_POSITION, control.position)
-	var baseline := control.get_meta(META_BASE_POSITION) as Vector2
+	var baseline: Vector2 = control.get_meta(META_BASE_POSITION, control.position)
 	control.position = baseline + shift
