@@ -6,6 +6,7 @@ signal back_requested
 
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var mission_list: VBoxContainer = $MissionPanel/MissionScroll/MissionList
@@ -20,6 +21,8 @@ func _ready() -> void:
 	ThemeScript.style_card($TopBar)
 	ThemeScript.style_card($MissionPanel)
 	$Header/Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	call_deferred("_apply_responsive_layout")
 	back_button.pressed.connect(func() -> void:
 		_play_ui(&"ui_back")
 		back_requested.emit()
@@ -83,3 +86,12 @@ func _play_ui(cue: StringName) -> void:
 	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
 	if audio != null and audio.has_method("play_cue"):
 		audio.call("play_cue", cue)
+
+
+func _apply_responsive_layout() -> void:
+	PortraitLayoutScript.apply(
+		self,
+		[$Header, $TopBar],
+		[$MissionPanel],
+		[$Footer, $BackButton]
+	)
