@@ -203,12 +203,12 @@ They require stronger value/silhouette than the environment.
 
 Do **not** generate all assets at once.
 
-First approval set:
-1. one Hub layered background set,
-2. one Run-down Compact production vehicle family **— IMPLEMENTED as the first reusable authored SVG proof across Hub / Garage / player Battle**,
-3. one Outskirts background/midground/foreground layer set,
-4. one shared UI panel/button kit,
-5. one survivor production silhouette.
+First approval set — **IMPLEMENTED, awaiting local Play acceptance**:
+1. **Hub layered background set** — authored sky/far, mid-structure and low foreground layers integrated behind dynamic settlement progression.
+2. **Run-down Compact production vehicle family** — one authored source reused across Hub / Garage / player Battle.
+3. **Outskirts environment set** — authored sky/far, midground, road and approved dark foreground layers integrated for Outskirts variants.
+4. **Shared UI panel/button kit** — authored scalable industrial panel/button surfaces integrated through the central Theme and existing `style_card()` calls.
+5. **Player survivor production silhouette** — authored source integrated for the player only, aligned to existing feet/muzzle gameplay contracts; enemy remains visually distinct on the current fallback.
 
 Integrate these in the real project and evaluate at normal phone scale.
 
@@ -250,3 +250,17 @@ The first representative asset-pipeline proof is now live:
 - later platforms remain temporary fallbacks until their individual production assets are approved.
 
 This proves the intended separation between production art and gameplay geometry before the rest of the vehicle ladder is authored.
+
+
+## Representative gate implementation — 2026-10-05
+
+The representative production set is now complete in code/assets and should be judged in local Play before expanding the art batch.
+
+Key separation rules are proven:
+- Hub environment art is static layered presentation while settlement progression remains dynamic.
+- Outskirts decorative layers do not own collision.
+- Player survivor art does not own collision or launch origin.
+- Shared UI art scales through nine-patch surfaces while native controls keep text/input/state.
+- Fort Knocks player markings are not applied to enemy cover or enemy survivor presentation.
+
+If this gate passes visually and functionally, the next production batch can safely scale the established pipeline to Command Board/Workshop hero details and the remaining platform family without changing the art architecture.
