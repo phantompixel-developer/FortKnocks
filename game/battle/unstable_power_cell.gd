@@ -1,6 +1,11 @@
 class_name UnstablePowerCell
 extends StaticBody2D
 
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const POWER_CELL_TEXTURE_PATH := "res://assets/art/production/battle/shared/unstable_power_cell.svg"
+
+var _production_texture: Texture2D
+
 signal discharged(world_position: Vector2, radius: float, damage: int, force: float)
 
 @export var pulse_radius := 230.0
@@ -37,6 +42,12 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 func _draw() -> void:
 	if is_discharged:
 		_draw_spent_cell()
+		return
+
+	if _production_texture == null:
+		_production_texture = ProductionArtScript.texture_from_svg(POWER_CELL_TEXTURE_PATH)
+	if _production_texture != null:
+		draw_texture_rect(_production_texture, Rect2(-75.0, -146.0, 150.0, 180.0), false)
 		return
 
 	var outline := Color("171c1b")
