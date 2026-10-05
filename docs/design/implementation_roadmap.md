@@ -277,6 +277,25 @@ Before scaling Milestone 4 further, local Play-mode review should confirm:
 
 Do not expand beyond the current four Suburbs missions or add another platform tier until these distinctions survive local playtesting.
 
+### Whole-current-game visual audit — 2026-10-05
+
+The second visual-production checkpoint was merged to `main` in PR #11. A subsequent whole-current-game audit against the locked visual reference is recorded in:
+
+- `docs/design/current_game_visual_audit.md`
+
+The audit confirms the overall theme has remained aligned, but identifies current-content polish work that should happen **before Highways or further content expansion**.
+
+Highest-priority remediation:
+1. replace the proof-era campaign Mission Brief with a readable final Run Brief,
+2. replace the proof-era campaign Result/Takeaway surface with a final debrief/reward hierarchy,
+3. implement shared safe-area/responsive portrait layout handling,
+4. make Command Board region-aware for Outskirts → Suburbs,
+5. verify/fix the four-platform Garage row fit,
+6. then recompose Garage/Workshop/Command Board toward the approved physical-world-first reference.
+
+Milestone 4 therefore remains active, but **visual/current-content acceptance is now a gate before further region expansion**.
+
+
 Possible expansion:
 - additional campaign regions,
 - more platform families,
