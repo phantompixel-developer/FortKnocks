@@ -278,3 +278,23 @@ Correction:
 - direct SVG preloads were removed from Battlefield, Hub, player survivor, player Compact, Garage showcase and shared UI theme.
 
 For shipping mobile builds, approved source SVGs should ultimately be rasterized to PNG/WebP runtime derivatives after visual approval and profiling.
+
+
+## Production batch 2 implementation — 2026-10-05
+
+Branch: `feat/visual-production-batch-2`
+
+Implemented:
+- Old Sedan / Estate production master,
+- Pickup production master,
+- Improvised Technical production master,
+- all four current player platforms now share authored presentation across Garage, Hub and player Battle,
+- Command Board recovered-map hero surface with dynamic route/state pins,
+- Workshop weapon hardware display,
+- Workshop module hardware display,
+- Twin Field Rack presents both carried specialists,
+- native mission/equip/purchase controls remain authoritative.
+
+Enemy cover remains on faction-neutral procedural art by design.
+
+After local Play acceptance, the next environment production target is **Suburbs**, not another global style redesign.
