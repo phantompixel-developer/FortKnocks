@@ -182,17 +182,17 @@ mode = "modules"
 [node name="ModuleList" type="VBoxContainer" parent="UtilityCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 234.0
+offset_top = 222.0
 offset_right = 546.0
-offset_bottom = 350.0
+offset_bottom = 374.0
 theme_override_constants/separation = 8
 
 [node name="Note" type="Label" parent="UtilityCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 354.0
+offset_top = 378.0
 offset_right = 546.0
-offset_bottom = 420.0
+offset_bottom = 426.0
 theme_override_font_sizes/font_size = 14
 text = "Equip a platform with a module position to fit field hardware."
 horizontal_alignment = 1
