@@ -1,37 +1,73 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#496b80"/><stop offset=".34" stop-color="#6f7880"/><stop offset=".64" stop-color="#a87562"/><stop offset="1" stop-color="#c7744a"/></linearGradient>
- <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe1a0"/><stop offset=".55" stop-color="#f1b45f" stop-opacity=".85"/><stop offset="1" stop-color="#e18047" stop-opacity="0"/></radialGradient>
- <linearGradient id="haze" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d38b5d" stop-opacity=".08"/><stop offset=".52" stop-color="#efd0a7" stop-opacity=".32"/><stop offset="1" stop-color="#d47d4e" stop-opacity=".08"/></linearGradient>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#2e5872"/>
+    <stop offset=".26" stop-color="#4f7081"/>
+    <stop offset=".50" stop-color="#9b675d"/>
+    <stop offset=".72" stop-color="#e07d49"/>
+    <stop offset="1" stop-color="#aa6445"/>
+  </linearGradient>
+  <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#fff2ba"/>
+    <stop offset=".34" stop-color="#ffd176" stop-opacity=".98"/>
+    <stop offset=".68" stop-color="#ef9650" stop-opacity=".46"/>
+    <stop offset="1" stop-color="#e17643" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="haze" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#f0a96b" stop-opacity=".05"/>
+    <stop offset=".52" stop-color="#f8d5aa" stop-opacity=".34"/>
+    <stop offset="1" stop-color="#e7834d" stop-opacity=".05"/>
+  </linearGradient>
 </defs>
 <rect width="2160" height="930" fill="url(#sky)"/>
-<circle cx="1775" cy="205" r="185" fill="url(#sun)"/><circle cx="1775" cy="205" r="54" fill="#ffd78d" opacity=".86"/>
-<path d="M0 345 C330 300 545 387 820 350 S1390 315 1680 365 S2010 320 2160 340 L2160 500 L0 500Z" fill="#efd5ba" opacity=".07"/>
-<path d="M0 482 C310 430 600 500 920 462 S1450 445 1760 500 S2030 460 2160 475 L2160 620 L0 620Z" fill="url(#haze)"/>
-<!-- distant urban/industrial silhouette -->
-<g fill="#52636a" opacity=".86">
- <path d="M0 620 L0 510 118 510 118 465 230 465 230 610 318 610 318 430 398 430 398 620Z"/>
- <path d="M430 620 L430 545 530 545 530 490 640 490 640 570 720 570 720 405 815 405 815 620Z"/>
- <path d="M855 620 L855 520 1000 520 1000 452 1095 452 1095 590 1180 590 1180 500 1302 500 1302 620Z"/>
- <path d="M1340 620 L1340 468 1425 468 1425 545 1540 545 1540 425 1632 425 1632 620Z"/>
- <path d="M1680 620 L1680 515 1818 515 1818 448 1930 448 1930 560 2025 560 2025 480 2160 480 2160 620Z"/>
+<circle cx="1770" cy="205" r="214" fill="url(#sun)"/>
+<circle cx="1770" cy="205" r="56" fill="#ffe09a" opacity=".94"/>
+
+<!-- broad atmospheric bands -->
+<path d="M0 314 C300 265 620 350 905 306 S1450 278 1740 332 S2040 286 2160 308 L2160 438 L0 438Z"
+      fill="#f8d9ba" opacity=".075"/>
+<path d="M0 452 C320 406 650 470 982 434 S1490 420 1785 474 S2045 432 2160 446 L2160 620 L0 620Z"
+      fill="url(#haze)"/>
+
+<!-- far skyline: modern city after collapse, not fantasy ruins -->
+<g fill="#52636b" opacity=".73">
+  <path d="M0 650 V520 H96 V468 H164 V596 H224 V420 H290 V650Z"/>
+  <path d="M315 650 V548 H410 V494 H496 V382 H570 V650Z"/>
+  <path d="M602 650 V500 H700 V454 H784 V566 H850 V410 H922 V650Z"/>
+  <path d="M958 650 V524 H1060 V438 H1134 V580 H1204 V470 H1298 V650Z"/>
+  <path d="M1332 650 V454 H1405 V540 H1490 V390 H1572 V650Z"/>
+  <path d="M1614 650 V514 H1728 V444 H1818 V558 H1900 V402 H1980 V650Z"/>
+  <path d="M2016 650 V492 H2084 V438 H2160 V650Z"/>
 </g>
-<g fill="#405159" opacity=".86">
- <rect x="70" y="586" width="210" height="160"/><rect x="350" y="560" width="180" height="186"/><rect x="620" y="585" width="250" height="161"/>
- <rect x="935" y="548" width="220" height="198"/><rect x="1235" y="575" width="180" height="171"/><rect x="1510" y="545" width="240" height="201"/><rect x="1840" y="578" width="260" height="168"/>
+<!-- darker near-far silhouettes -->
+<g fill="#3b4f58" opacity=".82">
+  <rect x="0" y="592" width="250" height="180"/>
+  <rect x="280" y="572" width="210" height="200"/>
+  <rect x="535" y="606" width="265" height="166"/>
+  <rect x="838" y="560" width="230" height="212"/>
+  <rect x="1110" y="596" width="270" height="176"/>
+  <rect x="1425" y="566" width="250" height="206"/>
+  <rect x="1710" y="590" width="250" height="182"/>
+  <rect x="1985" y="574" width="175" height="198"/>
 </g>
-<!-- chimneys/tanks -->
-<g fill="#394950" opacity=".78">
- <rect x="575" y="370" width="24" height="250"/><ellipse cx="587" cy="370" rx="28" ry="10"/>
- <rect x="1460" y="385" width="26" height="235"/><ellipse cx="1473" cy="385" rx="30" ry="10"/>
- <rect x="1985" y="402" width="22" height="218"/>
+
+<!-- ruined towers / industrial silhouettes -->
+<g fill="#33464d" opacity=".75">
+  <rect x="548" y="356" width="22" height="304"/><ellipse cx="559" cy="356" rx="26" ry="9"/>
+  <rect x="1454" y="365" width="25" height="295"/><ellipse cx="1466" cy="365" rx="29" ry="9"/>
+  <rect x="1944" y="390" width="20" height="270"/>
 </g>
-<path d="M0 730 C380 685 750 725 1080 692 S1800 710 2160 668 L2160 930 L0 930Z" fill="#35464d"/>
-<!-- reference-finish propagation -->
-<g id="reference_finish_v2" fill="none" stroke-linecap="round">
-<path d="M0 512 C310 468 650 518 970 486 S1510 468 1820 520 S2050 486 2160 494" stroke="#f0d4b2" stroke-width="20" opacity=".035"/>
-<path d="M70 582 H278 M350 556 H528 M620 580 H868 M935 544 H1154 M1236 571 H1414 M1510 541 H1748 M1840 574 H2100" stroke="#d49668" stroke-width="3" opacity=".11"/>
-<path d="M0 718 C420 684 790 724 1110 695 S1810 708 2160 674" stroke="#21363b" stroke-width="8" opacity=".24"/>
-<g stroke="#303f44" stroke-width="3" opacity=".28"><path d="M250 620 V520 M1188 620 V514 M1742 620 V536"/></g>
+
+<!-- sparse warm window remnants -->
+<g fill="#e79a58" opacity=".12">
+  <rect x="64" y="612" width="22" height="12"/><rect x="122" y="632" width="18" height="11"/>
+  <rect x="352" y="600" width="20" height="12"/><rect x="430" y="620" width="18" height="11"/>
+  <rect x="664" y="624" width="22" height="12"/><rect x="748" y="640" width="18" height="10"/>
+  <rect x="912" y="590" width="22" height="12"/><rect x="1004" y="624" width="19" height="11"/>
+  <rect x="1184" y="616" width="20" height="11"/><rect x="1290" y="632" width="20" height="11"/>
+  <rect x="1504" y="590" width="22" height="12"/><rect x="1606" y="620" width="18" height="11"/>
 </g>
+
+<path d="M0 742 C370 690 730 742 1080 700 S1780 730 2160 682 L2160 930 L0 930Z" fill="#33484f"/>
+<path d="M0 716 C430 680 790 720 1130 692 S1820 710 2160 674" fill="none" stroke="#f0b276" stroke-width="8" opacity=".08"/>
 </svg>
