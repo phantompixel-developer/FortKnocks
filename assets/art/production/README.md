@@ -63,3 +63,24 @@ All assets listed here are presentation-only unless an owning gameplay document 
 - **State authority:** native Godot controls/theme remain responsible for text, input, selected/disabled state and accessibility.
 
 Future production assets should record equivalent provenance here or in a per-asset manifest.
+
+
+## Runtime loading note
+
+The `.svg` files in this directory are editable production master art.
+
+Do **not** directly `preload()` these SVG paths from gameplay/presentation scripts. Some Godot editor/build configurations can expose the SVG image decoder without registering the source extension as a parse-time ResourceLoader, which caused the visual-production branch to fail script parsing.
+
+Runtime code must go through:
+- `game/presentation/production_art.gd`
+
+That helper:
+- reads the SVG source as text,
+- decodes it through `Image.load_svg_from_string()`,
+- creates an `ImageTexture`,
+- caches the resulting texture,
+- returns `null` on failure so the owning presentation code can use its procedural fallback.
+
+This keeps art-loader failures non-fatal and separates editable source art from gameplay boot requirements.
+
+Before mobile release/export, the preferred final packaging step remains rasterizing approved masters to PNG/WebP runtime derivatives and retaining SVG only as source/master art.
