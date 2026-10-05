@@ -5,6 +5,7 @@ signal back_requested
 signal platform_requested(platform_id: String)
 
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
+const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
@@ -47,9 +48,14 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	platform_showcase.configure(active_id, module_id)
 	var active_definition := PlatformCatalogScript.by_id(active_id)
 	if active_definition != null:
-		detail_label.text = "%s • %d COVER" % [
+		var effective_cover := active_definition.cover_health
+		var active_module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
+		if active_module != null:
+			effective_cover += active_module.cover_health_bonus
+		detail_label.text = "%s • %d COVER%s" % [
 			active_definition.tactical_summary,
-			active_definition.cover_health,
+			effective_cover,
+			(" • %s" % active_module.display_name.to_upper()) if active_module != null else "",
 		]
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
