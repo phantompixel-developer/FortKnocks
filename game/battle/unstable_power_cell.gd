@@ -3,8 +3,10 @@ extends StaticBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const POWER_CELL_TEXTURE_PATH := "res://assets/art/production/battle/shared/unstable_power_cell.svg"
+const POWER_CELL_SPENT_TEXTURE_PATH := "res://assets/art/production/battle/shared/unstable_power_cell_spent.svg"
 
 var _production_texture: Texture2D
+var _spent_texture: Texture2D
 
 signal discharged(world_position: Vector2, radius: float, damage: int, force: float)
 
@@ -41,6 +43,11 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 
 func _draw() -> void:
 	if is_discharged:
+		if _spent_texture == null:
+			_spent_texture = ProductionArtScript.texture_from_svg(POWER_CELL_SPENT_TEXTURE_PATH)
+		if _spent_texture != null:
+			draw_texture_rect(_spent_texture, Rect2(-75.0, -68.0, 150.0, 100.0), false)
+			return
 		_draw_spent_cell()
 		return
 
