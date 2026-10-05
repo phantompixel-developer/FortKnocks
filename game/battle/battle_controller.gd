@@ -317,7 +317,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		var platform := ArenaPlatformScript.new() as ArenaPlatform
 		if platform == null:
 			continue
-		platform.configure(rect)
+		var platform_style := "suburbs" if definition.visual_variant == 3 else "outskirts"
+		platform.configure(rect, platform_style)
 		encounter_geometry.add_child(platform)
 
 	if definition.collapsible_barrier_enabled:
