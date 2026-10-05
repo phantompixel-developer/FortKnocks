@@ -1,32 +1,100 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300">
 <defs>
- <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#667b70"/><stop offset=".55" stop-color="#4d665e"/><stop offset="1" stop-color="#334942"/></linearGradient>
- <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6e9695"/><stop offset="1" stop-color="#263f42"/></linearGradient>
+  <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#8a664d"/>
+    <stop offset=".50" stop-color="#675344"/>
+    <stop offset="1" stop-color="#3d4944"/>
+  </linearGradient>
+  <linearGradient id="repair" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#66716a"/>
+    <stop offset="1" stop-color="#34413e"/>
+  </linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#8cb0aa"/>
+    <stop offset=".5" stop-color="#4d7070"/>
+    <stop offset="1" stop-color="#263d41"/>
+  </linearGradient>
+  <linearGradient id="warm" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#f0ad63" stop-opacity="0"/>
+    <stop offset=".52" stop-color="#f0ad63" stop-opacity=".52"/>
+    <stop offset="1" stop-color="#f0ad63" stop-opacity="0"/>
+  </linearGradient>
 </defs>
-<ellipse cx="320" cy="255" rx="268" ry="18" fill="#080c0f" opacity=".6"/>
-<path d="M45 176 L83 151 L144 143 L184 80 L326 75 L388 139 L548 139 L593 166 L586 216 L52 216Z" fill="#0b1114"/>
-<path d="M58 174 L91 158 L153 150 L192 90 L320 86 L382 148 L540 148 L579 170 L572 201 L66 201Z" fill="url(#body)"/>
-<path d="M191 89 L320 84 L377 145 L168 145Z" fill="#172126" stroke="#0b1114" stroke-width="7"/>
-<path d="M200 95 L253 92 L253 138 L178 138Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
-<path d="M263 91 L314 90 L362 138 L263 138Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
-<path d="M386 148 H548 V184 H394Z" fill="#2e4943" stroke="#14201f" stroke-width="5"/>
-<path d="M392 153 H541" stroke="#8a8f78" stroke-width="4" opacity=".55"/>
-<path d="M537 150 L565 171" stroke="#a45f42" stroke-width="6"/>
-<rect x="278" y="158" width="78" height="35" rx="3" fill="#5c5547" stroke="#141b1c" stroke-width="5"/>
-<path d="M296 188 L314 164 M318 188 L336 164" stroke="#e7ad3c" stroke-width="8" stroke-linecap="round"/>
-<path d="M90 174 L150 164 M412 173 L505 170" stroke="#b88561" stroke-width="3" opacity=".4"/>
-<rect x="567" y="165" width="24" height="16" rx="3" fill="#d8c18a" stroke="#151b1c" stroke-width="4"/>
-<g><circle cx="154" cy="210" r="46" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="154" cy="210" r="29" fill="#353e40"/><circle cx="154" cy="210" r="12" fill="#8b8065"/><path d="M154 184 V236 M128 210 H180 M136 192 L172 228 M172 192 L136 228" stroke="#5e6769" stroke-width="3"/></g>
-<g><circle cx="502" cy="210" r="46" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="502" cy="210" r="29" fill="#353e40"/><circle cx="502" cy="210" r="12" fill="#8b8065"/><path d="M502 184 V236 M476 210 H528 M484 192 L520 228 M520 192 L484 228" stroke="#5e6769" stroke-width="3"/></g>
-<path d="M112 201 A44 44 0 0 1 196 201 M460 201 A44 44 0 0 1 544 201" fill="none" stroke="#101619" stroke-width="8"/>
-<!-- exposed welds/repair -->
-<path d="M78 188 L122 182 M225 164 L204 191 M365 171 L382 190" stroke="#c7774e" stroke-width="4" opacity=".65"/>
-<!-- reference-finish propagation -->
-<g id="reference_finish_v2" fill="none" stroke-linecap="round">
-<path d="M92 157 L153 148 M194 89 Q253 82 319 84 M384 146 H539" stroke="#e5a158" stroke-width="4" opacity=".48"/>
-<path d="M74 194 Q252 207 432 198 L565 190" stroke="#1b3531" stroke-width="6" opacity=".66"/>
-<path d="M205 100 L248 97 M269 96 L309 95" stroke="#abd3cb" stroke-width="2.5" opacity=".30"/>
-<path d="M123 181 l14 -4 M235 186 l12 -6 M404 184 l18 -4 M524 178 l12 -3" stroke="#b85f3f" stroke-width="3.2" opacity=".65"/>
-<path d="M396 158 H525" stroke="#c8ac77" stroke-width="2.5" opacity=".28"/>
+
+<ellipse cx="322" cy="258" rx="275" ry="20" fill="#070b0e" opacity=".64"/>
+
+<!-- lifted chassis -->
+<path d="M43 179 L77 151 L138 143 L176 87 L328 81 L390 144 L546 144 L603 169 L595 221 L49 221Z"
+      fill="#0a0f12" stroke="#080c0e" stroke-width="6"/>
+<path d="M60 175 L91 159 L150 151 L188 99 L319 93 L380 154 L536 154 L584 174 L576 204 L68 204Z"
+      fill="url(#body)" stroke="#172022" stroke-width="5"/>
+
+<!-- cabin -->
+<path d="M187 98 L320 91 L375 150 L165 150Z"
+      fill="#172126" stroke="#0b1114" stroke-width="7"/>
+<path d="M197 105 L248 101 L248 143 L177 143Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<path d="M258 100 L314 99 L361 143 L258 143Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<path d="M205 109 L242 106 M266 105 L305 104" stroke="#d4e3dc" stroke-width="2.5" opacity=".28"/>
+
+<!-- heavy bed with repaired outer skin -->
+<path d="M384 153 H547 L574 174 L565 204 H388Z" fill="#3d5049" stroke="#121b1c" stroke-width="5"/>
+<path d="M394 160 H541 L555 172 H400Z" fill="#697164" opacity=".5"/>
+<path d="M403 174 H550" stroke="#c6a46f" stroke-width="3" opacity=".34"/>
+<path d="M454 157 V201 M505 157 V201" stroke="#26332f" stroke-width="3.5"/>
+
+<!-- roll bar / utility rack -->
+<path d="M405 153 V103 H530 V154" fill="none" stroke="#172022" stroke-width="10" stroke-linejoin="round"/>
+<path d="M421 109 L514 151 M514 109 L421 151" stroke="#293833" stroke-width="5" opacity=".75"/>
+<rect x="432" y="89" width="70" height="15" rx="4" fill="#343f3b" stroke="#11181a" stroke-width="4"/>
+<circle cx="445" cy="96" r="5" fill="#e2a846"/><circle cx="489" cy="96" r="5" fill="#e2a846"/>
+
+<!-- bed cargo / tied salvage -->
+<rect x="418" y="126" width="46" height="28" rx="3" fill="#746247" stroke="#151b1c" stroke-width="4"/>
+<rect x="470" y="132" width="37" height="22" rx="3" fill="#505a53" stroke="#151b1c" stroke-width="4"/>
+<path d="M414 122 L511 152 M512 120 L418 151" stroke="#b7784b" stroke-width="3" opacity=".72"/>
+
+<!-- door repair + FK slash -->
+<path d="M268 157 L351 151 L360 193 L276 198Z" fill="url(#repair)" stroke="#141b1d" stroke-width="5"/>
+<circle cx="280" cy="165" r="4" fill="#0d1416"/><circle cx="342" cy="161" r="4" fill="#0d1416"/>
+<circle cx="285" cy="189" r="4" fill="#0d1416"/><circle cx="350" cy="185" r="4" fill="#0d1416"/>
+<path d="M295 191 L314 163 M319 191 L338 162" stroke="#e7ad3c" stroke-width="8" stroke-linecap="round"/>
+<path d="M342 190 L360 163" stroke="#b65c36" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+
+<!-- bull bar / reinforced corners -->
+<path d="M64 166 L88 155 L100 203 H69Z" fill="#4a5551" stroke="#141b1d" stroke-width="4"/>
+<path d="M574 167 L599 179 L591 211 L569 205Z" fill="#4b5550" stroke="#141b1d" stroke-width="4"/>
+<path d="M588 174 H610 V210 H590" fill="none" stroke="#202a2b" stroke-width="7"/>
+<rect x="575" y="163" width="22" height="15" rx="3" fill="#ead5a0" stroke="#151b1c" stroke-width="4"/>
+
+<!-- lifted wheel arches / rugged tyres -->
+<g>
+  <circle cx="151" cy="213" r="51" fill="#080c0f" stroke="#151d20" stroke-width="5"/>
+  <circle cx="151" cy="213" r="33" fill="#333c3e" stroke="#0d1214" stroke-width="5"/>
+  <circle cx="151" cy="213" r="13" fill="#8d8268" stroke="#171d1e" stroke-width="4"/>
+  <path d="M151 184 V242 M122 213 H180 M131 193 L171 233 M171 193 L131 233" stroke="#657074" stroke-width="3.5"/>
 </g>
+<g>
+  <circle cx="510" cy="213" r="51" fill="#080c0f" stroke="#151d20" stroke-width="5"/>
+  <circle cx="510" cy="213" r="33" fill="#333c3e" stroke="#0d1214" stroke-width="5"/>
+  <circle cx="510" cy="213" r="13" fill="#8d8268" stroke="#171d1e" stroke-width="4"/>
+  <path d="M510 184 V242 M481 213 H539 M490 193 L530 233 M530 193 L490 233" stroke="#657074" stroke-width="3.5"/>
+</g>
+<path d="M104 202 A49 49 0 0 1 198 202 M463 202 A49 49 0 0 1 557 202"
+      fill="none" stroke="#101619" stroke-width="9"/>
+
+<!-- suspension / skid plate -->
+<path d="M192 215 H465" stroke="#1a2425" stroke-width="10"/>
+<path d="M278 216 H366" stroke="#6a5c48" stroke-width="7"/>
+<path d="M118 213 L92 229 M536 214 L562 230" stroke="#51605b" stroke-width="6"/>
+
+<!-- paint wear and directional warm key -->
+<path d="M92 158 C204 128 340 133 532 154" stroke="url(#warm)" stroke-width="7" fill="none"/>
+<g fill="none" stroke-linecap="round">
+  <path d="M115 180 L146 172 M214 180 L236 173 M364 188 L386 181 M436 186 L458 180 M522 180 L543 175"
+        stroke="#c2754d" stroke-width="3.5" opacity=".7"/>
+  <path d="M102 194 L119 188 M227 196 L245 190 M392 198 L411 192 M544 197 L560 192"
+        stroke="#55332b" stroke-width="4" opacity=".72"/>
+</g>
+<path d="M72 194 C195 210 330 216 455 207 C500 204 536 198 568 190 L572 205
+         C438 232 201 234 68 204Z" fill="#17312e" opacity=".22"/>
 </svg>
