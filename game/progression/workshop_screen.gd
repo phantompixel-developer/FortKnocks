@@ -80,8 +80,8 @@ func _update_specialist_loadout(specialist_id: String, full_rack_active: bool) -
 		shock_button.disabled = true
 		ThemeScript.mark_active(heavy_button, true)
 		ThemeScript.mark_active(shock_button, true)
-		heavy_button.text = "HEAVY SLUG\nCover breaker • high force\nCARRIED BY TWIN RACK"
-		shock_button.text = "SHOCK CAPSULE\nRadial pulse • displacement\nCARRIED BY TWIN RACK"
+		heavy_button.text = "HEAVY SLUG\nCARRIED • COVER BREAKER"
+		shock_button.text = "SHOCK CAPSULE\nCARRIED • DISPLACEMENT"
 		loadout_rule_label.text = "Twin Field Rack active: both specialists are carried. Swap the mount to restore the one-specialist constraint."
 		return
 
@@ -92,11 +92,11 @@ func _update_specialist_loadout(specialist_id: String, full_rack_active: bool) -
 	shock_button.disabled = specialist_id == "shock_capsule"
 	ThemeScript.mark_active(heavy_button, specialist_id == "heavy_slug")
 	ThemeScript.mark_active(shock_button, specialist_id == "shock_capsule")
-	heavy_button.text = "HEAVY SLUG\nCover breaker • high force\n%s" % (
-		"ACTIVE SPECIALIST" if specialist_id == "heavy_slug" else "EQUIP SPECIALIST"
+	heavy_button.text = "HEAVY SLUG\n%s • COVER BREAKER" % (
+		"ACTIVE" if specialist_id == "heavy_slug" else "EQUIP"
 	)
-	shock_button.text = "SHOCK CAPSULE\nRadial pulse • displacement\n%s" % (
-		"ACTIVE SPECIALIST" if specialist_id == "shock_capsule" else "EQUIP SPECIALIST"
+	shock_button.text = "SHOCK CAPSULE\n%s • DISPLACEMENT" % (
+		"ACTIVE" if specialist_id == "shock_capsule" else "EQUIP"
 	)
 	loadout_rule_label.text = "Campaign rack: Scrap Bolt + one specialist. Switch freely between runs."
 
