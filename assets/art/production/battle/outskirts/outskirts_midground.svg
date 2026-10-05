@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
+<defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#44545a"/><stop offset="1" stop-color="#28363b"/></linearGradient><linearGradient id="rust" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b6045"/><stop offset="1" stop-color="#5d4037"/></linearGradient></defs>
+<!-- repeated roadside shells -->
+<g stroke="#182227" stroke-width="8" stroke-linejoin="round">
+ <path d="M55 700 L55 570 95 530 330 530 372 570 372 700Z" fill="url(#wall)"/>
+ <path d="M430 700 L430 600 480 552 720 552 760 600 760 700Z" fill="#3f5056"/>
+ <path d="M845 700 L845 548 890 510 1132 510 1184 548 1184 700Z" fill="url(#wall)"/>
+ <path d="M1275 700 L1275 590 1325 550 1540 550 1592 590 1592 700Z" fill="#405158"/>
+ <path d="M1680 700 L1680 560 1738 520 2030 520 2080 560 2080 700Z" fill="url(#wall)"/>
+</g>
+<!-- shutters/windows/sign remnants -->
+<g>
+ <rect x="95" y="596" width="115" height="104" fill="#222d31"/><path d="M103 610 H202 M103 628 H202 M103 646 H202 M103 664 H202" stroke="#556269" stroke-width="5"/>
+ <rect x="232" y="584" width="96" height="50" fill="#56706f" opacity=".58"/><path d="M236 638 H326" stroke="#b75d39" stroke-width="8"/>
+ <rect x="478" y="608" width="78" height="92" fill="#253136"/><rect x="584" y="596" width="126" height="58" fill="#536a69" opacity=".55"/>
+ <rect x="900" y="566" width="126" height="134" fill="#243036"/><rect x="1040" y="558" width="102" height="64" fill="#4e6767" opacity=".6"/><path d="M1045 632 H1138" stroke="#d6a14a" stroke-width="8" opacity=".58"/>
+ <rect x="1320" y="605" width="88" height="95" fill="#263237"/><rect x="1435" y="598" width="106" height="56" fill="#536866" opacity=".55"/>
+ <rect x="1738" y="574" width="116" height="126" fill="#253136"/><rect x="1880" y="566" width="146" height="67" fill="#536b69" opacity=".52"/>
+</g>
+<!-- corrugated awnings / repair -->
+<path d="M36 546 L386 546 L360 584 L58 584Z" fill="#6e5b49" stroke="#1c262a" stroke-width="7"/>
+<path d="M822 526 L1208 526 L1181 566 L848 566Z" fill="#755846" stroke="#1c262a" stroke-width="7"/>
+<path d="M1652 536 L2108 536 L2080 578 L1680 578Z" fill="#665748" stroke="#1c262a" stroke-width="7"/>
+<g stroke="#b76a43" stroke-width="4" opacity=".55"><path d="M90 552 L130 580 M145 552 L185 580 M200 552 L240 580 M908 532 L950 562 M970 532 L1012 562 M1770 542 L1812 574 M1840 542 L1882 574"/></g>
+<!-- utility poles/cables -->
+<g stroke="#222f34" fill="none" stroke-linecap="round">
+ <path d="M250 705 V350 M214 405 H286 M250 382 L236 350 M250 382 L264 350" stroke-width="13"/>
+ <path d="M760 705 V392 M724 442 H796" stroke-width="13"/>
+ <path d="M1260 705 V360 M1224 410 H1296" stroke-width="13"/>
+ <path d="M1840 705 V370 M1804 420 H1876" stroke-width="13"/>
+ <path d="M286 405 C470 455 570 402 724 442 M796 442 C960 485 1070 395 1224 410 M1296 410 C1490 458 1655 390 1804 420" stroke-width="4" opacity=".72"/>
+</g>
+<!-- stripped wrecks / roadside clutter -->
+<g stroke="#171f23" stroke-width="6">
+ <path d="M520 676 L552 642 650 642 698 674 694 706 510 706Z" fill="#62473d"/><circle cx="552" cy="705" r="23" fill="#11171a"/><circle cx="656" cy="705" r="23" fill="#11171a"/>
+ <path d="M1450 678 L1490 646 1582 646 1630 678 1622 708 1442 708Z" fill="#475a58"/><circle cx="1486" cy="706" r="22" fill="#11171a"/><circle cx="1588" cy="706" r="22" fill="#11171a"/>
+</g>
+<g fill="#78604a"><rect x="390" y="672" width="34" height="34"/><rect x="1200" y="676" width="42" height="30"/><rect x="2100" y="670" width="32" height="36"/></g>
+</svg>
