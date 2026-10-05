@@ -16,4 +16,12 @@
 <path d="M66 132 L86 110" stroke="#a45f42" stroke-width="8" stroke-linecap="round"/>
 <!-- damaged warning plate -->
 <rect x="102" y="67" width="24" height="34" rx="3" fill="#564b3e" stroke="#111719" stroke-width="4" transform="rotate(7 114 84)"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M40 46 H110 M48 54 V126 M83 54 V126" stroke="#b5d8d0" stroke-width="2.3" opacity=".26"/>
+<path d="M39 137 H111" stroke="#203832" stroke-width="4.5" opacity=".62"/>
+<path d="M42 73 l8 -3 M105 58 l8 -2 M42 117 l8 -3 M105 126 l7 -2" stroke="#b45c3f" stroke-width="2.3" opacity=".58"/>
+<path d="M59 60 V117 M94 60 V117" stroke="#bff2ee" stroke-width="1.8" opacity=".34"/>
+<circle cx="75" cy="94" r="20" stroke="#91e0df" stroke-width="2.2" opacity=".28"/>
+</g>
 </svg>

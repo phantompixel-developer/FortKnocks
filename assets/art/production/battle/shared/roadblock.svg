@@ -14,4 +14,11 @@
 <rect x="193" y="79" width="54" height="42" rx="3" fill="#46524d" stroke="#1a2223" stroke-width="5"/>
 <circle cx="203" cy="90" r="3" fill="#111719"/><circle cx="237" cy="90" r="3" fill="#111719"/><circle cx="203" cy="111" r="3" fill="#111719"/><circle cx="237" cy="111" r="3" fill="#111719"/>
 <path d="M204 117 L221 97 M225 117 L242 97" stroke="#d4aa55" stroke-width="6" stroke-linecap="round"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M47 64 L75 39 H224 L256 66" stroke="#d6aa70" stroke-width="4" opacity=".40"/>
+<path d="M43 169 Q150 181 257 169" stroke="#32423d" stroke-width="6" opacity=".58"/>
+<path d="M62 86 l10 -5 M137 58 l13 -3 M219 69 l12 -2 M80 164 l11 -4 M228 160 l10 -4" stroke="#a06145" stroke-width="3" opacity=".48"/>
+<path d="M52 72 l15 -4 M153 43 l16 0 M242 84 l11 4" stroke="#eee0bf" stroke-width="2.4" opacity=".24"/>
+</g>
 </svg>

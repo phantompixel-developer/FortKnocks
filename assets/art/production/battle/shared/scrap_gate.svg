@@ -13,4 +13,11 @@
 <path d="M40 272 L57 251 M61 274 L78 253" stroke="#d4aa55" stroke-width="8" stroke-linecap="round"/>
 <path d="M81 274 L98 253" stroke="#a45f42" stroke-width="8" stroke-linecap="round"/>
 <g fill="#9a8a65" stroke="#151b1c" stroke-width="2"><circle cx="30" cy="25" r="5"/><circle cx="90" cy="25" r="5"/><circle cx="30" cy="291" r="5"/><circle cx="90" cy="291" r="5"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M36 25 H84 M36 77 H84 M36 129 H84 M36 181 H84 M36 233 H84" stroke="#d39a62" stroke-width="2.5" opacity=".34"/>
+<path d="M31 294 H89 M88 20 V290" stroke="#20342f" stroke-width="4" opacity=".62"/>
+<path d="M40 64 l9 -3 M70 111 l8 -3 M44 165 l10 -3 M70 218 l9 -3 M47 259 l8 -3" stroke="#b15b40" stroke-width="2.4" opacity=".60"/>
+<path d="M33 20 V292" stroke="#a9b2a5" stroke-width="1.8" opacity=".20"/>
+</g>
 </svg>

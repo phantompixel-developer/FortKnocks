@@ -23,4 +23,11 @@
  <path d="M2 116 H26 M50 116 H74" stroke="#8a7b5e" stroke-width="10"/>
  <circle cx="35" cy="19" r="10" fill="#4f615d" stroke="#111719" stroke-width="5"/>
 </g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M40 49 H91 M143 70 H192 M210 79 H253 M292 40 H322 M346 40 H376 M445 45 V91" stroke="#e0a15c" stroke-width="2.8" opacity=".38"/>
+<path d="M40 126 H91 M143 117 H259 M286 136 H386 M429 137 H479" stroke="#20332f" stroke-width="4.5" opacity=".62"/>
+<path d="M161 79 l10 -4 M231 94 l10 -3 M309 96 l8 -3 M362 88 l8 -3 M449 91 l8 -3" stroke="#ad5b40" stroke-width="2.4" opacity=".58"/>
+<circle cx="70" cy="49" r="2.5" fill="#a7d9d4" stroke="none" opacity=".55"/>
+</g>
 </svg>
