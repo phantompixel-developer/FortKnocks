@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="350" viewBox="0 0 2160 350">
+<!-- dark garden-wall and scrub framing; intentionally low -->
+<g fill="#10171d">
+ <path d="M0 350 V278 L54 268 82 230 146 238 186 206 252 230 310 215 364 252 420 240 470 286 520 350Z"/>
+ <path d="M468 350 V292 L530 264 582 274 632 224 694 238 750 210 808 248 860 232 932 280 1006 350Z"/>
+ <path d="M980 350 V286 L1040 258 1094 270 1148 220 1214 238 1272 206 1330 246 1398 232 1470 282 1542 350Z"/>
+ <path d="M1510 350 V292 L1570 266 1628 274 1678 226 1744 242 1804 212 1860 248 1928 232 2006 280 2160 258 V350Z"/>
+</g>
+<!-- broken low brick/garden walls -->
+<g fill="#343a38" stroke="#0c1114" stroke-width="5">
+ <path d="M20 305 H202 V338 H20Z"/><path d="M246 314 H396 V342 H246Z"/>
+ <path d="M730 308 H908 V340 H730Z"/><path d="M1240 312 H1424 V342 H1240Z"/>
+ <path d="M1810 306 H1988 V338 H1810Z"/>
+</g>
+<g stroke="#80503e" stroke-width="4" opacity=".55"><path d="M52 312 L78 334 M116 312 L142 334 M770 316 L798 337 M1280 318 L1308 339 M1850 314 L1878 335"/></g>
+<!-- dry hedges/scrub -->
+<g stroke="#293a33" stroke-width="7" stroke-linecap="round">
+ <path d="M570 312 L548 252 M570 303 L594 238 M565 282 L530 267 M578 278 L613 258"/>
+ <path d="M1060 318 L1036 258 M1060 307 L1086 242 M1055 286 L1018 270 M1068 281 L1100 262"/>
+ <path d="M1638 316 L1612 256 M1638 306 L1664 240 M1634 284 L1598 268 M1647 280 L1680 260"/>
+</g>
+<!-- tyre / bent fence / discarded sign -->
+<circle cx="444" cy="306" r="34" fill="#090d11"/><circle cx="444" cy="306" r="16" fill="#293236"/>
+<g stroke="#212d31" stroke-width="7"><path d="M940 340 V270 M1000 340 V256 M940 282 L1000 270 M948 300 L992 288"/></g>
+<path d="M2018 332 L2030 258" stroke="#222e31" stroke-width="8"/><rect x="1988" y="246" width="74" height="34" rx="3" fill="#4b5756" stroke="#0c1114" stroke-width="5" transform="rotate(-7 2025 263)"/>
+<!-- restrained rust accents -->
+<g fill="#b56642" opacity=".56"><circle cx="676" cy="310" r="6"/><circle cx="1174" cy="314" r="6"/><circle cx="1740" cy="308" r="6"/></g>
+</svg>
