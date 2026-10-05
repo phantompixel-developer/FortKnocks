@@ -58,19 +58,19 @@ horizontal_alignment = 1
 visible = false
 layout_mode = 0
 offset_left = 72.0
-offset_top = 182.0
+offset_top = 158.0
 offset_right = 648.0
-offset_bottom = 220.0
-theme_override_font_sizes/font_size = 16
+offset_bottom = 178.0
+theme_override_font_sizes/font_size = 14
 text = "UTILITY MODULE BUILT"
 horizontal_alignment = 1
 
 [node name="LoadoutCard" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 44.0
-offset_top = 180.0
+offset_top = 186.0
 offset_right = 676.0
-offset_bottom = 650.0
+offset_bottom = 656.0
 color = Color(0.02, 0.025, 0.023, 0.08)
 
 [node name="Header" type="Label" parent="LoadoutCard"]
@@ -119,8 +119,8 @@ offset_left = 32.0
 offset_top = 334.0
 offset_right = 292.0
 offset_bottom = 406.0
-theme_override_font_sizes/font_size = 13
-text = "HEAVY SLUG\nCover breaker • high force\nACTIVE SPECIALIST"
+theme_override_font_sizes/font_size = 14
+text = "HEAVY SLUG\nACTIVE • COVER BREAKER"
 
 [node name="ShockButton" type="Button" parent="LoadoutCard"]
 layout_mode = 0
@@ -128,8 +128,8 @@ offset_left = 324.0
 offset_top = 334.0
 offset_right = 584.0
 offset_bottom = 406.0
-theme_override_font_sizes/font_size = 13
-text = "SHOCK CAPSULE\nRadial pulse • displacement\nEQUIP SPECIALIST"
+theme_override_font_sizes/font_size = 14
+text = "SHOCK CAPSULE\nEQUIP • DISPLACEMENT"
 
 [node name="RuleLabel" type="Label" parent="LoadoutCard"]
 layout_mode = 0
