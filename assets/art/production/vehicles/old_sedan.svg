@@ -1,34 +1,101 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
 <defs>
- <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#718074"/><stop offset=".55" stop-color="#59665e"/><stop offset="1" stop-color="#3c4641"/></linearGradient>
- <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#729190"/><stop offset="1" stop-color="#2c4447"/></linearGradient>
- <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#766553"/><stop offset="1" stop-color="#4d4338"/></linearGradient>
+  <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#867660"/>
+    <stop offset=".48" stop-color="#655e50"/>
+    <stop offset="1" stop-color="#3e4741"/>
+  </linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#8fb1ad"/>
+    <stop offset=".48" stop-color="#536e6f"/>
+    <stop offset="1" stop-color="#263c41"/>
+  </linearGradient>
+  <linearGradient id="repair" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#5f6962"/>
+    <stop offset="1" stop-color="#303b38"/>
+  </linearGradient>
+  <linearGradient id="warm" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#f1b46e" stop-opacity="0"/>
+    <stop offset=".5" stop-color="#f1b46e" stop-opacity=".55"/>
+    <stop offset="1" stop-color="#f1b46e" stop-opacity="0"/>
+  </linearGradient>
 </defs>
-<ellipse cx="300" cy="238" rx="246" ry="18" fill="#080c0f" opacity=".58"/>
-<path d="M48 166 L88 145 L142 137 L198 72 L373 66 L456 128 L528 140 L559 164 L552 204 L54 204Z" fill="#0b1114"/>
-<path d="M62 164 L96 151 L151 143 L205 82 L366 76 L448 136 L520 146 L547 167 L540 190 L68 190Z" fill="url(#body)"/>
-<path d="M204 82 L364 76 L438 134 L165 134Z" fill="#172126" stroke="#0b1114" stroke-width="7"/>
-<path d="M214 88 L282 84 L282 128 L176 128Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
-<path d="M292 83 L358 82 L424 128 L292 128Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
-<path d="M286 80 V188 M441 136 L430 188" stroke="#293331" stroke-width="4"/>
-<rect x="309" y="147" width="80" height="35" rx="3" fill="url(#plate)" stroke="#171d1e" stroke-width="5"/>
-<circle cx="320" cy="157" r="3.5" fill="#111719"/><circle cx="379" cy="156" r="3.5" fill="#111719"/><circle cx="324" cy="176" r="3.5" fill="#111719"/><circle cx="382" cy="175" r="3.5" fill="#111719"/>
-<path d="M332 179 L350 154 M353 179 L371 153" stroke="#e7ad3c" stroke-width="8" stroke-linecap="round"/>
-<path d="M376 179 L394 154" stroke="#b65c36" stroke-width="8" stroke-linecap="round" opacity=".85"/>
-<path d="M92 155 L154 148 M455 143 L515 151" stroke="#c7a16d" stroke-width="3" opacity=".45"/>
-<path d="M112 174 L170 164 M474 168 L522 174 M225 150 L206 180" stroke="#2a2a25" stroke-width="3" opacity=".7"/>
-<rect x="525" y="153" width="24" height="15" rx="3" fill="#d8c18a" stroke="#151b1c" stroke-width="4"/>
-<rect x="60" y="158" width="15" height="20" rx="3" fill="#a84d39" stroke="#151b1c" stroke-width="4"/>
-<g><circle cx="146" cy="198" r="43" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="146" cy="198" r="27" fill="#343c3e"/><circle cx="146" cy="198" r="11" fill="#8d8268"/><path d="M146 174 V222 M122 198 H170 M129 181 L163 215 M163 181 L129 215" stroke="#60686b" stroke-width="3"/></g>
-<g><circle cx="468" cy="198" r="43" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="468" cy="198" r="27" fill="#343c3e"/><circle cx="468" cy="198" r="11" fill="#8d8268"/><path d="M468 174 V222 M444 198 H492 M451 181 L485 215 M485 181 L451 215" stroke="#60686b" stroke-width="3"/></g>
-<path d="M106 189 A42 42 0 0 1 186 189 M428 189 A42 42 0 0 1 508 189" fill="none" stroke="#101619" stroke-width="8"/>
-<path d="M118 105 L157 94 L174 100 M397 103 L430 113" stroke="#a45f42" stroke-width="5" opacity=".7"/>
-<!-- reference-finish propagation -->
-<g id="reference_finish_v2" fill="none" stroke-linecap="round">
-<path d="M96 149 L151 141 M207 80 Q282 70 365 74 M449 134 L518 144" stroke="#e6a45c" stroke-width="4" opacity=".48"/>
-<path d="M78 184 Q225 195 414 188 L530 181" stroke="#203432" stroke-width="6" opacity=".62"/>
-<path d="M217 91 L273 88 M304 88 L354 86" stroke="#abd0c8" stroke-width="2.5" opacity=".30"/>
-<path d="M184 155 l15 -5 M199 172 l12 -4 M397 174 l16 -5 M435 157 l13 -3" stroke="#b85f3f" stroke-width="3" opacity=".62"/>
-<path d="M80 173 l12 -3 M262 187 l16 -2 M506 174 l13 -2" stroke="#d5b177" stroke-width="2" opacity=".38"/>
+
+<ellipse cx="300" cy="236" rx="250" ry="19" fill="#070b0e" opacity=".62"/>
+
+<!-- heavy estate underbody / bumpers -->
+<path d="M42 171 L73 151 L126 144 L172 102 L188 70 L388 66 L452 101 L520 131 L562 156 L555 203 L49 203Z"
+      fill="#0b1114" stroke="#080c0f" stroke-width="6" stroke-linejoin="round"/>
+<path d="M60 166 L88 154 L137 149 L181 111 L198 82 L380 78 L444 112 L514 140 L546 160 L539 188 L67 188Z"
+      fill="url(#body)" stroke="#161e20" stroke-width="5" stroke-linejoin="round"/>
+
+<!-- long estate roof and cabin -->
+<path d="M188 81 L379 77 L443 112 L431 136 L162 136 L181 109Z"
+      fill="#182226" stroke="#0b1114" stroke-width="7" stroke-linejoin="round"/>
+<path d="M199 88 L254 85 L254 128 L174 128Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<path d="M264 84 L325 82 L325 128 L264 128Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<path d="M335 81 L374 82 L426 128 L335 128Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<path d="M208 92 L248 89 M272 89 L316 87 M344 88 L377 92" stroke="#d4e3db" stroke-width="2.5" opacity=".28"/>
+
+<!-- roof rack and scavenged luggage -->
+<path d="M194 72 V58 M368 68 V55 M180 58 H390" stroke="#1a2325" stroke-width="7" stroke-linecap="round"/>
+<rect x="223" y="42" width="86" height="18" rx="4" fill="#6f6049" stroke="#12191b" stroke-width="4"/>
+<rect x="314" y="47" width="52" height="13" rx="3" fill="#3f4a45" stroke="#12191b" stroke-width="4"/>
+<path d="M235 47 L292 57" stroke="#e3a354" stroke-width="3" opacity=".55"/>
+
+<!-- estate body planes -->
+<path d="M70 160 L139 150 L175 139 L178 185 L68 185Z" fill="#756552" opacity=".78"/>
+<path d="M179 139 H434 L430 187 H177Z" fill="#606458" opacity=".38"/>
+<path d="M432 138 L516 142 L541 162 L531 184 L427 185Z" fill="#4a5149" opacity=".75"/>
+
+<!-- four-door / cargo seams -->
+<path d="M181 137 L178 186 M261 137 L260 186 M341 137 L340 186 M429 136 L427 186"
+      stroke="#28312e" stroke-width="3.5"/>
+<rect x="205" y="148" width="27" height="6" rx="3" fill="#171e20"/>
+<rect x="284" y="148" width="27" height="6" rx="3" fill="#171e20"/>
+<rect x="364" y="147" width="27" height="6" rx="3" fill="#171e20"/>
+
+<!-- large salvaged door plate / Fort Knocks identity -->
+<path d="M282 150 L361 145 L369 181 L289 186Z" fill="url(#repair)" stroke="#151c1e" stroke-width="5"/>
+<circle cx="294" cy="158" r="4" fill="#0d1416"/><circle cx="351" cy="154" r="4" fill="#0d1416"/>
+<circle cx="299" cy="177" r="4" fill="#0d1416"/><circle cx="358" cy="173" r="4" fill="#0d1416"/>
+<path d="M307 179 L326 153 M330 179 L349 152" stroke="#e7ad3c" stroke-width="8" stroke-linecap="round"/>
+<path d="M352 178 L369 153" stroke="#b65c36" stroke-width="7" stroke-linecap="round" opacity=".88"/>
+
+<!-- reinforced nose and tail -->
+<path d="M77 151 L118 145 L126 187 L67 187Z" fill="#4c5651" stroke="#141b1d" stroke-width="4"/>
+<path d="M511 142 L545 160 L535 186 L504 181Z" fill="#4b5350" stroke="#141b1d" stroke-width="4"/>
+<path d="M55 177 H84 M535 174 H560" stroke="#8c6a4f" stroke-width="8"/>
+<rect x="526" y="150" width="23" height="14" rx="3" fill="#ead6a0" stroke="#151b1c" stroke-width="4"/>
+<rect x="60" y="153" width="15" height="20" rx="3" fill="#a54b38" stroke="#151b1c" stroke-width="4"/>
+
+<!-- material wear -->
+<path d="M91 148 C194 119 357 120 513 143" stroke="url(#warm)" stroke-width="7" fill="none"/>
+<g fill="none" stroke-linecap="round">
+  <path d="M105 171 L139 163 M148 157 L166 151 M218 176 L238 170 M390 170 L414 164 M470 156 L497 160"
+        stroke="#c27651" stroke-width="3.5" opacity=".64"/>
+  <path d="M97 181 L111 175 M239 183 L254 179 M401 181 L419 176 M487 177 L504 172"
+        stroke="#53332b" stroke-width="4" opacity=".7"/>
+  <path d="M176 120 L190 115 M451 133 L470 136" stroke="#d6b47b" stroke-width="2.5" opacity=".45"/>
 </g>
+
+<!-- wheels / slightly tougher estate stance -->
+<g>
+  <circle cx="137" cy="197" r="45" fill="#090d10" stroke="#161d20" stroke-width="5"/>
+  <circle cx="137" cy="197" r="29" fill="#313a3c" stroke="#0d1214" stroke-width="4"/>
+  <circle cx="137" cy="197" r="12" fill="#8a8068" stroke="#171d1e" stroke-width="4"/>
+  <path d="M137 172 V222 M112 197 H162 M119 179 L155 215 M155 179 L119 215" stroke="#667074" stroke-width="3"/>
+</g>
+<g>
+  <circle cx="468" cy="197" r="45" fill="#090d10" stroke="#161d20" stroke-width="5"/>
+  <circle cx="468" cy="197" r="29" fill="#313a3c" stroke="#0d1214" stroke-width="4"/>
+  <circle cx="468" cy="197" r="12" fill="#8a8068" stroke="#171d1e" stroke-width="4"/>
+  <path d="M468 172 V222 M443 197 H493 M450 179 L486 215 M486 179 L450 215" stroke="#667074" stroke-width="3"/>
+</g>
+<path d="M95 188 A44 44 0 0 1 179 188 M426 188 A44 44 0 0 1 510 188"
+      fill="none" stroke="#101619" stroke-width="8"/>
+
+<!-- cool lower occlusion -->
+<path d="M72 182 C168 196 282 199 398 190 C448 187 492 181 530 174 L534 188
+         C412 213 196 214 68 191Z" fill="#173034" opacity=".22"/>
 </svg>
