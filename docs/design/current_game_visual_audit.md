@@ -883,13 +883,14 @@ More variation only after the higher-impact presentation work is accepted.
 # Recommended implementation batches
 
 ## Batch A — Campaign presentation foundation
-**Highest priority.**
+**IMPLEMENTED on `feat/visual-polish-a-campaign-foundation`.**
 
-Implement together:
-1. safe-area/responsive layout service/container,
-2. final campaign Run Brief,
-3. final campaign Result/Debrief,
-4. separate development Encounter Proof presentation from campaign presentation.
+Implemented together:
+1. shared safe-area/responsive portrait layout helper using the platform display safe area,
+2. player-controlled final campaign Run Brief,
+3. campaign Result/Debrief with objective/reward/progression hierarchy,
+4. explicit development Encounter Proof vs campaign presentation split,
+5. player-facing mission region/location/tactical metadata for all ten current missions.
 
 Why first:
 - affects every mission,
