@@ -1,0 +1,192 @@
+[
+  {
+    "path": "ui/icons/icon_settings.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-864d38f3-f009-4623-bd72-bc22d9af408d.png",
+    "visible_content_rect_xyxy": [
+      16,
+      17,
+      240,
+      238
+    ]
+  },
+  {
+    "path": "ui/icons/icon_garage.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-a55f7f0e-fd7c-4212-8a35-a0024a731c49.png",
+    "visible_content_rect_xyxy": [
+      16,
+      56,
+      240,
+      201
+    ]
+  },
+  {
+    "path": "ui/icons/icon_workshop.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-975770ba-dbda-4d2b-b703-d878805c06ec.png",
+    "visible_content_rect_xyxy": [
+      18,
+      17,
+      238,
+      239
+    ]
+  },
+  {
+    "path": "ui/icons/icon_missions.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-f214fd1b-5f98-4956-984c-22385536121c.png",
+    "visible_content_rect_xyxy": [
+      21,
+      17,
+      233,
+      239
+    ]
+  },
+  {
+    "path": "ui/icons/icon_map.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-b979ed29-f9e2-49db-bc8e-35332b9d00cb.png",
+    "visible_content_rect_xyxy": [
+      17,
+      31,
+      239,
+      224
+    ]
+  },
+  {
+    "path": "ui/icons/icon_energy.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-15075d24-86b4-4836-a9c1-a7a5f43eee8c.png",
+    "visible_content_rect_xyxy": [
+      50,
+      16,
+      207,
+      240
+    ]
+  },
+  {
+    "path": "ui/icons/icon_coin.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-fbbaa450-a760-4b44-801c-bc8e69171bb3.png",
+    "visible_content_rect_xyxy": [
+      16,
+      16,
+      240,
+      239
+    ]
+  },
+  {
+    "path": "ui/icons/icon_gem.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-5698e3dd-97b4-4d34-a549-3d04e69505ce.png",
+    "visible_content_rect_xyxy": [
+      25,
+      16,
+      231,
+      240
+    ]
+  },
+  {
+    "path": "ui/buttons/button_square_blank.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-4888bed0-a321-4dba-be07-b48b37ecb79c.png",
+    "visible_content_rect_xyxy": [
+      10,
+      18,
+      246,
+      237
+    ]
+  },
+  {
+    "path": "ui/icons/icon_plus.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-057dbeb4-34c1-4589-ad9f-b76d56cbd749.png",
+    "visible_content_rect_xyxy": [
+      20,
+      17,
+      235,
+      239
+    ]
+  },
+  {
+    "path": "ui/buttons/button_nav_blank.png",
+    "width": 280,
+    "height": 200,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-ea665593-2334-473c-b262-2ca1b0b67723.png",
+    "visible_content_rect_xyxy": [
+      4,
+      24,
+      276,
+      175
+    ]
+  },
+  {
+    "path": "ui/panels/panel_resource_blank.png",
+    "width": 320,
+    "height": 100,
+    "transparent": true,
+    "source": "AI reconstruction from Hub reference",
+    "processing": "crop visible bounds, proportional resize, transparent padding; original alpha retained",
+    "generated_source": "exec-626f085b-2135-4e40-9a86-e2701d9cd3d9.png",
+    "visible_content_rect_xyxy": [
+      4,
+      8,
+      316,
+      91
+    ]
+  },
+  {
+    "path": "backgrounds/hub_base_ui_removed.png",
+    "width": 984,
+    "height": 1599,
+    "transparent": false,
+    "source": "AI reconstruction of source Hub with UI removed",
+    "status": "pending visual approval; scenery flattened",
+    "revision": "Left blue jeep removed; exposed ground and wall reconstructed.",
+    "generated_source": "exec-7566253b-e508-4952-a4dc-831c8f5af135.png"
+  }
+]
