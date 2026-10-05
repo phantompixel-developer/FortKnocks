@@ -3,11 +3,14 @@ extends Node2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
+const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
+const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
+const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
 const HUB_SKY_FAR_PATH := "res://assets/art/production/hub/hub_sky_far.svg"
 const HUB_MID_STRUCTURES_PATH := "res://assets/art/production/hub/hub_mid_structures.svg"
 const HUB_FOREGROUND_PATH := "res://assets/art/production/hub/hub_foreground.svg"
 
-var _compact_texture: Texture2D
+var _vehicle_textures: Dictionary = {}
 var _hub_sky_far: Texture2D
 var _hub_mid_structures: Texture2D
 var _hub_foreground: Texture2D
@@ -48,8 +51,9 @@ func _draw() -> void:
 	_draw_production_foreground()
 
 func _ensure_production_textures() -> void:
-	if _compact_texture == null:
-		_compact_texture = ProductionArtScript.texture_from_svg(COMPACT_TEXTURE_PATH)
+	for platform_id in ["run_down_compact", "old_sedan", "pickup", "improvised_technical"]:
+		if not _vehicle_textures.has(platform_id):
+			_vehicle_textures[platform_id] = ProductionArtScript.texture_from_svg(_vehicle_path(platform_id))
 	if _hub_sky_far == null:
 		_hub_sky_far = ProductionArtScript.texture_from_svg(HUB_SKY_FAR_PATH)
 	if _hub_mid_structures == null:
@@ -180,6 +184,20 @@ func _draw_workshop() -> void:
 		draw_line(Vector2(386, 721), Vector2(620, 721), Color("a45f42", 0.42), 4.0)
 
 func _draw_active_platform() -> void:
+	var texture := _vehicle_textures.get(_platform_id) as Texture2D
+	if texture != null:
+		var rect := Rect2(356, 746, 318, 158)
+		match _platform_id:
+			"old_sedan":
+				rect = Rect2(350, 742, 326, 152)
+			"pickup":
+				rect = Rect2(342, 738, 338, 158)
+			"improvised_technical":
+				rect = Rect2(328, 724, 362, 170)
+		draw_texture_rect(texture, rect, false)
+		_draw_production_module_overlay(rect)
+		return
+
 	if _platform_id == "improvised_technical":
 		_draw_technical()
 	elif _platform_id == "pickup":
@@ -190,15 +208,46 @@ func _draw_active_platform() -> void:
 		_draw_compact()
 
 func _draw_compact() -> void:
-	# First production vehicle asset: same source is reused in Hub, Garage and Battle.
-	# Collision/stats remain owned by platform resources, not this presentation.
-	if _compact_texture != null:
-		draw_texture_rect(_compact_texture, Rect2(365, 758, 290, 145), false)
-	else:
-		draw_rect(Rect2(402, 782, 226, 72), Color("171c1b"))
-		draw_rect(Rect2(408, 788, 214, 58), Color("70513f"))
-		_draw_hub_wheels(454, 584, 858)
+	draw_rect(Rect2(402, 782, 226, 72), Color("171c1b"))
+	draw_rect(Rect2(408, 788, 214, 58), Color("70513f"))
+	_draw_hub_wheels(454, 584, 858)
 
+
+
+func _vehicle_path(platform_id: String) -> String:
+	match platform_id:
+		"old_sedan":
+			return SEDAN_TEXTURE_PATH
+		"pickup":
+			return PICKUP_TEXTURE_PATH
+		"improvised_technical":
+			return TECHNICAL_TEXTURE_PATH
+		_:
+			return COMPACT_TEXTURE_PATH
+
+func _draw_production_module_overlay(rect: Rect2) -> void:
+	if _module_id.is_empty():
+		return
+	var anchor := rect.position + Vector2(rect.size.x * 0.78, rect.size.y * 0.36)
+	match _module_id:
+		"spotter_rack":
+			draw_line(anchor, anchor + Vector2(0, -48), Color("1a2526"), 8.0)
+			draw_line(anchor + Vector2(0, -44), anchor + Vector2(28, -58), Color("1a2526"), 6.0)
+			draw_circle(anchor + Vector2(34, -61), 11.0, Color("5d918e"))
+			draw_circle(anchor + Vector2(34, -61), 4.0, Color("d3f1eb"))
+		"ballast_crates":
+			draw_rect(Rect2(anchor.x - 34, anchor.y - 22, 34, 27), Color("6d5d43"))
+			draw_rect(Rect2(anchor.x + 5, anchor.y - 17, 31, 22), Color("806c4b"))
+		"twin_field_rack":
+			draw_rect(Rect2(anchor.x - 27, anchor.y - 52, 22, 50), Color("52605c"))
+			draw_rect(Rect2(anchor.x + 6, anchor.y - 52, 22, 50), Color("405b56"))
+			draw_circle(anchor + Vector2(-16, -41), 4.0, Color("e7ad3c"))
+			draw_circle(anchor + Vector2(17, -41), 4.0, Color("77b6bf"))
+		"stabilizer_rig":
+			draw_line(anchor + Vector2(-18, 2), anchor + Vector2(-36, 42), Color("65716d"), 7.0)
+			draw_line(anchor + Vector2(18, 2), anchor + Vector2(36, 42), Color("65716d"), 7.0)
+			draw_line(anchor + Vector2(-44, 42), anchor + Vector2(-27, 42), Color("8a7b5e"), 7.0)
+			draw_line(anchor + Vector2(27, 42), anchor + Vector2(44, 42), Color("8a7b5e"), 7.0)
 
 func _draw_pickup() -> void:
 	var shell := Color("4d655d")
