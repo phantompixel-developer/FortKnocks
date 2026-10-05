@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="160" viewBox="0 0 500 160">
+<!-- spotter rack -->
+<g transform="translate(18 20)" stroke="#111719" stroke-width="5">
+ <path d="M20 108 V32 H84 V108" fill="none" stroke="#40504c" stroke-width="10"/><path d="M24 48 H80" stroke="#7b856e" stroke-width="7"/>
+ <circle cx="52" cy="30" r="18" fill="#5c918e"/><circle cx="52" cy="30" r="8" fill="#b9e4df"/><path d="M52 12 V3" stroke="#273532" stroke-width="7"/>
+</g>
+<!-- ballast crates -->
+<g transform="translate(132 38)" stroke="#151b1c" stroke-width="5">
+ <rect x="5" y="28" width="62" height="55" rx="3" fill="#6d5d43"/><rect x="72" y="38" width="56" height="45" rx="3" fill="#806c4b"/>
+ <path d="M13 38 L59 75 M59 38 L13 75 M80 46 L120 75 M120 46 L80 75" stroke="#4e4435" stroke-width="4"/>
+ <path d="M19 54 H54 M86 59 H114" stroke="#e7ad3c" stroke-width="5" opacity=".58"/>
+</g>
+<!-- twin field rack -->
+<g transform="translate(275 18)" stroke="#111719" stroke-width="5">
+ <rect x="10" y="20" width="42" height="100" rx="4" fill="#505d58"/><rect x="64" y="20" width="42" height="100" rx="4" fill="#3f5b56"/>
+ <path d="M0 116 H116" stroke="#2b3734" stroke-width="10"/><circle cx="31" cy="42" r="7" fill="#e7ad3c"/><circle cx="85" cy="42" r="7" fill="#77b6bf"/>
+ <path d="M25 60 H38 M79 60 H92" stroke="#aeb8ad" stroke-width="4"/>
+</g>
+<!-- stabilizer -->
+<g transform="translate(410 25)" fill="none" stroke-linecap="round">
+ <path d="M35 20 V74 M35 62 L7 116 M35 62 L66 116" stroke="#1a2223" stroke-width="13"/>
+ <path d="M35 20 V72 M35 62 L10 112 M35 62 L63 112" stroke="#65716d" stroke-width="7"/>
+ <path d="M2 116 H26 M50 116 H74" stroke="#8a7b5e" stroke-width="10"/>
+ <circle cx="35" cy="19" r="10" fill="#4f615d" stroke="#111719" stroke-width="5"/>
+</g>
+</svg>
