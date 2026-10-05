@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
+<defs>
+ <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#695b50"/><stop offset="1" stop-color="#463f3b"/></linearGradient>
+ <linearGradient id="render" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65706a"/><stop offset="1" stop-color="#414b48"/></linearGradient>
+</defs>
+<!-- terraced / semi-detached residential edge -->
+<g stroke="#182226" stroke-width="7" stroke-linejoin="round">
+ <path d="M30 730 L30 592 122 526 236 592 236 730Z" fill="url(#brick)"/>
+ <path d="M238 730 L238 600 330 540 438 600 438 730Z" fill="#59625c"/>
+ <path d="M470 730 L470 575 576 505 702 575 702 730Z" fill="url(#render)"/>
+ <path d="M732 730 L732 612 824 552 928 612 928 730Z" fill="url(#brick)"/>
+ <path d="M960 730 L960 570 1064 506 1184 570 1184 730Z" fill="#59645f"/>
+ <path d="M1212 730 L1212 604 1304 548 1416 604 1416 730Z" fill="url(#brick)"/>
+ <path d="M1448 730 L1448 580 1550 514 1672 580 1672 730Z" fill="url(#render)"/>
+ <path d="M1704 730 L1704 612 1798 550 1908 612 1908 730Z" fill="#5b625c"/>
+ <path d="M1936 730 L1936 582 2040 520 2160 586 2160 730Z" fill="url(#brick)"/>
+</g>
+<!-- doors/windows; quiet values -->
+<g fill="#273338" opacity=".92">
+ <rect x="64" y="650" width="44" height="80"/><rect x="142" y="624" width="55" height="44"/>
+ <rect x="270" y="652" width="42" height="78"/><rect x="345" y="626" width="55" height="42"/>
+ <rect x="510" y="646" width="46" height="84"/><rect x="605" y="612" width="58" height="46"/>
+ <rect x="770" y="654" width="44" height="76"/><rect x="848" y="630" width="52" height="42"/>
+ <rect x="1002" y="642" width="45" height="88"/><rect x="1090" y="610" width="58" height="46"/>
+ <rect x="1250" y="652" width="44" height="78"/><rect x="1330" y="628" width="54" height="42"/>
+ <rect x="1492" y="646" width="44" height="84"/><rect x="1584" y="612" width="58" height="46"/>
+ <rect x="1742" y="654" width="44" height="76"/><rect x="1822" y="630" width="52" height="42"/>
+ <rect x="1972" y="646" width="44" height="84"/><rect x="2060" y="614" width="58" height="46"/>
+</g>
+<!-- broken garden / retaining walls -->
+<g fill="#444b47" stroke="#20292a" stroke-width="5">
+ <path d="M0 774 H330 V812 H0Z"/><path d="M356 786 H688 V822 H356Z"/>
+ <path d="M728 770 H1088 V810 H728Z"/><path d="M1120 782 H1456 V820 H1120Z"/>
+ <path d="M1490 772 H1810 V812 H1490Z"/><path d="M1842 784 H2160 V822 H1842Z"/>
+</g>
+<g stroke="#a55d42" stroke-width="4" opacity=".48"><path d="M190 782 L224 806 M875 780 L910 804 M1294 792 L1324 814 M2018 794 L2050 816"/></g>
+<!-- garages / local service strip -->
+<g stroke="#192326" stroke-width="6">
+ <rect x="520" y="744" width="208" height="116" fill="#414d4c"/><rect x="536" y="770" width="78" height="90" fill="#263236"/><rect x="626" y="770" width="84" height="90" fill="#2e393c"/>
+ <rect x="1510" y="746" width="230" height="114" fill="#414c4b"/><rect x="1528" y="772" width="88" height="88" fill="#273337"/><rect x="1628" y="772" width="92" height="88" fill="#303a3c"/>
+</g>
+<!-- utility poles/cables remain a recurring world motif, but lighter than Outskirts -->
+<g stroke="#2a383d" fill="none" stroke-linecap="round">
+ <path d="M420 846 V520 M386 566 H454" stroke-width="11"/>
+ <path d="M1120 846 V540 M1086 585 H1154" stroke-width="11"/>
+ <path d="M1870 846 V524 M1836 570 H1904" stroke-width="11"/>
+ <path d="M454 566 C650 612 870 552 1086 585 M1154 585 C1390 625 1600 548 1836 570" stroke-width="4" opacity=".67"/>
+</g>
+<!-- broken bus shelter/service stop, characteristic of region -->
+<g stroke="#222d31" stroke-width="8" fill="none">
+ <path d="M870 850 V704 M1062 850 V704 M852 710 H1080"/>
+</g>
+<rect x="900" y="732" width="132" height="86" fill="#536965" opacity=".50" stroke="#243033" stroke-width="5"/>
+<path d="M912 804 L1018 750" stroke="#7bb4b8" stroke-width="4" opacity=".18"/>
+<rect x="912" y="822" width="104" height="12" rx="3" fill="#63584a"/>
+</svg>
