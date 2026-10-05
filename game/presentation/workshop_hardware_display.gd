@@ -5,7 +5,7 @@ const ProductionArtScript := preload("res://game/presentation/production_art.gd"
 const WEAPONS_PATH := "res://assets/art/production/workshop/workshop_weapons.svg"
 const MODULES_PATH := "res://assets/art/production/workshop/workshop_modules.svg"
 
-@export_enum("weapons", "modules") var mode := "weapons"
+@export_enum("weapons", "modules") var mode: String = "weapons"
 
 var _weapons: Texture2D
 var _modules: Texture2D
