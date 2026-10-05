@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160" viewBox="0 0 320 160">
+<defs>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8c9188"/><stop offset=".48" stop-color="#59645f"/><stop offset="1" stop-color="#2d3938"/></linearGradient>
+ <linearGradient id="rust" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a46a49"/><stop offset="1" stop-color="#5a3d34"/></linearGradient>
+</defs>
+<ellipse cx="160" cy="132" rx="112" ry="12" fill="#080c0f" opacity=".45"/>
+<path d="M38 83 L214 55 L264 70 L286 80 L264 91 L214 105 L38 101Z" fill="#0b1114"/>
+<path d="M48 84 L210 60 L257 72 L276 80 L257 88 L210 100 L48 96Z" fill="url(#metal)"/>
+<path d="M210 60 L260 72 L276 80 L260 88 L210 100Z" fill="#6c5846"/>
+<path d="M54 84 L86 79 L86 99 L54 96Z" fill="url(#rust)" stroke="#141b1c" stroke-width="4"/>
+<path d="M118 73 L130 98 M142 69 L154 94 M166 66 L178 91" stroke="#303a38" stroke-width="5" opacity=".7"/>
+<path d="M205 62 L236 70" stroke="#e9b06a" stroke-width="4" opacity=".45"/>
+<path d="M228 69 L245 91" stroke="#b65c36" stroke-width="5" opacity=".68"/>
+<circle cx="62" cy="90" r="4" fill="#e7ad3c"/><circle cx="76" cy="87" r="3" fill="#b65c36"/>
+<path d="M112 105 L126 119 M144 101 L158 116" stroke="#6d5846" stroke-width="7" stroke-linecap="round"/>
+</svg>
