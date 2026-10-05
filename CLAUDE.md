@@ -6,7 +6,7 @@ Then read:
 - `docs/README.md`
 - `docs/project_context.md`
 - `docs/design/visual_reference.md` for any visual/presentation work
-- `docs/design/visual_production_pass_4.md` for the active production-art migration
+- `docs/design/current_game_visual_audit.md` for the active current-content visual remediation priorities
 - the task-relevant documents under `docs/design/`, `docs/architecture/`, `docs/engineering/`, and `docs/legal/`
 
 For scope/sequencing decisions, read `docs/design/implementation_roadmap.md`.
