@@ -18,4 +18,26 @@
 <g stroke="#25333a" stroke-width="9"><path d="M22 650 V482 M202 650 V490 M22 500 H202 M42 520 L184 638 M184 520 L42 638"/><path d="M534 650 V496 M694 650 V496 M540 516 H688"/></g>
 <!-- scrap signage without baked UI text -->
 <rect x="274" y="494" width="74" height="22" rx="3" fill="#1a2429" stroke="#6e7776" stroke-width="3"/><path d="M286 504 H335" stroke="#e7ad3c" stroke-width="4" opacity=".62"/>
+
+<!-- reference-finish pilot: directional light, corrugated material planes and lived-in wear -->
+<path d="M18 548 L222 548" stroke="#e4a867" stroke-width="4" opacity=".24"/>
+<path d="M260 522 L500 522" stroke="#eab36f" stroke-width="4" opacity=".22"/>
+<path d="M540 552 L708 552" stroke="#e2a264" stroke-width="4" opacity=".22"/>
+<path d="M20 578 H218 V650 H20Z" fill="#17272c" opacity=".16"/>
+<path d="M260 548 H500 V650 H260Z" fill="#13242a" opacity=".14"/>
+<path d="M540 578 H708 V650 H540Z" fill="#15252a" opacity=".17"/>
+<g stroke="#819099" stroke-width="2" opacity=".20">
+ <path d="M38 520 V564 M60 516 V566 M82 514 V568 M104 514 V568 M126 514 V568 M148 514 V568 M170 516 V566 M192 520 V562"/>
+ <path d="M272 492 V544 M300 480 V546 M328 478 V546 M356 478 V546 M384 478 V546 M412 482 V544 M440 492 V542 M468 504 V538"/>
+ <path d="M548 530 V574 M574 522 V576 M600 520 V576 M626 522 V576 M652 528 V574 M678 536 V570"/>
+</g>
+<g fill="none" stroke-linecap="round">
+ <path d="M86 608 L108 603 M122 626 L148 619 M338 592 L362 587 M402 625 L430 616 M594 612 L620 607" stroke="#c88a5a" stroke-width="3" opacity=".45"/>
+ <path d="M45 566 L62 574 M186 551 L205 560 M278 532 L296 540 M468 530 L486 540 M558 563 L578 571 M678 558 L696 566" stroke="#7b4737" stroke-width="3.5" opacity=".56"/>
+</g>
+<circle cx="116" cy="611" r="32" fill="#f0a14a" opacity=".055"/>
+<circle cx="378" cy="584" r="58" fill="#f0a14a" opacity=".055"/>
+<path d="M74 597 H156" stroke="#f2c17a" stroke-width="2.5" opacity=".26"/>
+<path d="M324 566 H432" stroke="#f2c17a" stroke-width="2.5" opacity=".22"/>
+
 </svg>
