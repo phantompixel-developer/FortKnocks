@@ -3,8 +3,11 @@ extends StaticBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
+const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
+const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
+const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
 
-var _compact_texture: Texture2D
+var _vehicle_textures: Dictionary = {}
 
 signal health_changed(current: int, maximum: int)
 signal destroyed
@@ -112,10 +115,9 @@ func _draw() -> void:
 		_draw_rubble()
 		return
 
-	# Player starting platform is the first authored production-art proof.
-	# Enemy/default cover remains on the existing procedural presentation until
-	# its own faction/platform art is explicitly authored.
-	if _visual_profile == 0 and facing > 0 and _draw_production_compact(stage):
+	# Fort Knocks player platforms use the authored production vehicle family.
+	# Enemy cover deliberately keeps faction-neutral procedural presentation.
+	if facing > 0 and _draw_production_platform(stage):
 		return
 
 	var darkening := float(stage) * 0.11
@@ -176,14 +178,15 @@ func _draw() -> void:
 		)
 
 
-func _draw_production_compact(stage: int) -> bool:
-	if _compact_texture == null:
-		_compact_texture = ProductionArtScript.texture_from_svg(COMPACT_TEXTURE_PATH)
-	if _compact_texture == null:
+func _draw_production_platform(stage: int) -> bool:
+	var platform_id := _platform_id_from_visual_profile()
+	var texture := _texture_for_platform(platform_id)
+	if texture == null:
 		return false
 
-	var target_width := _body_size.x + 40.0
-	var target_height := target_width * 0.5
+	var target_width := _body_size.x + 46.0
+	var aspect := 0.50 if platform_id == "run_down_compact" else 0.47
+	var target_height := target_width * aspect
 	var tint := Color.WHITE.darkened(float(stage) * 0.08)
 	var target := Rect2(
 		-target_width * 0.5,
@@ -191,27 +194,79 @@ func _draw_production_compact(stage: int) -> bool:
 		target_width,
 		target_height
 	)
-	draw_texture_rect(_compact_texture, target, false, tint)
+	draw_texture_rect(texture, target, false, tint)
+	_draw_production_module_overlay(target)
 
-	# Damage remains authored by gameplay state instead of requiring separate
-	# sprite files for every HP value.
+	var half_width := target_width * 0.5
 	if stage >= 1:
-		draw_line(Vector2(-82, -44), Vector2(-44, -10), Color("1b2224"), 7.0)
-		draw_line(Vector2(38, -62), Vector2(20, -34), Color("d7c6a4", 0.72), 3.0)
-		draw_line(Vector2(-94, -12), Vector2(-58, -4), Color("b65c36", 0.76), 5.0)
+		draw_line(Vector2(-half_width * 0.58, -42), Vector2(-half_width * 0.30, -10), Color("1b2224"), 7.0)
+		draw_line(Vector2(half_width * 0.22, -62), Vector2(half_width * 0.08, -34), Color("d7c6a4", 0.72), 3.0)
+		draw_line(Vector2(-half_width * 0.66, -12), Vector2(-half_width * 0.42, -4), Color("b65c36", 0.76), 5.0)
 	if stage >= 2:
 		draw_polygon(
 			PackedVector2Array([
-				Vector2(50, -48),
-				Vector2(108, -43),
-				Vector2(101, -10),
-				Vector2(45, -16),
+				Vector2(half_width * 0.28, -48),
+				Vector2(half_width * 0.66, -43),
+				Vector2(half_width * 0.61, -10),
+				Vector2(half_width * 0.25, -16),
 			]),
 			PackedColorArray([Color("111820", 0.92)])
 		)
-		draw_line(Vector2(74, -58), Vector2(105, -18), Color("090d11"), 8.0)
-		draw_line(Vector2(-112, -38), Vector2(-82, 4), Color("090d11"), 7.0)
+		draw_line(Vector2(half_width * 0.43, -58), Vector2(half_width * 0.63, -18), Color("090d11"), 8.0)
+		draw_line(Vector2(-half_width * 0.72, -38), Vector2(-half_width * 0.52, 4), Color("090d11"), 7.0)
 	return true
+
+func _platform_id_from_visual_profile() -> String:
+	match _visual_profile:
+		1:
+			return "old_sedan"
+		2:
+			return "pickup"
+		3:
+			return "improvised_technical"
+		_:
+			return "run_down_compact"
+
+func _texture_for_platform(platform_id: String) -> Texture2D:
+	if _vehicle_textures.has(platform_id):
+		return _vehicle_textures[platform_id] as Texture2D
+
+	var path := COMPACT_TEXTURE_PATH
+	match platform_id:
+		"old_sedan":
+			path = SEDAN_TEXTURE_PATH
+		"pickup":
+			path = PICKUP_TEXTURE_PATH
+		"improvised_technical":
+			path = TECHNICAL_TEXTURE_PATH
+
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(path)
+	_vehicle_textures[platform_id] = texture
+	return texture
+
+func _draw_production_module_overlay(target: Rect2) -> void:
+	if _module_id.is_empty():
+		return
+	var anchor := target.position + Vector2(target.size.x * 0.78, target.size.y * 0.42)
+	match _module_id:
+		"spotter_rack":
+			draw_line(anchor, anchor + Vector2(0, -42), Color("172123"), 8.0)
+			draw_circle(anchor + Vector2(0, -49), 11.0, Color("5d918e"))
+			draw_circle(anchor + Vector2(0, -49), 4.0, Color("d3f1eb"))
+		"ballast_crates":
+			draw_rect(Rect2(anchor.x - 34, anchor.y - 21, 33, 25), Color("6d5d43"))
+			draw_rect(Rect2(anchor.x + 5, anchor.y - 16, 29, 20), Color("806c4b"))
+		"twin_field_rack":
+			draw_rect(Rect2(anchor.x - 27, anchor.y - 48, 21, 47), Color("52605c"))
+			draw_rect(Rect2(anchor.x + 6, anchor.y - 48, 21, 47), Color("405b56"))
+			draw_circle(anchor + Vector2(-17, -38), 4.0, Color("e7ad3c"))
+			draw_circle(anchor + Vector2(16, -38), 4.0, Color("77b6bf"))
+		"stabilizer_rig":
+			draw_line(anchor + Vector2(-16, 0), anchor + Vector2(-34, 34), Color("65716d"), 7.0)
+			draw_line(anchor + Vector2(16, 0), anchor + Vector2(34, 34), Color("65716d"), 7.0)
+			draw_line(anchor + Vector2(-42, 34), anchor + Vector2(-26, 34), Color("8a7b5e"), 7.0)
+			draw_line(anchor + Vector2(26, 34), anchor + Vector2(42, 34), Color("8a7b5e"), 7.0)
+
 
 func _draw_compact_cabin(shell: Color, outline: Color, body_top: float) -> void:
 	draw_polygon(
