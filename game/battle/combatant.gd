@@ -1,7 +1,10 @@
 class_name Combatant
 extends CharacterBody2D
 
-const PLAYER_SURVIVOR_TEXTURE: Texture2D = preload("res://assets/art/production/characters/fort_knocks_survivor.svg")
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const PLAYER_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/fort_knocks_survivor.svg"
+
+var _player_survivor_texture: Texture2D
 
 signal health_changed(current: int, maximum: int)
 
@@ -55,8 +58,7 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
-	if use_production_survivor:
-		_draw_production_survivor()
+	if use_production_survivor and _draw_production_survivor():
 		return
 
 	var alive := health > 0
@@ -142,14 +144,19 @@ func _draw() -> void:
 	draw_rect(Rect2(-33, -163, 66.0 * ratio, 4), Color("d4aa55") if alive else Color("5c625e"))
 
 
-func _draw_production_survivor() -> void:
+func _draw_production_survivor() -> bool:
+	if _player_survivor_texture == null:
+		_player_survivor_texture = ProductionArtScript.texture_from_svg(PLAYER_SURVIVOR_TEXTURE_PATH)
+	if _player_survivor_texture == null:
+		return false
+
 	var alive := health > 0
 	var tint := Color.WHITE if alive else Color(0.48, 0.50, 0.49, 1.0)
 	# The SVG was authored around the existing collision/launch contract.
 	# Muzzle remains close to get_launch_origin(); neither physics nor aim math
 	# derives from this rectangle.
 	var rect := Rect2(-90.0, -216.0, 180.0, 240.0)
-	draw_texture_rect(PLAYER_SURVIVOR_TEXTURE, rect, false, tint)
+	draw_texture_rect(_player_survivor_texture, rect, false, tint)
 
 	# Keep the established world-space health strip as gameplay information.
 	var outline := Color("090d11")
@@ -159,3 +166,4 @@ func _draw_production_survivor() -> void:
 		Rect2(-35, -232, 70.0 * ratio, 4),
 		Color("e7ad3c") if alive else Color("5c625e")
 	)
+	return true
