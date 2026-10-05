@@ -7,7 +7,8 @@ This repository is an AI-first Godot 4.7.x mobile game project.
 2. `docs/project_context.md`
 3. `docs/design/game_design.md`
 4. `docs/design/visual_reference.md` for any visual, UI, environment, character, platform or presentation work.
-5. `docs/design/current_game_visual_audit.md` for the active current-content visual remediation priorities.
+5. `docs/design/current_game_visual_audit.md` for the completed whole-game audit/remediation stack.
+6. `docs/design/reference_finish_pilot.md` when propagating production rendering finish.
 6. The design document relevant to the task.
 7. `docs/architecture/architecture.md`
 8. The architecture document relevant to the task.
