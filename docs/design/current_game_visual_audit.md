@@ -898,12 +898,15 @@ Why first:
 - establishes responsive rules before more UI is changed.
 
 ## Batch B — Physical meta-screen composition
-Implement:
-1. Command Board region-aware physical map,
-2. Garage vehicle-first layout,
-3. Workshop workbench-first layout,
-4. typography hierarchy,
-5. UI surface variants.
+**IMPLEMENTED on `feat/visual-polish-b-meta-screens`.**
+
+Implemented:
+1. region-aware physical Command Board with explicit Outskirts → Suburbs route language,
+2. vehicle-first Garage bay with a compact 2×2 platform selector and corrected four-platform fit,
+3. workbench/pegboard-first Workshop with exposed weapon/module hardware,
+4. shared display / section / metadata typography hierarchy,
+5. primary/secondary action hierarchy using the existing production UI assets,
+6. removal of duplicate fake route art behind the functional Command Board.
 
 Why second:
 - these three screens are the largest remaining source of “menu over art” presentation.
