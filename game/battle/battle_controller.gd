@@ -159,13 +159,31 @@ func set_progression_reward(amount: int) -> void:
 
 func _ready() -> void:
 	ThemeScript.apply($HUD/Root)
-	for card in [weapon_tray, weapon_info_card, control_deck, target_card, mission_brief_card, encounter_picker, result_card]:
-		ThemeScript.style_card(card)
+	ThemeScript.style_hud_card($HUD/Root/PlayerStatusPlate)
+	ThemeScript.style_hud_card($HUD/Root/EnemyStatusPlate, true)
+	for card in [weapon_tray, weapon_info_card, control_deck]:
+		ThemeScript.style_hud_card(card)
+	ThemeScript.style_tactical_card(target_card)
 	ThemeScript.style_card(mission_brief_card, 1)
+	ThemeScript.style_card(encounter_picker)
 	ThemeScript.style_card(result_card, 1)
 	ThemeScript.style_primary_button(begin_run_button)
-	ThemeScript.style_secondary_button(change_encounter_button)
-	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	ThemeScript.style_secondary_button(inspect_button)
+	ThemeScript.style_display_label(turn_label)
+	ThemeScript.style_section_label(health_label, true)
+	enemy_health_label.add_theme_color_override("font_color", ThemeScript.RUST)
+	ThemeScript.style_meta_label(enemy_locator_label, true)
+	ThemeScript.style_meta_label(hint_label)
+	ThemeScript.style_meta_label($HUD/Root/WeaponTray/Title)
+	ThemeScript.style_section_label(weapon_name_label, true)
+	ThemeScript.style_meta_label(weapon_role_label)
+	ThemeScript.style_section_label(power_label)
+	ThemeScript.style_section_label(angle_label)
+	ThemeScript.style_meta_label(last_shot_label)
+	ThemeScript.style_section_label(target_title_label)
+	target_title_label.add_theme_color_override("font_color", ThemeScript.COLD)
+	ThemeScript.style_display_label(mission_brief_title)
+	ThemeScript.style_display_label(result_title_label)
 	_selected_weapon = ScrapBolt as WeaponDefinition
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
@@ -210,9 +228,13 @@ func _ready() -> void:
 		encounter_picker.visible = false
 		restart_button.text = "REMATCH"
 		change_encounter_button.text = "FORT KNOCKS"
+		ThemeScript.style_secondary_button(restart_button)
+		ThemeScript.style_primary_button(change_encounter_button)
 		call_deferred("_begin_mission", _prepared_mission)
 		return
 
+	ThemeScript.style_primary_button(restart_button)
+	ThemeScript.style_secondary_button(change_encounter_button)
 	_show_encounter_picker()
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		var pending_id := str(get_tree().root.get_meta(PENDING_MISSION_META))
@@ -1463,7 +1485,9 @@ func _apply_responsive_layout() -> void:
 		$HUD/Root,
 		[
 			turn_label,
+			$HUD/Root/PlayerStatusPlate,
 			health_label,
+			$HUD/Root/EnemyStatusPlate,
 			enemy_health_label,
 			inspect_button,
 			enemy_locator_label,
