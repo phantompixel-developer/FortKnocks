@@ -264,3 +264,17 @@ Key separation rules are proven:
 - Fort Knocks player markings are not applied to enemy cover or enemy survivor presentation.
 
 If this gate passes visually and functionally, the next production batch can safely scale the established pipeline to Command Board/Workshop hero details and the remaining platform family without changing the art architecture.
+
+
+## SVG runtime-loader correction — 2026-10-05
+
+Local Godot testing exposed parse errors when production SVGs were referenced directly with `preload()`.
+
+Correction:
+- production SVGs remain repository master/source art,
+- runtime consumers no longer preload SVG resources,
+- `game/presentation/production_art.gd` reads and decodes the SVG source into cached `ImageTexture` objects,
+- every production-art consumer has a procedural fallback so a decode failure cannot prevent the game from booting,
+- direct SVG preloads were removed from Battlefield, Hub, player survivor, player Compact, Garage showcase and shared UI theme.
+
+For shipping mobile builds, approved source SVGs should ultimately be rasterized to PNG/WebP runtime derivatives after visual approval and profiling.
