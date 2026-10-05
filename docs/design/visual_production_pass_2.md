@@ -62,6 +62,10 @@ Before merging:
 - no production art owns collision or balance,
 - portrait touch targets remain usable.
 
+## Completion status
+
+**Accepted by the project owner as the next visual direction and continued on the same branch.** The full player platform family, physical Command Board and physical Workshop presentation are now the baseline for subsequent visual work.
+
 ## Next pass after acceptance
 
 The next visual-production branch should focus on the **Suburbs environment kit and region-specific encounter presentation**, reusing the same layering contract established for Outskirts.
