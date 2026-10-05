@@ -25,4 +25,11 @@
 <path d="M2018 332 L2030 258" stroke="#222e31" stroke-width="8"/><rect x="1988" y="246" width="74" height="34" rx="3" fill="#4b5756" stroke="#0c1114" stroke-width="5" transform="rotate(-7 2025 263)"/>
 <!-- restrained rust accents -->
 <g fill="#b56642" opacity=".56"><circle cx="676" cy="310" r="6"/><circle cx="1174" cy="314" r="6"/><circle cx="1740" cy="308" r="6"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+ <path d="M22 302 H198 M732 306 H906 M1242 310 H1422 M1812 304 H1986" stroke="#b06a49" stroke-width="3.2" opacity=".22"/>
+ <path d="M0 343 H2160" stroke="#05090b" stroke-width="15" opacity=".74"/>
+ <path d="M54 318 l15 -4 M780 322 l16 -4 M1300 324 l16 -4 M1872 319 l16 -4" stroke="#96503b" stroke-width="2.8" opacity=".50"/>
+ <path d="M548 257 l16 -7 M1036 263 l16 -8 M1614 261 l16 -8" stroke="#557065" stroke-width="2.4" opacity=".22"/>
+</g>
 </svg>

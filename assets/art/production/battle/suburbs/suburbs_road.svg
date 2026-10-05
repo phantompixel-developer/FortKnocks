@@ -19,4 +19,12 @@
 </g>
 <!-- driveway cuts -->
 <g fill="#454742"><path d="M450 0 H650 L622 64 H470Z"/><path d="M1400 0 H1595 L1574 64 H1422Z"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+ <path d="M0 12 H2160" stroke="#d0a16e" stroke-width="4" opacity=".16"/>
+ <path d="M0 339 H2160" stroke="#0d1417" stroke-width="11" opacity=".58"/>
+ <path d="M258 92 l34 -5 M1220 232 l38 -5 M1795 96 l36 -4" stroke="#a85a40" stroke-width="3" opacity=".34"/>
+ <path d="M70 50 H220 M680 50 H850 M1470 50 H1630 M2010 50 H2140" stroke="#c4aa84" stroke-width="2.5" opacity=".16"/>
+ <g fill="#171e20" stroke="none" opacity=".40"><circle cx="500" cy="262" r="4"/><circle cx="1040" cy="108" r="3"/><circle cx="1422" cy="292" r="4"/><circle cx="2070" cy="236" r="3"/></g>
+</g>
 </svg>

@@ -53,4 +53,50 @@
 <rect x="900" y="732" width="132" height="86" fill="#536965" opacity=".50" stroke="#243033" stroke-width="5"/>
 <path d="M912 804 L1018 750" stroke="#7bb4b8" stroke-width="4" opacity=".18"/>
 <rect x="912" y="822" width="104" height="12" rx="3" fill="#63584a"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" stroke-linecap="round" stroke-linejoin="round">
+<!-- non-repeating residential breakup: chimneys, patched openings, awnings and repair scars -->
+<g fill="#343f3b" stroke="#182226" stroke-width="4" opacity=".86">
+ <path d="M82 554 V505 H108 V536Z"/><path d="M548 535 V482 H578 V510Z"/>
+ <path d="M1280 570 V518 H1308 V548Z"/><path d="M2010 548 V494 H2038 V522Z"/>
+</g>
+<g fill="none" stroke="#b56a48" opacity=".38">
+ <path d="M40 592 L122 529 L228 590" stroke-width="3.5"/>
+ <path d="M474 575 L576 508 L698 575" stroke-width="3.5"/>
+ <path d="M964 570 L1064 509 L1180 570" stroke-width="3.5"/>
+ <path d="M1452 580 L1550 517 L1668 580" stroke-width="3.5"/>
+ <path d="M1940 582 L2040 523 L2156 586" stroke-width="3.5"/>
+</g>
+<g stroke="#192326" stroke-width="5" opacity=".84">
+ <path d="M144 625 L194 666 M194 625 L144 666" stroke="#6c5744"/>
+ <path d="M1090 611 L1146 655 M1146 611 L1090 655" stroke="#68523f"/>
+ <path d="M1822 631 L1872 667 M1872 631 L1822 667" stroke="#705845"/>
+</g>
+<g fill="#51483d" stroke="#1a2425" stroke-width="4" opacity=".82">
+ <path d="M750 640 H918 L898 666 H764Z"/><path d="M1230 672 H1410 L1394 696 H1244Z"/>
+</g>
+<g stroke="#a85c42" stroke-width="3" opacity=".42">
+ <path d="M772 648 H894 M1254 680 H1388"/>
+ <path d="M520 742 l30 -9 M682 740 l25 -6 M1512 744 l32 -8 M1698 742 l24 -6"/>
+</g>
+<!-- varied surface breakup, kept low-contrast behind gameplay -->
+<g fill="#2f3936" opacity=".38">
+ <path d="M84 594 l40 -18 34 12 -22 26 -46 8Z"/>
+ <path d="M596 570 l46 -16 32 18 -18 24 -52 4Z"/>
+ <path d="M1022 578 l42 -20 38 14 -18 28 -54 6Z"/>
+ <path d="M1530 586 l44 -18 36 16 -20 24 -48 5Z"/>
+ <path d="M2042 590 l40 -18 42 16 -21 25 -49 5Z"/>
+</g>
+<!-- a single recovered dish and uneven fence make the street read authored rather than tiled -->
+<g fill="none" stroke="#3d4e4b" opacity=".60">
+ <path d="M1550 518 L1572 490" stroke-width="5"/><path d="M1568 486 Q1593 488 1604 506" stroke-width="4"/>
+ <path d="M304 786 V836 M334 784 V836 M366 786 V836 M398 782 V836" stroke-width="5"/>
+ <path d="M298 804 H406 M298 828 H406" stroke-width="4"/>
+</g>
+<!-- cool lower-wall occlusion and warm construction-edge light -->
+<g fill="none">
+ <path d="M30 720 H236 M470 720 H702 M960 720 H1184 M1448 720 H1672 M1936 720 H2156" stroke="#243732" stroke-width="7" opacity=".46"/>
+ <path d="M36 594 L122 532 M480 575 L576 510 M970 570 L1064 511 M1458 580 L1550 519 M1946 582 L2040 526" stroke="#d29a62" stroke-width="2.5" opacity=".20"/>
+</g>
+</g>
 </svg>

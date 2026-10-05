@@ -38,4 +38,11 @@
  <circle cx="1708" cy="616" r="50"/><circle cx="1736" cy="598" r="34"/><rect x="1720" y="608" width="14" height="96"/>
 </g>
 <path d="M0 744 C360 714 760 738 1110 708 S1780 730 2160 700 L2160 930 L0 930Z" fill="#35464d"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+ <path d="M0 420 C300 378 610 432 910 398 S1480 384 1770 432 S2040 398 2160 408" stroke="#efd6bb" stroke-width="19" opacity=".04"/>
+ <path d="M0 650 C360 620 720 652 1080 626 S1800 644 2160 610" stroke="#263b40" stroke-width="8" opacity=".22"/>
+ <path d="M118 606 H228 M570 604 H744 M1090 608 H1290 M1695 606 H1905" stroke="#d29a6a" stroke-width="3" opacity=".10"/>
+ <g stroke="#304348" stroke-width="3" opacity=".24"><path d="M420 662 V574 M1370 662 V562 M2024 662 V586"/></g>
+</g>
 </svg>
