@@ -30,4 +30,20 @@
 <path d="M55 96 C82 118 108 133 127 101" fill="none" stroke="#503c31" stroke-width="5"/>
 <!-- small salvage details -->
 <rect x="54" y="137" width="18" height="19" fill="#59635d" stroke="#111719" stroke-width="4"/><path d="M57 150 L68 140" stroke="#e7ad3c" stroke-width="3"/>
+
+<!-- reference-finish pilot: readable directional light, cloth wear and material separation -->
+<path d="M58 91 Q78 80 97 91" fill="none" stroke="#f1b56b" stroke-width="3.5" opacity=".34"/>
+<path d="M57 94 L61 146 Q69 159 79 162" fill="none" stroke="#e9b26d" stroke-width="3" opacity=".24"/>
+<path d="M99 92 L104 149 L91 164" fill="none" stroke="#293c3a" stroke-width="6" opacity=".32"/>
+<path d="M64 118 L72 116 M84 135 L95 132 M61 151 L70 149" stroke="#d8bd86" stroke-width="2.3" opacity=".48" stroke-linecap="round"/>
+<path d="M55 141 L70 136 L73 153 L58 157Z" fill="#5d4a37" opacity=".48"/>
+<path d="M35 105 H48 M36 120 H49" stroke="#c1975a" stroke-width="2" opacity=".38"/>
+<path d="M50 82 L39 95" stroke="#8ea29d" stroke-width="3" opacity=".38"/>
+<path d="M63 76 Q79 72 96 78" stroke="#f0a14a" stroke-width="3" opacity=".42"/>
+<path d="M59 52 Q70 34 88 33" fill="none" stroke="#8b9691" stroke-width="3" opacity=".24"/>
+<path d="M70 57 Q79 51 88 55" fill="none" stroke="#e4b58b" stroke-width="2" opacity=".35"/>
+<path d="M107 106 L145 104" stroke="#82938e" stroke-width="2.5" opacity=".36"/>
+<path d="M123 101 L136 99" stroke="#dbb96f" stroke-width="2.5" opacity=".52"/>
+<path d="M60 210 L69 210 M100 210 L113 210" stroke="#6e7772" stroke-width="3" opacity=".34"/>
+
 </svg>
