@@ -23,4 +23,12 @@
 <!-- improvised enemy plate/cage language -->
 <path d="M94 124 L110 92 L138 88 M401 125 L419 100" stroke="#273330" stroke-width="7" fill="none"/>
 <path d="M107 102 L133 127" stroke="#7f503d" stroke-width="4"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M94 133 L148 126 M189 75 Q246 68 306 70 M362 120 L429 128" stroke="#c88355" stroke-width="3.5" opacity=".40"/>
+<path d="M79 172 Q201 182 329 176 L445 170" stroke="#21322f" stroke-width="5.5" opacity=".64"/>
+<path d="M201 86 L242 83 M264 82 L298 81" stroke="#91b7b0" stroke-width="2.2" opacity=".24"/>
+<path d="M118 154 l13 -4 M187 165 l12 -5 M371 158 l14 -4 M424 151 l10 -2" stroke="#9c543e" stroke-width="3" opacity=".68"/>
+<path d="M305 135 L350 132" stroke="#b98563" stroke-width="2" opacity=".34"/>
+</g>
 </svg>

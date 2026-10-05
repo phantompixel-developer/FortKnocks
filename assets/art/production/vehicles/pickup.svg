@@ -21,4 +21,12 @@
 <path d="M112 201 A44 44 0 0 1 196 201 M460 201 A44 44 0 0 1 544 201" fill="none" stroke="#101619" stroke-width="8"/>
 <!-- exposed welds/repair -->
 <path d="M78 188 L122 182 M225 164 L204 191 M365 171 L382 190" stroke="#c7774e" stroke-width="4" opacity=".65"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M92 157 L153 148 M194 89 Q253 82 319 84 M384 146 H539" stroke="#e5a158" stroke-width="4" opacity=".48"/>
+<path d="M74 194 Q252 207 432 198 L565 190" stroke="#1b3531" stroke-width="6" opacity=".66"/>
+<path d="M205 100 L248 97 M269 96 L309 95" stroke="#abd3cb" stroke-width="2.5" opacity=".30"/>
+<path d="M123 181 l14 -4 M235 186 l12 -6 M404 184 l18 -4 M524 178 l12 -3" stroke="#b85f3f" stroke-width="3.2" opacity=".65"/>
+<path d="M396 158 H525" stroke="#c8ac77" stroke-width="2.5" opacity=".28"/>
+</g>
 </svg>

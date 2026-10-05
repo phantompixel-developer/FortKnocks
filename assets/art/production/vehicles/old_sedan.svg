@@ -23,4 +23,12 @@
 <g><circle cx="468" cy="198" r="43" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="468" cy="198" r="27" fill="#343c3e"/><circle cx="468" cy="198" r="11" fill="#8d8268"/><path d="M468 174 V222 M444 198 H492 M451 181 L485 215 M485 181 L451 215" stroke="#60686b" stroke-width="3"/></g>
 <path d="M106 189 A42 42 0 0 1 186 189 M428 189 A42 42 0 0 1 508 189" fill="none" stroke="#101619" stroke-width="8"/>
 <path d="M118 105 L157 94 L174 100 M397 103 L430 113" stroke="#a45f42" stroke-width="5" opacity=".7"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M96 149 L151 141 M207 80 Q282 70 365 74 M449 134 L518 144" stroke="#e6a45c" stroke-width="4" opacity=".48"/>
+<path d="M78 184 Q225 195 414 188 L530 181" stroke="#203432" stroke-width="6" opacity=".62"/>
+<path d="M217 91 L273 88 M304 88 L354 86" stroke="#abd0c8" stroke-width="2.5" opacity=".30"/>
+<path d="M184 155 l15 -5 M199 172 l12 -4 M397 174 l16 -5 M435 157 l13 -3" stroke="#b85f3f" stroke-width="3" opacity=".62"/>
+<path d="M80 173 l12 -3 M262 187 l16 -2 M506 174 l13 -2" stroke="#d5b177" stroke-width="2" opacity=".38"/>
+</g>
 </svg>
