@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+<!-- low near-camera framing only -->
+<path d="M0 1280 V1192 L54 1164 108 1178 148 1138 206 1152 252 1126 316 1164 365 1154 420 1194 476 1172 534 1138 598 1160 650 1130 720 1160 V1280Z" fill="#0e151a" opacity=".96"/>
+<!-- scrap edge / tyre / concrete -->
+<path d="M38 1226 L72 1174 128 1185 116 1250 50 1254Z" fill="#343b3d" stroke="#090e11" stroke-width="5"/>
+<circle cx="624" cy="1218" r="38" fill="#090e11"/><circle cx="624" cy="1218" r="19" fill="#30383b"/>
+<path d="M258 1218 L292 1178 374 1178 408 1210 398 1244 250 1244Z" fill="#273238" stroke="#090e11" stroke-width="6"/>
+<path d="M82 1182 L102 1142 M96 1186 L132 1150" stroke="#8d5a42" stroke-width="5"/>
+<g stroke="#263731" stroke-width="6" stroke-linecap="round"><path d="M500 1235 L478 1178 M502 1228 L526 1164 M494 1208 L462 1194 M508 1202 L542 1183"/></g>
+<g fill="#c06c42" opacity=".55"><circle cx="205" cy="1210" r="6"/><circle cx="462" cy="1222" r="6"/></g>
+</svg>
