@@ -94,8 +94,7 @@ func draw_ellipse_shadow(center: Vector2, radii: Vector2) -> void:
 	draw_colored_polygon(points, Color(0.02, 0.03, 0.035, 0.58))
 
 func _draw_fallback_platform(center: Vector2) -> void:
-	# Temporary silhouettes for platforms that have not yet received production art.
-	# They are intentionally restrained so the authored Compact is visibly the new quality bar.
+	# Procedural safety fallback used only if production art cannot decode or a future platform has no authored master yet.
 	var body_width := 340.0
 	var body_height := 74.0
 	var shell := Color("465b58")
