@@ -5,4 +5,15 @@
 <path d="M11 13 H42 L48 8 H80 L86 13 H117" fill="none" stroke="#d3dde0" stroke-width="1.5" opacity=".45"/>
 <path d="M12 51 H116" stroke="#080c0f" stroke-width="3" opacity=".8"/>
 <path d="M10 24 L18 16 M110 16 L118 24 M10 40 L18 48 M110 48 L118 40" stroke="#d29a49" stroke-width="2.5" opacity=".62"/>
+
+<!-- reference-finish pilot: stronger pressable depth and controlled edge wear -->
+<path d="M9 18 H119" stroke="#d7e0e2" stroke-width="1.2" opacity=".16"/>
+<path d="M10 48 H118" stroke="#05090c" stroke-width="2" opacity=".66"/>
+<path d="M24 7 H45 M83 7 H104" stroke="#eff4f4" stroke-width="1" opacity=".18"/>
+<g fill="none" stroke-linecap="round">
+ <path d="M22 31 L31 28 M91 24 L101 21 M54 52 L66 50" stroke="#b5c0bf" stroke-width="1.4" opacity=".20"/>
+ <path d="M9 33 L15 28 M113 35 L119 30" stroke="#d38b46" stroke-width="1.8" opacity=".34"/>
+</g>
+<path d="M7 7 H121" stroke="#f0b25e" stroke-width="1.4" opacity=".11"/>
+
 </svg>
