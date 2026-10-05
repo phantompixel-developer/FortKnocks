@@ -148,14 +148,14 @@ func _draw_production_survivor() -> void:
 	# The SVG was authored around the existing collision/launch contract.
 	# Muzzle remains close to get_launch_origin(); neither physics nor aim math
 	# derives from this rectangle.
-	var rect := Rect2(-90.0, -200.0, 180.0, 240.0)
+	var rect := Rect2(-90.0, -216.0, 180.0, 240.0)
 	draw_texture_rect(PLAYER_SURVIVOR_TEXTURE, rect, false, tint)
 
 	# Keep the established world-space health strip as gameplay information.
 	var outline := Color("090d11")
-	draw_rect(Rect2(-39, -218, 78, 11), outline)
+	draw_rect(Rect2(-39, -236, 78, 11), outline)
 	var ratio := clampf(float(health) / float(max_health), 0.0, 1.0)
 	draw_rect(
-		Rect2(-35, -214, 70.0 * ratio, 4),
+		Rect2(-35, -232, 70.0 * ratio, 4),
 		Color("e7ad3c") if alive else Color("5c625e")
 	)
