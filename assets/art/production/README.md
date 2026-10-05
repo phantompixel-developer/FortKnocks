@@ -84,3 +84,47 @@ That helper:
 This keeps art-loader failures non-fatal and separates editable source art from gameplay boot requirements.
 
 Before mobile release/export, the preferred final packaging step remains rasterizing approved masters to PNG/WebP runtime derivatives and retaining SVG only as source/master art.
+
+
+## Vehicle — Old Sedan / Estate
+- **Asset:** `vehicles/old_sedan.svg`
+- **Purpose:** second platform-tier production master reused in Garage, Hub and player Battle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none.
+
+## Vehicle — Pickup
+- **Asset:** `vehicles/pickup.svg`
+- **Purpose:** utility-platform production master reused in Garage, Hub and player Battle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; module attachment overlays are presentation-only.
+
+## Vehicle — Improvised Technical
+- **Asset:** `vehicles/improvised_technical.svg`
+- **Purpose:** reinforced current top-tier platform production master reused in Garage, Hub and player Battle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; support-module attachment overlays are presentation-only.
+
+## Command Board
+- **Asset:** `campaign/command_board_surface.svg`
+- **Purpose:** recovered physical route-map surface beneath dynamic mission-state route pins.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Dynamic data:** mission names, availability, completion and rewards remain native/data-driven.
+
+## Workshop hardware
+- **Assets:**
+  - `workshop/workshop_weapons.svg`
+  - `workshop/workshop_modules.svg`
+- **Purpose:** physical presentation of the already-approved weapon and platform-module inventory.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Scope guardrail:** these assets depict only Scrap Bolt, Heavy Slug, Shock Capsule, Spotter Rack, Ballast Crates, Twin Field Rack and Stabilizer Rig.
