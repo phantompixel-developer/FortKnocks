@@ -4,6 +4,8 @@ extends RefCounted
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_industrial.svg"
 const BUTTON_TEXTURE_PATH := "res://assets/art/production/shared/ui/button_industrial.svg"
+const HUD_PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_hud_compact.svg"
+const TACTICAL_PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_tactical.svg"
 
 # Locked production palette: dark industrial UI, warm salvage lighting, restrained cold-tech accents.
 const COAL := Color("111820")
@@ -105,6 +107,59 @@ static func style_card(rect: ColorRect, emphasis := 0) -> void:
 		_:
 			surface.modulate = Color.WHITE
 
+
+
+static func style_hud_card(rect: ColorRect, cold := false) -> void:
+	if rect == null:
+		return
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(HUD_PANEL_TEXTURE_PATH)
+	if texture == null:
+		rect.color = Color("101920", 0.90)
+		return
+	_style_textured_surface(
+		rect,
+		texture,
+		Color(0.82, 0.96, 1.0, 1.0) if cold else Color.WHITE,
+		16
+	)
+
+static func style_tactical_card(rect: ColorRect) -> void:
+	if rect == null:
+		return
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(TACTICAL_PANEL_TEXTURE_PATH)
+	if texture == null:
+		rect.color = Color("102027", 0.94)
+		return
+	_style_textured_surface(rect, texture, Color.WHITE, 18)
+
+static func _style_textured_surface(
+	rect: ColorRect,
+	texture: Texture2D,
+	modulate: Color,
+	margin: int
+) -> void:
+	rect.color = Color.TRANSPARENT
+	var surface := rect.get_node_or_null("_ProductionSurface") as NinePatchRect
+	if surface == null:
+		surface = NinePatchRect.new()
+		surface.name = "_ProductionSurface"
+		surface.anchor_left = 0.0
+		surface.anchor_top = 0.0
+		surface.anchor_right = 1.0
+		surface.anchor_bottom = 1.0
+		surface.offset_left = 0.0
+		surface.offset_top = 0.0
+		surface.offset_right = 0.0
+		surface.offset_bottom = 0.0
+		surface.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		rect.add_child(surface)
+		rect.move_child(surface, 0)
+	surface.texture = texture
+	surface.patch_margin_left = margin
+	surface.patch_margin_top = margin
+	surface.patch_margin_right = margin
+	surface.patch_margin_bottom = margin
+	surface.modulate = modulate
 
 static func style_display_label(label: Label) -> void:
 	if label == null:
