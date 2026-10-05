@@ -78,6 +78,7 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var mission_brief_text: Label = $HUD/Root/MissionBriefCard/Briefing
 @onready var mission_brief_objective: Label = $HUD/Root/MissionBriefCard/Objective
 @onready var mission_brief_warning: Label = $HUD/Root/MissionBriefCard/TacticalWarning
+@onready var mission_brief_loadout: Label = $HUD/Root/MissionBriefCard/Loadout
 @onready var begin_run_button: Button = $HUD/Root/MissionBriefCard/BeginRunButton
 @onready var encounter_picker: ColorRect = $HUD/Root/EncounterPicker
 @onready var picker_briefing_label: Label = $HUD/Root/EncounterPicker/BriefingLabel
@@ -1237,20 +1238,17 @@ func _show_mission_brief(definition: MissionDefinition) -> void:
 			_region_display_name(definition.region_id),
 			definition.location_tag,
 		]
-		var warning_lines: Array[String] = []
-		if not definition.tactical_warning.is_empty():
-			warning_lines.append("FIELD NOTE • %s" % definition.tactical_warning)
-		var loadout_line := _campaign_loadout_line()
-		if not loadout_line.is_empty():
-			warning_lines.append(loadout_line)
-		mission_brief_warning.text = "\n".join(warning_lines)
-		mission_brief_warning.visible = not warning_lines.is_empty()
+		mission_brief_warning.text = "FIELD NOTE • %s" % definition.tactical_warning
+		mission_brief_warning.visible = not definition.tactical_warning.is_empty()
+		mission_brief_loadout.text = _campaign_loadout_line()
+		mission_brief_loadout.visible = not mission_brief_loadout.text.is_empty()
 		begin_run_button.visible = true
 		begin_run_button.disabled = false
 		begin_run_button.text = "BEGIN RUN"
 	else:
 		mission_brief_focus.text = definition.test_focus
 		mission_brief_warning.visible = false
+		mission_brief_loadout.visible = false
 		begin_run_button.visible = false
 
 	mission_brief_card.visible = true
