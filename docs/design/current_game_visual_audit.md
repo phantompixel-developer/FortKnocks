@@ -912,11 +912,15 @@ Why second:
 - these three screens are the largest remaining source of “menu over art” presentation.
 
 ## Batch C — Battle presentation parity
-Implement:
-1. authored Outskirts mission landmarks,
-2. HUD hierarchy polish,
-3. safe-area validation in battle,
-4. result/inspect readability validation across all 10 current missions.
+**IMPLEMENTED on `feat/visual-polish-c-battle-parity`.**
+
+Implemented:
+1. six authored Outskirts mission landmark overlays, giving all ten current missions mission-aware production composition,
+2. compact HUD surface family for status/weapon/aim data plus a distinct tactical inspect surface,
+3. player/enemy status plates and stronger battle typography/action hierarchy,
+4. safe-area layout integration for the new HUD surfaces,
+5. campaign/proof result-action hierarchy and victory/defeat emphasis,
+6. static ten-mission landmark/objective coverage validation (local phone-scale Play validation still required).
 
 ## Batch D — Reference-level rendering finish
 Run one representative high-fidelity art pilot before batch-upgrading the asset library.
