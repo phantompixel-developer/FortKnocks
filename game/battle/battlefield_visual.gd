@@ -5,6 +5,16 @@ const OUTSKIRTS_SKY_FAR_PATH := "res://assets/art/production/battle/outskirts/ou
 const OUTSKIRTS_MIDGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_midground.svg"
 const OUTSKIRTS_ROAD_PATH := "res://assets/art/production/battle/outskirts/outskirts_road.svg"
 const OUTSKIRTS_FOREGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_foreground.svg"
+const SUBURBS_SKY_FAR_PATH := "res://assets/art/production/battle/suburbs/suburbs_sky_far.svg"
+const SUBURBS_MIDGROUND_PATH := "res://assets/art/production/battle/suburbs/suburbs_midground.svg"
+const SUBURBS_ROAD_PATH := "res://assets/art/production/battle/suburbs/suburbs_road.svg"
+const SUBURBS_FOREGROUND_PATH := "res://assets/art/production/battle/suburbs/suburbs_foreground.svg"
+const SUBURBS_LANDMARK_PATHS := {
+	"suburbs_dead_air": "res://assets/art/production/battle/suburbs/suburbs_dead_air_landmark.svg",
+	"suburbs_crossroads": "res://assets/art/production/battle/suburbs/suburbs_crossroads_landmark.svg",
+	"suburbs_loaded_up": "res://assets/art/production/battle/suburbs/suburbs_loaded_up_landmark.svg",
+	"suburbs_hot_cargo": "res://assets/art/production/battle/suburbs/suburbs_hot_cargo_landmark.svg",
+}
 
 const WORLD_WIDTH := 2160.0
 const WORLD_HEIGHT := 1280.0
@@ -20,22 +30,33 @@ var _outskirts_sky_far: Texture2D
 var _outskirts_midground: Texture2D
 var _outskirts_road: Texture2D
 var _outskirts_foreground: Texture2D
+var _suburbs_sky_far: Texture2D
+var _suburbs_midground: Texture2D
+var _suburbs_road: Texture2D
+var _suburbs_foreground: Texture2D
+var _suburbs_landmarks: Dictionary = {}
+var _mission_id := ""
 
 func configure_variant(value: int) -> void:
 	_variant = clampi(value, 0, 3)
+	queue_redraw()
+
+func configure_mission(mission_id: String) -> void:
+	_mission_id = mission_id
 	queue_redraw()
 
 func _draw() -> void:
 	_ensure_production_textures()
 
 	if _variant == 3:
-		# Suburbs remains on the accepted procedural baseline until its own
-		# region-specific production pass. Do not blur the two art milestones.
-		_draw_atmosphere()
-		_draw_far_outskirts()
-		_draw_suburbs_backdrop()
-		_draw_road()
-		_draw_foreground_dressing()
+		if _has_complete_suburbs_set():
+			_draw_production_suburbs()
+		else:
+			_draw_atmosphere()
+			_draw_far_outskirts()
+			_draw_suburbs_backdrop()
+			_draw_road()
+			_draw_foreground_dressing()
 		return
 
 	if not _has_complete_outskirts_set():
@@ -74,6 +95,47 @@ func _ensure_production_textures() -> void:
 		_outskirts_road = ProductionArtScript.texture_from_svg(OUTSKIRTS_ROAD_PATH)
 	if _outskirts_foreground == null:
 		_outskirts_foreground = ProductionArtScript.texture_from_svg(OUTSKIRTS_FOREGROUND_PATH)
+	if _suburbs_sky_far == null:
+		_suburbs_sky_far = ProductionArtScript.texture_from_svg(SUBURBS_SKY_FAR_PATH)
+	if _suburbs_midground == null:
+		_suburbs_midground = ProductionArtScript.texture_from_svg(SUBURBS_MIDGROUND_PATH)
+	if _suburbs_road == null:
+		_suburbs_road = ProductionArtScript.texture_from_svg(SUBURBS_ROAD_PATH)
+	if _suburbs_foreground == null:
+		_suburbs_foreground = ProductionArtScript.texture_from_svg(SUBURBS_FOREGROUND_PATH)
+	for mission_id in SUBURBS_LANDMARK_PATHS:
+		if not _suburbs_landmarks.has(mission_id):
+			_suburbs_landmarks[mission_id] = ProductionArtScript.texture_from_svg(
+				str(SUBURBS_LANDMARK_PATHS[mission_id])
+			)
+
+
+func _has_complete_suburbs_set() -> bool:
+	return (
+		_suburbs_sky_far != null
+		and _suburbs_midground != null
+		and _suburbs_road != null
+		and _suburbs_foreground != null
+	)
+
+func _draw_production_suburbs() -> void:
+	draw_texture_rect(_suburbs_sky_far, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+	draw_texture_rect(_suburbs_midground, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+
+	var landmark := _suburbs_landmarks.get(_mission_id) as Texture2D
+	if landmark != null:
+		draw_texture_rect(landmark, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+
+	draw_texture_rect(
+		_suburbs_road,
+		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
+		false
+	)
+	draw_texture_rect(
+		_suburbs_foreground,
+		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
+		false
+	)
 
 func _has_complete_outskirts_set() -> bool:
 	return (

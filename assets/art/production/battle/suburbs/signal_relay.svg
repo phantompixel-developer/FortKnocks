@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="280" viewBox="0 0 180 280">
+<defs>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#69736d"/><stop offset="1" stop-color="#35423e"/></linearGradient>
+ <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#53625d"/><stop offset="1" stop-color="#343f3c"/></linearGradient>
+ <radialGradient id="cold"><stop offset="0" stop-color="#dff5f1"/><stop offset=".3" stop-color="#77b6bf"/><stop offset="1" stop-color="#77b6bf" stop-opacity="0"/></radialGradient>
+</defs>
+<!-- base -->
+<ellipse cx="90" cy="258" rx="62" ry="10" fill="#080c0f" opacity=".55"/>
+<path d="M60 244 H120 L130 260 H50Z" fill="#111719" stroke="#090d11" stroke-width="5"/>
+<path d="M70 236 H110 L116 249 H64Z" fill="#4c5651"/>
+<!-- mast -->
+<rect x="78" y="72" width="24" height="172" rx="4" fill="#111719"/>
+<rect x="84" y="78" width="12" height="158" rx="3" fill="url(#metal)"/>
+<path d="M90 82 V226" stroke="#93a09a" stroke-width="2" opacity=".32"/>
+<!-- electronics cabinet -->
+<rect x="39" y="132" width="102" height="72" rx="6" fill="#101719" stroke="#090d11" stroke-width="5"/>
+<rect x="46" y="139" width="88" height="58" rx="4" fill="url(#panel)" stroke="#68736d" stroke-width="3"/>
+<rect x="56" y="150" width="68" height="14" rx="3" fill="#26322f"/>
+<circle cx="64" cy="180" r="18" fill="url(#cold)" opacity=".55"/><circle cx="64" cy="180" r="6" fill="#77b6bf"/><circle cx="64" cy="180" r="2.5" fill="#e7fbf8"/>
+<circle cx="88" cy="180" r="5" fill="#e7ad3c"/><circle cx="105" cy="180" r="5" fill="#a45f42"/>
+<path d="M115 145 L127 158 M112 148 L124 161" stroke="#a45f42" stroke-width="4" opacity=".72"/>
+<!-- dish head -->
+<path d="M90 72 V36" stroke="#111719" stroke-width="10" stroke-linecap="round"/>
+<path d="M90 42 L122 22" stroke="#182326" stroke-width="8" stroke-linecap="round"/>
+<path d="M118 20 Q153 28 157 58 Q132 66 113 48Z" fill="#53635f" stroke="#111719" stroke-width="6"/>
+<path d="M122 28 Q145 34 148 52" fill="none" stroke="#77b6bf" stroke-width="4" opacity=".68"/>
+<circle cx="121" cy="43" r="6" fill="#dff5f1"/>
+<!-- welded braces / FK marking -->
+<path d="M70 226 L90 200 L110 226" fill="none" stroke="#293532" stroke-width="7"/>
+<path d="M52 194 L70 174 M73 194 L91 174" stroke="#e7ad3c" stroke-width="6" stroke-linecap="round"/>
+<path d="M95 194 L113 174" stroke="#b65c36" stroke-width="6" stroke-linecap="round"/>
+</svg>

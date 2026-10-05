@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://game/progression/workshop_screen.gd" id="1_workshop"]
 [ext_resource type="Script" path="res://game/presentation/screen_backdrop.gd" id="2_backdrop"]
+[ext_resource type="Script" path="res://game/presentation/workshop_hardware_display.gd" id="3_hardware"]
 
 [node name="Workshop" type="Control"]
 layout_mode = 3
@@ -67,9 +68,9 @@ horizontal_alignment = 1
 [node name="LoadoutCard" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 72.0
-offset_top = 232.0
+offset_top = 222.0
 offset_right = 648.0
-offset_bottom = 566.0
+offset_bottom = 612.0
 color = Color(0.10, 0.105, 0.09, 0.94)
 
 [node name="Header" type="Label" parent="LoadoutCard"]
@@ -82,60 +83,70 @@ theme_override_font_sizes/font_size = 18
 text = "FIELD LOADOUT"
 horizontal_alignment = 1
 
+[node name="WeaponDisplay" type="Control" parent="LoadoutCard"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 50.0
+offset_right = 548.0
+offset_bottom = 196.0
+mouse_filter = 2
+script = ExtResource("3_hardware")
+mode = "weapons"
+
 [node name="CoreLabel" type="Label" parent="LoadoutCard"]
 layout_mode = 0
 offset_left = 26.0
-offset_top = 58.0
+offset_top = 198.0
 offset_right = 550.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 14
+offset_bottom = 224.0
+theme_override_font_sizes/font_size = 13
 text = "CORE ROUND: SCRAP BOLT • always carried"
 horizontal_alignment = 1
 
 [node name="SpecialistLabel" type="Label" parent="LoadoutCard"]
 layout_mode = 0
 offset_left = 26.0
-offset_top = 96.0
+offset_top = 226.0
 offset_right = 550.0
-offset_bottom = 128.0
-theme_override_font_sizes/font_size = 15
+offset_bottom = 252.0
+theme_override_font_sizes/font_size = 14
 text = "FIELD RACK: SCRAP BOLT + HEAVY SLUG"
 horizontal_alignment = 1
 
 [node name="HeavyButton" type="Button" parent="LoadoutCard"]
 layout_mode = 0
 offset_left = 32.0
-offset_top = 146.0
+offset_top = 258.0
 offset_right = 272.0
-offset_bottom = 284.0
-theme_override_font_sizes/font_size = 14
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 13
 text = "HEAVY SLUG\nCover breaker • high force\nACTIVE SPECIALIST"
 
 [node name="ShockButton" type="Button" parent="LoadoutCard"]
 layout_mode = 0
 offset_left = 304.0
-offset_top = 146.0
+offset_top = 258.0
 offset_right = 544.0
-offset_bottom = 284.0
-theme_override_font_sizes/font_size = 14
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 13
 text = "SHOCK CAPSULE\nRadial pulse • displacement\nEQUIP SPECIALIST"
 
 [node name="RuleLabel" type="Label" parent="LoadoutCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 292.0
+offset_top = 348.0
 offset_right = 546.0
-offset_bottom = 322.0
-theme_override_font_sizes/font_size = 13
+offset_bottom = 378.0
+theme_override_font_sizes/font_size = 12
 text = "Campaign rack: Scrap Bolt + one specialist. Switch freely between runs."
 horizontal_alignment = 1
 
 [node name="UtilityCard" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 72.0
-offset_top = 590.0
+offset_top = 628.0
 offset_right = 648.0
-offset_bottom = 1050.0
+offset_bottom = 1062.0
 color = Color(0.09, 0.105, 0.095, 0.94)
 
 [node name="Title" type="Label" parent="UtilityCard"]
@@ -158,20 +169,30 @@ theme_override_font_sizes/font_size = 15
 text = "ACTIVE PLATFORM: RUN-DOWN COMPACT"
 horizontal_alignment = 1
 
+[node name="ModuleDisplay" type="Control" parent="UtilityCard"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 100.0
+offset_right = 546.0
+offset_bottom = 232.0
+mouse_filter = 2
+script = ExtResource("3_hardware")
+mode = "modules"
+
 [node name="ModuleList" type="VBoxContainer" parent="UtilityCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 108.0
+offset_top = 222.0
 offset_right = 546.0
-offset_bottom = 322.0
-theme_override_constants/separation = 14
+offset_bottom = 374.0
+theme_override_constants/separation = 8
 
 [node name="Note" type="Label" parent="UtilityCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 342.0
+offset_top = 378.0
 offset_right = 546.0
-offset_bottom = 430.0
+offset_bottom = 426.0
 theme_override_font_sizes/font_size = 14
 text = "Equip a platform with a module position to fit field hardware."
 horizontal_alignment = 1

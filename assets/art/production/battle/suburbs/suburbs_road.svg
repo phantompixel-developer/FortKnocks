@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="350" viewBox="0 0 2160 350">
+<defs><linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#373937"/><stop offset=".38" stop-color="#292b2c"/><stop offset="1" stop-color="#202326"/></linearGradient></defs>
+<rect width="2160" height="350" fill="url(#road)"/>
+<!-- kerb / pavement edge -->
+<rect y="0" width="2160" height="20" fill="#756d62"/><rect y="20" width="2160" height="36" fill="#50504a"/>
+<g fill="#6a665e"><rect x="0" y="0" width="150" height="20"/><rect x="330" y="0" width="140" height="20"/><rect x="710" y="0" width="170" height="20"/><rect x="1180" y="0" width="150" height="20"/><rect x="1670" y="0" width="160" height="20"/></g>
+<!-- faded local-road center markings -->
+<g fill="#ddd5bd" opacity=".50"><rect x="120" y="182" width="90" height="8"/><rect x="340" y="182" width="90" height="8"/><rect x="560" y="182" width="90" height="8"/><rect x="780" y="182" width="90" height="8"/><rect x="1000" y="182" width="90" height="8"/><rect x="1220" y="182" width="90" height="8"/><rect x="1440" y="182" width="90" height="8"/><rect x="1660" y="182" width="90" height="8"/><rect x="1880" y="182" width="90" height="8"/></g>
+<!-- abandoned crossing remnants -->
+<g fill="#d8d0b7" opacity=".25"><rect x="865" y="82" width="24" height="84"/><rect x="907" y="82" width="24" height="84"/><rect x="949" y="82" width="24" height="84"/><rect x="991" y="82" width="24" height="84"/></g>
+<!-- repairs and cracks -->
+<g fill="#313537" opacity=".86"><path d="M230 74 h184 l-16 66 -148 10 -34-42Z"/><path d="M1180 216 h242 l-25 82 -194-8 -42-40Z"/><path d="M1760 82 h190 l-18 64 -154 12 -32-38Z"/></g>
+<g fill="none" stroke="#11171a" stroke-linecap="round" opacity=".76">
+ <path d="M98 82 L136 104 120 135 166 158 146 188" stroke-width="6"/><path d="M126 135 L90 150 72 178" stroke-width="3"/>
+ <path d="M610 92 L652 112 632 142 680 166 660 190" stroke-width="5"/>
+ <path d="M1090 72 L1128 104 1110 132 1156 158 1138 188" stroke-width="6"/>
+ <path d="M1510 110 L1552 130 1530 158 1570 178" stroke-width="5"/>
+ <path d="M2030 90 L2068 116 2048 146 2092 172" stroke-width="5"/>
+</g>
+<!-- driveway cuts -->
+<g fill="#454742"><path d="M450 0 H650 L622 64 H470Z"/><path d="M1400 0 H1595 L1574 64 H1422Z"/></g>
+</svg>

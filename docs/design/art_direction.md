@@ -227,3 +227,32 @@ The presentation therefore has no external art-asset attribution dependency at t
 ## Originality
 
 Do not use another game's artwork as an image-to-image source for production assets. References may describe broad genre qualities, but final characters, silhouettes, UI, environments, props and composition must have an independent design language.
+
+
+## Rival combat presentation
+
+Current opponent presentation follows the same locked world language as Fort Knocks but avoids player identity markers.
+
+Rival visual rules:
+- scavenged civilian clothing and machinery,
+- muted olive/steel materials with restrained rust-red accents,
+- no Fort Knocks diagonal knock-mark,
+- no pristine military uniforms,
+- no sci-fi faction armour,
+- no zombie-coded styling,
+- silhouette/equipment differences before decorative lore.
+
+The goal is immediate player/opponent distinction without implying a separate genre or overbuilding faction lore before the campaign requires it.
+
+## Current battle hero quality bar
+
+The current production baseline expects authored presentation for objects the player actively reads or targets:
+- survivors,
+- player and rival cover,
+- roadblocks,
+- collapsible gates,
+- unstable power cells,
+- Signal Relay,
+- protected Salvage.
+
+Dynamic procedural drawing remains appropriate for trajectories, health strips, hit-state overlays, VFX and rubble where it communicates gameplay state more clearly than a baked sprite.

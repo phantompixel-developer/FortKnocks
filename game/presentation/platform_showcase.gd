@@ -3,8 +3,11 @@ extends Control
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
+const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
+const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
+const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
 
-var _compact_texture: Texture2D
+var _textures: Dictionary = {}
 
 var _platform_id := "run_down_compact"
 var _module_id := ""
@@ -18,24 +21,69 @@ func _draw() -> void:
 	var center := size * 0.5
 	draw_ellipse_shadow(center + Vector2(0, 54), Vector2(minf(size.x * 0.38, 205.0), 22.0))
 
-	if _platform_id == "run_down_compact":
-		if _compact_texture == null:
-			_compact_texture = ProductionArtScript.texture_from_svg(COMPACT_TEXTURE_PATH)
-		if _compact_texture == null:
-			_draw_fallback_platform(center)
-			return
-		var target_width := minf(size.x - 38.0, 430.0)
-		var target_height := target_width * 0.5
+	var texture := _texture_for_platform(_platform_id)
+	if texture != null:
+		var target_width := minf(size.x - 38.0, 440.0)
+		var aspect := 0.50 if _platform_id == "run_down_compact" else 0.47
+		var target_height := target_width * aspect
 		var target := Rect2(
 			center.x - target_width * 0.5,
-			center.y - target_height * 0.53,
+			center.y - target_height * 0.52,
 			target_width,
 			target_height
 		)
-		draw_texture_rect(_compact_texture, target, false)
+		draw_texture_rect(texture, target, false)
+		_draw_module_indicator(center, target_width, target_height)
 		return
 
 	_draw_fallback_platform(center)
+
+
+func _texture_for_platform(platform_id: String) -> Texture2D:
+	if _textures.has(platform_id):
+		return _textures[platform_id] as Texture2D
+
+	var path := ""
+	match platform_id:
+		"run_down_compact":
+			path = COMPACT_TEXTURE_PATH
+		"old_sedan":
+			path = SEDAN_TEXTURE_PATH
+		"pickup":
+			path = PICKUP_TEXTURE_PATH
+		"improvised_technical":
+			path = TECHNICAL_TEXTURE_PATH
+		_:
+			return null
+
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(path)
+	_textures[platform_id] = texture
+	return texture
+
+func _draw_module_indicator(center: Vector2, width: float, height: float) -> void:
+	if _module_id.is_empty():
+		return
+
+	var accent := Color("77b6bf")
+	var p := center + Vector2(width * 0.30, -height * 0.27)
+	match _module_id:
+		"spotter_rack":
+			draw_line(p, p + Vector2(0, -34), Color("18232c"), 7.0)
+			draw_circle(p + Vector2(0, -40), 11.0, Color("5d918e"))
+			draw_circle(p + Vector2(0, -40), 4.0, Color("d3f1eb"))
+		"ballast_crates":
+			draw_rect(Rect2(p.x - 36, p.y - 18, 31, 24), Color("6d5d43"))
+			draw_rect(Rect2(p.x + 1, p.y - 14, 28, 20), Color("806c4b"))
+		"twin_field_rack":
+			draw_rect(Rect2(p.x - 26, p.y - 40, 20, 42), Color("53615d"))
+			draw_rect(Rect2(p.x + 4, p.y - 40, 20, 42), Color("405b56"))
+			draw_circle(p + Vector2(-16, -30), 4.0, Color("e7ad3c"))
+			draw_circle(p + Vector2(14, -30), 4.0, accent)
+		"stabilizer_rig":
+			draw_line(p + Vector2(-18, 0), p + Vector2(-34, 30), Color("65716d"), 6.0)
+			draw_line(p + Vector2(18, 0), p + Vector2(34, 30), Color("65716d"), 6.0)
+			draw_line(p + Vector2(-42, 30), p + Vector2(-25, 30), Color("8a7b5e"), 6.0)
+			draw_line(p + Vector2(25, 30), p + Vector2(42, 30), Color("8a7b5e"), 6.0)
 
 func draw_ellipse_shadow(center: Vector2, radii: Vector2) -> void:
 	# Polygon approximation avoids a separate texture dependency for the showcase floor shadow.
@@ -46,8 +94,7 @@ func draw_ellipse_shadow(center: Vector2, radii: Vector2) -> void:
 	draw_colored_polygon(points, Color(0.02, 0.03, 0.035, 0.58))
 
 func _draw_fallback_platform(center: Vector2) -> void:
-	# Temporary silhouettes for platforms that have not yet received production art.
-	# They are intentionally restrained so the authored Compact is visibly the new quality bar.
+	# Procedural safety fallback used only if production art cannot decode or a future platform has no authored master yet.
 	var body_width := 340.0
 	var body_height := 74.0
 	var shell := Color("465b58")

@@ -84,3 +84,118 @@ That helper:
 This keeps art-loader failures non-fatal and separates editable source art from gameplay boot requirements.
 
 Before mobile release/export, the preferred final packaging step remains rasterizing approved masters to PNG/WebP runtime derivatives and retaining SVG only as source/master art.
+
+
+## Vehicle — Old Sedan / Estate
+- **Asset:** `vehicles/old_sedan.svg`
+- **Purpose:** second platform-tier production master reused in Garage, Hub and player Battle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none.
+
+## Vehicle — Pickup
+- **Asset:** `vehicles/pickup.svg`
+- **Purpose:** utility-platform production master reused in Garage, Hub and player Battle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; module attachment overlays are presentation-only.
+
+## Vehicle — Improvised Technical
+- **Asset:** `vehicles/improvised_technical.svg`
+- **Purpose:** reinforced current top-tier platform production master reused in Garage, Hub and player Battle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; support-module attachment overlays are presentation-only.
+
+## Command Board
+- **Asset:** `campaign/command_board_surface.svg`
+- **Purpose:** recovered physical route-map surface beneath dynamic mission-state route pins.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Dynamic data:** mission names, availability, completion and rewards remain native/data-driven.
+
+## Workshop hardware
+- **Assets:**
+  - `workshop/workshop_weapons.svg`
+  - `workshop/workshop_modules.svg`
+- **Purpose:** physical presentation of the already-approved weapon and platform-module inventory.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Scope guardrail:** these assets depict only Scrap Bolt, Heavy Slug, Shock Capsule, Spotter Rack, Ballast Crates, Twin Field Rack and Stabilizer Rig.
+
+
+## Suburbs environment kit
+
+- **Assets:**
+  - `battle/suburbs/suburbs_sky_far.svg`
+  - `battle/suburbs/suburbs_midground.svg`
+  - `battle/suburbs/suburbs_road.svg`
+  - `battle/suburbs/suburbs_foreground.svg`
+  - `battle/suburbs/suburbs_dead_air_landmark.svg`
+  - `battle/suburbs/suburbs_crossroads_landmark.svg`
+  - `battle/suburbs/suburbs_loaded_up_landmark.svg`
+  - `battle/suburbs/suburbs_hot_cargo_landmark.svg`
+- **Purpose:** layered production environment for the four current Suburbs encounters, using one shared regional identity plus mission-specific low-contrast landmark composition.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks from the locked visual reference.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; collision and mission geometry remain authored in mission resources / battle nodes.
+
+## Suburbs Signal Relay
+
+- **Asset:** `battle/suburbs/signal_relay.svg`
+- **Purpose:** production hero visual for the Dead Air objective.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Gameplay authority:** none; existing health/collision/objective state remains authoritative.
+
+## Suburbs protected Salvage Load
+
+- **Asset:** `battle/suburbs/salvage_load.svg`
+- **Purpose:** production hero visual for Loaded Up / Hot Cargo protected-objective play.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Gameplay authority:** none; existing health/collision/objective state remains authoritative.
+
+
+## Rival survivor
+
+- **Asset:** `characters/rival_survivor.svg`
+- **Purpose:** production opponent survivor used across current battles.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; collision, knockback and launch origin remain script-owned.
+- **Identity rule:** distinct from Fort Knocks through olive/rust materials without introducing a new faction genre or competing emblem.
+
+## Rival cover vehicle
+
+- **Asset:** `vehicles/rival_cover_vehicle.svg`
+- **Purpose:** faction-neutral opponent civilian cover vehicle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; enemy cover HP/collision remain unchanged.
+
+## Shared battle hero interactives
+
+- **Assets:**
+  - `battle/shared/roadblock.svg`
+  - `battle/shared/scrap_gate.svg`
+  - `battle/shared/unstable_power_cell.svg`
+  - `battle/shared/unstable_power_cell_spent.svg`
+  - `battle/suburbs/signal_relay_destroyed.svg`
+  - `battle/suburbs/salvage_load_destroyed.svg`
+- **Purpose:** production presentation for the current tactical objects and their critical spent/destroyed states.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Gameplay authority:** none; existing collision, HP, collapse and discharge logic remains authoritative.

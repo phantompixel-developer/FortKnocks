@@ -1,6 +1,11 @@
 class_name CollapsibleBarrier
 extends StaticBody2D
 
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const SCRAP_GATE_TEXTURE_PATH := "res://assets/art/production/battle/shared/scrap_gate.svg"
+
+var _production_texture: Texture2D
+
 signal collapsed(world_position: Vector2)
 
 @export var max_health := 70
@@ -63,6 +68,16 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "modulate", Color.WHITE, 0.18)
 
 func _draw() -> void:
+	if _production_texture == null:
+		_production_texture = ProductionArtScript.texture_from_svg(SCRAP_GATE_TEXTURE_PATH)
+	if _production_texture != null:
+		draw_texture_rect(_production_texture, Rect2(-60.0, -160.0, 120.0, 320.0), false)
+		if not is_collapsed:
+			var ratio: float = float(health) / float(max_health)
+			draw_rect(Rect2(-31, -174, 62, 10), Color("111719"))
+			draw_rect(Rect2(-28, -171, 56.0 * ratio, 4), Color("e7ad3c"))
+		return
+
 	var outline := Color("171c1b")
 	var frame := Color("2b3531")
 	var panel_a := Color("657069")

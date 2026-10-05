@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
+<!-- Crossroads: damaged junction furniture and corner-shop shell, all decorative -->
+<g opacity=".76">
+ <rect x="1270" y="610" width="300" height="142" fill="#414d4c" stroke="#1a2428" stroke-width="7"/>
+ <path d="M1248 610 H1594 L1566 576 H1278Z" fill="#725b49" stroke="#1a2428" stroke-width="7"/>
+ <rect x="1302" y="644" width="94" height="108" fill="#273337"/><rect x="1420" y="640" width="118" height="52" fill="#536764"/>
+ <path d="M1430 704 H1530" stroke="#b96b46" stroke-width="7"/>
+</g>
+<g stroke="#243034" fill="none" stroke-linecap="round" opacity=".72">
+ <path d="M900 790 V570 M900 604 H980" stroke-width="10"/><path d="M980 604 V648" stroke-width="8"/>
+ <path d="M1840 790 V590 M1760 620 H1840" stroke-width="10"/><path d="M1760 620 V664" stroke-width="8"/>
+</g>
+<g fill="#514f45" opacity=".78"><circle cx="980" cy="654" r="12"/><circle cx="1760" cy="670" r="12"/></g>
+</svg>

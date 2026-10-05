@@ -3,8 +3,9 @@ extends CharacterBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const PLAYER_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/fort_knocks_survivor.svg"
+const RIVAL_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/rival_survivor.svg"
 
-var _player_survivor_texture: Texture2D
+var _production_survivor_textures: Dictionary = {}
 
 signal health_changed(current: int, maximum: int)
 
@@ -145,9 +146,13 @@ func _draw() -> void:
 
 
 func _draw_production_survivor() -> bool:
-	if _player_survivor_texture == null:
-		_player_survivor_texture = ProductionArtScript.texture_from_svg(PLAYER_SURVIVOR_TEXTURE_PATH)
-	if _player_survivor_texture == null:
+	var texture_key := "player" if facing > 0 else "rival"
+	if not _production_survivor_textures.has(texture_key):
+		var texture_path := PLAYER_SURVIVOR_TEXTURE_PATH if facing > 0 else RIVAL_SURVIVOR_TEXTURE_PATH
+		_production_survivor_textures[texture_key] = ProductionArtScript.texture_from_svg(texture_path)
+
+	var survivor_texture := _production_survivor_textures[texture_key] as Texture2D
+	if survivor_texture == null:
 		return false
 
 	var alive := health > 0
@@ -156,7 +161,7 @@ func _draw_production_survivor() -> bool:
 	# Muzzle remains close to get_launch_origin(); neither physics nor aim math
 	# derives from this rectangle.
 	var rect := Rect2(-90.0, -216.0, 180.0, 240.0)
-	draw_texture_rect(_player_survivor_texture, rect, false, tint)
+	draw_texture_rect(survivor_texture, rect, false, tint)
 
 	# Keep the established world-space health strip as gameplay information.
 	var outline := Color("090d11")
@@ -164,6 +169,6 @@ func _draw_production_survivor() -> bool:
 	var ratio := clampf(float(health) / float(max_health), 0.0, 1.0)
 	draw_rect(
 		Rect2(-35, -232, 70.0 * ratio, 4),
-		Color("e7ad3c") if alive else Color("5c625e")
+		(Color("e7ad3c") if facing > 0 else Color("a45f42")) if alive else Color("5c625e")
 	)
 	return true

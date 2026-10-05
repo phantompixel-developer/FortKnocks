@@ -11,11 +11,13 @@ const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var specialist_label: Label = $LoadoutCard/SpecialistLabel
+@onready var weapon_display: WorkshopHardwareDisplay = $LoadoutCard/WeaponDisplay
 @onready var heavy_button: Button = $LoadoutCard/HeavyButton
 @onready var shock_button: Button = $LoadoutCard/ShockButton
 @onready var loadout_rule_label: Label = $LoadoutCard/RuleLabel
 @onready var platform_label: Label = $UtilityCard/PlatformLabel
 @onready var module_list: VBoxContainer = $UtilityCard/ModuleList
+@onready var module_display: WorkshopHardwareDisplay = $UtilityCard/ModuleDisplay
 @onready var utility_note: Label = $UtilityCard/Note
 @onready var notice_label: Label = $NoticeLabel
 @onready var back_button: Button = $BackButton
@@ -56,6 +58,8 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
+	weapon_display.configure_specialist(specialist_id, full_rack_active)
+	module_display.configure_module(active_module_id)
 	_update_specialist_loadout(specialist_id, full_rack_active)
 	_rebuild_modules(platform_id)
 
@@ -124,8 +128,8 @@ func _rebuild_modules(platform_id: String) -> void:
 			action = "NEED %d SALVAGE" % definition.purchase_cost
 
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 96.0)
-		button.add_theme_font_size_override("font_size", 14)
+		button.custom_minimum_size = Vector2(0.0, 70.0)
+		button.add_theme_font_size_override("font_size", 12)
 		button.disabled = not enabled
 		button.text = "%s\n%s\n%s" % [
 			definition.display_name.to_upper(),

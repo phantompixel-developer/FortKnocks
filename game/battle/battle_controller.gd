@@ -317,7 +317,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		var platform := ArenaPlatformScript.new() as ArenaPlatform
 		if platform == null:
 			continue
-		platform.configure(rect)
+		var platform_style := "suburbs" if definition.visual_variant == 3 else "outskirts"
+		platform.configure(rect, platform_style)
 		encounter_geometry.add_child(platform)
 
 	if definition.collapsible_barrier_enabled:
@@ -345,6 +346,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 
 	if battlefield_visual.has_method("configure_variant"):
 		battlefield_visual.call("configure_variant", definition.visual_variant)
+	if battlefield_visual.has_method("configure_mission"):
+		battlefield_visual.call("configure_mission", definition.id)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if phase != Phase.PLAYER_AIM or _is_inspecting:

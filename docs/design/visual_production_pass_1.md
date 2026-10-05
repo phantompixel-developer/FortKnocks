@@ -105,7 +105,7 @@ Prefer sprite sheets/atlases and layered transparent assets for world art. Use p
 
 ## Representative production gate status
 
-**Implementation status: complete on branch; local Play acceptance pending.**
+**Implementation status: accepted in local Play and merged to `main` as the visual-production checkpoint (PR #10).**
 
 Implemented in this gate:
 - layered production Fort Knocks backdrop,
@@ -114,7 +114,7 @@ Implemented in this gate:
 - scalable shared industrial UI surfaces,
 - production player survivor aligned to existing gameplay geometry.
 
-Do not scale this asset pipeline further until the user confirms this set works in normal Play at portrait phone scale.
+The user confirmed the lighting, depth, palette, foreground framing and readability direction in normal Play. The pipeline is approved to scale through subsequent visual-production passes.
 
 ## Acceptance gate
 

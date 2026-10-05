@@ -203,7 +203,7 @@ They require stronger value/silhouette than the environment.
 
 Do **not** generate all assets at once.
 
-First approval set — **IMPLEMENTED, awaiting local Play acceptance**:
+First approval set — **IMPLEMENTED, ACCEPTED AND MERGED TO MAIN (PR #10)**:
 1. **Hub layered background set** — authored sky/far, mid-structure and low foreground layers integrated behind dynamic settlement progression.
 2. **Run-down Compact production vehicle family** — one authored source reused across Hub / Garage / player Battle.
 3. **Outskirts environment set** — authored sky/far, midground, road and approved dark foreground layers integrated for Outskirts variants.
@@ -254,7 +254,7 @@ This proves the intended separation between production art and gameplay geometry
 
 ## Representative gate implementation — 2026-10-05
 
-The representative production set is now complete in code/assets and should be judged in local Play before expanding the art batch.
+The representative production set was accepted in local Play and merged to `main` as the first visual-production checkpoint.
 
 Key separation rules are proven:
 - Hub environment art is static layered presentation while settlement progression remains dynamic.
@@ -278,3 +278,82 @@ Correction:
 - direct SVG preloads were removed from Battlefield, Hub, player survivor, player Compact, Garage showcase and shared UI theme.
 
 For shipping mobile builds, approved source SVGs should ultimately be rasterized to PNG/WebP runtime derivatives after visual approval and profiling.
+
+
+## Production batch 2 implementation — 2026-10-05
+
+Branch: `feat/visual-production-batch-2`
+
+Implemented:
+- Old Sedan / Estate production master,
+- Pickup production master,
+- Improvised Technical production master,
+- all four current player platforms now share authored presentation across Garage, Hub and player Battle,
+- Command Board recovered-map hero surface with dynamic route/state pins,
+- Workshop weapon hardware display,
+- Workshop module hardware display,
+- Twin Field Rack presents both carried specialists,
+- native mission/equip/purchase controls remain authoritative.
+
+Enemy cover remains on faction-neutral procedural art by design.
+
+After local Play acceptance, the next environment production target is **Suburbs**, not another global style redesign.
+
+
+## Suburbs production batch — 2026-10-05
+
+Implemented on `feat/visual-production-batch-2` after explicit approval to continue the same branch.
+
+Shared Suburbs production layers:
+- sky / distant residential silhouette,
+- residential-commercial midground,
+- local-road terrain skin,
+- dark garden-wall / scrub foreground framing.
+
+Mission-specific presentation:
+- Dead Air service-strip landmark,
+- Crossroads junction/corner-shop landmark,
+- Loaded Up garage/service-lane landmark,
+- Hot Cargo retaining/service-infrastructure landmark.
+
+Interactive presentation:
+- authored Signal Relay,
+- authored protected Salvage Load,
+- Suburbs-specific retaining-wall treatment for elevated authored platforms.
+
+Architecture rule:
+- `BattlefieldVisual.configure_mission()` receives mission identity for decorative composition only.
+- mission resources remain authoritative for collision, positions, objectives and tactics.
+- all Suburbs SVG masters continue through `ProductionArt.texture_from_svg()`; no direct SVG resource preloads are permitted.
+
+Reference lock:
+This batch follows `docs/design/visual_reference.md`. It introduces a new **region identity**, not a new game-wide art style.
+
+
+## Combat hero completion batch — 2026-10-05
+
+Implemented on `feat/visual-production-batch-2`.
+
+Authored current combat hero presentation now covers:
+- Fort Knocks survivor,
+- rival survivor,
+- all four current Fort Knocks platform families,
+- rival cover vehicle,
+- concrete roadblock,
+- collapsible scrap gate,
+- unstable power cell + spent state,
+- Signal Relay + destroyed state,
+- protected Salvage Load + destroyed state.
+
+Identity separation:
+- Fort Knocks keeps hazard-yellow / rust knock-mark language,
+- rival presentation uses muted olive / oxidised steel / rust and no Fort Knocks identifier,
+- both remain grounded civilian-salvage designs from the same collapsed modern world.
+
+Gameplay separation:
+- textures do not define collision,
+- survivor textures do not define projectile launch origins,
+- damage/destruction state is driven by existing gameplay state,
+- gate rotation/collapse and cell discharge remain unchanged.
+
+Reference authority remains `docs/design/visual_reference.md`.

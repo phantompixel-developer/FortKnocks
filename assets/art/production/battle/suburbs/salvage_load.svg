@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="180" viewBox="0 0 280 180">
+<defs>
+ <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#66716b"/><stop offset="1" stop-color="#38433f"/></linearGradient>
+ <linearGradient id="crate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#806c4f"/><stop offset="1" stop-color="#594a39"/></linearGradient>
+</defs>
+<ellipse cx="140" cy="154" rx="116" ry="12" fill="#080c0f" opacity=".56"/>
+<!-- low cart -->
+<path d="M22 116 H258 L250 142 H30Z" fill="#111719" stroke="#090d11" stroke-width="6"/>
+<path d="M32 112 H248 L242 132 H38Z" fill="url(#metal)"/>
+<!-- strapped recovered equipment/crates -->
+<rect x="42" y="58" width="84" height="58" rx="4" fill="url(#crate)" stroke="#111719" stroke-width="5"/>
+<path d="M50 67 L117 107 M117 67 L50 107" stroke="#4d4134" stroke-width="4"/>
+<rect x="134" y="52" width="72" height="64" rx="4" fill="#6f624d" stroke="#111719" stroke-width="5"/>
+<path d="M143 61 H197 M143 78 H197 M143 95 H197" stroke="#50483b" stroke-width="4"/>
+<!-- recovered machinery bundle -->
+<rect x="211" y="70" width="31" height="46" rx="5" fill="#465650" stroke="#111719" stroke-width="5"/>
+<circle cx="226" cy="84" r="9" fill="#293834"/><circle cx="226" cy="84" r="4" fill="#77b6bf" opacity=".72"/>
+<!-- straps -->
+<path d="M68 50 V119 M176 45 V119" stroke="#1e2829" stroke-width="9"/>
+<path d="M70 50 V119 M178 45 V119" stroke="#d0a548" stroke-width="4" opacity=".72"/>
+<!-- painted identifier -->
+<path d="M87 111 L104 90 M108 111 L125 90" stroke="#e7ad3c" stroke-width="7" stroke-linecap="round"/>
+<path d="M129 111 L146 90" stroke="#b65c36" stroke-width="7" stroke-linecap="round"/>
+<!-- wheels -->
+<g><circle cx="70" cy="145" r="25" fill="#090d11"/><circle cx="70" cy="145" r="12" fill="#56605d"/><circle cx="70" cy="145" r="5" fill="#8a8066"/></g>
+<g><circle cx="210" cy="145" r="25" fill="#090d11"/><circle cx="210" cy="145" r="12" fill="#56605d"/><circle cx="210" cy="145" r="5" fill="#8a8066"/></g>
+</svg>
