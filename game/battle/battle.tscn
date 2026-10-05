@@ -136,6 +136,15 @@ theme_override_font_sizes/font_size = 30
 text = "FORT KNOCKS"
 horizontal_alignment = 1
 
+[node name="PlayerStatusPlate" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 86.0
+offset_right = 270.0
+offset_bottom = 166.0
+mouse_filter = 2
+color = Color(0.08, 0.095, 0.087, 0.88)
+
 [node name="HealthLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 28.0
@@ -144,6 +153,15 @@ offset_right = 250.0
 offset_bottom = 158.0
 theme_override_font_sizes/font_size = 17
 text = "YOU 100/100\nCOVER 150/150"
+
+[node name="EnemyStatusPlate" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 438.0
+offset_top = 92.0
+offset_right = 704.0
+offset_bottom = 154.0
+mouse_filter = 2
+color = Color(0.08, 0.095, 0.087, 0.88)
 
 [node name="EnemyHealthLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
