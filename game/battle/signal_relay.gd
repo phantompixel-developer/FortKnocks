@@ -3,8 +3,10 @@ extends StaticBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const RELAY_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay.svg"
+const RELAY_DESTROYED_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay_destroyed.svg"
 
 var _production_texture: Texture2D
+var _destroyed_texture: Texture2D
 
 signal destroyed(world_position: Vector2)
 
@@ -72,7 +74,13 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
-	if not is_destroyed:
+	if is_destroyed:
+		if _destroyed_texture == null:
+			_destroyed_texture = ProductionArtScript.texture_from_svg(RELAY_DESTROYED_TEXTURE_PATH)
+		if _destroyed_texture != null:
+			draw_texture_rect(_destroyed_texture, Rect2(-90.0, -110.0, 180.0, 120.0), false)
+			return
+	else:
 		if _production_texture == null:
 			_production_texture = ProductionArtScript.texture_from_svg(RELAY_TEXTURE_PATH)
 		if _production_texture != null:
