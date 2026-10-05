@@ -1,6 +1,17 @@
 class_name FortKnocksHubVisual
 extends Node2D
 
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
+const HUB_SKY_FAR_PATH := "res://assets/art/production/hub/hub_sky_far.svg"
+const HUB_MID_STRUCTURES_PATH := "res://assets/art/production/hub/hub_mid_structures.svg"
+const HUB_FOREGROUND_PATH := "res://assets/art/production/hub/hub_foreground.svg"
+
+var _compact_texture: Texture2D
+var _hub_sky_far: Texture2D
+var _hub_mid_structures: Texture2D
+var _hub_foreground: Texture2D
+
 var _platform_id := "run_down_compact"
 var _module_id := ""
 var _campaign_stage := 0
@@ -23,40 +34,45 @@ func configure(platform_id: String, module_id := "", completed_missions := 0) ->
 	queue_redraw()
 
 func _draw() -> void:
-	_draw_atmosphere()
-	_draw_distant_outskirts()
+	_ensure_production_textures()
+	if _hub_sky_far != null and _hub_mid_structures != null:
+		_draw_production_backdrop()
+	else:
+		_draw_fallback_backdrop()
 	_draw_perimeter()
 	_draw_campaign_progress()
 	_draw_workshop()
 	_draw_active_platform()
 	_draw_scrapyard_and_fire()
 	_draw_gate_and_watch()
+	_draw_production_foreground()
 
-func _draw_atmosphere() -> void:
-	draw_rect(Rect2(0, 0, 720, 1280), Color("71847d"))
-	draw_rect(Rect2(0, 0, 720, 300), Color("667b74"))
-	draw_circle(Vector2(588, 202), 66.0, Color("d4c790", 0.30))
-	draw_rect(Rect2(0, 650, 720, 630), Color("2f3733"))
-	draw_rect(Rect2(0, 650, 720, 25), Color("48534d"))
+func _ensure_production_textures() -> void:
+	if _compact_texture == null:
+		_compact_texture = ProductionArtScript.texture_from_svg(COMPACT_TEXTURE_PATH)
+	if _hub_sky_far == null:
+		_hub_sky_far = ProductionArtScript.texture_from_svg(HUB_SKY_FAR_PATH)
+	if _hub_mid_structures == null:
+		_hub_mid_structures = ProductionArtScript.texture_from_svg(HUB_MID_STRUCTURES_PATH)
+	if _hub_foreground == null:
+		_hub_foreground = ProductionArtScript.texture_from_svg(HUB_FOREGROUND_PATH)
 
-func _draw_distant_outskirts() -> void:
-	for building in [
-		Rect2(0, 372, 116, 278),
-		Rect2(132, 438, 96, 212),
-		Rect2(252, 330, 140, 320),
-		Rect2(418, 414, 108, 236),
-		Rect2(548, 350, 172, 300),
-	]:
-		draw_rect(building, Color("4d5f58"))
-	for building in [
-		Rect2(18, 500, 145, 150),
-		Rect2(188, 532, 118, 118),
-		Rect2(338, 476, 155, 174),
-		Rect2(526, 512, 128, 138),
-	]:
-		draw_rect(building, Color("42514b"))
-	draw_line(Vector2(610, 648), Vector2(610, 410), Color("34413c"), 9.0)
-	draw_line(Vector2(568, 450), Vector2(653, 450), Color("34413c"), 7.0)
+func _draw_fallback_backdrop() -> void:
+	draw_rect(Rect2(0, 0, 720, 650), Color("5d6f77"))
+	draw_rect(Rect2(0, 360, 720, 290), Color("9d6c58"))
+	draw_circle(Vector2(588, 214), 72.0, Color("efb25f", 0.7))
+	draw_rect(Rect2(0, 650, 720, 630), Color("242829"))
+
+func _draw_production_backdrop() -> void:
+	draw_texture_rect(_hub_sky_far, Rect2(0, 0, 720, 1280), false)
+	draw_texture_rect(_hub_mid_structures, Rect2(0, 0, 720, 1280), false)
+
+func _draw_production_foreground() -> void:
+	# Low near-camera framing only. Dynamic platform, settlement upgrades and
+	# navigation remain separate so progression never gets baked into the art.
+	if _hub_foreground != null:
+		draw_texture_rect(_hub_foreground, Rect2(0, 0, 720, 1280), false)
+
 
 func _draw_perimeter() -> void:
 	# Corrugated fence with mismatched panels and the diagonal knock-mark motif.
@@ -146,11 +162,13 @@ func _draw_workshop() -> void:
 	draw_rect(Rect2(72, 708, 250, 148), Color("26312d"))
 	draw_polygon(
 		PackedVector2Array([Vector2(54, 712), Vector2(197, 644), Vector2(344, 712)]),
-		PackedColorArray([Color("655d49")])
+		PackedColorArray([Color("52656a")])
 	)
 	draw_line(Vector2(86, 710), Vector2(86, 862), Color("1b231f"), 10.0)
 	draw_line(Vector2(307, 710), Vector2(307, 862), Color("1b231f"), 10.0)
-	draw_rect(Rect2(104, 776, 188, 18), Color("4a544e"))
+	draw_rect(Rect2(104, 776, 188, 18), Color("6b5848"))
+	draw_circle(Vector2(198, 742), 46.0, Color("f0a14a", 0.10))
+	draw_circle(Vector2(198, 742), 8.0, Color("f0a14a", 0.78))
 	for x in [122.0, 168.0, 214.0, 260.0]:
 		draw_line(Vector2(x, 782), Vector2(x + 18, 756), Color("d4aa55", 0.45), 4.0)
 
@@ -172,17 +190,15 @@ func _draw_active_platform() -> void:
 		_draw_compact()
 
 func _draw_compact() -> void:
-	var shell := Color("70513f")
-	draw_rect(Rect2(402, 782, 226, 72), Color("171c1b"))
-	draw_rect(Rect2(408, 788, 214, 58), shell)
-	draw_polygon(
-		PackedVector2Array([Vector2(448, 788), Vector2(470, 744), Vector2(558, 744), Vector2(586, 788)]),
-		PackedColorArray([shell.lightened(0.05)])
-	)
-	draw_rect(Rect2(479, 751, 66, 28), Color("445a55"))
-	_draw_hub_wheels(454, 584, 858)
-	draw_line(Vector2(528, 792), Vector2(548, 770), Color("d4aa55"), 6.0)
-	draw_line(Vector2(548, 792), Vector2(568, 770), Color("a45f42"), 6.0)
+	# First production vehicle asset: same source is reused in Hub, Garage and Battle.
+	# Collision/stats remain owned by platform resources, not this presentation.
+	if _compact_texture != null:
+		draw_texture_rect(_compact_texture, Rect2(365, 758, 290, 145), false)
+	else:
+		draw_rect(Rect2(402, 782, 226, 72), Color("171c1b"))
+		draw_rect(Rect2(408, 788, 214, 58), Color("70513f"))
+		_draw_hub_wheels(454, 584, 858)
+
 
 func _draw_pickup() -> void:
 	var shell := Color("4d655d")

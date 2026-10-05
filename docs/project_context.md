@@ -1,6 +1,6 @@
 # Fort Knocks — Canonical Project Context
 
-Last consolidated: 2026-09-30.
+Last consolidated: 2026-10-03.
 
 This file is the compact durable context future AI sessions should read before reconstructing the project from chat history.
 
@@ -16,6 +16,19 @@ The player starts vulnerable. Their home settlement is jokingly called **Fort Kn
 
 The title also supports the physical combat fantasy of knocking enemies out of cover and breaking defensive positions. It is a working commercial title, not assumed legally cleared.
 
+## Locked primary visual direction
+
+The primary visual target was explicitly locked on **2026-10-03**.
+
+Canonical reference:
+- `docs/design/visual_reference.md`
+- `docs/design/reference/fort_knocks_primary_visual_reference.svg`
+- current implementation sequencing: `docs/design/visual_production_pass_1.md`
+
+The target is a **high-quality stylised modern post-collapse salvage-war game** with painterly/cel-shaded 2D art, cinematic warm lighting, strong silhouettes, layered 2.5D depth and polished dark industrial UI. The approved gameplay foreground treatment uses stronger dark near-camera debris/cover framing to create depth while keeping the projectile corridor clear.
+
+The concept reference controls presentation, not feature scope. Incidental currencies, weapon types, wave counters, map nodes or other invented UI content shown in concept imagery are not canonical unless separately defined in game-design documents.
+
 ## Non-negotiable product direction
 
 These are locked unless the user explicitly changes them:
@@ -30,6 +43,7 @@ These are locked unless the user explicitly changes them:
 - Destructible authored cover and environmental interactions.
 - Combat-platform progression from poor civilian protection toward restored heavy hardware.
 - Stylised post-collapse salvage warfare.
+- Visual implementation must stay aligned with the locked 2026-10-03 primary reference unless the project owner explicitly changes direction.
 - No water, raft, maritime, or nautical theme.
 - No requirement for zombies; human conflict, scarcity, engineering, and old-world machinery are sufficient.
 - One primary general progression currency initially: **Salvage**.

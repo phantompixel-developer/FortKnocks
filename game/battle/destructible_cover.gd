@@ -1,6 +1,11 @@
 class_name DestructibleCover
 extends StaticBody2D
 
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
+
+var _compact_texture: Texture2D
+
 signal health_changed(current: int, maximum: int)
 signal destroyed
 
@@ -107,6 +112,12 @@ func _draw() -> void:
 		_draw_rubble()
 		return
 
+	# Player starting platform is the first authored production-art proof.
+	# Enemy/default cover remains on the existing procedural presentation until
+	# its own faction/platform art is explicitly authored.
+	if _visual_profile == 0 and facing > 0 and _draw_production_compact(stage):
+		return
+
 	var darkening := float(stage) * 0.11
 	var shell := body_color.darkened(darkening)
 	var outline := Color("181c1a")
@@ -163,6 +174,44 @@ func _draw() -> void:
 			]),
 			PackedColorArray([Color("2d322f")])
 		)
+
+
+func _draw_production_compact(stage: int) -> bool:
+	if _compact_texture == null:
+		_compact_texture = ProductionArtScript.texture_from_svg(COMPACT_TEXTURE_PATH)
+	if _compact_texture == null:
+		return false
+
+	var target_width := _body_size.x + 40.0
+	var target_height := target_width * 0.5
+	var tint := Color.WHITE.darkened(float(stage) * 0.08)
+	var target := Rect2(
+		-target_width * 0.5,
+		-target_height * 0.72,
+		target_width,
+		target_height
+	)
+	draw_texture_rect(_compact_texture, target, false, tint)
+
+	# Damage remains authored by gameplay state instead of requiring separate
+	# sprite files for every HP value.
+	if stage >= 1:
+		draw_line(Vector2(-82, -44), Vector2(-44, -10), Color("1b2224"), 7.0)
+		draw_line(Vector2(38, -62), Vector2(20, -34), Color("d7c6a4", 0.72), 3.0)
+		draw_line(Vector2(-94, -12), Vector2(-58, -4), Color("b65c36", 0.76), 5.0)
+	if stage >= 2:
+		draw_polygon(
+			PackedVector2Array([
+				Vector2(50, -48),
+				Vector2(108, -43),
+				Vector2(101, -10),
+				Vector2(45, -16),
+			]),
+			PackedColorArray([Color("111820", 0.92)])
+		)
+		draw_line(Vector2(74, -58), Vector2(105, -18), Color("090d11"), 8.0)
+		draw_line(Vector2(-112, -38), Vector2(-82, 4), Color("090d11"), 7.0)
+	return true
 
 func _draw_compact_cabin(shell: Color, outline: Color, body_top: float) -> void:
 	draw_polygon(

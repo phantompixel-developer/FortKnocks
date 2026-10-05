@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_garage"]
 [ext_resource type="Script" path="res://game/presentation/screen_backdrop.gd" id="2_backdrop"]
+[ext_resource type="Script" path="res://game/presentation/platform_showcase.gd" id="3_showcase"]
 
 [node name="Garage" type="Control"]
 layout_mode = 3
@@ -56,29 +57,38 @@ horizontal_alignment = 1
 [node name="CurrentCard" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 92.0
-offset_top = 246.0
+offset_top = 232.0
 offset_right = 628.0
-offset_bottom = 434.0
+offset_bottom = 540.0
 color = Color(0.10, 0.115, 0.105, 0.94)
 
 [node name="Header" type="Label" parent="CurrentCard"]
 layout_mode = 0
 offset_left = 24.0
-offset_top = 20.0
+offset_top = 14.0
 offset_right = 512.0
-offset_bottom = 52.0
+offset_bottom = 46.0
 theme_override_font_sizes/font_size = 18
 text = "COMBAT PLATFORM"
 horizontal_alignment = 1
 
+[node name="PlatformShowcase" type="Control" parent="CurrentCard"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 48.0
+offset_right = 512.0
+offset_bottom = 238.0
+mouse_filter = 2
+script = ExtResource("3_showcase")
+
 [node name="CurrentLabel" type="Label" parent="CurrentCard"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 72.0
+offset_top = 240.0
 offset_right = 508.0
-offset_bottom = 146.0
-theme_override_font_sizes/font_size = 24
-text = "ACTIVE\nRUN-DOWN COMPACT"
+offset_bottom = 292.0
+theme_override_font_sizes/font_size = 20
+text = "ACTIVE • RUN-DOWN COMPACT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -96,9 +106,9 @@ horizontal_alignment = 1
 [node name="ProgressionCard" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 72.0
-offset_top = 470.0
+offset_top = 562.0
 offset_right = 648.0
-offset_bottom = 1008.0
+offset_bottom = 1016.0
 color = Color(0.10, 0.115, 0.105, 0.9)
 
 [node name="Title" type="Label" parent="ProgressionCard"]
@@ -114,18 +124,18 @@ horizontal_alignment = 1
 [node name="PlatformList" type="VBoxContainer" parent="ProgressionCard"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 76.0
+offset_top = 62.0
 offset_right = 548.0
-offset_bottom = 428.0
+offset_bottom = 404.0
 theme_override_constants/separation = 8
 
 [node name="DetailLabel" type="Label" parent="ProgressionCard"]
 layout_mode = 0
 offset_left = 30.0
-offset_top = 442.0
+offset_top = 408.0
 offset_right = 546.0
-offset_bottom = 510.0
-theme_override_font_sizes/font_size = 14
+offset_bottom = 446.0
+theme_override_font_sizes/font_size = 13
 text = "Platform trade-off information."
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -6,11 +6,13 @@ This repository is an AI-first Godot 4.7.x mobile game project.
 1. `docs/README.md`
 2. `docs/project_context.md`
 3. `docs/design/game_design.md`
-4. The design document relevant to the task.
-5. `docs/architecture/architecture.md`
-6. The architecture document relevant to the task.
-7. `docs/design/implementation_roadmap.md` when scope/sequencing is relevant.
-8. `docs/engineering/definition_of_done.md`
+4. `docs/design/visual_reference.md` for any visual, UI, environment, character, platform or presentation work.
+5. `docs/design/visual_production_pass_1.md` when implementing the current production-art migration.
+6. The design document relevant to the task.
+7. `docs/architecture/architecture.md`
+8. The architecture document relevant to the task.
+9. `docs/design/implementation_roadmap.md` when scope/sequencing is relevant.
+10. `docs/engineering/definition_of_done.md`
 
 For exact implementation rules, canonical repository documentation is more reliable than chat/model memory. If a durable decision changes, update the owning canonical document in the same branch.
 
@@ -36,6 +38,7 @@ For exact implementation rules, canonical repository documentation is more relia
 - Do not add plugins, SDKs, backends, analytics, accounts, multiplayer, monetisation, or cloud services without explicit approval.
 - Do not add speculative systems outside the requested milestone.
 - Keep placeholder art clearly separated from production art.
+- The locked primary visual reference is `docs/design/visual_reference.md`. Do not silently introduce a conflicting art style. Concept-board details are visual guidance only and must not create unapproved gameplay systems.
 - Do not skip milestone gates in `docs/design/implementation_roadmap.md`.
 
 ## Validation

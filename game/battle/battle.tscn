@@ -52,6 +52,7 @@ script = ExtResource("3_combatant")
 display_name = "You"
 facing = 1
 accent_color = Color(0.77, 0.67, 0.43, 1)
+use_production_survivor = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
 position = Vector2(0, -59)

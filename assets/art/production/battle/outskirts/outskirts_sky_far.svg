@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#496b80"/><stop offset=".34" stop-color="#6f7880"/><stop offset=".64" stop-color="#a87562"/><stop offset="1" stop-color="#c7744a"/></linearGradient>
+ <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe1a0"/><stop offset=".55" stop-color="#f1b45f" stop-opacity=".85"/><stop offset="1" stop-color="#e18047" stop-opacity="0"/></radialGradient>
+ <linearGradient id="haze" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d38b5d" stop-opacity=".08"/><stop offset=".52" stop-color="#efd0a7" stop-opacity=".32"/><stop offset="1" stop-color="#d47d4e" stop-opacity=".08"/></linearGradient>
+</defs>
+<rect width="2160" height="930" fill="url(#sky)"/>
+<circle cx="1775" cy="205" r="185" fill="url(#sun)"/><circle cx="1775" cy="205" r="54" fill="#ffd78d" opacity=".86"/>
+<path d="M0 345 C330 300 545 387 820 350 S1390 315 1680 365 S2010 320 2160 340 L2160 500 L0 500Z" fill="#efd5ba" opacity=".07"/>
+<path d="M0 482 C310 430 600 500 920 462 S1450 445 1760 500 S2030 460 2160 475 L2160 620 L0 620Z" fill="url(#haze)"/>
+<!-- distant urban/industrial silhouette -->
+<g fill="#52636a" opacity=".86">
+ <path d="M0 620 L0 510 118 510 118 465 230 465 230 610 318 610 318 430 398 430 398 620Z"/>
+ <path d="M430 620 L430 545 530 545 530 490 640 490 640 570 720 570 720 405 815 405 815 620Z"/>
+ <path d="M855 620 L855 520 1000 520 1000 452 1095 452 1095 590 1180 590 1180 500 1302 500 1302 620Z"/>
+ <path d="M1340 620 L1340 468 1425 468 1425 545 1540 545 1540 425 1632 425 1632 620Z"/>
+ <path d="M1680 620 L1680 515 1818 515 1818 448 1930 448 1930 560 2025 560 2025 480 2160 480 2160 620Z"/>
+</g>
+<g fill="#405159" opacity=".86">
+ <rect x="70" y="586" width="210" height="160"/><rect x="350" y="560" width="180" height="186"/><rect x="620" y="585" width="250" height="161"/>
+ <rect x="935" y="548" width="220" height="198"/><rect x="1235" y="575" width="180" height="171"/><rect x="1510" y="545" width="240" height="201"/><rect x="1840" y="578" width="260" height="168"/>
+</g>
+<!-- chimneys/tanks -->
+<g fill="#394950" opacity=".78">
+ <rect x="575" y="370" width="24" height="250"/><ellipse cx="587" cy="370" rx="28" ry="10"/>
+ <rect x="1460" y="385" width="26" height="235"/><ellipse cx="1473" cy="385" rx="30" ry="10"/>
+ <rect x="1985" y="402" width="22" height="218"/>
+</g>
+<path d="M0 730 C380 685 750 725 1080 692 S1800 710 2160 668 L2160 930 L0 930Z" fill="#35464d"/>
+</svg>
