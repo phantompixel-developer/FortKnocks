@@ -10,4 +10,10 @@
  <circle cx="1626" cy="754" r="25" fill="#101619"/><circle cx="1752" cy="754" r="25" fill="#101619"/>
  <rect x="1640" y="683" width="78" height="38" fill="#394d4c"/>
 </g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+ <path d="M1062 608 H1492 M1584 718 L1626 676 H1746" stroke="#d09a63" stroke-width="3.5" opacity=".22"/>
+ <path d="M1062 754 H1494 M1580 746 H1792" stroke="#22352f" stroke-width="6" opacity=".50"/>
+ <path d="M1090 624 l16 -4 M1328 624 l16 -4 M1460 620 l14 -3 M1642 688 l14 -3 M1760 716 l12 -3" stroke="#a8583f" stroke-width="3" opacity=".47"/>
+</g>
 </svg>
