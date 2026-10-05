@@ -18,19 +18,26 @@ func configure(platform_id: String, module_id := "") -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var center := size * 0.5
-	draw_ellipse_shadow(center + Vector2(0, 54), Vector2(minf(size.x * 0.38, 205.0), 22.0))
+	var center := Vector2(size.x * 0.5, size.y * 0.48)
 
 	var texture := _texture_for_platform(_platform_id)
 	if texture != null:
-		var target_width := minf(size.x - 38.0, 440.0)
-		var aspect := 0.50 if _platform_id == "run_down_compact" else 0.47
+		# The reference treats the selected vehicle as the hero of the room.
+		# Keep only a narrow environmental margin around it instead of presenting
+		# the platform as a small thumbnail inside a large empty bay.
+		var target_width := minf(size.x - 24.0, 526.0)
+		var source_size := texture.get_size()
+		var aspect := source_size.y / maxf(source_size.x, 1.0)
 		var target_height := target_width * aspect
 		var target := Rect2(
 			center.x - target_width * 0.5,
-			center.y - target_height * 0.52,
+			center.y - target_height * 0.50,
 			target_width,
 			target_height
+		)
+		draw_ellipse_shadow(
+			Vector2(center.x, target.position.y + target.size.y * 0.80),
+			Vector2(minf(target_width * 0.43, 230.0), 26.0)
 		)
 		draw_texture_rect(texture, target, false)
 		_draw_module_indicator(center, target_width, target_height)
