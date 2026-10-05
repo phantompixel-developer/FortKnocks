@@ -4,6 +4,11 @@ extends Resource
 @export var id := "mission"
 @export var display_name := "Encounter"
 @export var test_focus := "BASELINE"
+
+@export_group("Player-facing presentation")
+@export_enum("outskirts", "suburbs") var region_id: String = "outskirts"
+@export var location_tag := "ROADSIDE"
+@export var tactical_warning := ""
 @export_multiline var briefing := ""
 @export var objective_text := "INCAPACITATE ENEMY"
 @export_enum("incapacitate_enemy", "disable_relay", "protect_salvage") var objective_mode: String = "incapacitate_enemy"

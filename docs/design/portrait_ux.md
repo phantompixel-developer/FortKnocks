@@ -88,13 +88,38 @@ The off-screen enemy cue is intentionally approximate (direction plus rounded di
 
 Avoid covering the central play space with controls. Player-selection controls should prefer edge/sky regions over the road and likely projectile path.
 
-## Encounter brief and result report
-Encounter Proof uses two development-facing cards:
+## Run brief, Encounter Proof brief and results
 
-- **Mission brief** — briefly shows encounter name, test focus, briefing, and objective before the enemy preview.
-- **Encounter report** — on victory/defeat shows player shot count, direct hits, cover hits, environment hits, and BOLT/SLUG/SHOCK usage before Restart or Choose Encounter.
+Campaign and development proof presentation are now deliberately separate.
 
-These surfaces exist to evaluate whether different greybox layouts actually change player decisions. They are not the final campaign mission screen or progression-results design.
+### Campaign Run Brief
+Before a campaign battle begins, the player gets a player-controlled Run Brief showing:
+- mission name,
+- real region and location tag,
+- readable mission briefing,
+- one concise tactical field note,
+- current platform / field-rack / module summary,
+- objective,
+- an explicit **Begin Run** action.
+
+Campaign briefing copy is never placed on a short timer.
+
+### Campaign Debrief
+Campaign results prioritize:
+1. route secured / run failed,
+2. objective outcome,
+3. Salvage recovered,
+4. newly opened route when applicable,
+5. compact performance data as secondary information.
+
+### Encounter Proof
+Encounter Proof retains its development-facing diagnostic brief/report:
+- encounter test focus,
+- shot/direct/cover/environment metrics,
+- BOLT/SLUG/SHOCK usage,
+- comparative tactical takeaway.
+
+Those proof metrics do not define the campaign result hierarchy.
 
 ## Enemy inspection
 Provide a player-controlled **Inspect Enemy** action during the player's aiming phase. It pans to the opponent and stays there until the player explicitly taps **Return to Shooter**. Do not auto-return on a short timer: the player must have enough time to read enemy position, cover, elevation, and hazards. The player's selected power, angle, and trajectory state must remain intact; inspection is information gathering, not an aim reset.

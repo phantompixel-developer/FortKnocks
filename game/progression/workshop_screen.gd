@@ -8,6 +8,7 @@ signal specialist_weapon_requested(weapon_id: String)
 const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var specialist_label: Label = $LoadoutCard/SpecialistLabel
@@ -27,9 +28,18 @@ var _snapshot: Dictionary = {}
 func _ready() -> void:
 	ThemeScript.apply(self)
 	ThemeScript.style_card($TopBar)
-	ThemeScript.style_card($LoadoutCard, 1)
-	ThemeScript.style_card($UtilityCard)
-	$Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	$LoadoutCard.color = Color(0.02, 0.025, 0.023, 0.08)
+	$UtilityCard.color = Color(0.02, 0.025, 0.023, 0.08)
+	ThemeScript.style_display_label($Title)
+	ThemeScript.style_section_label($LoadoutCard/Header)
+	ThemeScript.style_meta_label($LoadoutCard/CoreLabel)
+	ThemeScript.style_section_label($LoadoutCard/SpecialistLabel, true)
+	ThemeScript.style_section_label($UtilityCard/Title)
+	ThemeScript.style_meta_label($UtilityCard/PlatformLabel, true)
+	ThemeScript.style_meta_label($UtilityCard/Note)
+	ThemeScript.style_secondary_button(back_button)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	call_deferred("_apply_responsive_layout")
 	back_button.pressed.connect(func() -> void:
 		_play_ui(&"ui_back")
 		back_requested.emit()
@@ -149,3 +159,12 @@ func _play_ui(cue: StringName) -> void:
 	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
 	if audio != null and audio.has_method("play_cue"):
 		audio.call("play_cue", cue)
+
+
+func _apply_responsive_layout() -> void:
+	PortraitLayoutScript.apply(
+		self,
+		[$Title, $TopBar],
+		[$NoticeLabel, $LoadoutCard, $UtilityCard],
+		[$BackButton]
+	)

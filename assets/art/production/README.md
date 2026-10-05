@@ -199,3 +199,34 @@ Before mobile release/export, the preferred final packaging step remains rasteri
 - **Created:** 2026-10-05
 - **Origin:** original repository-authored vector artwork.
 - **Gameplay authority:** none; existing collision, HP, collapse and discharge logic remains authoritative.
+
+
+## Current-game visual remediation assets — 2026-10-05
+
+### Outskirts mission landmark parity
+Authored presentation-only landmark overlays now exist for all six Outskirts missions:
+- `battle/outskirts/roadblock_trial_landmark.svg`
+- `battle/outskirts/high_ground_trial_landmark.svg`
+- `battle/outskirts/scrap_gate_trial_landmark.svg`
+- `battle/outskirts/broken_span_landmark.svg`
+- `battle/outskirts/depot_line_landmark.svg`
+- `battle/outskirts/outskirts_checkpoint_landmark.svg`
+
+They are original Fort Knocks artwork with no external source/licence dependency and carry no collision.
+
+### Battle HUD surfaces
+- `shared/ui/panel_hud_compact.svg`
+- `shared/ui/panel_tactical.svg`
+
+These provide compact and tactical UI hierarchy while text/state remains native Godot UI.
+
+### Reference-finish pilot
+The following existing masters received a non-destructive rendering-finish pass:
+- `vehicles/run_down_compact.svg`
+- `characters/fort_knocks_survivor.svg`
+- `hub/hub_mid_structures.svg`
+- `battle/outskirts/outskirts_midground.svg`
+- `shared/ui/panel_industrial.svg`
+- `shared/ui/button_industrial.svg`
+
+All remain original repository-authored assets. The finish recipe is documented in `docs/design/reference_finish_pilot.md`.

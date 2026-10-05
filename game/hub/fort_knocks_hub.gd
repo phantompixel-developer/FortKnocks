@@ -6,6 +6,7 @@ signal garage_requested
 signal workshop_requested
 
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
 @onready var hub_visual: FortKnocksHubVisual = $Visual
 @onready var subtitle_label: Label = $Subtitle
@@ -21,7 +22,12 @@ func _ready() -> void:
 	ThemeScript.apply(self)
 	ThemeScript.style_card($TopBar)
 	ThemeScript.style_card($StatusCard, 1)
-	$Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	ThemeScript.style_display_label($Title)
+	ThemeScript.style_meta_label($Subtitle)
+	ThemeScript.style_section_label($StatusCard/PlatformLabel)
+	ThemeScript.style_primary_button(command_board_button)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	call_deferred("_apply_responsive_layout")
 	command_board_button.pressed.connect(func() -> void: command_board_requested.emit())
 	garage_button.pressed.connect(func() -> void: garage_requested.emit())
 	workshop_button.pressed.connect(func() -> void: workshop_requested.emit())
@@ -72,3 +78,12 @@ func _progress_subtitle(completed_count: int) -> String:
 	if completed_count >= 2:
 		return "OUTSKIRTS CAMP • TAKING SHAPE"
 	return "OUTSKIRTS CAMP • HOLDING TOGETHER"
+
+
+func _apply_responsive_layout() -> void:
+	PortraitLayoutScript.apply(
+		self,
+		[$Title, $Subtitle, $TopBar],
+		[$StatusCard, $NoticeLabel],
+		[$Actions]
+	)

@@ -5,12 +5,14 @@ signal back_requested
 signal platform_requested(platform_id: String)
 
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
+const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var current_label: Label = $CurrentCard/CurrentLabel
 @onready var platform_showcase: PlatformShowcase = $CurrentCard/PlatformShowcase
-@onready var platform_list: VBoxContainer = $ProgressionCard/PlatformList
+@onready var platform_list: GridContainer = $ProgressionCard/PlatformList
 @onready var detail_label: Label = $ProgressionCard/DetailLabel
 @onready var notice_label: Label = $NoticeLabel
 @onready var back_button: Button = $BackButton
@@ -20,9 +22,16 @@ var _snapshot: Dictionary = {}
 func _ready() -> void:
 	ThemeScript.apply(self)
 	ThemeScript.style_card($TopBar)
-	ThemeScript.style_card($CurrentCard, 1)
+	$CurrentCard.color = Color(0.02, 0.025, 0.023, 0.12)
 	ThemeScript.style_card($ProgressionCard)
-	$Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	ThemeScript.style_display_label($Title)
+	ThemeScript.style_section_label($CurrentCard/Header)
+	ThemeScript.style_section_label($CurrentCard/CurrentLabel, true)
+	ThemeScript.style_section_label($ProgressionCard/Title)
+	ThemeScript.style_meta_label(detail_label)
+	ThemeScript.style_secondary_button(back_button)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	call_deferred("_apply_responsive_layout")
 	back_button.pressed.connect(func() -> void:
 		_play_ui(&"ui_back")
 		back_requested.emit()
@@ -37,6 +46,17 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	var module_id := str(equipped_modules.get(active_id, ""))
 	current_label.text = "ACTIVE • %s" % _platform_display_name(active_id)
 	platform_showcase.configure(active_id, module_id)
+	var active_definition := PlatformCatalogScript.by_id(active_id)
+	if active_definition != null:
+		var effective_cover := active_definition.cover_health
+		var active_module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
+		if active_module != null:
+			effective_cover += active_module.cover_health_bonus
+		detail_label.text = "%s • %d COVER%s" % [
+			active_definition.tactical_summary,
+			effective_cover,
+			(" • %s" % active_module.display_name.to_upper()) if active_module != null else "",
+		]
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
 	_rebuild_platform_list()
@@ -75,19 +95,28 @@ func _rebuild_platform_list() -> void:
 			action = "NEED %d SALVAGE" % definition.purchase_cost
 
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 82.0)
-		button.add_theme_font_size_override("font_size", 14)
+		button.custom_minimum_size = Vector2(0.0, 86.0)
+		button.add_theme_font_size_override("font_size", 12)
 		button.disabled = not enabled
 		button.text = "%s\n%s\n%s" % [
 			definition.display_name.to_upper(),
-			definition.tactical_summary,
+			_platform_selector_summary(definition.id),
 			action,
 		]
 		ThemeScript.mark_active(button, is_active)
 		button.pressed.connect(_request_platform.bind(definition.id))
 		platform_list.add_child(button)
 
-	detail_label.text = "Protection is physical: stronger platforms last longer, but a wider silhouette also occupies more of the shallow firing line."
+func _platform_selector_summary(platform_id: String) -> String:
+	match platform_id:
+		"old_sedan":
+			return "MORE COVER • WIDER"
+		"pickup":
+			return "UTILITY SLOT"
+		"improvised_technical":
+			return "SUPPORT SLOT • HEAVY"
+		_:
+			return "LIGHT • NARROW"
 
 func _request_platform(platform_id: String) -> void:
 	platform_requested.emit(platform_id)
@@ -100,3 +129,12 @@ func _play_ui(cue: StringName) -> void:
 	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
 	if audio != null and audio.has_method("play_cue"):
 		audio.call("play_cue", cue)
+
+
+func _apply_responsive_layout() -> void:
+	PortraitLayoutScript.apply(
+		self,
+		[$Title, $TopBar],
+		[$CurrentCard, $NoticeLabel, $ProgressionCard],
+		[$BackButton]
+	)

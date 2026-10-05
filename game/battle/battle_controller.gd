@@ -26,6 +26,7 @@ const SignalRelayScript := preload("res://game/battle/signal_relay.gd")
 const SalvageLoadScript := preload("res://game/battle/salvage_load.gd")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
@@ -49,7 +50,9 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var aim_guide: AimGuide = $AimGuide
 
 @onready var turn_label: Label = $HUD/Root/TurnLabel
+@onready var player_status_plate: ColorRect = $HUD/Root/PlayerStatusPlate
 @onready var health_label: Label = $HUD/Root/HealthLabel
+@onready var enemy_status_plate: ColorRect = $HUD/Root/EnemyStatusPlate
 @onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
 @onready var feedback_label: Label = $HUD/Root/FeedbackLabel
 @onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
@@ -76,6 +79,9 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var mission_brief_focus: Label = $HUD/Root/MissionBriefCard/Focus
 @onready var mission_brief_text: Label = $HUD/Root/MissionBriefCard/Briefing
 @onready var mission_brief_objective: Label = $HUD/Root/MissionBriefCard/Objective
+@onready var mission_brief_warning: Label = $HUD/Root/MissionBriefCard/TacticalWarning
+@onready var mission_brief_loadout: Label = $HUD/Root/MissionBriefCard/Loadout
+@onready var begin_run_button: Button = $HUD/Root/MissionBriefCard/BeginRunButton
 @onready var encounter_picker: ColorRect = $HUD/Root/EncounterPicker
 @onready var picker_briefing_label: Label = $HUD/Root/EncounterPicker/BriefingLabel
 @onready var mission_button_list: VBoxContainer = $HUD/Root/EncounterPicker/MissionButtons
@@ -109,6 +115,7 @@ var _player_module: PlatformModuleDefinition
 var _campaign_weapon_ids: Array[String] = []
 var _completion_emitted := false
 var _progression_reward := 0
+var _progression_processed := false
 
 var _player_shots_fired := 0
 var _player_direct_hits := 0
@@ -148,16 +155,37 @@ func prepare_for_campaign(
 
 func set_progression_reward(amount: int) -> void:
 	_progression_reward = maxi(0, amount)
+	_progression_processed = true
 	if result_card != null and result_card.visible:
 		_update_result_card()
 
 func _ready() -> void:
 	ThemeScript.apply($HUD/Root)
-	for card in [weapon_tray, weapon_info_card, control_deck, target_card, mission_brief_card, encounter_picker, result_card]:
-		ThemeScript.style_card(card)
+	ThemeScript.style_hud_card($HUD/Root/PlayerStatusPlate)
+	ThemeScript.style_hud_card($HUD/Root/EnemyStatusPlate, true)
+	for card in [weapon_tray, weapon_info_card, control_deck]:
+		ThemeScript.style_hud_card(card)
+	ThemeScript.style_tactical_card(target_card)
 	ThemeScript.style_card(mission_brief_card, 1)
+	ThemeScript.style_card(encounter_picker)
 	ThemeScript.style_card(result_card, 1)
-	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	ThemeScript.style_primary_button(begin_run_button)
+	ThemeScript.style_secondary_button(inspect_button)
+	ThemeScript.style_display_label(turn_label)
+	ThemeScript.style_section_label(health_label, true)
+	enemy_health_label.add_theme_color_override("font_color", ThemeScript.RUST)
+	ThemeScript.style_meta_label(enemy_locator_label, true)
+	ThemeScript.style_meta_label(hint_label)
+	ThemeScript.style_meta_label($HUD/Root/WeaponTray/Title)
+	ThemeScript.style_section_label(weapon_name_label, true)
+	ThemeScript.style_meta_label(weapon_role_label)
+	ThemeScript.style_section_label(power_label)
+	ThemeScript.style_section_label(angle_label)
+	ThemeScript.style_meta_label(last_shot_label)
+	ThemeScript.style_section_label(target_title_label)
+	target_title_label.add_theme_color_override("font_color", ThemeScript.COLD)
+	ThemeScript.style_display_label(mission_brief_title)
+	ThemeScript.style_display_label(result_title_label)
 	_selected_weapon = ScrapBolt as WeaponDefinition
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
@@ -170,9 +198,14 @@ func _ready() -> void:
 	shock_capsule_button.pressed.connect(func() -> void: _select_weapon(ShockCapsule as WeaponDefinition))
 	restart_button.pressed.connect(_restart)
 	change_encounter_button.pressed.connect(_change_encounter)
+	begin_run_button.pressed.connect(_confirm_run_brief)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	call_deferred("_apply_responsive_layout")
 
 	world.visible = false
+	player_status_plate.visible = false
 	health_label.visible = false
+	enemy_status_plate.visible = false
 	enemy_health_label.visible = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
@@ -199,9 +232,13 @@ func _ready() -> void:
 		encounter_picker.visible = false
 		restart_button.text = "REMATCH"
 		change_encounter_button.text = "FORT KNOCKS"
+		ThemeScript.style_secondary_button(restart_button)
+		ThemeScript.style_primary_button(change_encounter_button)
 		call_deferred("_begin_mission", _prepared_mission)
 		return
 
+	ThemeScript.style_primary_button(restart_button)
+	ThemeScript.style_secondary_button(change_encounter_button)
 	_show_encounter_picker()
 	if get_tree().root.has_meta(PENDING_MISSION_META):
 		var pending_id := str(get_tree().root.get_meta(PENDING_MISSION_META))
@@ -217,7 +254,9 @@ func _show_encounter_picker() -> void:
 	result_card.visible = false
 	restart_button.visible = false
 	change_encounter_button.visible = false
+	player_status_plate.visible = false
 	health_label.visible = false
+	enemy_status_plate.visible = false
 	enemy_health_label.visible = false
 	turn_label.text = "ENCOUNTER PROOF"
 	picker_briefing_label.text = "Choose one of %d greybox battle problems. Each uses the same weapons and combat rules." % _missions.size()
@@ -256,6 +295,7 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	_current_mission = definition
 	_completion_emitted = false
 	_progression_reward = 0
+	_progression_processed = false
 	_reset_encounter_metrics()
 	_configure_mission(definition)
 	encounter_picker.visible = false
@@ -263,12 +303,19 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	restart_button.visible = false
 	change_encounter_button.visible = false
 	world.visible = true
+	player_status_plate.visible = true
 	health_label.visible = true
+	enemy_status_plate.visible = true
 	enemy_health_label.visible = true
 	turn_label.text = definition.display_name.to_upper()
-	hint_label.text = definition.briefing
+	hint_label.text = "Review the run brief" if _campaign_managed else definition.briefing
 	_update_hud()
 	_show_mission_brief(definition)
+
+	if _campaign_managed:
+		# Campaign brief is player-controlled. Never put narrative/objective copy
+		# on a timer; the run starts only when the player explicitly commits.
+		return
 
 	await get_tree().process_frame
 	await get_tree().create_timer(1.15).timeout
@@ -1159,6 +1206,7 @@ func _check_game_over() -> bool:
 	if victory:
 		turn_label.text = "YOU WIN"
 		result_title_label.text = "VICTORY"
+		result_title_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 		if _current_mission != null and _current_mission.objective_mode == "disable_relay":
 			hint_label.text = "Signal relay disabled — route opened"
 			if _signal_relay != null and is_instance_valid(_signal_relay):
@@ -1177,6 +1225,7 @@ func _check_game_over() -> bool:
 	else:
 		turn_label.text = "DEFEAT"
 		result_title_label.text = "DEFEAT"
+		result_title_label.add_theme_color_override("font_color", ThemeScript.SIGNAL)
 		if _objective_failed():
 			hint_label.text = "Protected Salvage was destroyed"
 			if _salvage_load != null and is_instance_valid(_salvage_load):
@@ -1215,32 +1264,67 @@ func _reset_encounter_metrics() -> void:
 
 func _show_mission_brief(definition: MissionDefinition) -> void:
 	mission_brief_title.text = definition.display_name.to_upper()
-	mission_brief_focus.text = definition.test_focus
-	var briefing := definition.briefing
-	if _campaign_managed and _player_platform != null:
-		var effective_cover := _player_platform.cover_health
-		if _player_module != null:
-			effective_cover += _player_module.cover_health_bonus
-		briefing += "\n\nPLATFORM: %s • %d COVER" % [
-			_player_platform.display_name.to_upper(),
-			effective_cover,
-		]
-		if _player_module != null:
-			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
-			if _player_module.crew_knockback_multiplier < 1.0:
-				var reduction_percent: int = int(round((1.0 - _player_module.crew_knockback_multiplier) * 100.0))
-				briefing += " • %d%% LESS DISPLACEMENT" % reduction_percent
-		if _campaign_weapon_ids.has("heavy_slug") and _campaign_weapon_ids.has("shock_capsule"):
-			briefing += "\nFIELD RACK: BOLT + SLUG + SHOCK"
-		elif _campaign_weapon_ids.size() >= 2:
-			var specialist: String = "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
-			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
-	mission_brief_text.text = briefing
+	mission_brief_text.text = definition.briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
+
+	if _campaign_managed:
+		mission_brief_focus.text = "%s • %s" % [
+			_region_display_name(definition.region_id),
+			definition.location_tag,
+		]
+		mission_brief_warning.text = "FIELD NOTE • %s" % definition.tactical_warning
+		mission_brief_warning.visible = not definition.tactical_warning.is_empty()
+		mission_brief_loadout.text = _campaign_loadout_line()
+		mission_brief_loadout.visible = not mission_brief_loadout.text.is_empty()
+		begin_run_button.visible = true
+		begin_run_button.disabled = false
+		begin_run_button.text = "BEGIN RUN"
+	else:
+		mission_brief_focus.text = definition.test_focus
+		mission_brief_warning.visible = false
+		mission_brief_loadout.visible = false
+		begin_run_button.visible = false
+
 	mission_brief_card.visible = true
+
+func _confirm_run_brief() -> void:
+	if not _campaign_managed or _current_mission == null or phase != Phase.INTRO:
+		return
+	begin_run_button.disabled = true
+	mission_brief_card.visible = false
+	_start_player_turn(true)
+
+func _campaign_loadout_line() -> String:
+	if _player_platform == null:
+		return ""
+
+	var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
+	var rack := "BOLT + SLUG + SHOCK" if (
+		_campaign_weapon_ids.has("heavy_slug")
+		and _campaign_weapon_ids.has("shock_capsule")
+	) else "BOLT + %s" % specialist
+
+	var parts: Array[String] = [
+		"LOADOUT • %s" % _player_platform.display_name.to_upper(),
+		rack,
+	]
+	if _player_module != null:
+		parts.append(_player_module.display_name.to_upper())
+	return " • ".join(parts)
+
+func _region_display_name(region_id: String) -> String:
+	match region_id:
+		"suburbs":
+			return "SUBURBS"
+		_:
+			return "OUTSKIRTS"
 
 func _update_result_card() -> void:
 	if _current_mission == null:
+		return
+
+	if _campaign_managed:
+		_update_campaign_debrief()
 		return
 
 	result_encounter_label.text = _current_mission.display_name.to_upper()
@@ -1253,16 +1337,58 @@ func _update_result_card() -> void:
 		int(_weapon_shots["heavy_slug"]),
 		int(_weapon_shots["shock_capsule"]),
 	]
-	var takeaway := _encounter_takeaway()
-	if _campaign_managed:
-		if not player.is_alive() or _objective_failed():
-			result_takeaway_label.text = "NO SALVAGE RECOVERED\n%s" % takeaway
-		elif _progression_reward > 0:
-			result_takeaway_label.text = "+%d SALVAGE SECURED\n%s" % [_progression_reward, takeaway]
+	result_takeaway_label.text = _encounter_takeaway()
+
+func _update_campaign_debrief() -> void:
+	var victory := player.is_alive() and _objective_completed()
+	result_title_label.text = "ROUTE SECURED" if victory else "RUN FAILED"
+	result_encounter_label.text = "%s • %s" % [
+		_region_display_name(_current_mission.region_id),
+		_current_mission.display_name.to_upper(),
+	]
+
+	if not victory:
+		var failure := "PROTECTED SALVAGE LOST" if _objective_failed() else "SURVIVOR INCAPACITATED"
+		result_stats_label.text = "%s\nNO SALVAGE RECOVERED" % failure
+		result_takeaway_label.text = "PERFORMANCE • %d SHOTS • %d DIRECT • %d ENVIRONMENT" % [
+			_player_shots_fired,
+			_player_direct_hits,
+			_player_environment_events,
+		]
+		return
+
+	var reward_line := "RECOVERY REPORT PENDING"
+	if _progression_processed:
+		reward_line = (
+			"+%d SALVAGE RECOVERED" % _progression_reward
+			if _progression_reward > 0
+			else "ROUTE ALREADY CLEARED • NO NEW SALVAGE"
+		)
+
+	result_stats_label.text = "OBJECTIVE COMPLETE\n%s\n%s" % [
+		_current_mission.objective_text,
+		reward_line,
+	]
+
+	var progression_line := ""
+	if _progression_processed and _progression_reward > 0:
+		if not _current_mission.next_mission_id.is_empty():
+			var next_mission := EncounterCatalogScript.by_id(_current_mission.next_mission_id)
+			if next_mission != null:
+				progression_line = "NEXT ROUTE OPEN • %s" % next_mission.display_name.to_upper()
 		else:
-			result_takeaway_label.text = "ROUTE ALREADY CLEARED • NO NEW SALVAGE\n%s" % takeaway
-	else:
-		result_takeaway_label.text = takeaway
+			progression_line = "%s ROUTE SECURED" % _region_display_name(_current_mission.region_id)
+
+	var performance := "PERFORMANCE • %d SHOTS • %d DIRECT • %d ENVIRONMENT" % [
+		_player_shots_fired,
+		_player_direct_hits,
+		_player_environment_events,
+	]
+	result_takeaway_label.text = (
+		"%s\n%s" % [progression_line, performance]
+		if not progression_line.is_empty()
+		else performance
+	)
 
 func _encounter_takeaway() -> String:
 	if _current_mission != null and _current_mission.objective_mode == "protect_salvage":
@@ -1362,6 +1488,36 @@ func _change_encounter() -> void:
 		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()
 
+
+
+func _apply_responsive_layout() -> void:
+	PortraitLayoutScript.apply(
+		$HUD/Root,
+		[
+			turn_label,
+			player_status_plate,
+			health_label,
+			enemy_status_plate,
+			enemy_health_label,
+			inspect_button,
+			enemy_locator_label,
+			weapon_tray,
+			weapon_info_card,
+		],
+		[
+			feedback_label,
+			mission_brief_card,
+			encounter_picker,
+			result_card,
+			restart_button,
+			change_encounter_button,
+		],
+		[
+			target_card,
+			control_deck,
+			hint_label,
+		]
+	)
 
 func _fire_cue(weapon: WeaponDefinition) -> StringName:
 	if weapon == null:

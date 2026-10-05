@@ -357,3 +357,25 @@ Gameplay separation:
 - gate rotation/collapse and cell discharge remain unchanged.
 
 Reference authority remains `docs/design/visual_reference.md`.
+
+
+## Whole-game visual remediation stack — 2026-10-05
+
+The audit-driven A–D implementation is complete on the stacked branch chain ending at:
+
+`feat/visual-polish-d-reference-finish-pilot`
+
+Current additions include:
+- shared portrait safe-area/responsive layout support,
+- campaign Run Brief and campaign Debrief separated from Encounter Proof diagnostics,
+- region/location/tactical presentation metadata for all ten current missions,
+- region-aware physical Command Board,
+- vehicle-first Garage composition,
+- workbench-first Workshop composition,
+- six authored Outskirts mission landmarks, bringing both current regions to mission-aware production parity,
+- compact battle HUD and tactical inspect surface families,
+- representative reference-finish pilot across vehicle, survivor, Hub, environment and core UI assets.
+
+Rendering-finish propagation must follow `docs/design/reference_finish_pilot.md`.
+
+Do not begin Highways until the combined final branch is accepted in normal local Play/device review against `docs/design/visual_reference.md`.

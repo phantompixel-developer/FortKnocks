@@ -63,52 +63,64 @@ func _draw() -> void:
 			_draw_command_motif(hazard, rust)
 
 func _draw_command_motif(hazard: Color, rust: Color) -> void:
-	# Recovered physical route board language.
-	draw_rect(Rect2(56, 700, 608, 360), Color("2a2722", 0.72))
-	draw_rect(Rect2(72, 718, 576, 324), Color("6a5843", 0.18))
-	var route := PackedVector2Array([
-		Vector2(124, 958),
-		Vector2(226, 892),
-		Vector2(318, 914),
-		Vector2(410, 836),
-		Vector2(526, 774),
-	])
-	for i in range(route.size() - 1):
-		draw_line(route[i], route[i + 1], Color("e4d3b0", 0.42), 4.0)
-	for i in range(route.size()):
-		var active := i < 3
-		draw_circle(route[i], 12.0, Color(hazard if active else rust, 0.62 if active else 0.34))
-		draw_circle(route[i], 5.0, Color("171c21"))
+	# Command room surrounds the real recovered map surface. Do not draw a
+	# second fake route here; route state belongs exclusively to RouteVisual.
+	draw_rect(Rect2(34, 230, 652, 838), Color("161d21", 0.88))
+	draw_rect(Rect2(46, 244, 628, 804), Color("252622", 0.76))
+	draw_line(Vector2(46, 244), Vector2(674, 244), Color("0b1014"), 16.0)
+	for x in [64.0, 656.0]:
+		draw_line(Vector2(x, 244), Vector2(x, 1050), Color("3a332a"), 12.0)
+	# Pinned scraps and route notes around, not on top of, the functional map.
 	for card in [
-		Rect2(100, 742, 126, 70),
-		Rect2(246, 774, 132, 74),
-		Rect2(430, 708, 150, 78),
+		Rect2(58, 284, 92, 58),
+		Rect2(566, 300, 92, 64),
+		Rect2(64, 930, 104, 66),
+		Rect2(550, 910, 108, 72),
 	]:
 		draw_rect(card, Color("d7c7a7", 0.16))
-		draw_line(card.position + Vector2(12, 18), Vector2(card.end.x - 12, card.position.y + 18), Color(rust, 0.5), 3.0)
+		draw_line(card.position + Vector2(10, 16), Vector2(card.end.x - 10, card.position.y + 16), Color(rust, 0.48), 3.0)
+	for x in [176.0, 544.0]:
+		draw_line(Vector2(x, 230), Vector2(x, 268), Color("0c1115"), 5.0)
+		draw_circle(Vector2(x, 280), 38.0, Color(hazard, 0.08))
+		draw_circle(Vector2(x, 280), 7.0, Color(hazard, 0.62))
 
 func _draw_garage_motif(hazard: Color, rust: Color, warm: Color) -> void:
-	# Structural bay, overhead lamps and floor guide create a physical garage.
-	draw_line(Vector2(58, 700), Vector2(662, 700), Color("0b1014"), 18.0)
-	for x in [92.0, 360.0, 628.0]:
-		draw_line(Vector2(x, 700), Vector2(x, 1020), Color("26343d"), 14.0)
+	# The garage is a room first: broad structural bay, task lights and a floor
+	# that visually receives the selected platform instead of framing it as UI.
+	draw_rect(Rect2(34, 204, 652, 838), Color("121b21", 0.90))
+	draw_rect(Rect2(48, 222, 624, 470), Color("1c2930", 0.86))
+	draw_line(Vector2(48, 222), Vector2(672, 222), Color("0b1014"), 18.0)
+	for x in [72.0, 360.0, 648.0]:
+		draw_line(Vector2(x, 222), Vector2(x, 1018), Color("26343d"), 14.0)
 	for x in [188.0, 532.0]:
-		draw_line(Vector2(x, 704), Vector2(x, 754), Color("0c1115"), 5.0)
-		draw_circle(Vector2(x, 766), 32.0, Color(warm, 0.16))
-		draw_circle(Vector2(x, 766), 9.0, Color(warm, 0.72))
-	draw_line(Vector2(78, 968), Vector2(642, 968), Color(hazard, 0.20), 10.0)
-	for x in range(96, 640, 92):
-		draw_line(Vector2(x, 968), Vector2(x + 44, 1006), Color(rust, 0.22), 8.0)
+		draw_line(Vector2(x, 226), Vector2(x, 266), Color("0c1115"), 6.0)
+		draw_circle(Vector2(x, 282), 72.0, Color(warm, 0.10))
+		draw_circle(Vector2(x, 282), 11.0, Color(warm, 0.82))
+	draw_rect(Rect2(48, 692, 624, 350), Color("171d20", 0.94))
+	draw_line(Vector2(72, 692), Vector2(648, 692), Color("526068"), 6.0)
+	draw_line(Vector2(88, 650), Vector2(632, 650), Color(hazard, 0.18), 9.0)
+	for x in range(92, 640, 92):
+		draw_line(Vector2(x, 682), Vector2(x + 48, 720), Color(rust, 0.20), 8.0)
+	for y in [764.0, 858.0, 952.0]:
+		draw_line(Vector2(72, y), Vector2(648, y), Color("2a353a", 0.48), 3.0)
 
 func _draw_workshop_motif(hazard: Color, rust: Color, warm: Color) -> void:
-	# Warm task-lit pegboard and bench.
-	draw_rect(Rect2(70, 704, 580, 260), Color("273139"))
-	for x in range(98, 640, 42):
-		for y in range(732, 944, 42):
-			draw_circle(Vector2(x, y), 2.5, Color("0e1418"))
-	for y in [774.0, 842.0, 910.0]:
-		draw_line(Vector2(126, y), Vector2(544, y - 18), Color("121a20"), 14.0)
-		draw_line(Vector2(156, y - 2), Vector2(516, y - 16), Color(rust if y < 900.0 else hazard, 0.72), 4.0)
-	draw_line(Vector2(92, 1008), Vector2(628, 1008), Color("815137"), 34.0)
-	draw_circle(Vector2(520, 690), 56.0, Color(warm, 0.12))
-	draw_circle(Vector2(520, 690), 10.0, Color(warm, 0.76))
+	# Full-height task wall: hardware art can now live directly on the pegboard
+	# instead of being hidden inside two opaque menu cards.
+	draw_rect(Rect2(44, 198, 632, 862), Color("19242a", 0.94))
+	draw_rect(Rect2(64, 218, 592, 716), Color("273139"))
+	for x in range(88, 648, 36):
+		for y in range(240, 922, 36):
+			draw_circle(Vector2(x, y), 2.2, Color("0e1418"))
+	draw_line(Vector2(72, 468), Vector2(648, 468), Color("121a20"), 11.0)
+	draw_line(Vector2(72, 742), Vector2(648, 742), Color("121a20"), 11.0)
+	draw_line(Vector2(88, 982), Vector2(632, 982), Color("815137"), 34.0)
+	draw_rect(Rect2(100, 1000, 520, 46), Color("30251e"))
+	for x in [160.0, 560.0]:
+		draw_line(Vector2(x, 1044), Vector2(x, 1096), Color("242d2d"), 12.0)
+	for x in [184.0, 536.0]:
+		draw_line(Vector2(x, 202), Vector2(x, 238), Color("0c1115"), 6.0)
+		draw_circle(Vector2(x, 252), 64.0, Color(warm, 0.10))
+		draw_circle(Vector2(x, 252), 10.0, Color(warm, 0.80))
+	draw_line(Vector2(108, 496), Vector2(260, 474), Color(rust, 0.42), 4.0)
+	draw_line(Vector2(456, 750), Vector2(602, 730), Color(hazard, 0.38), 4.0)

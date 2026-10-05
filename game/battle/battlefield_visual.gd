@@ -5,6 +5,14 @@ const OUTSKIRTS_SKY_FAR_PATH := "res://assets/art/production/battle/outskirts/ou
 const OUTSKIRTS_MIDGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_midground.svg"
 const OUTSKIRTS_ROAD_PATH := "res://assets/art/production/battle/outskirts/outskirts_road.svg"
 const OUTSKIRTS_FOREGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_foreground.svg"
+const OUTSKIRTS_LANDMARK_PATHS := {
+	"roadblock_trial": "res://assets/art/production/battle/outskirts/roadblock_trial_landmark.svg",
+	"high_ground_trial": "res://assets/art/production/battle/outskirts/high_ground_trial_landmark.svg",
+	"scrap_gate_trial": "res://assets/art/production/battle/outskirts/scrap_gate_trial_landmark.svg",
+	"broken_span": "res://assets/art/production/battle/outskirts/broken_span_landmark.svg",
+	"depot_line": "res://assets/art/production/battle/outskirts/depot_line_landmark.svg",
+	"outskirts_checkpoint": "res://assets/art/production/battle/outskirts/outskirts_checkpoint_landmark.svg",
+}
 const SUBURBS_SKY_FAR_PATH := "res://assets/art/production/battle/suburbs/suburbs_sky_far.svg"
 const SUBURBS_MIDGROUND_PATH := "res://assets/art/production/battle/suburbs/suburbs_midground.svg"
 const SUBURBS_ROAD_PATH := "res://assets/art/production/battle/suburbs/suburbs_road.svg"
@@ -30,6 +38,7 @@ var _outskirts_sky_far: Texture2D
 var _outskirts_midground: Texture2D
 var _outskirts_road: Texture2D
 var _outskirts_foreground: Texture2D
+var _outskirts_landmarks: Dictionary = {}
 var _suburbs_sky_far: Texture2D
 var _suburbs_midground: Texture2D
 var _suburbs_road: Texture2D
@@ -75,13 +84,9 @@ func _draw() -> void:
 
 	_draw_production_outskirts_base()
 
-	match _variant:
-		1:
-			_draw_overpass_backdrop()
-		2:
-			_draw_salvage_backdrop()
-		_:
-			pass
+	var outskirts_landmark := _outskirts_landmarks.get(_mission_id) as Texture2D
+	if outskirts_landmark != null:
+		draw_texture_rect(outskirts_landmark, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
 
 	_draw_production_outskirts_road()
 	_draw_production_outskirts_foreground()
@@ -95,6 +100,11 @@ func _ensure_production_textures() -> void:
 		_outskirts_road = ProductionArtScript.texture_from_svg(OUTSKIRTS_ROAD_PATH)
 	if _outskirts_foreground == null:
 		_outskirts_foreground = ProductionArtScript.texture_from_svg(OUTSKIRTS_FOREGROUND_PATH)
+	for mission_id in OUTSKIRTS_LANDMARK_PATHS:
+		if not _outskirts_landmarks.has(mission_id):
+			_outskirts_landmarks[mission_id] = ProductionArtScript.texture_from_svg(
+				str(OUTSKIRTS_LANDMARK_PATHS[mission_id])
+			)
 	if _suburbs_sky_far == null:
 		_suburbs_sky_far = ProductionArtScript.texture_from_svg(SUBURBS_SKY_FAR_PATH)
 	if _suburbs_midground == null:

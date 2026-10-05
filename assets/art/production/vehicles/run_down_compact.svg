@@ -109,4 +109,20 @@
   <!-- lower grime -->
   <path d="M178 164 C226 174 299 171 334 163" stroke="#211f1c" stroke-width="8" opacity=".45"/>
   <path d="M80 161 L119 168 M401 159 L431 163" stroke="#2a2621" stroke-width="6" opacity=".5"/>
+
+  <!-- reference-finish pilot: directional warm rim / cool occlusion / controlled chipped wear -->
+  <path d="M112 106 C166 73 243 61 318 96" fill="none" stroke="#f3bb73" stroke-width="5" opacity=".32" stroke-linecap="round"/>
+  <path d="M326 101 C372 104 411 111 441 129" fill="none" stroke="#f0a14a" stroke-width="4" opacity=".28" stroke-linecap="round"/>
+  <path d="M76 157 C146 169 211 174 282 169 C350 164 397 157 436 151 L438 170 C344 187 170 188 76 172Z" fill="#18282b" opacity=".20"/>
+  <path d="M146 92 L214 92 L205 78 L164 80Z" fill="#d9f0e9" opacity=".08"/>
+  <path d="M226 90 L294 90 L273 76 L233 69Z" fill="#d9f0e9" opacity=".07"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M93 121 L111 116 M118 151 L132 148 M151 112 L164 109 M330 119 L344 116 M401 146 L416 142" stroke="#efbd83" stroke-width="2.4" opacity=".54"/>
+    <path d="M102 160 L115 154 M184 161 L197 158 M333 158 L347 151 M374 113 L389 109" stroke="#5b3027" stroke-width="3.2" opacity=".66"/>
+    <path d="M244 129 L252 126 M303 127 L313 123 M248 161 L258 158" stroke="#aeb9ae" stroke-width="2" opacity=".48"/>
+  </g>
+  <path d="M73 171 C112 181 166 184 201 181" fill="none" stroke="#0a1114" stroke-width="5" opacity=".72"/>
+  <path d="M313 178 C354 182 405 179 439 169" fill="none" stroke="#0a1114" stroke-width="5" opacity=".72"/>
+  <circle cx="437" cy="127" r="7" fill="#f5dba1" opacity=".18"/>
+
 </svg>

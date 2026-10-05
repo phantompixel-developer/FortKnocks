@@ -36,4 +36,22 @@
  <path d="M1450 678 L1490 646 1582 646 1630 678 1622 708 1442 708Z" fill="#475a58"/><circle cx="1486" cy="706" r="22" fill="#11171a"/><circle cx="1588" cy="706" r="22" fill="#11171a"/>
 </g>
 <g fill="#78604a"><rect x="390" y="672" width="34" height="34"/><rect x="1200" y="676" width="42" height="30"/><rect x="2100" y="670" width="32" height="36"/></g>
+
+<!-- reference-finish pilot: warm key light, cool occlusion and material breakup -->
+<g fill="#101b20" opacity=".13">
+ <path d="M55 650 H372 V700 H55Z"/><path d="M430 652 H760 V700 H430Z"/><path d="M845 640 H1184 V700 H845Z"/>
+ <path d="M1275 650 H1592 V700 H1275Z"/><path d="M1680 642 H2080 V700 H1680Z"/>
+</g>
+<g fill="none" stroke-linecap="round">
+ <path d="M70 566 H350 M448 596 H744 M862 544 H1164 M1294 586 H1570 M1698 556 H2058" stroke="#f0ad6b" stroke-width="4" opacity=".20"/>
+ <path d="M78 580 L98 574 M120 594 L143 588 M500 618 L526 610 M914 584 L940 576 M1090 654 L1122 644 M1340 620 L1370 610 M1750 602 L1778 594 M1970 650 L2002 642" stroke="#d79563" stroke-width="3" opacity=".38"/>
+ <path d="M108 674 L136 668 M278 682 L310 676 M626 676 L660 669 M980 680 L1012 674 M1460 682 L1496 674 M1900 678 L1934 670" stroke="#713f34" stroke-width="4" opacity=".46"/>
+</g>
+<g stroke="#79878a" stroke-width="2" opacity=".18">
+ <path d="M74 548 L102 582 M118 548 L146 582 M162 548 L190 582 M206 548 L234 582 M250 548 L278 582 M294 548 L322 582"/>
+ <path d="M860 530 L892 564 M914 530 L946 564 M968 530 L1000 564 M1022 530 L1054 564 M1076 530 L1108 564"/>
+</g>
+<path d="M0 708 C420 690 850 708 1210 692 S1770 704 2160 688 V756 H0Z" fill="#1b2a2f" opacity=".09"/>
+<circle cx="280" cy="604" r="80" fill="#efa04d" opacity=".028"/><circle cx="1760" cy="596" r="90" fill="#efa04d" opacity=".024"/>
+
 </svg>

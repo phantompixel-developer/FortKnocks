@@ -4,6 +4,8 @@ extends RefCounted
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_industrial.svg"
 const BUTTON_TEXTURE_PATH := "res://assets/art/production/shared/ui/button_industrial.svg"
+const HUD_PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_hud_compact.svg"
+const TACTICAL_PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_tactical.svg"
 
 # Locked production palette: dark industrial UI, warm salvage lighting, restrained cold-tech accents.
 const COAL := Color("111820")
@@ -104,6 +106,109 @@ static func style_card(rect: ColorRect, emphasis := 0) -> void:
 			surface.modulate = Color(1.0, 0.82, 0.64, 1.0)
 		_:
 			surface.modulate = Color.WHITE
+
+
+
+static func style_hud_card(rect: ColorRect, cold := false) -> void:
+	if rect == null:
+		return
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(HUD_PANEL_TEXTURE_PATH)
+	if texture == null:
+		rect.color = Color("101920", 0.90)
+		return
+	_style_textured_surface(
+		rect,
+		texture,
+		Color(0.82, 0.96, 1.0, 1.0) if cold else Color.WHITE,
+		16
+	)
+
+static func style_tactical_card(rect: ColorRect) -> void:
+	if rect == null:
+		return
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(TACTICAL_PANEL_TEXTURE_PATH)
+	if texture == null:
+		rect.color = Color("102027", 0.94)
+		return
+	_style_textured_surface(rect, texture, Color.WHITE, 18)
+
+static func _style_textured_surface(
+	rect: ColorRect,
+	texture: Texture2D,
+	modulate: Color,
+	margin: int
+) -> void:
+	rect.color = Color.TRANSPARENT
+	var surface := rect.get_node_or_null("_ProductionSurface") as NinePatchRect
+	if surface == null:
+		surface = NinePatchRect.new()
+		surface.name = "_ProductionSurface"
+		surface.anchor_left = 0.0
+		surface.anchor_top = 0.0
+		surface.anchor_right = 1.0
+		surface.anchor_bottom = 1.0
+		surface.offset_left = 0.0
+		surface.offset_top = 0.0
+		surface.offset_right = 0.0
+		surface.offset_bottom = 0.0
+		surface.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		rect.add_child(surface)
+		rect.move_child(surface, 0)
+	surface.texture = texture
+	surface.patch_margin_left = margin
+	surface.patch_margin_top = margin
+	surface.patch_margin_right = margin
+	surface.patch_margin_bottom = margin
+	surface.modulate = modulate
+
+static func style_display_label(label: Label) -> void:
+	if label == null:
+		return
+	label.add_theme_color_override("font_color", HAZARD)
+	label.add_theme_color_override("font_outline_color", SHADOW)
+	label.add_theme_constant_override("outline_size", 3)
+	label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.78))
+	label.add_theme_constant_override("shadow_offset_x", 2)
+	label.add_theme_constant_override("shadow_offset_y", 3)
+
+static func style_section_label(label: Label, accent := false) -> void:
+	if label == null:
+		return
+	label.add_theme_color_override("font_color", HAZARD if accent else BONE)
+	label.add_theme_color_override("font_outline_color", SHADOW)
+	label.add_theme_constant_override("outline_size", 2)
+
+static func style_meta_label(label: Label, cold := false) -> void:
+	if label == null:
+		return
+	label.add_theme_color_override("font_color", COLD if cold else MUTED)
+	label.add_theme_color_override("font_outline_color", SHADOW)
+	label.add_theme_constant_override("outline_size", 1)
+
+static func style_primary_button(button: Button) -> void:
+	if button == null:
+		return
+	var button_texture: Texture2D = ProductionArtScript.texture_from_svg(BUTTON_TEXTURE_PATH)
+	button.add_theme_color_override("font_color", Color("fff0c8"))
+	button.add_theme_color_override("font_hover_color", Color.WHITE)
+	if button_texture != null:
+		button.add_theme_stylebox_override(
+			"normal",
+			_texture_box(button_texture, Color(1.0, 0.82, 0.44, 1.0), 20.0, 15.0)
+		)
+		button.add_theme_stylebox_override(
+			"hover",
+			_texture_box(button_texture, Color(1.0, 0.92, 0.66, 1.0), 20.0, 15.0)
+		)
+		button.add_theme_stylebox_override(
+			"pressed",
+			_texture_box(button_texture, Color(1.0, 0.68, 0.28, 1.0), 20.0, 15.0)
+		)
+
+static func style_secondary_button(button: Button) -> void:
+	if button == null:
+		return
+	button.add_theme_color_override("font_color", MUTED)
 
 static func mark_active(button: Button, active: bool) -> void:
 	if button == null:

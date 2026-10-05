@@ -6,4 +6,16 @@
 <path d="M14 110 H42 L50 117 H78 L86 110 H114" fill="none" stroke="#080c0f" stroke-width="3" opacity=".8"/>
 <path d="M9 39 L18 30 M110 30 L119 39 M9 89 L18 98 M110 98 L119 89" stroke="#b77943" stroke-width="3" opacity=".42"/>
 <circle cx="15" cy="15" r="3" fill="#0b1013" stroke="#6d7778" stroke-width="1"/><circle cx="113" cy="15" r="3" fill="#0b1013" stroke="#6d7778" stroke-width="1"/><circle cx="15" cy="113" r="3" fill="#0b1013" stroke="#6d7778" stroke-width="1"/><circle cx="113" cy="113" r="3" fill="#0b1013" stroke="#6d7778" stroke-width="1"/>
+
+<!-- reference-finish pilot: layered bevel, handling wear and restrained warm edge -->
+<path d="M11 25 H117" stroke="#9dacb0" stroke-width="1.5" opacity=".16"/>
+<path d="M11 101 H117" stroke="#05090c" stroke-width="2" opacity=".64"/>
+<path d="M24 9 H47 M82 9 H104" stroke="#e6eef0" stroke-width="1.2" opacity=".16"/>
+<path d="M20 119 H45 M83 119 H106" stroke="#000508" stroke-width="2" opacity=".52"/>
+<g fill="none" stroke-linecap="round">
+ <path d="M18 52 L28 48 M96 36 L107 32 M32 92 L42 89 M86 105 L98 101" stroke="#b7c1c0" stroke-width="1.5" opacity=".22"/>
+ <path d="M11 66 L18 60 M110 71 L118 64" stroke="#c47a43" stroke-width="2" opacity=".34"/>
+</g>
+<path d="M8 8 H120" stroke="#f0b25e" stroke-width="1.5" opacity=".10"/>
+
 </svg>
