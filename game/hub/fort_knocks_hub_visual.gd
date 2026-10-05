@@ -216,14 +216,16 @@ func _draw_workshop() -> void:
 func _draw_active_platform() -> void:
 	var texture := _vehicle_textures.get(_platform_id) as Texture2D
 	if texture != null:
-		var rect := Rect2(356, 746, 318, 158)
+		# Keep the active platform prominent enough to read as a progression
+		# reward at phone scale, matching the reference hub's large parked vehicle.
+		var rect := Rect2(320, 738, 372, 186)
 		match _platform_id:
 			"old_sedan":
-				rect = Rect2(350, 742, 326, 152)
+				rect = Rect2(302, 734, 398, 186)
 			"pickup":
-				rect = Rect2(342, 738, 338, 158)
+				rect = Rect2(286, 724, 416, 195)
 			"improvised_technical":
-				rect = Rect2(328, 724, 362, 170)
+				rect = Rect2(272, 708, 438, 206)
 		draw_texture_rect(texture, rect, false)
 		_draw_production_module_overlay(rect)
 		return
