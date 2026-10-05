@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+<defs>
+ <linearGradient id="bay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59635b"/><stop offset="1" stop-color="#29332f"/></linearGradient>
+ <linearGradient id="crate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#76664b"/><stop offset="1" stop-color="#493f32"/></linearGradient>
+</defs>
+<path d="M28 950 V848 H174 V950" fill="none" stroke="#17211e" stroke-width="13"/>
+<path d="M34 852 H168" stroke="url(#bay)" stroke-width="12"/>
+<path d="M38 872 H164" stroke="#6b705f" stroke-width="7"/>
+<g stroke="#171c1b" stroke-width="4">
+ <rect x="42" y="884" width="48" height="38" rx="2" fill="url(#crate)"/>
+ <rect x="94" y="888" width="56" height="34" rx="2" fill="#655844"/>
+ <rect x="65" y="925" width="64" height="31" rx="2" fill="#705f45"/>
+</g>
+<g stroke="#d6a14b" stroke-width="4" opacity=".48"><path d="M48 890 L84 916 M101 894 L143 916 M72 930 L120 952"/></g>
+<path d="M36 878 L166 944 M166 878 L36 944" stroke="#303c37" stroke-width="3" opacity=".42"/>
+<path d="M22 944 H182" stroke="#090e10" stroke-width="8" opacity=".72"/>
+<g stroke="#a95a3d" stroke-width="3" opacity=".50"><path d="M32 862 H56 M142 858 H166 M92 936 H118"/></g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+<defs><radialGradient id="beacon"><stop offset="0" stop-color="#ffe4a5" stop-opacity=".8"/><stop offset=".42" stop-color="#e7ad3c" stop-opacity=".24"/><stop offset="1" stop-color="#e7ad3c" stop-opacity="0"/></radialGradient></defs>
+<rect x="26" y="580" width="668" height="24" rx="3" fill="#151e1b" stroke="#3f4a43" stroke-width="3"/>
+<path d="M40 588 H680" stroke="#7b8276" stroke-width="3" opacity=".28"/>
+<path d="M530 590 V414" stroke="#19231f" stroke-width="13"/>
+<path d="M530 432 L574 454 M530 454 L492 477" stroke="#27332f" stroke-width="7" stroke-linecap="round"/>
+<path d="M530 414 V388 M518 395 H542" stroke="#727a70" stroke-width="4"/>
+<circle cx="530" cy="410" r="38" fill="url(#beacon)"/><circle cx="530" cy="410" r="8" fill="#d8a148"/>
+<path d="M544 406 Q574 410 594 430" fill="none" stroke="#d8a148" stroke-width="3" opacity=".42"/>
+<path d="M548 397 Q590 402 616 435" fill="none" stroke="#d8a148" stroke-width="2" opacity=".22"/>
+<g stroke="#a85a3d" stroke-width="4" opacity=".55"><path d="M92 584 L116 600 M284 584 L308 600 M604 584 L628 600"/></g>
+<g fill="#313c36"><circle cx="74" cy="592" r="4"/><circle cx="188" cy="592" r="4"/><circle cx="420" cy="592" r="4"/><circle cx="652" cy="592" r="4"/></g>
+</svg>

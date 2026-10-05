@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+<defs>
+ <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b746b"/><stop offset="1" stop-color="#313d38"/></linearGradient>
+ <linearGradient id="machine" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5c6962"/><stop offset="1" stop-color="#2a3631"/></linearGradient>
+ <radialGradient id="task"><stop offset="0" stop-color="#8fe3e0" stop-opacity=".48"/><stop offset="1" stop-color="#69b8c8" stop-opacity="0"/></radialGradient>
+</defs>
+<path d="M392 824 V668 M644 824 V668 M392 674 H644" stroke="#1a2421" stroke-width="17" stroke-linecap="square"/>
+<path d="M410 700 H626" stroke="url(#beam)" stroke-width="10"/>
+<path d="M442 700 V736 M594 700 V736" stroke="#778078" stroke-width="5"/>
+<rect x="462" y="708" width="108" height="35" rx="4" fill="url(#machine)" stroke="#17201e" stroke-width="5"/>
+<path d="M474 736 L554 714" stroke="#d8a44e" stroke-width="5" opacity=".54"/>
+<circle cx="588" cy="718" r="28" fill="url(#task)"/><circle cx="588" cy="718" r="7" fill="#79c4c8"/>
+<rect x="420" y="758" width="186" height="18" rx="3" fill="#4d5750" stroke="#17201e" stroke-width="4"/>
+<path d="M438 764 H500 M522 764 H584" stroke="#8c674d" stroke-width="3" opacity=".62"/>
+<g stroke="#b7603e" stroke-width="3" opacity=".52"><path d="M400 690 H428 M618 814 H640 M476 714 H495"/></g>
+<g fill="#e7ad3c" opacity=".58"><circle cx="548" cy="752" r="3"/><circle cx="556" cy="760" r="2.5"/><circle cx="565" cy="748" r="2.5"/></g>
+</svg>

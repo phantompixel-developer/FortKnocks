@@ -9,11 +9,19 @@ const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised
 const HUB_SKY_FAR_PATH := "res://assets/art/production/hub/hub_sky_far.svg"
 const HUB_MID_STRUCTURES_PATH := "res://assets/art/production/hub/hub_mid_structures.svg"
 const HUB_FOREGROUND_PATH := "res://assets/art/production/hub/hub_foreground.svg"
+const HUB_PROGRESS_PATHS := [
+	"res://assets/art/production/hub/progression/hub_progress_01_storage.svg",
+	"res://assets/art/production/hub/progression/hub_progress_02_power.svg",
+	"res://assets/art/production/hub/progression/hub_progress_03_fortification.svg",
+	"res://assets/art/production/hub/progression/hub_progress_04_fabrication.svg",
+	"res://assets/art/production/hub/progression/hub_progress_05_secure_storage.svg",
+]
 
 var _vehicle_textures: Dictionary = {}
 var _hub_sky_far: Texture2D
 var _hub_mid_structures: Texture2D
 var _hub_foreground: Texture2D
+var _hub_progression_textures: Array = []
 
 var _platform_id := "run_down_compact"
 var _module_id := ""
@@ -60,6 +68,9 @@ func _ensure_production_textures() -> void:
 		_hub_mid_structures = ProductionArtScript.texture_from_svg(HUB_MID_STRUCTURES_PATH)
 	if _hub_foreground == null:
 		_hub_foreground = ProductionArtScript.texture_from_svg(HUB_FOREGROUND_PATH)
+	if _hub_progression_textures.is_empty():
+		for path in HUB_PROGRESS_PATHS:
+			_hub_progression_textures.append(ProductionArtScript.texture_from_svg(path))
 
 func _draw_fallback_backdrop() -> void:
 	draw_rect(Rect2(0, 0, 720, 650), Color("5d6f77"))
@@ -90,6 +101,25 @@ func _draw_perimeter() -> void:
 		draw_line(Vector2(x + 20, 644), Vector2(x + 50, 608), Color("a45f42", 0.70), 7.0)
 
 func _draw_campaign_progress() -> void:
+	if _campaign_stage <= 0:
+		return
+
+	var authored_ready := _hub_progression_textures.size() >= _campaign_stage
+	if authored_ready:
+		for index in range(_campaign_stage):
+			if _hub_progression_textures[index] == null:
+				authored_ready = false
+				break
+
+	if authored_ready:
+		for index in range(_campaign_stage):
+			var texture := _hub_progression_textures[index] as Texture2D
+			draw_texture_rect(texture, Rect2(0, 0, 720, 1280), false)
+		return
+
+	_draw_campaign_progress_fallback()
+
+func _draw_campaign_progress_fallback() -> void:
 	if _campaign_stage >= 1:
 		# Organised racks and marked salvage bins replace loose survival clutter.
 		draw_rect(Rect2(18, 680, 50, 154), Color("202825"))

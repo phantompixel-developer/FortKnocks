@@ -9,6 +9,8 @@ const BattleScene := preload("res://game/battle/battle.tscn")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
 const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
+const SCREEN_REVEAL_DURATION := 0.18
+const SCREEN_REVEAL_COLOR := Color("0b1116")
 
 @onready var save_service: SaveService = $SaveService
 @onready var audio_director: FortKnocksAudioDirector = $AudioDirector
@@ -18,8 +20,10 @@ var _active_mission: MissionDefinition
 var _hub_notice := ""
 var _garage_notice := ""
 var _workshop_notice := ""
+var _transition_overlay: ColorRect
 
 func _ready() -> void:
+	_ensure_transition_overlay()
 	_reconcile_campaign_unlocks()
 	_show_hub()
 
@@ -206,10 +210,54 @@ func _on_battle_rematch_requested() -> void:
 		_start_mission(mission)
 
 func _replace_screen(screen: Node) -> void:
+	_ensure_transition_overlay()
+	if _transition_overlay != null:
+		_transition_overlay.visible = true
+		_transition_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+		_transition_overlay.modulate.a = 1.0
+
 	for child in current_screen.get_children():
 		current_screen.remove_child(child)
 		child.queue_free()
 	current_screen.add_child(screen)
+	_play_screen_reveal()
+
+func _ensure_transition_overlay() -> void:
+	if is_instance_valid(_transition_overlay):
+		return
+
+	var layer := CanvasLayer.new()
+	layer.name = "ScreenTransitionLayer"
+	layer.layer = 100
+	add_child(layer)
+
+	_transition_overlay = ColorRect.new()
+	_transition_overlay.name = "ScreenReveal"
+	_transition_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_transition_overlay.color = SCREEN_REVEAL_COLOR
+	_transition_overlay.modulate.a = 0.0
+	_transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_transition_overlay.visible = false
+	layer.add_child(_transition_overlay)
+
+func _play_screen_reveal() -> void:
+	if not is_instance_valid(_transition_overlay):
+		return
+
+	var tween := create_tween()
+	tween.tween_property(
+		_transition_overlay,
+		"modulate:a",
+		0.0,
+		SCREEN_REVEAL_DURATION
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.finished.connect(_on_screen_reveal_finished)
+
+func _on_screen_reveal_finished() -> void:
+	if not is_instance_valid(_transition_overlay):
+		return
+	_transition_overlay.visible = false
+	_transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _current_child() -> Node:
 	if current_screen.get_child_count() == 0:
