@@ -9,6 +9,7 @@ const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var mission_list: VBoxContainer = $MissionPanel/MissionScroll/MissionList
+@onready var route_visual: CommandBoardVisual = $MissionPanel/RouteVisual
 @onready var back_button: Button = $BackButton
 
 var _snapshot: Dictionary = {}
@@ -39,14 +40,23 @@ func _rebuild() -> void:
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
 
 	var missions: Array[MissionDefinition] = EncounterCatalogScript.all()
+	var unlocked_count := 0
+	var completed_count := 0
+	for mission in missions:
+		if unlocked.has(mission.id):
+			unlocked_count += 1
+		if completed.has(mission.id):
+			completed_count += 1
+	route_visual.configure(missions.size(), unlocked_count, completed_count)
+
 	for index in range(missions.size()):
 		var mission: MissionDefinition = missions[index]
 		var is_unlocked := unlocked.has(mission.id)
 		var is_completed := completed.has(mission.id)
 
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 112.0)
-		button.add_theme_font_size_override("font_size", 16)
+		button.custom_minimum_size = Vector2(0.0, 96.0)
+		button.add_theme_font_size_override("font_size", 14)
 		button.disabled = not is_unlocked
 
 		var state := "LOCKED"
