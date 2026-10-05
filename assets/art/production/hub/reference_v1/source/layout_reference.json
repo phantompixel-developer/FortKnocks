@@ -1,0 +1,123 @@
+{
+  "coordinate_system": "pixels, origin top-left",
+  "reference_size": [
+    309,
+    501
+  ],
+  "status": "visual reference only; not integrated or tested in game",
+  "background": "backgrounds/hub_base_ui_removed.png",
+  "navigation": [
+    {
+      "name": "garage",
+      "rect": [
+        10,
+        452,
+        65,
+        48
+      ],
+      "face": "ui/buttons/button_nav_blank.png",
+      "icon": "ui/icons/icon_garage.png",
+      "label": "GARAGE",
+      "font": "fonts/BarlowCondensed-Bold.ttf"
+    },
+    {
+      "name": "workshop",
+      "rect": [
+        84,
+        452,
+        69,
+        48
+      ],
+      "face": "ui/buttons/button_nav_blank.png",
+      "icon": "ui/icons/icon_workshop.png",
+      "label": "WORKSHOP",
+      "font": "fonts/BarlowCondensed-Bold.ttf"
+    },
+    {
+      "name": "missions",
+      "rect": [
+        162,
+        452,
+        67,
+        48
+      ],
+      "face": "ui/buttons/button_nav_blank.png",
+      "icon": "ui/icons/icon_missions.png",
+      "label": "MISSIONS",
+      "font": "fonts/BarlowCondensed-Bold.ttf"
+    },
+    {
+      "name": "map",
+      "rect": [
+        239,
+        452,
+        66,
+        48
+      ],
+      "face": "ui/buttons/button_nav_blank.png",
+      "icon": "ui/icons/icon_map.png",
+      "label": "MAP",
+      "font": "fonts/BarlowCondensed-Bold.ttf"
+    }
+  ],
+  "hud": [
+    {
+      "name": "settings",
+      "rect": [
+        9,
+        10,
+        28,
+        28
+      ],
+      "icon": "ui/icons/icon_settings.png",
+      "face": "ui/buttons/button_square_blank.png"
+    },
+    {
+      "name": "energy",
+      "rect": [
+        60,
+        12,
+        65,
+        22
+      ],
+      "icon": "ui/icons/icon_energy.png",
+      "reference_value": "20/20",
+      "face": "ui/panels/panel_resource_blank.png"
+    },
+    {
+      "name": "coins",
+      "rect": [
+        127,
+        12,
+        77,
+        22
+      ],
+      "icon": "ui/icons/icon_coin.png",
+      "reference_value": "4,250",
+      "face": "ui/panels/panel_resource_blank.png"
+    },
+    {
+      "name": "gems",
+      "rect": [
+        214,
+        12,
+        72,
+        22
+      ],
+      "icon": "ui/icons/icon_gem.png",
+      "reference_value": "120",
+      "face": "ui/panels/panel_resource_blank.png"
+    },
+    {
+      "name": "add",
+      "rect": [
+        269,
+        12,
+        21,
+        22
+      ],
+      "icon": "ui/icons/icon_plus.png",
+      "face": "ui/buttons/button_square_blank.png"
+    }
+  ]
+}
