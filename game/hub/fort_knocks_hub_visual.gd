@@ -46,35 +46,6 @@ func _draw_production_foreground() -> void:
 	# navigation remain separate so progression never gets baked into the art.
 	draw_texture_rect(HUB_FOREGROUND, Rect2(0, 0, 720, 1280), false)
 
-func _draw_atmosphere() -> void:
-	# Same warm/cool lighting language as the locked production reference.
-	draw_rect(Rect2(0, 0, 720, 1280), Color("4b6879"))
-	draw_rect(Rect2(0, 0, 720, 220), Color("466679"))
-	draw_rect(Rect2(0, 220, 720, 220), Color("946b61"))
-	draw_rect(Rect2(0, 440, 720, 210), Color("c2744c"))
-	draw_circle(Vector2(588, 214), 70.0, Color("f3c36c", 0.72))
-	draw_circle(Vector2(588, 214), 112.0, Color("ed9650", 0.10))
-	draw_rect(Rect2(0, 650, 720, 630), Color("242729"))
-	draw_rect(Rect2(0, 650, 720, 25), Color("5f5a50"))
-
-func _draw_distant_outskirts() -> void:
-	for building in [
-		Rect2(0, 372, 116, 278),
-		Rect2(132, 438, 96, 212),
-		Rect2(252, 330, 140, 320),
-		Rect2(418, 414, 108, 236),
-		Rect2(548, 350, 172, 300),
-	]:
-		draw_rect(building, Color("46565d"))
-	for building in [
-		Rect2(18, 500, 145, 150),
-		Rect2(188, 532, 118, 118),
-		Rect2(338, 476, 155, 174),
-		Rect2(526, 512, 128, 138),
-	]:
-		draw_rect(building, Color("37484e"))
-	draw_line(Vector2(610, 648), Vector2(610, 410), Color("34413c"), 9.0)
-	draw_line(Vector2(568, 450), Vector2(653, 450), Color("34413c"), 7.0)
 
 func _draw_perimeter() -> void:
 	# Corrugated fence with mismatched panels and the diagonal knock-mark motif.
