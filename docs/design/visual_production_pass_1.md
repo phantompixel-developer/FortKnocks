@@ -103,6 +103,19 @@ Approve in-engine before producing variants.
 
 Prefer sprite sheets/atlases and layered transparent assets for world art. Use procedural Godot drawing only where it remains visually competitive or is useful for dynamic state/VFX.
 
+## Representative production gate status
+
+**Implementation status: complete on branch; local Play acceptance pending.**
+
+Implemented in this gate:
+- layered production Fort Knocks backdrop,
+- reusable production Run-down Compact,
+- layered production Outskirts environment,
+- scalable shared industrial UI surfaces,
+- production player survivor aligned to existing gameplay geometry.
+
+Do not scale this asset pipeline further until the user confirms this set works in normal Play at portrait phone scale.
+
 ## Acceptance gate
 
 Do not expand to the rest of the game until local Play confirms:
