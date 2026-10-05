@@ -26,6 +26,7 @@ const SignalRelayScript := preload("res://game/battle/signal_relay.gd")
 const SalvageLoadScript := preload("res://game/battle/salvage_load.gd")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const PortraitLayoutScript := preload("res://game/presentation/portrait_layout.gd")
 
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
@@ -76,6 +77,8 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var mission_brief_focus: Label = $HUD/Root/MissionBriefCard/Focus
 @onready var mission_brief_text: Label = $HUD/Root/MissionBriefCard/Briefing
 @onready var mission_brief_objective: Label = $HUD/Root/MissionBriefCard/Objective
+@onready var mission_brief_warning: Label = $HUD/Root/MissionBriefCard/TacticalWarning
+@onready var begin_run_button: Button = $HUD/Root/MissionBriefCard/BeginRunButton
 @onready var encounter_picker: ColorRect = $HUD/Root/EncounterPicker
 @onready var picker_briefing_label: Label = $HUD/Root/EncounterPicker/BriefingLabel
 @onready var mission_button_list: VBoxContainer = $HUD/Root/EncounterPicker/MissionButtons
@@ -109,6 +112,7 @@ var _player_module: PlatformModuleDefinition
 var _campaign_weapon_ids: Array[String] = []
 var _completion_emitted := false
 var _progression_reward := 0
+var _progression_processed := false
 
 var _player_shots_fired := 0
 var _player_direct_hits := 0
@@ -148,6 +152,7 @@ func prepare_for_campaign(
 
 func set_progression_reward(amount: int) -> void:
 	_progression_reward = maxi(0, amount)
+	_progression_processed = true
 	if result_card != null and result_card.visible:
 		_update_result_card()
 
@@ -170,6 +175,9 @@ func _ready() -> void:
 	shock_capsule_button.pressed.connect(func() -> void: _select_weapon(ShockCapsule as WeaponDefinition))
 	restart_button.pressed.connect(_restart)
 	change_encounter_button.pressed.connect(_change_encounter)
+	begin_run_button.pressed.connect(_confirm_run_brief)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	call_deferred("_apply_responsive_layout")
 
 	world.visible = false
 	health_label.visible = false
@@ -256,6 +264,7 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	_current_mission = definition
 	_completion_emitted = false
 	_progression_reward = 0
+	_progression_processed = false
 	_reset_encounter_metrics()
 	_configure_mission(definition)
 	encounter_picker.visible = false
@@ -269,6 +278,11 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	hint_label.text = definition.briefing
 	_update_hud()
 	_show_mission_brief(definition)
+
+	if _campaign_managed:
+		# Campaign brief is player-controlled. Never put narrative/objective copy
+		# on a timer; the run starts only when the player explicitly commits.
+		return
 
 	await get_tree().process_frame
 	await get_tree().create_timer(1.15).timeout
@@ -1215,32 +1229,70 @@ func _reset_encounter_metrics() -> void:
 
 func _show_mission_brief(definition: MissionDefinition) -> void:
 	mission_brief_title.text = definition.display_name.to_upper()
-	mission_brief_focus.text = definition.test_focus
-	var briefing := definition.briefing
-	if _campaign_managed and _player_platform != null:
-		var effective_cover := _player_platform.cover_health
-		if _player_module != null:
-			effective_cover += _player_module.cover_health_bonus
-		briefing += "\n\nPLATFORM: %s • %d COVER" % [
-			_player_platform.display_name.to_upper(),
-			effective_cover,
-		]
-		if _player_module != null:
-			briefing += "\nUTILITY: %s" % _player_module.display_name.to_upper()
-			if _player_module.crew_knockback_multiplier < 1.0:
-				var reduction_percent: int = int(round((1.0 - _player_module.crew_knockback_multiplier) * 100.0))
-				briefing += " • %d%% LESS DISPLACEMENT" % reduction_percent
-		if _campaign_weapon_ids.has("heavy_slug") and _campaign_weapon_ids.has("shock_capsule"):
-			briefing += "\nFIELD RACK: BOLT + SLUG + SHOCK"
-		elif _campaign_weapon_ids.size() >= 2:
-			var specialist: String = "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
-			briefing += "\nFIELD RACK: SCRAP BOLT + %s" % specialist
-	mission_brief_text.text = briefing
+	mission_brief_text.text = definition.briefing
 	mission_brief_objective.text = "OBJECTIVE: %s" % definition.objective_text
+
+	if _campaign_managed:
+		mission_brief_focus.text = "%s • %s" % [
+			_region_display_name(definition.region_id),
+			definition.location_tag,
+		]
+		var warning_lines: Array[String] = []
+		if not definition.tactical_warning.is_empty():
+			warning_lines.append("FIELD NOTE • %s" % definition.tactical_warning)
+		var loadout_line := _campaign_loadout_line()
+		if not loadout_line.is_empty():
+			warning_lines.append(loadout_line)
+		mission_brief_warning.text = "\n".join(warning_lines)
+		mission_brief_warning.visible = not warning_lines.is_empty()
+		begin_run_button.visible = true
+		begin_run_button.disabled = false
+		begin_run_button.text = "BEGIN RUN"
+	else:
+		mission_brief_focus.text = definition.test_focus
+		mission_brief_warning.visible = false
+		begin_run_button.visible = false
+
 	mission_brief_card.visible = true
+
+func _confirm_run_brief() -> void:
+	if not _campaign_managed or _current_mission == null or phase != Phase.INTRO:
+		return
+	begin_run_button.disabled = true
+	mission_brief_card.visible = false
+	_start_player_turn(true)
+
+func _campaign_loadout_line() -> String:
+	if _player_platform == null:
+		return ""
+
+	var specialist := "HEAVY SLUG" if _campaign_weapon_ids.has("heavy_slug") else "SHOCK CAPSULE"
+	var rack := "BOLT + SLUG + SHOCK" if (
+		_campaign_weapon_ids.has("heavy_slug")
+		and _campaign_weapon_ids.has("shock_capsule")
+	) else "BOLT + %s" % specialist
+
+	var parts: Array[String] = [
+		"LOADOUT • %s" % _player_platform.display_name.to_upper(),
+		rack,
+	]
+	if _player_module != null:
+		parts.append(_player_module.display_name.to_upper())
+	return " • ".join(parts)
+
+func _region_display_name(region_id: String) -> String:
+	match region_id:
+		"suburbs":
+			return "SUBURBS"
+		_:
+			return "OUTSKIRTS"
 
 func _update_result_card() -> void:
 	if _current_mission == null:
+		return
+
+	if _campaign_managed:
+		_update_campaign_debrief()
 		return
 
 	result_encounter_label.text = _current_mission.display_name.to_upper()
@@ -1253,16 +1305,58 @@ func _update_result_card() -> void:
 		int(_weapon_shots["heavy_slug"]),
 		int(_weapon_shots["shock_capsule"]),
 	]
-	var takeaway := _encounter_takeaway()
-	if _campaign_managed:
-		if not player.is_alive() or _objective_failed():
-			result_takeaway_label.text = "NO SALVAGE RECOVERED\n%s" % takeaway
-		elif _progression_reward > 0:
-			result_takeaway_label.text = "+%d SALVAGE SECURED\n%s" % [_progression_reward, takeaway]
+	result_takeaway_label.text = _encounter_takeaway()
+
+func _update_campaign_debrief() -> void:
+	var victory := player.is_alive() and _objective_completed()
+	result_title_label.text = "ROUTE SECURED" if victory else "RUN FAILED"
+	result_encounter_label.text = "%s • %s" % [
+		_region_display_name(_current_mission.region_id),
+		_current_mission.display_name.to_upper(),
+	]
+
+	if not victory:
+		var failure := "PROTECTED SALVAGE LOST" if _objective_failed() else "SURVIVOR INCAPACITATED"
+		result_stats_label.text = "%s\nNO SALVAGE RECOVERED" % failure
+		result_takeaway_label.text = "PERFORMANCE • %d SHOTS • %d DIRECT • %d ENVIRONMENT" % [
+			_player_shots_fired,
+			_player_direct_hits,
+			_player_environment_events,
+		]
+		return
+
+	var reward_line := "RECOVERY REPORT PENDING"
+	if _progression_processed:
+		reward_line = (
+			"+%d SALVAGE RECOVERED" % _progression_reward
+			if _progression_reward > 0
+			else "ROUTE ALREADY CLEARED • NO NEW SALVAGE"
+		)
+
+	result_stats_label.text = "OBJECTIVE COMPLETE\n%s\n%s" % [
+		_current_mission.objective_text,
+		reward_line,
+	]
+
+	var progression_line := ""
+	if _progression_processed and _progression_reward > 0:
+		if not _current_mission.next_mission_id.is_empty():
+			var next_mission := EncounterCatalogScript.by_id(_current_mission.next_mission_id)
+			if next_mission != null:
+				progression_line = "NEXT ROUTE OPEN • %s" % next_mission.display_name.to_upper()
 		else:
-			result_takeaway_label.text = "ROUTE ALREADY CLEARED • NO NEW SALVAGE\n%s" % takeaway
-	else:
-		result_takeaway_label.text = takeaway
+			progression_line = "%s ROUTE SECURED" % _region_display_name(_current_mission.region_id)
+
+	var performance := "PERFORMANCE • %d SHOTS • %d DIRECT • %d ENVIRONMENT" % [
+		_player_shots_fired,
+		_player_direct_hits,
+		_player_environment_events,
+	]
+	result_takeaway_label.text = (
+		"%s\n%s" % [progression_line, performance]
+		if not progression_line.is_empty()
+		else performance
+	)
 
 func _encounter_takeaway() -> String:
 	if _current_mission != null and _current_mission.objective_mode == "protect_salvage":
@@ -1362,6 +1456,34 @@ func _change_encounter() -> void:
 		get_tree().root.remove_meta(PENDING_MISSION_META)
 	get_tree().reload_current_scene()
 
+
+
+func _apply_responsive_layout() -> void:
+	PortraitLayoutScript.apply(
+		$HUD/Root,
+		[
+			turn_label,
+			health_label,
+			enemy_health_label,
+			inspect_button,
+			enemy_locator_label,
+			weapon_tray,
+			weapon_info_card,
+		],
+		[
+			feedback_label,
+			mission_brief_card,
+			encounter_picker,
+			result_card,
+			restart_button,
+			change_encounter_button,
+		],
+		[
+			target_card,
+			control_deck,
+			hint_label,
+		]
+	)
 
 func _fire_cue(weapon: WeaponDefinition) -> StringName:
 	if weapon == null:
