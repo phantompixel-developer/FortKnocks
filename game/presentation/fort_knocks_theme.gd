@@ -105,6 +105,56 @@ static func style_card(rect: ColorRect, emphasis := 0) -> void:
 		_:
 			surface.modulate = Color.WHITE
 
+
+static func style_display_label(label: Label) -> void:
+	if label == null:
+		return
+	label.add_theme_color_override("font_color", HAZARD)
+	label.add_theme_color_override("font_outline_color", SHADOW)
+	label.add_theme_constant_override("outline_size", 3)
+	label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.78))
+	label.add_theme_constant_override("shadow_offset_x", 2)
+	label.add_theme_constant_override("shadow_offset_y", 3)
+
+static func style_section_label(label: Label, accent := false) -> void:
+	if label == null:
+		return
+	label.add_theme_color_override("font_color", HAZARD if accent else BONE)
+	label.add_theme_color_override("font_outline_color", SHADOW)
+	label.add_theme_constant_override("outline_size", 2)
+
+static func style_meta_label(label: Label, cold := false) -> void:
+	if label == null:
+		return
+	label.add_theme_color_override("font_color", COLD if cold else MUTED)
+	label.add_theme_color_override("font_outline_color", SHADOW)
+	label.add_theme_constant_override("outline_size", 1)
+
+static func style_primary_button(button: Button) -> void:
+	if button == null:
+		return
+	var button_texture: Texture2D = ProductionArtScript.texture_from_svg(BUTTON_TEXTURE_PATH)
+	button.add_theme_color_override("font_color", Color("fff0c8"))
+	button.add_theme_color_override("font_hover_color", Color.WHITE)
+	if button_texture != null:
+		button.add_theme_stylebox_override(
+			"normal",
+			_texture_box(button_texture, Color(1.0, 0.82, 0.44, 1.0), 20.0, 15.0)
+		)
+		button.add_theme_stylebox_override(
+			"hover",
+			_texture_box(button_texture, Color(1.0, 0.92, 0.66, 1.0), 20.0, 15.0)
+		)
+		button.add_theme_stylebox_override(
+			"pressed",
+			_texture_box(button_texture, Color(1.0, 0.68, 0.28, 1.0), 20.0, 15.0)
+		)
+
+static func style_secondary_button(button: Button) -> void:
+	if button == null:
+		return
+	button.add_theme_color_override("font_color", MUTED)
+
 static func mark_active(button: Button, active: bool) -> void:
 	if button == null:
 		return
