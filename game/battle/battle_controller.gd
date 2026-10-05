@@ -345,6 +345,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 
 	if battlefield_visual.has_method("configure_variant"):
 		battlefield_visual.call("configure_variant", definition.visual_variant)
+	if battlefield_visual.has_method("configure_mission"):
+		battlefield_visual.call("configure_mission", definition.id)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if phase != Phase.PLAYER_AIM or _is_inspecting:
