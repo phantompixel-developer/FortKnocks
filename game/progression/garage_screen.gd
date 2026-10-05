@@ -85,7 +85,7 @@ func _rebuild_platform_list() -> void:
 			action = "EQUIP"
 			enabled = true
 		elif not definition.purchasable:
-			action = "NEXT PROGRESSION PROOF"
+			action = "FUTURE TIER"
 		elif not unlocked:
 			action = "LOCKED"
 		elif salvage >= definition.purchase_cost:
@@ -95,13 +95,13 @@ func _rebuild_platform_list() -> void:
 			action = "NEED %d SALVAGE" % definition.purchase_cost
 
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 86.0)
-		button.add_theme_font_size_override("font_size", 12)
+		button.custom_minimum_size = Vector2(0.0, 80.0)
+		button.add_theme_font_size_override("font_size", 14)
 		button.disabled = not enabled
-		button.text = "%s\n%s\n%s" % [
+		button.text = "%s\n%s • %s" % [
 			definition.display_name.to_upper(),
-			_platform_selector_summary(definition.id),
 			action,
+			_platform_selector_summary(definition.id),
 		]
 		ThemeScript.mark_active(button, is_active)
 		button.pressed.connect(_request_platform.bind(definition.id))
