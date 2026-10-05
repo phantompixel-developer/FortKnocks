@@ -163,3 +163,39 @@ Before mobile release/export, the preferred final packaging step remains rasteri
 - **Created:** 2026-10-05
 - **Origin:** original repository-authored vector artwork.
 - **Gameplay authority:** none; existing health/collision/objective state remains authoritative.
+
+
+## Rival survivor
+
+- **Asset:** `characters/rival_survivor.svg`
+- **Purpose:** production opponent survivor used across current battles.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; collision, knockback and launch origin remain script-owned.
+- **Identity rule:** distinct from Fort Knocks through olive/rust materials without introducing a new faction genre or competing emblem.
+
+## Rival cover vehicle
+
+- **Asset:** `vehicles/rival_cover_vehicle.svg`
+- **Purpose:** faction-neutral opponent civilian cover vehicle.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; enemy cover HP/collision remain unchanged.
+
+## Shared battle hero interactives
+
+- **Assets:**
+  - `battle/shared/roadblock.svg`
+  - `battle/shared/scrap_gate.svg`
+  - `battle/shared/unstable_power_cell.svg`
+  - `battle/shared/unstable_power_cell_spent.svg`
+  - `battle/suburbs/signal_relay_destroyed.svg`
+  - `battle/suburbs/salvage_load_destroyed.svg`
+- **Purpose:** production presentation for the current tactical objects and their critical spent/destroyed states.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Gameplay authority:** none; existing collision, HP, collapse and discharge logic remains authoritative.
