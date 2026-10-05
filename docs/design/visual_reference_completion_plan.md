@@ -1,6 +1,6 @@
 # Fort Knocks — Visual Reference Completion Plan
 
-**Branch:** `feat/visual-reference-completion-all`  
+**Branch:** `feat/visual-reference-completion-one-pass`  
 **Authority:** `docs/design/visual_reference.md` and the approved Fort Knocks visual board  
 **Rule:** presentation may improve; gameplay contracts, collision, progression rules and portrait combat readability must not drift.
 
@@ -26,3 +26,22 @@ A task is implementation-complete only when:
 - procedural fallbacks remain available where production art decoding can fail.
 
 Runtime-dependent acceptance is deliberately not marked complete until normal Godot Play/device review is performed.
+
+
+## Single-branch consolidation status — 2026-10-05
+
+The complete current-content visual remediation is consolidated on this branch, created from current `main`.
+
+Source-level QA completed after consolidation:
+- branch is ahead of `main` and has no behind commits,
+- safe-area helper uses Godot 4.7-compatible `DisplayServer.get_display_safe_area()` with no arguments,
+- the shared portrait helper is integrated into Battle, Command Board, Garage, Workshop and Hub-facing UI,
+- campaign Run Brief is player-controlled; the 1.15-second timer remains only for standalone Encounter Proof,
+- all ten current missions have explicit region, location and tactical-warning metadata,
+- all six Outskirts and four Suburbs missions have mission-aware production landmark coverage,
+- all five current Fort Knocks settlement-growth overlays use authored production layers,
+- compact HUD and tactical inspect panel variants are integrated,
+- shared screen-reveal transitions are integrated and guarded against overlapping tweens,
+- modified runtime GDScript contains no direct `.svg` preload usage.
+
+These checks establish source/architecture completion only. Normal Godot Play and device review remain mandatory before declaring visual acceptance, because repository inspection cannot prove final phone-scale composition, touch comfort, rendered SVG quality, import behavior, frame pacing or device safe-area behavior.
