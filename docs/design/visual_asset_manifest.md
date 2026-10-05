@@ -298,3 +298,33 @@ Implemented:
 Enemy cover remains on faction-neutral procedural art by design.
 
 After local Play acceptance, the next environment production target is **Suburbs**, not another global style redesign.
+
+
+## Suburbs production batch — 2026-10-05
+
+Implemented on `feat/visual-production-batch-2` after explicit approval to continue the same branch.
+
+Shared Suburbs production layers:
+- sky / distant residential silhouette,
+- residential-commercial midground,
+- local-road terrain skin,
+- dark garden-wall / scrub foreground framing.
+
+Mission-specific presentation:
+- Dead Air service-strip landmark,
+- Crossroads junction/corner-shop landmark,
+- Loaded Up garage/service-lane landmark,
+- Hot Cargo retaining/service-infrastructure landmark.
+
+Interactive presentation:
+- authored Signal Relay,
+- authored protected Salvage Load,
+- Suburbs-specific retaining-wall treatment for elevated authored platforms.
+
+Architecture rule:
+- `BattlefieldVisual.configure_mission()` receives mission identity for decorative composition only.
+- mission resources remain authoritative for collision, positions, objectives and tactics.
+- all Suburbs SVG masters continue through `ProductionArt.texture_from_svg()`; no direct SVG resource preloads are permitted.
+
+Reference lock:
+This batch follows `docs/design/visual_reference.md`. It introduces a new **region identity**, not a new game-wide art style.
