@@ -205,7 +205,7 @@ Do **not** generate all assets at once.
 
 First approval set:
 1. one Hub layered background set,
-2. one Run-down Compact production vehicle family,
+2. one Run-down Compact production vehicle family **— IMPLEMENTED as the first reusable authored SVG proof across Hub / Garage / player Battle**,
 3. one Outskirts background/midground/foreground layer set,
 4. one shared UI panel/button kit,
 5. one survivor production silhouette.
@@ -237,3 +237,16 @@ An asset is rejected when it:
 - uses a different lighting/rendering style from the locked reference,
 - cannot be mapped cleanly to the existing scene/gameplay architecture,
 - introduces an unapproved gameplay feature simply because the concept image showed it.
+
+
+## Implementation note — 2026-10-05
+
+The first representative asset-pipeline proof is now live:
+- `assets/art/production/vehicles/run_down_compact.svg` is the single authored source for the starting platform,
+- Hub reuses the source directly,
+- Garage now has a dynamic platform showcase and reuses the source when Compact is active,
+- player Battle cover reuses the source while existing collision/damage rules stay authoritative,
+- enemy cover deliberately remains on its existing procedural/faction-neutral presentation so Fort Knocks markings are not leaked to opponents,
+- later platforms remain temporary fallbacks until their individual production assets are approved.
+
+This proves the intended separation between production art and gameplay geometry before the rest of the vehicle ladder is authored.
