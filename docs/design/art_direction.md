@@ -256,3 +256,19 @@ The current production baseline expects authored presentation for objects the pl
 - protected Salvage.
 
 Dynamic procedural drawing remains appropriate for trajectories, health strips, hit-state overlays, VFX and rubble where it communicates gameplay state more clearly than a baked sprite.
+
+
+## Reference-finish rendering recipe
+
+The representative high-fidelity pilot is documented in `docs/design/reference_finish_pilot.md`.
+
+For production art beyond the pilot:
+- preserve silhouette before surface detail,
+- build important materials with key/base/occlusion value planes,
+- use warm directional key light with cooler structural shadow,
+- place wear according to construction and handling rather than uniform noise,
+- strengthen contact/attachment shadows,
+- keep teal restricted to functional recovered technology,
+- reduce detail/contrast with depth.
+
+The pilot is the new rendering-quality reference beneath the locked primary concept board. It does not authorize a theme change.
