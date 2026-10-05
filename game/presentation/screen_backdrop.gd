@@ -63,29 +63,26 @@ func _draw() -> void:
 			_draw_command_motif(hazard, rust)
 
 func _draw_command_motif(hazard: Color, rust: Color) -> void:
-	# Recovered physical route board language.
-	draw_rect(Rect2(56, 700, 608, 360), Color("2a2722", 0.72))
-	draw_rect(Rect2(72, 718, 576, 324), Color("6a5843", 0.18))
-	var route := PackedVector2Array([
-		Vector2(124, 958),
-		Vector2(226, 892),
-		Vector2(318, 914),
-		Vector2(410, 836),
-		Vector2(526, 774),
-	])
-	for i in range(route.size() - 1):
-		draw_line(route[i], route[i + 1], Color("e4d3b0", 0.42), 4.0)
-	for i in range(route.size()):
-		var active := i < 3
-		draw_circle(route[i], 12.0, Color(hazard if active else rust, 0.62 if active else 0.34))
-		draw_circle(route[i], 5.0, Color("171c21"))
+	# Command room surrounds the real recovered map surface. Do not draw a
+	# second fake route here; route state belongs exclusively to RouteVisual.
+	draw_rect(Rect2(34, 230, 652, 838), Color("161d21", 0.88))
+	draw_rect(Rect2(46, 244, 628, 804), Color("252622", 0.76))
+	draw_line(Vector2(46, 244), Vector2(674, 244), Color("0b1014"), 16.0)
+	for x in [64.0, 656.0]:
+		draw_line(Vector2(x, 244), Vector2(x, 1050), Color("3a332a"), 12.0)
+	# Pinned scraps and route notes around, not on top of, the functional map.
 	for card in [
-		Rect2(100, 742, 126, 70),
-		Rect2(246, 774, 132, 74),
-		Rect2(430, 708, 150, 78),
+		Rect2(58, 284, 92, 58),
+		Rect2(566, 300, 92, 64),
+		Rect2(64, 930, 104, 66),
+		Rect2(550, 910, 108, 72),
 	]:
 		draw_rect(card, Color("d7c7a7", 0.16))
-		draw_line(card.position + Vector2(12, 18), Vector2(card.end.x - 12, card.position.y + 18), Color(rust, 0.5), 3.0)
+		draw_line(card.position + Vector2(10, 16), Vector2(card.end.x - 10, card.position.y + 16), Color(rust, 0.48), 3.0)
+	for x in [176.0, 544.0]:
+		draw_line(Vector2(x, 230), Vector2(x, 268), Color("0c1115"), 5.0)
+		draw_circle(Vector2(x, 280), 38.0, Color(hazard, 0.08))
+		draw_circle(Vector2(x, 280), 7.0, Color(hazard, 0.62))
 
 func _draw_garage_motif(hazard: Color, rust: Color, warm: Color) -> void:
 	# The garage is a room first: broad structural bay, task lights and a floor
