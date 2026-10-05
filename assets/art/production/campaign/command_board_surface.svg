@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="300" viewBox="0 0 560 300">
+<defs>
+ <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b3d31"/><stop offset="1" stop-color="#241d19"/></linearGradient>
+ <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cbbd9b"/><stop offset=".55" stop-color="#b3a786"/><stop offset="1" stop-color="#8f866f"/></linearGradient>
+</defs>
+<rect x="4" y="4" width="552" height="292" rx="8" fill="#0a0e11"/>
+<rect x="10" y="10" width="540" height="280" rx="6" fill="url(#frame)" stroke="#6e5a45" stroke-width="4"/>
+<rect x="28" y="28" width="504" height="244" rx="3" fill="url(#paper)" stroke="#1d2627" stroke-width="5"/>
+<!-- folded/creased recovered road map -->
+<path d="M116 31 V269 M246 31 V269 M390 31 V269" stroke="#756f5e" stroke-width="2" opacity=".42"/>
+<path d="M31 104 H529 M31 190 H529" stroke="#756f5e" stroke-width="2" opacity=".34"/>
+<!-- abstract roads -->
+<g fill="none" stroke-linecap="round">
+ <path d="M48 227 C116 197 126 166 198 153 S296 168 348 116 S442 64 514 72" stroke="#665f52" stroke-width="10" opacity=".55"/>
+ <path d="M74 62 C132 85 164 108 190 150 S239 214 302 234" stroke="#7c7461" stroke-width="7" opacity=".46"/>
+ <path d="M272 42 C286 102 317 132 354 151 S446 206 506 243" stroke="#746b59" stroke-width="6" opacity=".42"/>
+ <path d="M52 235 C123 205 155 169 203 154 S299 173 349 119 S438 72 510 80" stroke="#d3c49d" stroke-width="3" opacity=".48"/>
+</g>
+<!-- district blocks / waterways not implied; just built-up road marks -->
+<g fill="#6e6b5f" opacity=".36">
+ <rect x="62" y="92" width="38" height="28"/><rect x="112" y="116" width="28" height="40"/><rect x="316" y="60" width="42" height="30"/>
+ <rect x="402" y="112" width="48" height="26"/><rect x="454" y="164" width="34" height="40"/><rect x="232" y="202" width="42" height="28"/>
+</g>
+<!-- tape and pinned scraps -->
+<path d="M41 21 L95 21 L91 41 L45 42Z" fill="#b79357" opacity=".68"/>
+<path d="M462 252 L521 248 L524 270 L466 274Z" fill="#a47d4b" opacity=".62"/>
+<rect x="56" y="50" width="74" height="32" fill="#e0d5b9" opacity=".65" transform="rotate(-6 93 66)"/>
+<rect x="421" y="214" width="82" height="36" fill="#d8caaa" opacity=".6" transform="rotate(5 462 232)"/>
+<!-- frame hardware -->
+<circle cx="19" cy="19" r="4" fill="#0b1114" stroke="#7a7061" stroke-width="2"/><circle cx="541" cy="19" r="4" fill="#0b1114" stroke="#7a7061" stroke-width="2"/>
+<circle cx="19" cy="281" r="4" fill="#0b1114" stroke="#7a7061" stroke-width="2"/><circle cx="541" cy="281" r="4" fill="#0b1114" stroke="#7a7061" stroke-width="2"/>
+</svg>
