@@ -10,10 +10,12 @@ const MODULES_PATH := "res://assets/art/production/workshop/workshop_modules.svg
 var _weapons: Texture2D
 var _modules: Texture2D
 var _active_specialist := "heavy_slug"
+var _carry_both_specialists := false
 var _active_module := ""
 
-func configure_specialist(id: String) -> void:
+func configure_specialist(id: String, carry_both := false) -> void:
 	_active_specialist = id
+	_carry_both_specialists = carry_both
 	queue_redraw()
 
 func configure_module(id: String) -> void:
@@ -41,6 +43,12 @@ func _draw_weapon_marker() -> void:
 		"heavy_slug": Vector2(size.x * 0.50, size.y * 0.52),
 		"shock_capsule": Vector2(size.x * 0.83, size.y * 0.52),
 	}
+	if _carry_both_specialists:
+		for id in ["heavy_slug", "shock_capsule"]:
+			var both_p: Vector2 = centers[id]
+			draw_arc(both_p, 42.0, 0.0, TAU, 36, Color("e7ad3c", 0.88), 3.0, true)
+			draw_circle(both_p + Vector2(31, -29), 6.0, Color("e7ad3c"))
+		return
 	if not centers.has(_active_specialist):
 		return
 	var p: Vector2 = centers[_active_specialist]
