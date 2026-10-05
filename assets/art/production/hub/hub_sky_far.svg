@@ -1,26 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
-<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#496b7e"/><stop offset=".28" stop-color="#68747a"/><stop offset=".47" stop-color="#9b6c5e"/><stop offset=".62" stop-color="#c3734b"/><stop offset="1" stop-color="#272b2d"/></linearGradient><radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe1a1"/><stop offset=".6" stop-color="#efaa59" stop-opacity=".76"/><stop offset="1" stop-color="#e47b45" stop-opacity="0"/></radialGradient></defs>
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#31536b"/>
+    <stop offset=".27" stop-color="#516b78"/>
+    <stop offset=".48" stop-color="#a16557"/>
+    <stop offset=".66" stop-color="#df7c45"/>
+    <stop offset="1" stop-color="#3a302d"/>
+  </linearGradient>
+  <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#fff0b6"/>
+    <stop offset=".38" stop-color="#ffd178" stop-opacity=".95"/>
+    <stop offset=".7" stop-color="#ed9951" stop-opacity=".46"/>
+    <stop offset="1" stop-color="#e77b43" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="haze" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#f4bc83" stop-opacity=".04"/>
+    <stop offset=".5" stop-color="#ffd7aa" stop-opacity=".24"/>
+    <stop offset="1" stop-color="#ef9053" stop-opacity=".04"/>
+  </linearGradient>
+</defs>
 <rect width="720" height="1280" fill="url(#sky)"/>
-<circle cx="590" cy="212" r="116" fill="url(#sun)"/><circle cx="590" cy="212" r="36" fill="#ffd98f" opacity=".82"/>
-<path d="M0 350 C150 320 275 375 410 348 S610 332 720 356 L720 505 L0 505Z" fill="#f0d6b7" opacity=".07"/>
-<!-- far ruined skyline -->
-<g fill="#53636a" opacity=".88">
- <path d="M0 610 V432 H86 V490 H136 V388 H205 V610Z"/>
- <path d="M218 610 V468 H292 V350 H372 V432 H418 V610Z"/>
- <path d="M432 610 V420 H510 V472 H558 V366 H632 V430 H720 V610Z"/>
+<circle cx="586" cy="232" r="142" fill="url(#sun)"/>
+<circle cx="586" cy="232" r="39" fill="#ffdfa0" opacity=".92"/>
+<path d="M0 290 C120 255 250 312 360 280 S590 250 720 300 L720 430 L0 430Z" fill="#f5d4b4" opacity=".07"/>
+<path d="M0 430 C150 392 280 458 430 420 S620 390 720 442 L720 565 L0 565Z" fill="url(#haze)"/>
+
+<!-- layered ruined skyline with broken crowns / towers -->
+<g fill="#51626a" opacity=".78">
+  <path d="M0 596 V470 H58 V410 H96 V510 H132 V382 H176 V596Z"/>
+  <path d="M192 596 V478 H238 V440 H276 V352 H324 V596Z"/>
+  <path d="M338 596 V458 H382 V398 H432 V516 H472 V372 H516 V596Z"/>
+  <path d="M530 596 V470 H570 V408 H612 V338 H646 V510 H690 V390 H720 V596Z"/>
 </g>
-<g fill="#3d4d54" opacity=".9">
- <rect x="16" y="518" width="138" height="126"/><rect x="178" y="544" width="112" height="100"/><rect x="314" y="490" width="150" height="154"/><rect x="492" y="526" width="110" height="118"/><rect x="618" y="506" width="102" height="138"/>
+<g fill="#34464f" opacity=".9">
+  <rect x="0" y="540" width="122" height="122"/>
+  <rect x="146" y="510" width="112" height="152"/>
+  <rect x="280" y="532" width="132" height="130"/>
+  <rect x="430" y="500" width="108" height="162"/>
+  <rect x="556" y="520" width="164" height="142"/>
 </g>
-<!-- old mast / utility -->
-<g stroke="#26343a" fill="none" stroke-linecap="round"><path d="M92 620 V398 M62 438 H122" stroke-width="10"/><path d="M62 438 C220 482 310 414 442 448 S612 430 700 458" stroke-width="3" opacity=".65"/></g>
-<rect y="644" width="720" height="636" fill="#242829"/>
-<rect y="644" width="720" height="24" fill="#5b574f"/>
-<!-- reference-finish propagation -->
-<g id="reference_finish_v2" fill="none" stroke-linecap="round">
-<path d="M0 382 C150 350 300 400 454 366 S632 340 720 362" stroke="#f0cfaa" stroke-width="18" opacity=".055"/>
-<path d="M16 514 H154 M178 540 H290 M314 486 H464 M492 522 H602 M618 502 H714" stroke="#d89b68" stroke-width="3" opacity=".12"/>
-<path d="M0 638 H720" stroke="#1b2528" stroke-width="8" opacity=".36"/>
-<g stroke="#263a3c" stroke-width="3" opacity=".32"><path d="M250 610 V520 M535 610 V500 M666 610 V540"/></g>
+<!-- broken windows catch sunset without looking inhabited -->
+<g fill="#d98b55" opacity=".16">
+  <rect x="22" y="558" width="16" height="11"/><rect x="57" y="574" width="18" height="10"/>
+  <rect x="170" y="536" width="18" height="12"/><rect x="213" y="553" width="15" height="11"/>
+  <rect x="308" y="550" width="18" height="11"/><rect x="365" y="566" width="16" height="10"/>
+  <rect x="455" y="520" width="17" height="11"/><rect x="494" y="545" width="17" height="11"/>
+  <rect x="590" y="544" width="18" height="11"/><rect x="642" y="560" width="15" height="10"/>
 </g>
+
+<!-- distant utility silhouette -->
+<g stroke="#26373f" fill="none" stroke-linecap="round">
+  <path d="M94 650 V390 M58 435 H130" stroke-width="10"/>
+  <path d="M58 435 C230 485 318 408 454 446 S618 424 714 460" stroke-width="3" opacity=".6"/>
+</g>
+
+<rect y="662" width="720" height="618" fill="#242829"/>
 </svg>
