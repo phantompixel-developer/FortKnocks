@@ -1,5 +1,10 @@
 extends Node2D
 
+const OUTSKIRTS_SKY_FAR: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_sky_far.svg")
+const OUTSKIRTS_MIDGROUND: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_midground.svg")
+const OUTSKIRTS_ROAD: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_road.svg")
+const OUTSKIRTS_FOREGROUND: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_foreground.svg")
+
 const WORLD_WIDTH := 2160.0
 const WORLD_HEIGHT := 1280.0
 const ROAD_TOP := 930.0
@@ -16,21 +21,48 @@ func configure_variant(value: int) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	_draw_atmosphere()
-	_draw_far_outskirts()
+	if _variant == 3:
+		# Suburbs remains on the accepted procedural baseline until its own
+		# region-specific production pass. Do not blur the two art milestones.
+		_draw_atmosphere()
+		_draw_far_outskirts()
+		_draw_suburbs_backdrop()
+		_draw_road()
+		_draw_foreground_dressing()
+		return
+
+	_draw_production_outskirts_base()
 
 	match _variant:
 		1:
 			_draw_overpass_backdrop()
 		2:
 			_draw_salvage_backdrop()
-		3:
-			_draw_suburbs_backdrop()
 		_:
-			_draw_city_backdrop()
+			pass
 
-	_draw_road()
-	_draw_foreground_dressing()
+	_draw_production_outskirts_road()
+	_draw_production_outskirts_foreground()
+
+func _draw_production_outskirts_base() -> void:
+	draw_texture_rect(OUTSKIRTS_SKY_FAR, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+	draw_texture_rect(OUTSKIRTS_MIDGROUND, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+
+func _draw_production_outskirts_road() -> void:
+	draw_texture_rect(
+		OUTSKIRTS_ROAD,
+		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
+		false
+	)
+
+func _draw_production_outskirts_foreground() -> void:
+	# Decorative only: no collision and intentionally concentrated below the
+	# aiming corridor, matching the approved secondary-reference foreground.
+	draw_texture_rect(
+		OUTSKIRTS_FOREGROUND,
+		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
+		false
+	)
 
 func _draw_atmosphere() -> void:
 	# Locked visual reference: warm cinematic horizon with cooler upper atmosphere.
