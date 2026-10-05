@@ -128,3 +128,38 @@ Before mobile release/export, the preferred final packaging step remains rasteri
 - **Created:** 2026-10-05
 - **Origin:** original repository-authored vector artwork.
 - **Scope guardrail:** these assets depict only Scrap Bolt, Heavy Slug, Shock Capsule, Spotter Rack, Ballast Crates, Twin Field Rack and Stabilizer Rig.
+
+
+## Suburbs environment kit
+
+- **Assets:**
+  - `battle/suburbs/suburbs_sky_far.svg`
+  - `battle/suburbs/suburbs_midground.svg`
+  - `battle/suburbs/suburbs_road.svg`
+  - `battle/suburbs/suburbs_foreground.svg`
+  - `battle/suburbs/suburbs_dead_air_landmark.svg`
+  - `battle/suburbs/suburbs_crossroads_landmark.svg`
+  - `battle/suburbs/suburbs_loaded_up_landmark.svg`
+  - `battle/suburbs/suburbs_hot_cargo_landmark.svg`
+- **Purpose:** layered production environment for the four current Suburbs encounters, using one shared regional identity plus mission-specific low-contrast landmark composition.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork created specifically for Fort Knocks from the locked visual reference.
+- **External source art:** none.
+- **Licence dependency:** none.
+- **Gameplay authority:** none; collision and mission geometry remain authored in mission resources / battle nodes.
+
+## Suburbs Signal Relay
+
+- **Asset:** `battle/suburbs/signal_relay.svg`
+- **Purpose:** production hero visual for the Dead Air objective.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Gameplay authority:** none; existing health/collision/objective state remains authoritative.
+
+## Suburbs protected Salvage Load
+
+- **Asset:** `battle/suburbs/salvage_load.svg`
+- **Purpose:** production hero visual for Loaded Up / Hot Cargo protected-objective play.
+- **Created:** 2026-10-05
+- **Origin:** original repository-authored vector artwork.
+- **Gameplay authority:** none; existing health/collision/objective state remains authoritative.
