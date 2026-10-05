@@ -1,12 +1,15 @@
 class_name Combatant
 extends CharacterBody2D
 
+const PLAYER_SURVIVOR_TEXTURE: Texture2D = preload("res://assets/art/production/characters/fort_knocks_survivor.svg")
+
 signal health_changed(current: int, maximum: int)
 
 @export var display_name := "Survivor"
 @export var facing := 1
 @export var accent_color := Color("d8c49b")
 @export var max_health := 100
+@export var use_production_survivor := false
 
 var health := 100
 var knockback_multiplier: float = 1.0
@@ -52,6 +55,10 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
+	if use_production_survivor:
+		_draw_production_survivor()
+		return
+
 	var alive := health > 0
 	var cloth := accent_color if alive else Color("4b504d")
 	var outline := Color("171b1a")
@@ -133,3 +140,22 @@ func _draw() -> void:
 	draw_rect(Rect2(-36, -166, 72, 10), outline)
 	var ratio := float(health) / float(max_health)
 	draw_rect(Rect2(-33, -163, 66.0 * ratio, 4), Color("d4aa55") if alive else Color("5c625e"))
+
+
+func _draw_production_survivor() -> void:
+	var alive := health > 0
+	var tint := Color.WHITE if alive else Color(0.48, 0.50, 0.49, 1.0)
+	# The SVG was authored around the existing collision/launch contract.
+	# Muzzle remains close to get_launch_origin(); neither physics nor aim math
+	# derives from this rectangle.
+	var rect := Rect2(-90.0, -200.0, 180.0, 240.0)
+	draw_texture_rect(PLAYER_SURVIVOR_TEXTURE, rect, false, tint)
+
+	# Keep the established world-space health strip as gameplay information.
+	var outline := Color("090d11")
+	draw_rect(Rect2(-39, -218, 78, 11), outline)
+	var ratio := clampf(float(health) / float(max_health), 0.0, 1.0)
+	draw_rect(
+		Rect2(-35, -214, 70.0 * ratio, 4),
+		Color("e7ad3c") if alive else Color("5c625e")
+	)
