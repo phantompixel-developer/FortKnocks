@@ -1206,6 +1206,7 @@ func _check_game_over() -> bool:
 	if victory:
 		turn_label.text = "YOU WIN"
 		result_title_label.text = "VICTORY"
+		result_title_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 		if _current_mission != null and _current_mission.objective_mode == "disable_relay":
 			hint_label.text = "Signal relay disabled — route opened"
 			if _signal_relay != null and is_instance_valid(_signal_relay):
@@ -1224,6 +1225,7 @@ func _check_game_over() -> bool:
 	else:
 		turn_label.text = "DEFEAT"
 		result_title_label.text = "DEFEAT"
+		result_title_label.add_theme_color_override("font_color", ThemeScript.SIGNAL)
 		if _objective_failed():
 			hint_label.text = "Protected Salvage was destroyed"
 			if _salvage_load != null and is_instance_valid(_salvage_load):
