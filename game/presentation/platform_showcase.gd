@@ -1,7 +1,10 @@
 class_name PlatformShowcase
 extends Control
 
-const COMPACT_TEXTURE: Texture2D = preload("res://assets/art/production/vehicles/run_down_compact.svg")
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
+
+var _compact_texture: Texture2D
 
 var _platform_id := "run_down_compact"
 var _module_id := ""
@@ -16,6 +19,11 @@ func _draw() -> void:
 	draw_ellipse_shadow(center + Vector2(0, 54), Vector2(minf(size.x * 0.38, 205.0), 22.0))
 
 	if _platform_id == "run_down_compact":
+		if _compact_texture == null:
+			_compact_texture = ProductionArtScript.texture_from_svg(COMPACT_TEXTURE_PATH)
+		if _compact_texture == null:
+			_draw_fallback_platform(center)
+			return
 		var target_width := minf(size.x - 38.0, 430.0)
 		var target_height := target_width * 0.5
 		var target := Rect2(
@@ -24,7 +32,7 @@ func _draw() -> void:
 			target_width,
 			target_height
 		)
-		draw_texture_rect(COMPACT_TEXTURE, target, false)
+		draw_texture_rect(_compact_texture, target, false)
 		return
 
 	_draw_fallback_platform(center)
