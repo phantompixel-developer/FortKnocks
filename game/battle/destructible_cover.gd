@@ -6,6 +6,7 @@ const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_com
 const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
 const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
 const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
+const RIVAL_COVER_TEXTURE_PATH := "res://assets/art/production/vehicles/rival_cover_vehicle.svg"
 
 var _vehicle_textures: Dictionary = {}
 
@@ -119,6 +120,8 @@ func _draw() -> void:
 	# Enemy cover deliberately keeps faction-neutral procedural presentation.
 	if facing > 0 and _draw_production_platform(stage):
 		return
+	if facing < 0 and _draw_production_rival_cover(stage):
+		return
 
 	var darkening := float(stage) * 0.11
 	var shell := body_color.darkened(darkening)
@@ -177,6 +180,47 @@ func _draw() -> void:
 			PackedColorArray([Color("2d322f")])
 		)
 
+
+
+func _draw_production_rival_cover(stage: int) -> bool:
+	if not _vehicle_textures.has("rival_cover"):
+		_vehicle_textures["rival_cover"] = ProductionArtScript.texture_from_svg(RIVAL_COVER_TEXTURE_PATH)
+
+	var texture := _vehicle_textures["rival_cover"] as Texture2D
+	if texture == null:
+		return false
+
+	var target_width := _body_size.x + 46.0
+	var target_height := target_width * (250.0 / 520.0)
+	var target := Rect2(
+		-target_width * 0.5,
+		-target_height * 0.72,
+		target_width,
+		target_height
+	)
+	var tint := Color.WHITE.darkened(float(stage) * 0.10)
+
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1.0, 1.0))
+	draw_texture_rect(texture, target, false, tint)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+	if stage >= 1:
+		draw_line(Vector2(-78, -42), Vector2(-42, -8), Color("202729"), 7.0)
+		draw_line(Vector2(28, -58), Vector2(12, -30), Color("b7c0b6", 0.68), 3.0)
+		draw_line(Vector2(-92, -9), Vector2(-60, -2), Color("91553f", 0.76), 5.0)
+	if stage >= 2:
+		draw_polygon(
+			PackedVector2Array([
+				Vector2(42, -46),
+				Vector2(98, -41),
+				Vector2(92, -10),
+				Vector2(38, -15),
+			]),
+			PackedColorArray([Color("111820", 0.92)])
+		)
+		draw_line(Vector2(66, -56), Vector2(96, -18), Color("090d11"), 8.0)
+		draw_line(Vector2(-104, -36), Vector2(-78, 4), Color("090d11"), 7.0)
+	return true
 
 func _draw_production_platform(stage: int) -> bool:
 	var platform_id := _platform_id_from_visual_profile()
