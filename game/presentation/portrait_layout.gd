@@ -47,7 +47,7 @@ static func logical_safe_insets(viewport: Viewport) -> Vector4:
 	if screen_size_i.x <= 0 or screen_size_i.y <= 0:
 		return Vector4.ZERO
 
-	var safe := DisplayServer.get_display_safe_area(DisplayServer.SCREEN_OF_MAIN_WINDOW)
+	var safe := DisplayServer.get_display_safe_area()
 	if safe.size.x <= 0 or safe.size.y <= 0:
 		return Vector4.ZERO
 
