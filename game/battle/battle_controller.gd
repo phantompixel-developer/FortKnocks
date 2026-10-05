@@ -163,6 +163,8 @@ func _ready() -> void:
 		ThemeScript.style_card(card)
 	ThemeScript.style_card(mission_brief_card, 1)
 	ThemeScript.style_card(result_card, 1)
+	ThemeScript.style_primary_button(begin_run_button)
+	ThemeScript.style_secondary_button(change_encounter_button)
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	_selected_weapon = ScrapBolt as WeaponDefinition
 	_missions = EncounterCatalogScript.all()
