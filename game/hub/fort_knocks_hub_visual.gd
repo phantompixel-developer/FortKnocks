@@ -1,6 +1,8 @@
 class_name FortKnocksHubVisual
 extends Node2D
 
+const COMPACT_TEXTURE: Texture2D = preload("res://assets/art/production/vehicles/run_down_compact.svg")
+
 var _platform_id := "run_down_compact"
 var _module_id := ""
 var _campaign_stage := 0
@@ -178,17 +180,10 @@ func _draw_active_platform() -> void:
 		_draw_compact()
 
 func _draw_compact() -> void:
-	var shell := Color("70513f")
-	draw_rect(Rect2(402, 782, 226, 72), Color("171c1b"))
-	draw_rect(Rect2(408, 788, 214, 58), shell)
-	draw_polygon(
-		PackedVector2Array([Vector2(448, 788), Vector2(470, 744), Vector2(558, 744), Vector2(586, 788)]),
-		PackedColorArray([shell.lightened(0.05)])
-	)
-	draw_rect(Rect2(479, 751, 66, 28), Color("445a55"))
-	_draw_hub_wheels(454, 584, 858)
-	draw_line(Vector2(528, 792), Vector2(548, 770), Color("d4aa55"), 6.0)
-	draw_line(Vector2(548, 792), Vector2(568, 770), Color("a45f42"), 6.0)
+	# First production vehicle asset: same source is reused in Hub, Garage and Battle.
+	# Collision/stats remain owned by platform resources, not this presentation.
+	draw_texture_rect(COMPACT_TEXTURE, Rect2(365, 758, 290, 145), false)
+
 
 func _draw_pickup() -> void:
 	var shell := Color("4d655d")
