@@ -1,57 +1,117 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#44545a"/><stop offset="1" stop-color="#28363b"/></linearGradient><linearGradient id="rust" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b6045"/><stop offset="1" stop-color="#5d4037"/></linearGradient></defs>
-<!-- repeated roadside shells -->
-<g stroke="#182227" stroke-width="8" stroke-linejoin="round">
- <path d="M55 700 L55 570 95 530 330 530 372 570 372 700Z" fill="url(#wall)"/>
- <path d="M430 700 L430 600 480 552 720 552 760 600 760 700Z" fill="#3f5056"/>
- <path d="M845 700 L845 548 890 510 1132 510 1184 548 1184 700Z" fill="url(#wall)"/>
- <path d="M1275 700 L1275 590 1325 550 1540 550 1592 590 1592 700Z" fill="#405158"/>
- <path d="M1680 700 L1680 560 1738 520 2030 520 2080 560 2080 700Z" fill="url(#wall)"/>
-</g>
-<!-- shutters/windows/sign remnants -->
-<g>
- <rect x="95" y="596" width="115" height="104" fill="#222d31"/><path d="M103 610 H202 M103 628 H202 M103 646 H202 M103 664 H202" stroke="#556269" stroke-width="5"/>
- <rect x="232" y="584" width="96" height="50" fill="#56706f" opacity=".58"/><path d="M236 638 H326" stroke="#b75d39" stroke-width="8"/>
- <rect x="478" y="608" width="78" height="92" fill="#253136"/><rect x="584" y="596" width="126" height="58" fill="#536a69" opacity=".55"/>
- <rect x="900" y="566" width="126" height="134" fill="#243036"/><rect x="1040" y="558" width="102" height="64" fill="#4e6767" opacity=".6"/><path d="M1045 632 H1138" stroke="#d6a14a" stroke-width="8" opacity=".58"/>
- <rect x="1320" y="605" width="88" height="95" fill="#263237"/><rect x="1435" y="598" width="106" height="56" fill="#536866" opacity=".55"/>
- <rect x="1738" y="574" width="116" height="126" fill="#253136"/><rect x="1880" y="566" width="146" height="67" fill="#536b69" opacity=".52"/>
-</g>
-<!-- corrugated awnings / repair -->
-<path d="M36 546 L386 546 L360 584 L58 584Z" fill="#6e5b49" stroke="#1c262a" stroke-width="7"/>
-<path d="M822 526 L1208 526 L1181 566 L848 566Z" fill="#755846" stroke="#1c262a" stroke-width="7"/>
-<path d="M1652 536 L2108 536 L2080 578 L1680 578Z" fill="#665748" stroke="#1c262a" stroke-width="7"/>
-<g stroke="#b76a43" stroke-width="4" opacity=".55"><path d="M90 552 L130 580 M145 552 L185 580 M200 552 L240 580 M908 532 L950 562 M970 532 L1012 562 M1770 542 L1812 574 M1840 542 L1882 574"/></g>
-<!-- utility poles/cables -->
-<g stroke="#222f34" fill="none" stroke-linecap="round">
- <path d="M250 705 V350 M214 405 H286 M250 382 L236 350 M250 382 L264 350" stroke-width="13"/>
- <path d="M760 705 V392 M724 442 H796" stroke-width="13"/>
- <path d="M1260 705 V360 M1224 410 H1296" stroke-width="13"/>
- <path d="M1840 705 V370 M1804 420 H1876" stroke-width="13"/>
- <path d="M286 405 C470 455 570 402 724 442 M796 442 C960 485 1070 395 1224 410 M1296 410 C1490 458 1655 390 1804 420" stroke-width="4" opacity=".72"/>
-</g>
-<!-- stripped wrecks / roadside clutter -->
-<g stroke="#171f23" stroke-width="6">
- <path d="M520 676 L552 642 650 642 698 674 694 706 510 706Z" fill="#62473d"/><circle cx="552" cy="705" r="23" fill="#11171a"/><circle cx="656" cy="705" r="23" fill="#11171a"/>
- <path d="M1450 678 L1490 646 1582 646 1630 678 1622 708 1442 708Z" fill="#475a58"/><circle cx="1486" cy="706" r="22" fill="#11171a"/><circle cx="1588" cy="706" r="22" fill="#11171a"/>
-</g>
-<g fill="#78604a"><rect x="390" y="672" width="34" height="34"/><rect x="1200" y="676" width="42" height="30"/><rect x="2100" y="670" width="32" height="36"/></g>
+<defs>
+  <linearGradient id="wallA" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#526269"/>
+    <stop offset="1" stop-color="#28363b"/>
+  </linearGradient>
+  <linearGradient id="wallB" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#665b50"/>
+    <stop offset="1" stop-color="#344348"/>
+  </linearGradient>
+  <linearGradient id="awning" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#865d43"/>
+    <stop offset="1" stop-color="#4f514c"/>
+  </linearGradient>
+  <radialGradient id="warmGlow" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#f5b366" stop-opacity=".34"/>
+    <stop offset="1" stop-color="#e68449" stop-opacity="0"/>
+  </radialGradient>
+</defs>
 
-<!-- reference-finish pilot: warm key light, cool occlusion and material breakup -->
-<g fill="#101b20" opacity=".13">
- <path d="M55 650 H372 V700 H55Z"/><path d="M430 652 H760 V700 H430Z"/><path d="M845 640 H1184 V700 H845Z"/>
- <path d="M1275 650 H1592 V700 H1275Z"/><path d="M1680 642 H2080 V700 H1680Z"/>
+<!-- LEFT: roadside service / salvage strip -->
+<g stroke="#162127" stroke-width="8" stroke-linejoin="round">
+  <path d="M28 718 V548 L74 500 H356 L404 548 V718Z" fill="url(#wallA)"/>
+  <path d="M430 718 V582 L470 548 H724 L770 586 V718Z" fill="url(#wallB)"/>
+</g>
+<path d="M8 536 H418 L386 584 H42Z" fill="url(#awning)" stroke="#182328" stroke-width="7"/>
+<g stroke="#b56a45" stroke-width="4" opacity=".54">
+  <path d="M62 544 L102 579 M122 544 L162 579 M182 544 L222 579 M242 544 L282 579"/>
+</g>
+<rect x="70" y="596" width="146" height="122" fill="#202b31"/>
+<path d="M82 614 H204 M82 638 H204 M82 662 H204 M82 686 H204" stroke="#536269" stroke-width="5"/>
+<rect x="242" y="574" width="118" height="58" fill="#486a6b" opacity=".58"/>
+<path d="M250 638 H350" stroke="#b65c36" stroke-width="9" opacity=".72"/>
+<rect x="478" y="608" width="94" height="110" fill="#263238"/>
+<rect x="604" y="596" width="118" height="58" fill="#526b69" opacity=".5"/>
+<circle cx="648" cy="628" r="46" fill="url(#warmGlow)"/>
+
+<!-- dead roadside tree / scrub for richer scene silhouette -->
+<g stroke="#39433a" stroke-linecap="round" fill="none">
+  <path d="M392 714 V538" stroke-width="11"/>
+  <path d="M392 584 L352 548 M392 602 L432 554 M389 628 L356 606" stroke-width="7"/>
+</g>
+
+<!-- MID-LEFT: taller service tower -->
+<g stroke="#162127" stroke-width="8">
+  <path d="M830 718 V530 L882 486 H1166 L1216 530 V718Z" fill="url(#wallA)"/>
+</g>
+<path d="M804 514 H1238 L1204 560 H840Z" fill="#725646" stroke="#182328" stroke-width="7"/>
+<rect x="882" y="570" width="144" height="148" fill="#222e34"/>
+<rect x="1048" y="560" width="118" height="66" fill="#506a68" opacity=".58"/>
+<path d="M1056 638 H1162" stroke="#dda44f" stroke-width="8" opacity=".6"/>
+<path d="M934 520 V424 H1016 V522" fill="none" stroke="#26353b" stroke-width="12"/>
+<rect x="946" y="438" width="58" height="38" rx="4" fill="#755548" stroke="#162127" stroke-width="5"/>
+<path d="M958 458 H992" stroke="#e7ad3c" stroke-width="4" opacity=".65"/>
+
+<!-- MID-RIGHT: low depots -->
+<g stroke="#162127" stroke-width="8">
+  <path d="M1270 718 V590 L1318 548 H1570 L1618 590 V718Z" fill="url(#wallB)"/>
+  <path d="M1680 718 V552 L1736 510 H2054 L2108 552 V718Z" fill="url(#wallA)"/>
+</g>
+<path d="M1246 578 H1640 L1610 616 H1280Z" fill="#5d544a" stroke="#182328" stroke-width="7"/>
+<path d="M1650 540 H2136 L2100 580 H1682Z" fill="#675545" stroke="#182328" stroke-width="7"/>
+<rect x="1324" y="612" width="96" height="106" fill="#263238"/>
+<rect x="1450" y="602" width="118" height="58" fill="#536866" opacity=".5"/>
+<rect x="1742" y="582" width="126" height="136" fill="#243036"/>
+<rect x="1892" y="570" width="154" height="68" fill="#526a68" opacity=".48"/>
+
+<!-- utility poles and sagging cables -->
+<g stroke="#213039" fill="none" stroke-linecap="round">
+  <path d="M250 720 V342 M210 404 H290" stroke-width="13"/>
+  <path d="M760 720 V382 M720 438 H800" stroke-width="13"/>
+  <path d="M1264 720 V350 M1224 408 H1304" stroke-width="13"/>
+  <path d="M1838 720 V362 M1798 420 H1878" stroke-width="13"/>
+  <path d="M290 404 C470 460 588 397 720 438 M800 438 C958 490 1080 392 1224 408 M1304 408 C1500 466 1662 392 1798 420"
+        stroke-width="4" opacity=".72"/>
+</g>
+<g fill="#b9aa83" opacity=".7">
+  <circle cx="214" cy="405" r="5"/><circle cx="286" cy="405" r="5"/>
+  <circle cx="724" cy="439" r="5"/><circle cx="796" cy="439" r="5"/>
+</g>
+
+<!-- stripped wrecks / barrels / salvage piles -->
+<g stroke="#151e22" stroke-width="6">
+  <path d="M510 686 L548 646 H654 L704 682 L696 716 H500Z" fill="#6a493e"/>
+  <circle cx="548" cy="716" r="24" fill="#0e1417"/><circle cx="658" cy="716" r="24" fill="#0e1417"/>
+  <path d="M1450 688 L1490 650 H1594 L1644 686 L1636 716 H1440Z" fill="#475b58"/>
+  <circle cx="1490" cy="716" r="23" fill="#0e1417"/><circle cx="1598" cy="716" r="23" fill="#0e1417"/>
+</g>
+<g fill="#7c6048" stroke="#1c2527" stroke-width="4">
+  <rect x="410" y="678" width="34" height="38" rx="3"/>
+  <rect x="1188" y="682" width="42" height="34" rx="3"/>
+  <rect x="2110" y="678" width="30" height="38" rx="3"/>
+</g>
+
+<!-- low vegetation / weeds -->
+<g stroke="#435c50" stroke-width="5" stroke-linecap="round">
+  <path d="M112 718 L96 682 M112 712 L128 674 M110 698 L86 688"/>
+  <path d="M744 718 L728 684 M744 712 L760 678 M742 700 L720 692"/>
+  <path d="M1660 718 L1644 680 M1660 710 L1680 674 M1656 700 L1638 690"/>
+</g>
+
+<!-- directional warm key, cool lower occlusion, chipped wear -->
+<g fill="#112027" opacity=".14">
+  <path d="M28 662 H404 V718 H28Z"/><path d="M430 666 H770 V718 H430Z"/>
+  <path d="M830 650 H1216 V718 H830Z"/><path d="M1270 664 H1618 V718 H1270Z"/>
+  <path d="M1680 656 H2108 V718 H1680Z"/>
 </g>
 <g fill="none" stroke-linecap="round">
- <path d="M70 566 H350 M448 596 H744 M862 544 H1164 M1294 586 H1570 M1698 556 H2058" stroke="#f0ad6b" stroke-width="4" opacity=".20"/>
- <path d="M78 580 L98 574 M120 594 L143 588 M500 618 L526 610 M914 584 L940 576 M1090 654 L1122 644 M1340 620 L1370 610 M1750 602 L1778 594 M1970 650 L2002 642" stroke="#d79563" stroke-width="3" opacity=".38"/>
- <path d="M108 674 L136 668 M278 682 L310 676 M626 676 L660 669 M980 680 L1012 674 M1460 682 L1496 674 M1900 678 L1934 670" stroke="#713f34" stroke-width="4" opacity=".46"/>
+  <path d="M44 548 H388 M446 582 H754 M846 530 H1200 M1290 590 H1598 M1698 552 H2088"
+        stroke="#f0ad6b" stroke-width="4" opacity=".23"/>
+  <path d="M90 590 L112 584 M150 604 L174 598 M516 632 L542 624 M902 582 L928 574 M1080 654 L1112 646
+           M1340 620 L1368 610 M1772 604 L1798 596 M1980 654 L2010 646"
+        stroke="#d79563" stroke-width="3" opacity=".42"/>
+  <path d="M96 696 L126 690 M278 702 L310 696 M636 696 L666 690 M986 702 L1018 696 M1470 700 L1504 692 M1910 698 L1944 690"
+        stroke="#703f34" stroke-width="4" opacity=".5"/>
 </g>
-<g stroke="#79878a" stroke-width="2" opacity=".18">
- <path d="M74 548 L102 582 M118 548 L146 582 M162 548 L190 582 M206 548 L234 582 M250 548 L278 582 M294 548 L322 582"/>
- <path d="M860 530 L892 564 M914 530 L946 564 M968 530 L1000 564 M1022 530 L1054 564 M1076 530 L1108 564"/>
-</g>
-<path d="M0 708 C420 690 850 708 1210 692 S1770 704 2160 688 V756 H0Z" fill="#1b2a2f" opacity=".09"/>
-<circle cx="280" cy="604" r="80" fill="#efa04d" opacity=".028"/><circle cx="1760" cy="596" r="90" fill="#efa04d" opacity=".024"/>
-
 </svg>
