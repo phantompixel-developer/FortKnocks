@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#496b7e"/><stop offset=".28" stop-color="#68747a"/><stop offset=".47" stop-color="#9b6c5e"/><stop offset=".62" stop-color="#c3734b"/><stop offset="1" stop-color="#272b2d"/></linearGradient><radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe1a1"/><stop offset=".6" stop-color="#efaa59" stop-opacity=".76"/><stop offset="1" stop-color="#e47b45" stop-opacity="0"/></radialGradient></defs>
+<rect width="720" height="1280" fill="url(#sky)"/>
+<circle cx="590" cy="212" r="116" fill="url(#sun)"/><circle cx="590" cy="212" r="36" fill="#ffd98f" opacity=".82"/>
+<path d="M0 350 C150 320 275 375 410 348 S610 332 720 356 L720 505 L0 505Z" fill="#f0d6b7" opacity=".07"/>
+<!-- far ruined skyline -->
+<g fill="#53636a" opacity=".88">
+ <path d="M0 610 V432 H86 V490 H136 V388 H205 V610Z"/>
+ <path d="M218 610 V468 H292 V350 H372 V432 H418 V610Z"/>
+ <path d="M432 610 V420 H510 V472 H558 V366 H632 V430 H720 V610Z"/>
+</g>
+<g fill="#3d4d54" opacity=".9">
+ <rect x="16" y="518" width="138" height="126"/><rect x="178" y="544" width="112" height="100"/><rect x="314" y="490" width="150" height="154"/><rect x="492" y="526" width="110" height="118"/><rect x="618" y="506" width="102" height="138"/>
+</g>
+<!-- old mast / utility -->
+<g stroke="#26343a" fill="none" stroke-linecap="round"><path d="M92 620 V398 M62 438 H122" stroke-width="10"/><path d="M62 438 C220 482 310 414 442 448 S612 430 700 458" stroke-width="3" opacity=".65"/></g>
+<rect y="644" width="720" height="636" fill="#242829"/>
+<rect y="644" width="720" height="24" fill="#5b574f"/>
+</svg>
