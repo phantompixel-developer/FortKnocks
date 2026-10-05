@@ -276,7 +276,7 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	health_label.visible = true
 	enemy_health_label.visible = true
 	turn_label.text = definition.display_name.to_upper()
-	hint_label.text = definition.briefing
+	hint_label.text = "Review the run brief" if _campaign_managed else definition.briefing
 	_update_hud()
 	_show_mission_brief(definition)
 
