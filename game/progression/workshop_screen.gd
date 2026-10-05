@@ -58,7 +58,7 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
-	weapon_display.configure_specialist(specialist_id)
+	weapon_display.configure_specialist(specialist_id, full_rack_active)
 	module_display.configure_module(active_module_id)
 	_update_specialist_loadout(specialist_id, full_rack_active)
 	_rebuild_modules(platform_id)
