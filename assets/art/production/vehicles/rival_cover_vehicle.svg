@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="250" viewBox="0 0 520 250">
+<defs>
+ <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#657267"/><stop offset=".52" stop-color="#4a574e"/><stop offset="1" stop-color="#343e39"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#617e7d"/><stop offset="1" stop-color="#2a4142"/></linearGradient>
+</defs>
+<ellipse cx="260" cy="215" rx="208" ry="17" fill="#080c0f" opacity=".58"/>
+<path d="M54 151 L86 128 L139 121 L180 66 L312 62 L368 113 L438 122 L469 148 L462 191 L58 191Z" fill="#0b1114"/>
+<path d="M66 150 L94 134 L148 128 L188 76 L307 72 L361 121 L430 130 L456 151 L450 177 L70 177Z" fill="url(#body)"/>
+<path d="M188 76 L307 72 L357 120 L160 120Z" fill="#172126" stroke="#0b1114" stroke-width="7"/>
+<path d="M198 82 L247 79 L247 114 L171 114Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<path d="M257 78 L302 77 L344 114 L257 114Z" fill="url(#glass)" stroke="#11191c" stroke-width="4"/>
+<!-- rival repair plates, no Fort Knocks slashes -->
+<path d="M294 135 L356 130 L363 163 L302 168Z" fill="#5e5547" stroke="#161d1f" stroke-width="5"/>
+<circle cx="306" cy="143" r="3.5" fill="#101618"/><circle cx="350" cy="139" r="3.5" fill="#101618"/><circle cx="312" cy="160" r="3.5" fill="#101618"/><circle cx="354" cy="156" r="3.5" fill="#101618"/>
+<path d="M321 160 L340 137" stroke="#9f5d43" stroke-width="8" stroke-linecap="round"/>
+<path d="M105 145 L153 136 M375 139 L425 146" stroke="#a07b5a" stroke-width="3" opacity=".42"/>
+<path d="M126 162 L172 153 M227 131 L213 163 M389 157 L421 164" stroke="#272923" stroke-width="3" opacity=".72"/>
+<rect x="444" y="141" width="21" height="14" rx="3" fill="#c6b681" stroke="#151b1c" stroke-width="4"/>
+<rect x="58" y="145" width="14" height="18" rx="3" fill="#8e4838" stroke="#151b1c" stroke-width="4"/>
+<g><circle cx="137" cy="184" r="39" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="137" cy="184" r="24" fill="#333b3d"/><circle cx="137" cy="184" r="10" fill="#817760"/></g>
+<g><circle cx="393" cy="184" r="39" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="393" cy="184" r="24" fill="#333b3d"/><circle cx="393" cy="184" r="10" fill="#817760"/></g>
+<path d="M100 176 A38 38 0 0 1 174 176 M356 176 A38 38 0 0 1 430 176" fill="none" stroke="#101619" stroke-width="8"/>
+<!-- improvised enemy plate/cage language -->
+<path d="M94 124 L110 92 L138 88 M401 125 L419 100" stroke="#273330" stroke-width="7" fill="none"/>
+<path d="M107 102 L133 127" stroke="#7f503d" stroke-width="4"/>
+</svg>
