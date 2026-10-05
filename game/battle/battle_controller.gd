@@ -50,7 +50,9 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var aim_guide: AimGuide = $AimGuide
 
 @onready var turn_label: Label = $HUD/Root/TurnLabel
+@onready var player_status_plate: ColorRect = $HUD/Root/PlayerStatusPlate
 @onready var health_label: Label = $HUD/Root/HealthLabel
+@onready var enemy_status_plate: ColorRect = $HUD/Root/EnemyStatusPlate
 @onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
 @onready var feedback_label: Label = $HUD/Root/FeedbackLabel
 @onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
@@ -201,7 +203,9 @@ func _ready() -> void:
 	call_deferred("_apply_responsive_layout")
 
 	world.visible = false
+	player_status_plate.visible = false
 	health_label.visible = false
+	enemy_status_plate.visible = false
 	enemy_health_label.visible = false
 	inspect_button.visible = false
 	enemy_locator_label.visible = false
@@ -250,7 +254,9 @@ func _show_encounter_picker() -> void:
 	result_card.visible = false
 	restart_button.visible = false
 	change_encounter_button.visible = false
+	player_status_plate.visible = false
 	health_label.visible = false
+	enemy_status_plate.visible = false
 	enemy_health_label.visible = false
 	turn_label.text = "ENCOUNTER PROOF"
 	picker_briefing_label.text = "Choose one of %d greybox battle problems. Each uses the same weapons and combat rules." % _missions.size()
@@ -297,7 +303,9 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	restart_button.visible = false
 	change_encounter_button.visible = false
 	world.visible = true
+	player_status_plate.visible = true
 	health_label.visible = true
+	enemy_status_plate.visible = true
 	enemy_health_label.visible = true
 	turn_label.text = definition.display_name.to_upper()
 	hint_label.text = "Review the run brief" if _campaign_managed else definition.briefing
@@ -1485,9 +1493,9 @@ func _apply_responsive_layout() -> void:
 		$HUD/Root,
 		[
 			turn_label,
-			$HUD/Root/PlayerStatusPlate,
+			player_status_plate,
 			health_label,
-			$HUD/Root/EnemyStatusPlate,
+			enemy_status_plate,
 			enemy_health_label,
 			inspect_button,
 			enemy_locator_label,
