@@ -9,6 +9,7 @@ const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 
 @onready var salvage_label: Label = $TopBar/SalvageLabel
 @onready var current_label: Label = $CurrentCard/CurrentLabel
+@onready var platform_showcase: PlatformShowcase = $CurrentCard/PlatformShowcase
 @onready var platform_list: VBoxContainer = $ProgressionCard/PlatformList
 @onready var detail_label: Label = $ProgressionCard/DetailLabel
 @onready var notice_label: Label = $NoticeLabel
@@ -31,9 +32,11 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	_snapshot = save_snapshot.duplicate(true)
 	var inventory := _snapshot.get("inventory", {}) as Dictionary
 	salvage_label.text = "SALVAGE  %d" % int(inventory.get("salvage", 0))
-	current_label.text = "ACTIVE\n%s" % _platform_display_name(
-		str(inventory.get("platform_id", "run_down_compact"))
-	)
+	var active_id := str(inventory.get("platform_id", "run_down_compact"))
+	var equipped_modules := inventory.get("equipped_module_by_platform", {}) as Dictionary
+	var module_id := str(equipped_modules.get(active_id, ""))
+	current_label.text = "ACTIVE • %s" % _platform_display_name(active_id)
+	platform_showcase.configure(active_id, module_id)
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
 	_rebuild_platform_list()
