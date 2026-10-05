@@ -75,8 +75,8 @@ func _rebuild() -> void:
 		var is_completed := completed.has(mission.id)
 
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 68.0)
-		button.add_theme_font_size_override("font_size", 13)
+		button.custom_minimum_size = Vector2(0.0, 72.0)
+		button.add_theme_font_size_override("font_size", 14)
 		button.disabled = not is_unlocked
 
 		var state := "LOCKED"
