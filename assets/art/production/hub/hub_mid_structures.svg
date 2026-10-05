@@ -1,43 +1,93 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280">
-<!-- background settlement shells; dynamic progression is drawn separately -->
-<g stroke="#11191d" stroke-width="7" stroke-linejoin="round">
- <path d="M10 650 L10 548 54 510 190 510 228 548 228 650Z" fill="#36464d"/>
- <path d="M250 650 L250 522 302 472 454 472 506 522 506 650Z" fill="#3b4c52"/>
- <path d="M532 650 L532 552 572 520 700 520 718 552 718 650Z" fill="#33434a"/>
-</g>
-<!-- corrugated roofs -->
-<path d="M-4 538 L232 538 L207 572 L20 572Z" fill="#675a4c" stroke="#162126" stroke-width="6"/>
-<path d="M232 510 L524 510 L492 548 L264 548Z" fill="#52656a" stroke="#162126" stroke-width="6"/>
-<path d="M516 544 L724 544 L700 578 L540 578Z" fill="#695748" stroke="#162126" stroke-width="6"/>
-<g stroke="#b96b43" stroke-width="3" opacity=".48"><path d="M26 544 L60 570 M74 544 L108 570 M286 516 L326 545 M340 516 L380 545 M566 550 L598 575 M614 550 L646 575"/></g>
-<!-- open bays / workshop glow -->
-<rect x="56" y="584" width="118" height="66" fill="#192329"/><rect x="74" y="596" width="82" height="54" fill="#b96b42" opacity=".2"/>
-<rect x="306" y="554" width="142" height="96" fill="#172127"/><circle cx="378" cy="576" r="44" fill="#efa04d" opacity=".08"/>
-<rect x="574" y="588" width="94" height="62" fill="#182328"/>
-<!-- scaffolding -->
-<g stroke="#25333a" stroke-width="9"><path d="M22 650 V482 M202 650 V490 M22 500 H202 M42 520 L184 638 M184 520 L42 638"/><path d="M534 650 V496 M694 650 V496 M540 516 H688"/></g>
-<!-- scrap signage without baked UI text -->
-<rect x="274" y="494" width="74" height="22" rx="3" fill="#1a2429" stroke="#6e7776" stroke-width="3"/><path d="M286 504 H335" stroke="#e7ad3c" stroke-width="4" opacity=".62"/>
+<defs>
+  <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#52616a"/>
+    <stop offset="1" stop-color="#26353b"/>
+  </linearGradient>
+  <linearGradient id="roof" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#765c48"/>
+    <stop offset=".55" stop-color="#4d5552"/>
+    <stop offset="1" stop-color="#303b3b"/>
+  </linearGradient>
+  <radialGradient id="lamp" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#ffd080" stop-opacity=".75"/>
+    <stop offset=".45" stop-color="#ed994c" stop-opacity=".22"/>
+    <stop offset="1" stop-color="#ed994c" stop-opacity="0"/>
+  </radialGradient>
+</defs>
 
-<!-- reference-finish pilot: directional light, corrugated material planes and lived-in wear -->
-<path d="M18 548 L222 548" stroke="#e4a867" stroke-width="4" opacity=".24"/>
-<path d="M260 522 L500 522" stroke="#eab36f" stroke-width="4" opacity=".22"/>
-<path d="M540 552 L708 552" stroke="#e2a264" stroke-width="4" opacity=".22"/>
-<path d="M20 578 H218 V650 H20Z" fill="#17272c" opacity=".16"/>
-<path d="M260 548 H500 V650 H260Z" fill="#13242a" opacity=".14"/>
-<path d="M540 578 H708 V650 H540Z" fill="#15252a" opacity=".17"/>
-<g stroke="#819099" stroke-width="2" opacity=".20">
- <path d="M38 520 V564 M60 516 V566 M82 514 V568 M104 514 V568 M126 514 V568 M148 514 V568 M170 516 V566 M192 520 V562"/>
- <path d="M272 492 V544 M300 480 V546 M328 478 V546 M356 478 V546 M384 478 V546 M412 482 V544 M440 492 V542 M468 504 V538"/>
- <path d="M548 530 V574 M574 522 V576 M600 520 V576 M626 522 V576 M652 528 V574 M678 536 V570"/>
+<!-- back scaffold towers -->
+<g stroke="#172329" stroke-width="9" fill="none">
+  <path d="M18 810 V380 M174 810 V404 M18 426 H174 M22 515 H170 M22 606 H170 M22 697 H170"/>
+  <path d="M22 426 L170 606 M170 426 L22 606 M22 606 L170 786 M170 606 L22 786"/>
+  <path d="M566 810 V340 M704 810 V370 M566 394 H704 M566 494 H704 M566 594 H704 M566 694 H704"/>
+  <path d="M570 394 L700 594 M700 394 L570 594 M570 594 L700 780 M700 594 L570 780"/>
 </g>
+
+<!-- vertical lookout / command shack -->
+<path d="M36 408 L60 372 H150 L172 408 V570 H36Z" fill="url(#steel)" stroke="#11191d" stroke-width="7"/>
+<path d="M25 406 L182 406 L164 438 H42Z" fill="url(#roof)" stroke="#172126" stroke-width="6"/>
+<rect x="64" y="460" width="78" height="52" fill="#18262c"/>
+<rect x="74" y="470" width="58" height="32" fill="#e8924f" opacity=".17"/>
+<path d="M103 372 V322 M76 334 H130" stroke="#27363b" stroke-width="7"/>
+<path d="M103 322 L122 300" stroke="#d9a54d" stroke-width="3" opacity=".6"/>
+
+<!-- central multi-level fabrication hall -->
+<path d="M176 820 V508 L224 454 H496 L544 508 V820Z" fill="url(#steel)" stroke="#11191d" stroke-width="8"/>
+<path d="M154 496 L566 496 L524 540 H190Z" fill="url(#roof)" stroke="#172126" stroke-width="7"/>
+<path d="M205 585 H515 V820 H205Z" fill="#1b282e" stroke="#121b1f" stroke-width="5"/>
+<rect x="232" y="620" width="112" height="126" fill="#162127"/>
+<rect x="372" y="610" width="116" height="136" fill="#172329"/>
+<path d="M238 636 H338 M238 660 H338 M238 684 H338 M238 708 H338" stroke="#46565b" stroke-width="4"/>
+<circle cx="430" cy="650" r="62" fill="url(#lamp)"/>
+<rect x="388" y="628" width="84" height="84" fill="#a95e3c" opacity=".12"/>
+<path d="M216 575 H510" stroke="#d5985b" stroke-width="4" opacity=".26"/>
+
+<!-- right storage / machine bay -->
+<path d="M528 820 V560 L558 522 H702 L720 548 V820Z" fill="#33464c" stroke="#11191d" stroke-width="7"/>
+<path d="M512 548 L724 548 L704 586 H532Z" fill="#665546" stroke="#172126" stroke-width="6"/>
+<rect x="566" y="626" width="108" height="120" fill="#172329"/>
+<path d="M574 646 H666 M574 670 H666 M574 694 H666" stroke="#4e5e62" stroke-width="4"/>
+
+<!-- blue-grey tarps break up the metal mass -->
+<path d="M98 566 C170 548 236 564 298 552 L288 626 C220 612 160 620 92 636Z"
+      fill="#34596a" opacity=".82" stroke="#16262c" stroke-width="5"/>
+<path d="M452 522 C520 504 578 512 648 500 L642 560 C574 550 520 556 454 570Z"
+      fill="#3b6170" opacity=".72" stroke="#16262c" stroke-width="5"/>
+
+<!-- Fort Knocks cloth marker -->
+<path d="M142 438 H216 V548 H142Z" fill="#8b4936" stroke="#1b2528" stroke-width="5"/>
+<path d="M162 516 L182 480 M184 516 L204 480" stroke="#e7ad3c" stroke-width="7" stroke-linecap="round"/>
+
+<!-- hanging work lights -->
+<g stroke="#1a2426" stroke-width="5">
+  <path d="M262 494 V548"/><path d="M448 494 V548"/><path d="M620 548 V606"/>
+</g>
+<g>
+  <circle cx="262" cy="558" r="54" fill="url(#lamp)"/><circle cx="262" cy="558" r="8" fill="#f0aa4e"/>
+  <circle cx="448" cy="558" r="54" fill="url(#lamp)"/><circle cx="448" cy="558" r="8" fill="#f0aa4e"/>
+  <circle cx="620" cy="616" r="48" fill="url(#lamp)"/><circle cx="620" cy="616" r="7" fill="#f0aa4e"/>
+</g>
+
+<!-- catwalk / rails -->
+<path d="M70 754 H650" stroke="#172126" stroke-width="14"/>
+<path d="M70 722 H650" stroke="#4d5a58" stroke-width="7"/>
+<g stroke="#293632" stroke-width="6">
+  <path d="M84 722 V754 M142 722 V754 M200 722 V754 M258 722 V754 M316 722 V754 M374 722 V754 M432 722 V754 M490 722 V754 M548 722 V754 M606 722 V754"/>
+</g>
+
+<!-- cable runs / clutter silhouettes -->
+<g stroke="#213035" fill="none" stroke-linecap="round">
+  <path d="M102 414 C250 452 370 390 520 430 S646 418 716 446" stroke-width="4"/>
+  <path d="M42 690 C186 662 300 686 434 660 S614 670 704 644" stroke-width="3" opacity=".7"/>
+</g>
+
+<!-- warm painted wear / chipped edges -->
 <g fill="none" stroke-linecap="round">
- <path d="M86 608 L108 603 M122 626 L148 619 M338 592 L362 587 M402 625 L430 616 M594 612 L620 607" stroke="#c88a5a" stroke-width="3" opacity=".45"/>
- <path d="M45 566 L62 574 M186 551 L205 560 M278 532 L296 540 M468 530 L486 540 M558 563 L578 571 M678 558 L696 566" stroke="#7b4737" stroke-width="3.5" opacity=".56"/>
+  <path d="M190 510 H528 M48 414 H166 M534 560 H704" stroke="#eda768" stroke-width="4" opacity=".23"/>
+  <path d="M222 780 L248 772 M286 798 L314 788 M414 786 L438 776 M576 790 L604 780"
+        stroke="#b86743" stroke-width="4" opacity=".55"/>
+  <path d="M70 442 L88 436 M228 536 L248 530 M486 548 L506 540 M620 578 L640 572"
+        stroke="#d4b176" stroke-width="2.5" opacity=".36"/>
 </g>
-<circle cx="116" cy="611" r="32" fill="#f0a14a" opacity=".055"/>
-<circle cx="378" cy="584" r="58" fill="#f0a14a" opacity=".055"/>
-<path d="M74 597 H156" stroke="#f2c17a" stroke-width="2.5" opacity=".26"/>
-<path d="M324 566 H432" stroke="#f2c17a" stroke-width="2.5" opacity=".22"/>
-
 </svg>
