@@ -1,9 +1,10 @@
 extends Node2D
 
-const OUTSKIRTS_SKY_FAR: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_sky_far.svg")
-const OUTSKIRTS_MIDGROUND: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_midground.svg")
-const OUTSKIRTS_ROAD: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_road.svg")
-const OUTSKIRTS_FOREGROUND: Texture2D = preload("res://assets/art/production/battle/outskirts/outskirts_foreground.svg")
+const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const OUTSKIRTS_SKY_FAR_PATH := "res://assets/art/production/battle/outskirts/outskirts_sky_far.svg"
+const OUTSKIRTS_MIDGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_midground.svg"
+const OUTSKIRTS_ROAD_PATH := "res://assets/art/production/battle/outskirts/outskirts_road.svg"
+const OUTSKIRTS_FOREGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_foreground.svg"
 
 const WORLD_WIDTH := 2160.0
 const WORLD_HEIGHT := 1280.0
@@ -15,18 +16,38 @@ const SCRAP_STACK_OFFSETS: Array[Vector2] = [
 ]
 
 var _variant := 0
+var _outskirts_sky_far: Texture2D
+var _outskirts_midground: Texture2D
+var _outskirts_road: Texture2D
+var _outskirts_foreground: Texture2D
 
 func configure_variant(value: int) -> void:
 	_variant = clampi(value, 0, 3)
 	queue_redraw()
 
 func _draw() -> void:
+	_ensure_production_textures()
+
 	if _variant == 3:
 		# Suburbs remains on the accepted procedural baseline until its own
 		# region-specific production pass. Do not blur the two art milestones.
 		_draw_atmosphere()
 		_draw_far_outskirts()
 		_draw_suburbs_backdrop()
+		_draw_road()
+		_draw_foreground_dressing()
+		return
+
+	if not _has_complete_outskirts_set():
+		_draw_atmosphere()
+		_draw_far_outskirts()
+		match _variant:
+			1:
+				_draw_overpass_backdrop()
+			2:
+				_draw_salvage_backdrop()
+			_:
+				_draw_city_backdrop()
 		_draw_road()
 		_draw_foreground_dressing()
 		return
@@ -44,13 +65,31 @@ func _draw() -> void:
 	_draw_production_outskirts_road()
 	_draw_production_outskirts_foreground()
 
+func _ensure_production_textures() -> void:
+	if _outskirts_sky_far == null:
+		_outskirts_sky_far = ProductionArtScript.texture_from_svg(OUTSKIRTS_SKY_FAR_PATH)
+	if _outskirts_midground == null:
+		_outskirts_midground = ProductionArtScript.texture_from_svg(OUTSKIRTS_MIDGROUND_PATH)
+	if _outskirts_road == null:
+		_outskirts_road = ProductionArtScript.texture_from_svg(OUTSKIRTS_ROAD_PATH)
+	if _outskirts_foreground == null:
+		_outskirts_foreground = ProductionArtScript.texture_from_svg(OUTSKIRTS_FOREGROUND_PATH)
+
+func _has_complete_outskirts_set() -> bool:
+	return (
+		_outskirts_sky_far != null
+		and _outskirts_midground != null
+		and _outskirts_road != null
+		and _outskirts_foreground != null
+	)
+
 func _draw_production_outskirts_base() -> void:
-	draw_texture_rect(OUTSKIRTS_SKY_FAR, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
-	draw_texture_rect(OUTSKIRTS_MIDGROUND, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+	draw_texture_rect(_outskirts_sky_far, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+	draw_texture_rect(_outskirts_midground, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
 
 func _draw_production_outskirts_road() -> void:
 	draw_texture_rect(
-		OUTSKIRTS_ROAD,
+		_outskirts_road,
 		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
 		false
 	)
@@ -59,7 +98,7 @@ func _draw_production_outskirts_foreground() -> void:
 	# Decorative only: no collision and intentionally concentrated below the
 	# aiming corridor, matching the approved secondary-reference foreground.
 	draw_texture_rect(
-		OUTSKIRTS_FOREGROUND,
+		_outskirts_foreground,
 		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
 		false
 	)
