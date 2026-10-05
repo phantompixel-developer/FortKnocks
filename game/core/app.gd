@@ -21,6 +21,7 @@ var _hub_notice := ""
 var _garage_notice := ""
 var _workshop_notice := ""
 var _transition_overlay: ColorRect
+var _transition_tween: Tween
 
 func _ready() -> void:
 	_ensure_transition_overlay()
@@ -233,31 +234,34 @@ func _ensure_transition_overlay() -> void:
 
 	_transition_overlay = ColorRect.new()
 	_transition_overlay.name = "ScreenReveal"
-	_transition_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_transition_overlay.color = SCREEN_REVEAL_COLOR
 	_transition_overlay.modulate.a = 0.0
 	_transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_transition_overlay.visible = false
 	layer.add_child(_transition_overlay)
+	_transition_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
 func _play_screen_reveal() -> void:
 	if not is_instance_valid(_transition_overlay):
 		return
 
-	var tween := create_tween()
-	tween.tween_property(
+	if _transition_tween != null:
+		_transition_tween.kill()
+	_transition_tween = create_tween()
+	_transition_tween.tween_property(
 		_transition_overlay,
 		"modulate:a",
 		0.0,
 		SCREEN_REVEAL_DURATION
 	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.finished.connect(_on_screen_reveal_finished)
+	_transition_tween.finished.connect(_on_screen_reveal_finished)
 
 func _on_screen_reveal_finished() -> void:
 	if not is_instance_valid(_transition_overlay):
 		return
 	_transition_overlay.visible = false
 	_transition_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_transition_tween = null
 
 func _current_child() -> Node:
 	if current_screen.get_child_count() == 0:
