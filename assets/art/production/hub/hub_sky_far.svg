@@ -16,4 +16,11 @@
 <g stroke="#26343a" fill="none" stroke-linecap="round"><path d="M92 620 V398 M62 438 H122" stroke-width="10"/><path d="M62 438 C220 482 310 414 442 448 S612 430 700 458" stroke-width="3" opacity=".65"/></g>
 <rect y="644" width="720" height="636" fill="#242829"/>
 <rect y="644" width="720" height="24" fill="#5b574f"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M0 382 C150 350 300 400 454 366 S632 340 720 362" stroke="#f0cfaa" stroke-width="18" opacity=".055"/>
+<path d="M16 514 H154 M178 540 H290 M314 486 H464 M492 522 H602 M618 502 H714" stroke="#d89b68" stroke-width="3" opacity=".12"/>
+<path d="M0 638 H720" stroke="#1b2528" stroke-width="8" opacity=".36"/>
+<g stroke="#263a3c" stroke-width="3" opacity=".32"><path d="M250 610 V520 M535 610 V500 M666 610 V540"/></g>
+</g>
 </svg>

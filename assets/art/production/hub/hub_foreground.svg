@@ -8,4 +8,10 @@
 <path d="M82 1182 L102 1142 M96 1186 L132 1150" stroke="#8d5a42" stroke-width="5"/>
 <g stroke="#263731" stroke-width="6" stroke-linecap="round"><path d="M500 1235 L478 1178 M502 1228 L526 1164 M494 1208 L462 1194 M508 1202 L542 1183"/></g>
 <g fill="#c06c42" opacity=".55"><circle cx="205" cy="1210" r="6"/><circle cx="462" cy="1222" r="6"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M42 1221 L73 1175 L126 1186 M260 1215 L294 1180 H371 M596 1192 Q624 1172 651 1190" stroke="#d18b55" stroke-width="3" opacity=".26"/>
+<path d="M0 1264 Q180 1246 360 1261 T720 1252" stroke="#070b0e" stroke-width="12" opacity=".72"/>
+<path d="M74 1205 l12 -4 M300 1201 l14 -3 M372 1228 l12 -4 M611 1199 l10 -3" stroke="#a9543b" stroke-width="2.5" opacity=".55"/>
+</g>
 </svg>

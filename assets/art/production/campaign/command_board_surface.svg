@@ -38,4 +38,14 @@
 <path d="M417 374 H482 M417 386 H470" stroke="#6e5a48" stroke-width="3" opacity=".58"/>
 <!-- frame hardware -->
 <g fill="#0b1114" stroke="#7a7061" stroke-width="2"><circle cx="19" cy="19" r="4"/><circle cx="541" cy="19" r="4"/><circle cx="19" cy="461" r="4"/><circle cx="541" cy="461" r="4"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M16 14 H544 M16 14 V466" stroke="#d29759" stroke-width="3" opacity=".20"/>
+<path d="M18 466 H542 M542 18 V462" stroke="#120d0b" stroke-width="5" opacity=".58"/>
+<path d="M42 56 C82 44 110 52 138 42 M382 426 C420 410 468 420 510 404" stroke="#f2e2bd" stroke-width="3" opacity=".17"/>
+<path d="M72 114 l20 -5 M188 220 l16 -4 M362 308 l18 -5 M472 248 l14 -4" stroke="#8e5a42" stroke-width="3" opacity=".28"/>
+<circle cx="86" cy="420" r="18" stroke="#6e5844" stroke-width="4" opacity=".16"/>
+<circle cx="468" cy="86" r="24" stroke="#6e5844" stroke-width="5" opacity=".13"/>
+<path d="M58 444 H126 M420 38 H500" stroke="#6c7c74" stroke-width="2" opacity=".22"/>
+</g>
 </svg>

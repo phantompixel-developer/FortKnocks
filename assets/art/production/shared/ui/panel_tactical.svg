@@ -5,4 +5,12 @@
 <path d="M12 18 H42 L49 10 H79 L86 18 H116" fill="none" stroke="#7bc2ca" stroke-width="2" opacity=".52"/>
 <path d="M12 79 H116" stroke="#090e11" stroke-width="3"/>
 <path d="M12 32 L20 24 M108 24 L116 32 M12 64 L20 72 M108 72 L116 64" stroke="#69b8c8" stroke-width="2.5" opacity=".58"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M10 10 H43 L50 6 H78 L85 10 H118" stroke="#9ed7d8" stroke-width="1.4" opacity=".26"/>
+<path d="M11 85 H117" stroke="#05090c" stroke-width="3" opacity=".78"/>
+<path d="M16 28 l8 -4 M104 68 l9 -4" stroke="#b06142" stroke-width="1.8" opacity=".42"/>
+<circle cx="18" cy="82" r="1.5" fill="#7bc2ca" stroke="none" opacity=".55"/>
+<circle cx="110" cy="14" r="1.5" fill="#7bc2ca" stroke="none" opacity=".55"/>
+</g>
 </svg>
