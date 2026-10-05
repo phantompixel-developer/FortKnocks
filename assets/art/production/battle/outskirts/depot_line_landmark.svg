@@ -9,4 +9,10 @@
  <path d="M1320 818 L1354 760 H1470 L1512 818Z" fill="#4d5a55"/><circle cx="1368" cy="820" r="18" fill="#171d1f"/><circle cx="1465" cy="820" r="18" fill="#171d1f"/>
 </g>
 <path d="M548 776 L676 806 M718 750 L862 778 M1346 780 L1480 810" stroke="#9a5b42" stroke-width="6" opacity=".52"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M941 510 V790 M951 528 H1255" stroke="#c88e58" stroke-width="4" opacity=".22"/>
+<path d="M520 810 H712 M690 784 H890 M1320 818 H1512" stroke="#243630" stroke-width="6" opacity=".46"/>
+<path d="M560 760 l16 -4 M750 739 l15 -4 M1364 766 l17 -4 M1170 646 l10 -4" stroke="#a9563d" stroke-width="3" opacity=".48"/>
+</g>
 </svg>

@@ -7,4 +7,10 @@
  <path d="M1248 540 L1200 500 M1270 558 L1320 520" stroke="#9d5c42" stroke-width="9"/>
 </g>
 <path d="M1030 632 L1112 686 M1468 634 L1542 686" stroke="#27322f" stroke-width="7" opacity=".60"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M770 594 H1178 M1362 614 H2148" stroke="#d69a61" stroke-width="4" opacity=".25"/>
+<path d="M770 652 H1178 M1390 676 H2148" stroke="#243631" stroke-width="6" opacity=".48"/>
+<path d="M1178 604 l18 -6 M1260 551 l13 -5 M1500 634 l20 -3" stroke="#a7583f" stroke-width="3" opacity=".45"/>
+</g>
 </svg>
