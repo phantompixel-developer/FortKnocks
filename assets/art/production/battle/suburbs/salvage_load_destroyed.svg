@@ -7,4 +7,10 @@
 <rect x="158" y="54" width="39" height="28" fill="#756249" stroke="#151b1c" stroke-width="4" transform="rotate(8 177 68)"/>
 <circle cx="62" cy="94" r="15" fill="#090d11"/><circle cx="218" cy="94" r="13" fill="#090d11"/>
 <path d="M82 84 L101 65 M104 84 L123 65" stroke="#d4aa55" stroke-width="5" opacity=".45"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M38 88 Q139 103 244 90" stroke="#22312d" stroke-width="5" opacity=".70"/>
+<path d="M62 70 l12 -5 M109 76 l10 -4 M162 70 l11 -4 M216 74 l11 -4" stroke="#a6563d" stroke-width="2.5" opacity=".60"/>
+<path d="M77 58 H105 M165 59 H190" stroke="#d0a06b" stroke-width="2" opacity=".24"/>
+</g>
 </svg>

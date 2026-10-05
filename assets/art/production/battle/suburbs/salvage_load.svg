@@ -24,4 +24,12 @@
 <!-- wheels -->
 <g><circle cx="70" cy="145" r="25" fill="#090d11"/><circle cx="70" cy="145" r="12" fill="#56605d"/><circle cx="70" cy="145" r="5" fill="#8a8066"/></g>
 <g><circle cx="210" cy="145" r="25" fill="#090d11"/><circle cx="210" cy="145" r="12" fill="#56605d"/><circle cx="210" cy="145" r="5" fill="#8a8066"/></g>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M45 59 H122 M137 53 H203 M213 71 H240" stroke="#e1a35e" stroke-width="3" opacity=".38"/>
+<path d="M39 129 H242" stroke="#20332f" stroke-width="5" opacity=".62"/>
+<path d="M50 101 l10 -3 M112 78 l9 -3 M146 109 l10 -3 M219 105 l8 -3" stroke="#ae5b40" stroke-width="2.5" opacity=".58"/>
+<path d="M73 52 V116 M181 47 V116" stroke="#f0c66a" stroke-width="1.8" opacity=".24"/>
+<circle cx="226" cy="84" r="7" stroke="#9ad8d5" stroke-width="1.7" opacity=".26"/>
+</g>
 </svg>

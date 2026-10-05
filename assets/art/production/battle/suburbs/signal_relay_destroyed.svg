@@ -9,4 +9,10 @@
 <path d="M55 78 L83 60" stroke="#9b5b42" stroke-width="6"/>
 <circle cx="118" cy="88" r="8" fill="#31403c"/><circle cx="118" cy="88" r="3" fill="#77b6bf" opacity=".22"/>
 <path d="M31 99 H148" stroke="#252d2c" stroke-width="6"/>
+<!-- reference-finish propagation -->
+<g id="reference_finish_v2" fill="none" stroke-linecap="round">
+<path d="M45 86 Q87 96 134 92" stroke="#22312e" stroke-width="4.5" opacity=".66"/>
+<path d="M68 66 l10 -6 M93 40 l9 -5 M124 31 l9 -4" stroke="#9d523b" stroke-width="2.5" opacity=".58"/>
+<path d="M53 79 l13 -2 M108 83 l11 2" stroke="#b79872" stroke-width="2" opacity=".22"/>
+</g>
 </svg>
