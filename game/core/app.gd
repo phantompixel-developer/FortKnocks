@@ -62,6 +62,7 @@ func _show_workshop() -> void:
 	workshop.back_requested.connect(_show_hub)
 	workshop.module_requested.connect(_on_module_requested)
 	workshop.specialist_weapon_requested.connect(_on_specialist_weapon_requested)
+	workshop.weapon_upgrade_requested.connect(_on_weapon_upgrade_requested)
 	workshop.configure(save_service.snapshot(), _workshop_notice)
 	_workshop_notice = ""
 
@@ -79,6 +80,43 @@ func _on_specialist_weapon_requested(weapon_id: String) -> void:
 	var display_name := "HEAVY SLUG" if weapon_id == "heavy_slug" else "SHOCK CAPSULE"
 	_workshop_notice = "%s SET AS SPECIALIST" % display_name
 	_hub_notice = "FIELD RACK UPDATED • BOLT + %s" % display_name
+	_show_workshop()
+
+func _on_weapon_upgrade_requested(weapon_id: String) -> void:
+	var definition: WeaponDefinition
+	match weapon_id:
+		"scrap_bolt":
+			definition = preload("res://game/weapons/scrap_bolt.tres") as WeaponDefinition
+		"heavy_slug":
+			definition = preload("res://game/weapons/heavy_slug.tres") as WeaponDefinition
+		"shock_capsule":
+			definition = preload("res://game/weapons/shock_capsule.tres") as WeaponDefinition
+		_:
+			return
+
+	var current_level: int = save_service.weapon_level(weapon_id)
+	var cost: int = definition.upgrade_cost(current_level)
+	if cost <= 0:
+		_workshop_notice = "%s IS MAX LEVEL" % definition.display_name.to_upper()
+		_show_workshop()
+		return
+
+	if not save_service.upgrade_weapon(weapon_id, cost, definition.max_level):
+		_workshop_notice = "NOT ENOUGH SALVAGE"
+		_show_workshop()
+		return
+
+	var next_level: int = current_level + 1
+	audio_director.play_cue(&"ui_confirm")
+	_workshop_notice = "%s UPGRADED • LEVEL %d • -%d SALVAGE" % [
+		definition.display_name.to_upper(),
+		next_level,
+		cost,
+	]
+	_hub_notice = "WORKSHOP UPGRADE COMPLETE • %s LEVEL %d" % [
+		definition.display_name.to_upper(),
+		next_level,
+	]
 	_show_workshop()
 
 func _on_module_requested(module_id: String) -> void:
@@ -202,7 +240,7 @@ func _start_mission(mission: MissionDefinition) -> void:
 		weapon_ids.append("shock_capsule")
 	else:
 		weapon_ids.append(save_service.specialist_weapon_id())
-	battle.call("prepare_for_campaign", mission, platform, module, weapon_ids)
+	battle.call("prepare_for_campaign", mission, platform, module, weapon_ids, save_service.weapon_levels())
 	battle.connect("battle_completed", Callable(self, "_on_battle_completed"))
 	battle.connect("exit_requested", Callable(self, "_on_battle_exit_requested"))
 	battle.connect("rematch_requested", Callable(self, "_on_battle_rematch_requested"))
