@@ -7,6 +7,8 @@ const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
 const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
 const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
 
+@export var draw_floor_shadow := true
+
 var _textures: Dictionary = {}
 
 var _platform_id := "run_down_compact"
@@ -19,7 +21,8 @@ func configure(platform_id: String, module_id := "") -> void:
 
 func _draw() -> void:
 	var center := size * 0.5
-	draw_ellipse_shadow(center + Vector2(0, 54), Vector2(minf(size.x * 0.38, 205.0), 22.0))
+	if draw_floor_shadow:
+		draw_ellipse_shadow(center + Vector2(0, 54), Vector2(minf(size.x * 0.38, 205.0), 22.0))
 
 	var texture := _texture_for_platform(_platform_id)
 	if texture != null:
