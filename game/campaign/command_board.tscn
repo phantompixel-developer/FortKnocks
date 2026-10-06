@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://game/campaign/command_board.gd" id="1_board"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_planks.png" id="2_planks"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/progress_track_9s.png" id="9_track"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/progress_fill_9s.png" id="10_fill"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/hud_chapter_tab_9s.png" id="11_tab"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_close.png" id="12_close"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_close_pressed.png" id="13_close_pressed"]
 
 [node name="CommandBoard" type="Control"]
 layout_mode = 3
@@ -266,3 +268,126 @@ theme_override_font_sizes/font_size = 15
 text = "0/10"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+
+[node name="BriefingOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Dim" type="ColorRect" parent="BriefingOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.02, 0.025, 0.03, 0.82)
+
+[node name="BriefingPanel" type="PanelContainer" parent="BriefingOverlay"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -292.0
+offset_top = -316.0
+offset_right = 292.0
+offset_bottom = 316.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="BriefingOverlay/BriefingPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 34
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 34
+theme_override_constants/margin_bottom = 30
+
+[node name="Content" type="VBoxContainer" parent="BriefingOverlay/BriefingPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BriefingTitle" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
+theme_override_font_sizes/font_size = 30
+text = "MISSION"
+horizontal_alignment = 1
+
+[node name="BriefingMeta" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.67, 0.72, 0.72, 1)
+theme_override_font_sizes/font_size = 15
+text = "MISSION 01 • OUTSKIRTS"
+horizontal_alignment = 1
+
+[node name="Rule" type="HSeparator" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="ObjectiveHeader" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
+theme_override_font_sizes/font_size = 14
+text = "OBJECTIVE"
+
+[node name="BriefingObjective" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "INCAPACITATE ENEMY"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BriefingText" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.79, 0.82, 0.82, 1)
+theme_override_font_sizes/font_size = 17
+text = "Mission briefing."
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BriefingReward" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
+theme_override_font_sizes/font_size = 18
+text = "RECOVERY • 0 SALVAGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeployButton" type="Button" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "DEPLOY"
+
+[node name="BriefingClose" type="TextureButton" parent="BriefingOverlay/BriefingPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 510.0
+offset_top = 18.0
+offset_right = 566.0
+offset_bottom = 74.0
+focus_mode = 0
+texture_normal = ExtResource("12_close")
+texture_pressed = ExtResource("13_close_pressed")
+ignore_texture_size = true
+stretch_mode = 5
