@@ -122,13 +122,13 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 func _sync_showroom() -> void:
 	if not is_node_ready():
 		return
-	var target_bottom := %Header.global_position.y - global_position.y + 48.0
-	var reference_height := 656.0
+	var target_bottom: float = float(%Header.global_position.y - global_position.y + 48.0)
+	var reference_height: float = 656.0
 	showroom.size = Vector2(size.x, maxf(target_bottom, 430.0))
-	var scale_up := maxf(showroom.size.y / reference_height, 1.0)
+	var scale_up: float = maxf(float(showroom.size.y) / reference_height, 1.0)
 	if scale_up > 1.0:
-		var base_width := showroom.size.x * 0.70
-		var grow := (base_width * scale_up - base_width) * 0.5
+		var base_width: float = float(showroom.size.x) * 0.70
+		var grow: float = (base_width * scale_up - base_width) * 0.5
 		weapon_display.offset_left = -grow
 		weapon_display.offset_right = grow
 
