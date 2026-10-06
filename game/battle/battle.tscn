@@ -126,34 +126,55 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="PlayerStatusCard" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 88.0
+offset_right = 274.0
+offset_bottom = 148.0
+mouse_filter = 2
+color = Color(0.055, 0.085, 0.105, 0.94)
+
+[node name="EnemyStatusCard" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 446.0
+offset_top = 88.0
+offset_right = 702.0
+offset_bottom = 148.0
+mouse_filter = 2
+color = Color(0.055, 0.085, 0.105, 0.94)
+
 [node name="TurnLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 225.0
-offset_top = 42.0
-offset_right = 495.0
-offset_bottom = 88.0
-theme_override_font_sizes/font_size = 30
+offset_left = 214.0
+offset_top = 28.0
+offset_right = 506.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 28
 text = "FORT KNOCKS"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HealthLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 98.0
-offset_right = 250.0
-offset_bottom = 158.0
-theme_override_font_sizes/font_size = 17
-text = "YOU 100/100\nCOVER 150/150"
+offset_left = 30.0
+offset_top = 101.0
+offset_right = 262.0
+offset_bottom = 137.0
+theme_override_font_sizes/font_size = 16
+text = "YOU 100/100  •  COVER 150/150"
+vertical_alignment = 1
 
 [node name="EnemyHealthLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 450.0
-offset_top = 104.0
-offset_right = 692.0
-offset_bottom = 142.0
-theme_override_font_sizes/font_size = 20
+offset_left = 458.0
+offset_top = 101.0
+offset_right = 690.0
+offset_bottom = 137.0
+theme_override_font_sizes/font_size = 18
 text = "ENEMY 100/100"
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="FeedbackLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
@@ -170,19 +191,19 @@ mouse_filter = 2
 [node name="InspectButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 500.0
-offset_top = 164.0
-offset_right = 696.0
-offset_bottom = 216.0
+offset_top = 166.0
+offset_right = 700.0
+offset_bottom = 220.0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 15
 text = "INSPECT ENEMY"
 
 [node name="EnemyLocatorLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 230.0
-offset_right = 540.0
-offset_bottom = 270.0
+offset_left = 198.0
+offset_top = 236.0
+offset_right = 522.0
+offset_bottom = 274.0
 theme_override_font_sizes/font_size = 19
 text = "ENEMY →  ~39m"
 horizontal_alignment = 1
@@ -190,10 +211,10 @@ mouse_filter = 2
 
 [node name="WeaponTray" type="ColorRect" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 164.0
+offset_left = 18.0
+offset_top = 166.0
 offset_right = 158.0
-offset_bottom = 358.0
+offset_bottom = 346.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.88)
 
@@ -242,9 +263,9 @@ text = "SHOCK"
 visible = false
 layout_mode = 0
 offset_left = 176.0
-offset_top = 164.0
-offset_right = 482.0
-offset_bottom = 230.0
+offset_top = 166.0
+offset_right = 484.0
+offset_bottom = 232.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.9)
 
@@ -272,9 +293,9 @@ mouse_filter = 2
 
 [node name="ControlDeck" type="ColorRect" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 108.0
-offset_top = 1090.0
-offset_right = 612.0
+offset_left = 100.0
+offset_top = 1084.0
+offset_right = 620.0
 offset_bottom = 1168.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.88)
@@ -368,10 +389,10 @@ mouse_filter = 2
 
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 70.0
-offset_top = 1182.0
-offset_right = 650.0
-offset_bottom = 1244.0
+offset_left = 64.0
+offset_top = 1178.0
+offset_right = 656.0
+offset_bottom = 1242.0
 theme_override_font_sizes/font_size = 17
 text = "Preparing battle..."
 horizontal_alignment = 1
