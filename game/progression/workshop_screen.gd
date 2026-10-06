@@ -5,76 +5,102 @@ signal back_requested
 signal module_requested(module_id: String)
 signal specialist_weapon_requested(weapon_id: String)
 
-const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
+const PlatformModuleCatalogScript := preload("res://game/platforms/platform_module_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 const ProductionUIScript := preload("res://game/presentation/production_ui.gd")
 const ScrapBolt := preload("res://game/weapons/scrap_bolt.tres")
 const HeavySlug := preload("res://game/weapons/heavy_slug.tres")
 const ShockCapsule := preload("res://game/weapons/shock_capsule.tres")
 
-const PANEL_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/panel_stats_9s.png"
-const COIN_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/icons/icon_coin.png"
-const LOCK_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/icons/icon_lock.png"
-const WORKSHOP_ART_ROOT := "res://assets/art/claude_assets/1_Asset_Kit/03_workshop/png/art"
-
+const WORKSHOP_ROOT := "res://assets/art/claude_assets/1_Asset_Kit/03_workshop"
 const DISPLAY_PATHS := {
-	"scrap_bolt": WORKSHOP_ART_ROOT + "/ammo_standard_display.png",
-	"heavy_slug": WORKSHOP_ART_ROOT + "/ammo_heavy_display.png",
-	"shock_capsule": WORKSHOP_ART_ROOT + "/ammo_emp_display.png",
+	"scrap_bolt": WORKSHOP_ROOT + "/png/art/ammo_standard_display.png",
+	"heavy_slug": WORKSHOP_ROOT + "/png/art/ammo_heavy_display.png",
+	"shock_capsule": WORKSHOP_ROOT + "/png/art/ammo_emp_display.png",
 }
 const THUMB_PATHS := {
-	"scrap_bolt": WORKSHOP_ART_ROOT + "/ammo_standard_thumb.png",
-	"heavy_slug": WORKSHOP_ART_ROOT + "/ammo_heavy_thumb.png",
-	"shock_capsule": WORKSHOP_ART_ROOT + "/ammo_emp_thumb.png",
+	"scrap_bolt": WORKSHOP_ROOT + "/png/art/ammo_standard_thumb.png",
+	"heavy_slug": WORKSHOP_ROOT + "/png/art/ammo_heavy_thumb.png",
+	"shock_capsule": WORKSHOP_ROOT + "/png/art/ammo_emp_thumb.png",
 }
+const ICON_DAMAGE := WORKSHOP_ROOT + "/png/icons/icon_stat_damage.png"
+const ICON_EXPLOSION := WORKSHOP_ROOT + "/png/icons/icon_stat_explosion.png"
+const ICON_RANGE := WORKSHOP_ROOT + "/png/icons/icon_stat_range.png"
+const ICON_BOUNCE := WORKSHOP_ROOT + "/png/icons/icon_stat_bounce.png"
+
+const PANEL_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/panel_stats_9s.png"
+const CARD_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/card_item_9s.png"
+const CARD_SELECTED_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/card_item_selected_9s.png"
+const SEG_EMPTY_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/statbar_seg_empty_9s.png"
+const SEG_FILLED_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/statbar_seg_filled_9s.png"
+const COIN_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/icons/icon_coin.png"
+
+const SWIPE_MIN := 60.0
 
 @onready var safe: MarginContainer = %Safe
-@onready var salvage_label: Label = %SalvageLabel
+@onready var showroom: Control = %Showroom
 @onready var weapon_display: TextureRect = %WeaponDisplay
+@onready var swipe_area: Control = %SwipeArea
 @onready var title_label: Label = %WeaponTitle
 @onready var status_label: Label = %WeaponStatus
-@onready var description_label: Label = %Description
-@onready var stat_rows: VBoxContainer = %StatRows
-@onready var weapon_row: HBoxContainer = %WeaponRow
+@onready var rows: VBoxContainer = %Rows
 @onready var action_button: Button = %ActionButton
-@onready var prev_button: TextureButton = %PrevButton
-@onready var next_button: TextureButton = %NextButton
+@onready var action_label: Label = %ActionLabel
+@onready var action_coin: TextureRect = %ActionCoin
+@onready var action_cost: Label = %ActionCost
+@onready var weapon_row: HBoxContainer = %WeaponRow
+@onready var card_scroll: ScrollContainer = %CardScroll
+@onready var module_panel: PanelContainer = %ModulePanel
 @onready var module_display: WorkshopHardwareDisplay = %ModuleDisplay
 @onready var module_row: HBoxContainer = %ModuleRow
 @onready var module_note: Label = %ModuleNote
-@onready var notice_label: Label = %NoticeLabel
+@onready var prev_button: TextureButton = %PrevButton
+@onready var next_button: TextureButton = %NextButton
 @onready var back_button: TextureButton = %BackButton
-@onready var swipe_area: Control = %SwipeArea
+@onready var notice_label: Label = %NoticeLabel
 
-const SWIPE_MIN := 62.0
-var _swipe_start := Vector2.INF
 var _snapshot: Dictionary = {}
 var _weapons: Array[WeaponDefinition] = []
-var _selected_index := 1
+var _selected_index := 0
 var _weapon_cards: Array[Button] = []
+var _swipe_start := Vector2.INF
 
 func _ready() -> void:
 	ThemeScript.apply(self)
-	ProductionUIScript.apply_safe_area(safe)
-	%StatsPanel.add_theme_stylebox_override(
-		"panel",
-		ProductionUIScript.texture_box(PANEL_PATH, Vector4(40.0, 40.0, 40.0, 40.0))
+	ProductionUIScript.apply_safe_area(safe, Vector4(24.0, 26.0, 24.0, 13.0))
+
+	var panel_style := ProductionUIScript.texture_box(
+		PANEL_PATH,
+		Vector4(27.0, 27.0, 27.0, 27.0),
+		Color.WHITE,
+		Vector4(29.0, 22.0, 29.0, 20.0)
 	)
-	%ModulePanel.add_theme_stylebox_override(
+	%StatsPanel.add_theme_stylebox_override("panel", panel_style)
+	module_panel.add_theme_stylebox_override(
 		"panel",
-		ProductionUIScript.texture_box(PANEL_PATH, Vector4(40.0, 40.0, 40.0, 40.0), Color(0.88, 0.92, 0.94, 0.96))
+		ProductionUIScript.texture_box(
+			PANEL_PATH,
+			Vector4(27.0, 27.0, 27.0, 27.0),
+			Color(0.92, 0.94, 0.96, 0.96),
+			Vector4(14.0, 10.0, 14.0, 10.0)
+		)
 	)
 	ProductionUIScript.style_action_button(action_button)
-	%Coin.texture = ProductionUIScript.texture(COIN_PATH)
+	action_coin.texture = ProductionUIScript.texture(COIN_PATH)
+
 	back_button.pressed.connect(func() -> void:
 		_play_ui(&"ui_back")
 		back_requested.emit()
 	)
 	prev_button.pressed.connect(_step.bind(-1))
 	next_button.pressed.connect(_step.bind(1))
-	swipe_area.gui_input.connect(_on_swipe_input)
 	action_button.pressed.connect(_request_selected_weapon)
+	swipe_area.gui_input.connect(_on_swipe_input)
+
+	resized.connect(_sync_showroom)
+	%Header.item_rect_changed.connect(_sync_showroom)
+	_sync_showroom.call_deferred()
 
 func configure(save_snapshot: Dictionary, notice := "") -> void:
 	_snapshot = save_snapshot.duplicate(true)
@@ -86,12 +112,25 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	var inventory := _snapshot.get("inventory", {}) as Dictionary
 	var specialist_id := str(inventory.get("specialist_weapon_id", "heavy_slug"))
 	_selected_index = 1 if specialist_id == "heavy_slug" else 2
-	salvage_label.text = "%d" % int(inventory.get("salvage", 0))
+
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
 	_build_weapon_cards()
 	_rebuild_modules()
 	_show_selected(false)
+
+func _sync_showroom() -> void:
+	if not is_node_ready():
+		return
+	var target_bottom := %Header.global_position.y - global_position.y + 48.0
+	var reference_height := 656.0
+	showroom.size = Vector2(size.x, maxf(target_bottom, 430.0))
+	var scale_up := maxf(showroom.size.y / reference_height, 1.0)
+	if scale_up > 1.0:
+		var base_width := showroom.size.x * 0.70
+		var grow := (base_width * scale_up - base_width) * 0.5
+		weapon_display.offset_left = -grow
+		weapon_display.offset_right = grow
 
 func _step(direction: int) -> void:
 	if _weapons.is_empty():
@@ -106,111 +145,116 @@ func _step(direction: int) -> void:
 func _show_selected(animate := true) -> void:
 	if _weapons.is_empty():
 		return
+
 	var weapon := _weapons[_selected_index]
 	var inventory := _snapshot.get("inventory", {}) as Dictionary
 	var specialist_id := str(inventory.get("specialist_weapon_id", "heavy_slug"))
 	var full_rack_active := _full_rack_active()
 
 	title_label.text = weapon.display_name.to_upper()
-	status_label.text = _weapon_status(weapon.id, specialist_id, full_rack_active)
-	description_label.text = weapon.description
 	weapon_display.texture = ProductionUIScript.texture(str(DISPLAY_PATHS.get(weapon.id, "")))
-	_rebuild_weapon_stats(weapon)
-	_update_weapon_action(weapon.id, specialist_id, full_rack_active)
-	prev_button.disabled = _selected_index <= 0
-	next_button.disabled = _selected_index >= _weapons.size() - 1
+	_rebuild_stats(weapon)
+	_update_action(weapon.id, specialist_id, full_rack_active)
+
+	prev_button.disabled = _selected_index == 0
+	next_button.disabled = _selected_index == _weapons.size() - 1
 
 	for i in range(_weapon_cards.size()):
-		ProductionUIScript.style_card_button(_weapon_cards[i], i == _selected_index)
+		_set_card_selected(_weapon_cards[i], i == _selected_index)
+	if _selected_index < _weapon_cards.size():
+		card_scroll.ensure_control_visible.call_deferred(_weapon_cards[_selected_index])
 
 	if animate:
 		weapon_display.pivot_offset = weapon_display.size * 0.5
 		weapon_display.modulate.a = 0.0
 		weapon_display.scale = Vector2(0.94, 0.94)
 		var tween := create_tween().set_parallel().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-		tween.tween_property(weapon_display, "modulate:a", 1.0, 0.16)
-		tween.tween_property(weapon_display, "scale", Vector2.ONE, 0.20)
+		tween.tween_property(weapon_display, "modulate:a", 1.0, 0.18)
+		tween.tween_property(weapon_display, "scale", Vector2.ONE, 0.22)
 
-func _weapon_status(weapon_id: String, specialist_id: String, full_rack_active: bool) -> String:
-	if weapon_id == "scrap_bolt":
-		return "CORE ROUND • ALWAYS CARRIED"
-	if full_rack_active:
-		return "TWIN FIELD RACK • CARRIED"
-	if weapon_id == specialist_id:
-		return "ACTIVE SPECIALIST"
-	return "AVAILABLE SPECIALIST"
-
-func _update_weapon_action(weapon_id: String, specialist_id: String, full_rack_active: bool) -> void:
+func _update_action(weapon_id: String, specialist_id: String, full_rack_active: bool) -> void:
+	action_coin.visible = false
+	action_cost.visible = false
 	action_button.disabled = true
+
 	if weapon_id == "scrap_bolt":
-		action_button.text = "CORE ROUND • ALWAYS CARRIED"
+		status_label.text = "CORE ROUND"
+		action_label.text = "ALWAYS CARRIED"
 	elif full_rack_active:
-		action_button.text = "CARRIED BY TWIN FIELD RACK"
+		status_label.text = "TWIN FIELD RACK"
+		action_label.text = "CARRIED"
 	elif weapon_id == specialist_id:
-		action_button.text = "ACTIVE SPECIALIST"
+		status_label.text = "ACTIVE SPECIALIST"
+		action_label.text = "ACTIVE"
 	else:
-		action_button.text = "EQUIP SPECIALIST"
+		status_label.text = "SPECIALIST ROUND"
+		action_label.text = "EQUIP"
 		action_button.disabled = false
 
 func _request_selected_weapon() -> void:
 	if _weapons.is_empty() or action_button.disabled:
 		return
-	var weapon := _weapons[_selected_index]
-	if weapon.id == "heavy_slug" or weapon.id == "shock_capsule":
-		specialist_weapon_requested.emit(weapon.id)
+	var id := _weapons[_selected_index].id
+	if id == "heavy_slug" or id == "shock_capsule":
+		specialist_weapon_requested.emit(id)
 
-func _rebuild_weapon_stats(weapon: WeaponDefinition) -> void:
-	for child in stat_rows.get_children():
-		child.queue_free()
+func _rebuild_stats(weapon: WeaponDefinition) -> void:
+	for child in rows.get_children():
+		if child != action_button:
+			child.queue_free()
 
-	_add_stat_row(
-		"DAMAGE",
-		str(weapon.direct_damage),
-		clampi(int(ceil(float(weapon.direct_damage) / 15.0)), 1, 4)
-	)
-	_add_stat_row(
-		"COVER",
-		str(weapon.cover_damage),
-		clampi(int(ceil(float(weapon.cover_damage) / 23.0)), 1, 4)
-	)
-	_add_stat_row(
-		"FORCE",
-		str(int(weapon.knockback_force)),
-		clampi(int(ceil(weapon.knockback_force / 200.0)), 1, 4)
-	)
+	var damage := clampi(int(ceil(float(weapon.direct_damage) / 15.0)), 1, 4)
+	var explosion := 0
+	if weapon.blast_radius > 0.0:
+		explosion = clampi(int(ceil(weapon.blast_radius / 55.0)), 1, 4)
+	var range_level := clampi(int(round(weapon.speed_multiplier * 2.5)), 1, 4)
+	var bounce := clampi(weapon.max_ground_bounces, 0, 4)
 
-	if weapon.max_ground_bounces > 0:
-		_add_stat_row("BOUNCE", "%d×" % weapon.max_ground_bounces, clampi(weapon.max_ground_bounces, 1, 4))
-	elif weapon.blast_radius > 0.0:
-		_add_stat_row("BLAST", str(int(weapon.blast_radius)), clampi(int(ceil(weapon.blast_radius / 55.0)), 1, 4))
-	else:
-		var speed_fill := clampi(int(round(weapon.speed_multiplier * 3.0)), 1, 4)
-		_add_stat_row("FLIGHT", "×%.2f" % weapon.speed_multiplier, speed_fill)
+	_add_stat_row("DAMAGE", ICON_DAMAGE, damage, action_button.get_index())
+	_add_stat_row("EXPLOSION", ICON_EXPLOSION, explosion, action_button.get_index())
+	_add_stat_row("RANGE", ICON_RANGE, range_level, action_button.get_index())
+	_add_stat_row("BOUNCE", ICON_BOUNCE, bounce, action_button.get_index())
 
-func _add_stat_row(label_text: String, value_text: String, filled: int) -> void:
+func _add_stat_row(label_text: String, icon_path: String, filled: int, insert_index: int) -> void:
 	var row := HBoxContainer.new()
-	row.custom_minimum_size = Vector2(0.0, 30.0)
-	row.add_theme_constant_override("separation", 8)
+	row.custom_minimum_size = Vector2(0.0, 38.0)
+	row.add_theme_constant_override("separation", 12)
+
+	var icon := TextureRect.new()
+	icon.texture = ProductionUIScript.texture(icon_path)
+	icon.custom_minimum_size = Vector2(38.0, 38.0)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(icon)
 
 	var label := Label.new()
-	label.custom_minimum_size = Vector2(88.0, 0.0)
+	label.custom_minimum_size = Vector2(150.0, 0.0)
 	label.text = label_text
-	label.add_theme_font_size_override("font_size", 14)
+	label.add_theme_font_size_override("font_size", 26)
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(label)
 
 	var segments := HBoxContainer.new()
 	segments.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	segments.add_theme_constant_override("separation", 4)
+	segments.add_theme_constant_override("separation", 5)
 	row.add_child(segments)
-	ProductionUIScript.rebuild_segments(segments, filled, 4)
 
-	var value := Label.new()
-	value.custom_minimum_size = Vector2(72.0, 0.0)
-	value.text = value_text
-	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	value.add_theme_font_size_override("font_size", 13)
-	row.add_child(value)
-	stat_rows.add_child(row)
+	for i in range(4):
+		var segment := NinePatchRect.new()
+		segment.texture = ProductionUIScript.texture(SEG_FILLED_PATH if i < filled else SEG_EMPTY_PATH)
+		segment.patch_margin_left = 8
+		segment.patch_margin_top = 8
+		segment.patch_margin_right = 8
+		segment.patch_margin_bottom = 8
+		segment.custom_minimum_size = Vector2(40.0, 31.0)
+		segment.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		segment.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		segment.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		segments.add_child(segment)
+
+	rows.add_child(row)
+	rows.move_child(row, insert_index)
 
 func _build_weapon_cards() -> void:
 	for child in weapon_row.get_children():
@@ -219,40 +263,76 @@ func _build_weapon_cards() -> void:
 
 	for i in range(_weapons.size()):
 		var weapon := _weapons[i]
-		var button := Button.new()
-		button.custom_minimum_size = Vector2(182.0, 112.0)
-		button.clip_contents = true
-		button.focus_mode = Control.FOCUS_NONE
-		button.pressed.connect(_select_weapon_card.bind(i))
-		ProductionUIScript.style_card_button(button, i == _selected_index)
 
-		var art := TextureRect.new()
-		art.texture = ProductionUIScript.texture(str(THUMB_PATHS.get(weapon.id, "")))
-		art.anchor_left = 0.06
-		art.anchor_top = 0.04
-		art.anchor_right = 0.94
-		art.anchor_bottom = 0.72
-		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		button.add_child(art)
+		var card := Button.new()
+		card.custom_minimum_size = Vector2(152.0, 188.0)
+		card.focus_mode = Control.FOCUS_NONE
+		card.flat = true
+		card.clip_contents = false
+		card.pressed.connect(_select_weapon_card.bind(i))
 
-		var label := Label.new()
-		label.anchor_left = 0.0
-		label.anchor_top = 0.72
-		label.anchor_right = 1.0
-		label.anchor_bottom = 1.0
-		label.offset_left = 8.0
-		label.offset_right = -8.0
-		label.text = weapon.display_name.to_upper()
-		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.add_theme_font_size_override("font_size", 13)
-		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		button.add_child(label)
+		var frame := NinePatchRect.new()
+		frame.name = "_Frame"
+		frame.texture = ProductionUIScript.texture(CARD_PATH)
+		frame.set_anchors_preset(Control.PRESET_FULL_RECT)
+		frame.patch_margin_left = 20
+		frame.patch_margin_top = 20
+		frame.patch_margin_right = 20
+		frame.patch_margin_bottom = 20
+		frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card.add_child(frame)
 
-		weapon_row.add_child(button)
-		_weapon_cards.append(button)
+		var selected := NinePatchRect.new()
+		selected.name = "_SelectedFrame"
+		selected.texture = ProductionUIScript.texture(CARD_SELECTED_PATH)
+		selected.set_anchors_preset(Control.PRESET_FULL_RECT)
+		selected.offset_left = -13.0
+		selected.offset_top = -13.0
+		selected.offset_right = 13.0
+		selected.offset_bottom = 13.0
+		selected.patch_margin_left = 33
+		selected.patch_margin_top = 33
+		selected.patch_margin_right = 33
+		selected.patch_margin_bottom = 33
+		selected.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card.add_child(selected)
+
+		var thumb := TextureRect.new()
+		thumb.texture = ProductionUIScript.texture(str(THUMB_PATHS.get(weapon.id, "")))
+		thumb.anchor_left = 0.08
+		thumb.anchor_top = 0.04
+		thumb.anchor_right = 0.92
+		thumb.anchor_bottom = 0.72
+		thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card.add_child(thumb)
+
+		var caption := Label.new()
+		caption.anchor_left = 0.0
+		caption.anchor_top = 0.72
+		caption.anchor_right = 1.0
+		caption.anchor_bottom = 1.0
+		caption.offset_left = 4.0
+		caption.offset_right = -4.0
+		caption.text = weapon.display_name
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		caption.add_theme_color_override("font_color", Color(0.95, 0.96, 0.965, 1))
+		caption.add_theme_font_size_override("font_size", 21)
+		caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card.add_child(caption)
+
+		weapon_row.add_child(card)
+		_weapon_cards.append(card)
+
+func _set_card_selected(card: Button, selected: bool) -> void:
+	var normal := card.get_node_or_null("_Frame") as CanvasItem
+	var glow := card.get_node_or_null("_SelectedFrame") as CanvasItem
+	if normal != null:
+		normal.visible = not selected
+	if glow != null:
+		glow.visible = selected
 
 func _select_weapon_card(index: int) -> void:
 	if index < 0 or index >= _weapons.size():
@@ -273,42 +353,39 @@ func _rebuild_modules() -> void:
 	module_display.configure_module(active_module_id)
 
 	if platform == null or platform.utility_slot_count <= 0:
-		module_note.text = "CURRENT PLATFORM HAS NO UTILITY MOUNT"
+		module_panel.visible = false
 		return
 
 	var modules := PlatformModuleCatalogScript.for_platform(platform_id)
+	module_panel.visible = not modules.is_empty()
 	if modules.is_empty():
-		module_note.text = "NO MODULES AVAILABLE FOR THIS PLATFORM"
 		return
 
 	var owned := inventory.get("owned_module_ids", []) as Array
 	var salvage := int(inventory.get("salvage", 0))
-	module_note.text = "%s • %d UTILITY SLOT" % [platform.display_name.to_upper(), platform.utility_slot_count]
+	module_note.text = "%s • PLATFORM MODULE" % platform.display_name.to_upper()
 
 	for definition in modules:
 		var is_owned := owned.has(definition.id)
 		var is_active := active_module_id == definition.id
+
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(220.0, 66.0)
+		button.custom_minimum_size = Vector2(150.0, 58.0)
 		button.focus_mode = Control.FOCUS_NONE
 		button.add_theme_font_size_override("font_size", 12)
 		ProductionUIScript.style_card_button(button, is_active)
 
 		if is_active:
-			button.text = "%s
-ACTIVE" % definition.display_name.to_upper()
+			button.text = "%s\nACTIVE" % definition.display_name.to_upper()
 			button.disabled = true
 		elif is_owned:
-			button.text = "%s
-EQUIP" % definition.display_name.to_upper()
+			button.text = "%s\nEQUIP" % definition.display_name.to_upper()
 			button.pressed.connect(_request_module.bind(definition.id))
 		elif salvage >= definition.purchase_cost:
-			button.text = "%s
-BUILD • %d" % [definition.display_name.to_upper(), definition.purchase_cost]
+			button.text = "%s\nBUILD %d" % [definition.display_name.to_upper(), definition.purchase_cost]
 			button.pressed.connect(_request_module.bind(definition.id))
 		else:
-			button.text = "%s
-NEED %d SALVAGE" % [definition.display_name.to_upper(), definition.purchase_cost]
+			button.text = "%s\nNEED %d" % [definition.display_name.to_upper(), definition.purchase_cost]
 			button.disabled = true
 		module_row.add_child(button)
 
@@ -337,7 +414,7 @@ func _on_swipe_input(event: InputEvent) -> void:
 	elif _swipe_start != Vector2.INF:
 		var delta: Vector2 = event.position - _swipe_start
 		_swipe_start = Vector2.INF
-		if absf(delta.x) >= SWIPE_MIN and absf(delta.x) > absf(delta.y) * 1.4:
+		if absf(delta.x) >= SWIPE_MIN and absf(delta.x) > absf(delta.y) * 1.5:
 			_step(-1 if delta.x > 0.0 else 1)
 
 func _play_ui(cue: StringName) -> void:
