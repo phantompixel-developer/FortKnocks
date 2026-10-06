@@ -13,3 +13,8 @@ knockback_force = 680.0
 speed_multiplier = 1.08
 projectile_color = Color(0.73, 0.77, 0.75, 1)
 trail_color = Color(0.68, 0.73, 0.71, 0.56)
+
+upgrade_base_cost = 55
+direct_damage_per_level = 4
+cover_damage_per_level = 8
+blast_damage_per_level = 0
