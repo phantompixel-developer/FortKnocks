@@ -53,9 +53,20 @@ const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 @onready var hud_root: Control = $HUD/Root
 @onready var player_status_card: ColorRect = $HUD/Root/PlayerStatusCard
 @onready var enemy_status_card: ColorRect = $HUD/Root/EnemyStatusCard
+@onready var health_label: Label = $HUD/Root/PlayerStatusCard/HealthLabel
+@onready var player_cover_label: Label = $HUD/Root/PlayerStatusCard/CoverLabel
+@onready var player_health_bar_back: ColorRect = $HUD/Root/PlayerStatusCard/HealthBarBack
+@onready var player_health_bar_fill: ColorRect = $HUD/Root/PlayerStatusCard/HealthBarFill
+@onready var player_cover_bar_back: ColorRect = $HUD/Root/PlayerStatusCard/CoverBarBack
+@onready var player_cover_bar_fill: ColorRect = $HUD/Root/PlayerStatusCard/CoverBarFill
+@onready var enemy_health_label: Label = $HUD/Root/EnemyStatusCard/HealthLabel
+@onready var enemy_cover_label: Label = $HUD/Root/EnemyStatusCard/CoverLabel
+@onready var enemy_health_bar_back: ColorRect = $HUD/Root/EnemyStatusCard/HealthBarBack
+@onready var enemy_health_bar_fill: ColorRect = $HUD/Root/EnemyStatusCard/HealthBarFill
+@onready var enemy_cover_bar_back: ColorRect = $HUD/Root/EnemyStatusCard/CoverBarBack
+@onready var enemy_cover_bar_fill: ColorRect = $HUD/Root/EnemyStatusCard/CoverBarFill
 @onready var turn_label: Label = $HUD/Root/TurnLabel
-@onready var health_label: Label = $HUD/Root/HealthLabel
-@onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
+@onready var feedback_plate: ColorRect = $HUD/Root/FeedbackPlate
 @onready var feedback_label: Label = $HUD/Root/FeedbackLabel
 @onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
@@ -145,7 +156,13 @@ var _hud_base_offsets: Dictionary = {}
 func _style_live_hud() -> void:
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	health_label.add_theme_color_override("font_color", ThemeScript.BONE)
+	player_cover_label.add_theme_color_override("font_color", ThemeScript.MUTED)
 	enemy_health_label.add_theme_color_override("font_color", Color("ef9b84"))
+	enemy_cover_label.add_theme_color_override("font_color", ThemeScript.MUTED)
+	player_health_bar_fill.color = ThemeScript.HAZARD
+	player_cover_bar_fill.color = ThemeScript.OXIDE
+	enemy_health_bar_fill.color = ThemeScript.SIGNAL
+	enemy_cover_bar_fill.color = ThemeScript.RUST
 	enemy_locator_label.add_theme_color_override("font_color", ThemeScript.COLD)
 	feedback_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	var weapon_title := weapon_tray.get_node("Title") as Label
@@ -165,12 +182,11 @@ func _capture_hud_layout() -> void:
 		player_status_card,
 		enemy_status_card,
 		turn_label,
-		health_label,
-		enemy_health_label,
 		inspect_button,
 		enemy_locator_label,
 		weapon_tray,
 		weapon_info_card,
+		feedback_plate,
 		feedback_label,
 		control_deck,
 		target_card,
@@ -200,16 +216,15 @@ func _apply_hud_safe_area() -> void:
 	var bottom_shift := size_delta.y - maxf(0.0, safe.w)
 
 	_set_hud_control_shift(player_status_card, Vector2(left_shift, top_shift))
-	_set_hud_control_shift(health_label, Vector2(left_shift, top_shift))
 	_set_hud_control_shift(weapon_tray, Vector2(left_shift, top_shift))
 
 	_set_hud_control_shift(enemy_status_card, Vector2(right_shift, top_shift))
-	_set_hud_control_shift(enemy_health_label, Vector2(right_shift, top_shift))
 	_set_hud_control_shift(inspect_button, Vector2(right_shift, top_shift))
 
 	_set_hud_control_shift(turn_label, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(weapon_info_card, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(enemy_locator_label, Vector2(center_shift_x, top_shift))
+	_set_hud_control_shift(feedback_plate, Vector2(center_shift_x, size_delta.y * 0.35))
 	_set_hud_control_shift(feedback_label, Vector2(center_shift_x, size_delta.y * 0.35))
 
 	_set_hud_control_shift(control_deck, Vector2(center_shift_x, bottom_shift))
@@ -278,6 +293,7 @@ func _ready() -> void:
 		weapon_info_card,
 		control_deck,
 		target_card,
+		feedback_plate,
 		mission_brief_card,
 		encounter_picker,
 		result_card,
@@ -294,6 +310,7 @@ func _ready() -> void:
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
 	player_cover.health_changed.connect(_on_health_changed)
+	enemy_cover.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
 	inspect_button.pressed.connect(_inspect_enemy)
 	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(_player_weapon("scrap_bolt")))
@@ -318,6 +335,7 @@ func _ready() -> void:
 	result_card.visible = false
 	restart_button.visible = false
 	change_encounter_button.visible = false
+	feedback_plate.visible = false
 	feedback_label.visible = false
 	last_impact_marker.clear_marker()
 
@@ -517,6 +535,7 @@ func _begin_drag(screen_position: Vector2) -> void:
 	_drag_start = screen_position
 	_set_weapon_choice_ui_visible(false)
 	inspect_button.visible = false
+	enemy_locator_label.visible = false
 	_aim_power = 0.0
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
@@ -566,6 +585,8 @@ func _end_drag(screen_position: Vector2) -> void:
 		aim_guide.clear()
 		_set_weapon_choice_ui_visible(true)
 		inspect_button.visible = true
+		enemy_locator_label.visible = enemy.is_alive()
+		_update_enemy_locator()
 		power_label.text = "POWER —"
 		angle_label.text = "ANGLE —"
 		hint_label.text = "Pull back to aim • release to fire"
@@ -631,12 +652,12 @@ func _update_weapon_button_visibility() -> void:
 	shock_capsule_button.visible = _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
 	if _campaign_managed and not _campaign_weapon_ids.is_empty():
-		weapon_tray.offset_bottom = 312.0
+		weapon_tray.offset_bottom = 330.0
 		if shock_capsule_button.visible and not heavy_slug_button.visible:
 			shock_capsule_button.offset_top = 92.0
 			shock_capsule_button.offset_bottom = 134.0
 	else:
-		weapon_tray.offset_bottom = 360.0
+		weapon_tray.offset_bottom = 378.0
 		shock_capsule_button.offset_top = 144.0
 		shock_capsule_button.offset_bottom = 186.0
 
@@ -1226,15 +1247,24 @@ func _show_feedback(message: String) -> void:
 		_feedback_tween.kill()
 
 	feedback_label.text = message
+	feedback_plate.visible = true
 	feedback_label.visible = true
+	feedback_plate.modulate = Color.WHITE
 	feedback_label.modulate = Color.WHITE
-	feedback_label.scale = Vector2(0.82, 0.82)
+	feedback_plate.scale = Vector2(0.90, 0.90)
+	feedback_label.scale = Vector2(0.86, 0.86)
 
 	_feedback_tween = create_tween()
 	_feedback_tween.set_parallel(true)
+	_feedback_tween.tween_property(feedback_plate, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_feedback_tween.tween_property(feedback_label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_feedback_tween.tween_property(feedback_label, "modulate:a", 0.0, 0.62).set_delay(0.22)
-	_feedback_tween.chain().tween_callback(func() -> void: feedback_label.visible = false)
+	_feedback_tween.tween_property(feedback_plate, "modulate:a", 0.0, 0.66).set_delay(0.24)
+	_feedback_tween.tween_property(feedback_label, "modulate:a", 0.0, 0.66).set_delay(0.24)
+	_feedback_tween.chain().tween_callback(_hide_feedback)
+
+func _hide_feedback() -> void:
+	feedback_plate.visible = false
+	feedback_label.visible = false
 
 func _calculate_enemy_velocity(origin: Vector2, target: Vector2, weapon: WeaponDefinition) -> Vector2:
 	var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity", 980.0))
@@ -1436,17 +1466,35 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 	_update_hud()
 
 func _update_hud() -> void:
-	health_label.text = "YOU %d/%d  •  COVER %d/%d" % [
-		player.health,
-		player.max_health,
-		player_cover.health,
-		player_cover.max_health,
-	]
-	enemy_health_label.text = "ENEMY %d/%d" % [enemy.health, enemy.max_health]
+	health_label.text = "YOU  %d/%d" % [player.health, player.max_health]
+	player_cover_label.text = "COVER  %d/%d" % [player_cover.health, player_cover.max_health]
+	enemy_health_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
+	enemy_cover_label.text = "COVER  %d/%d" % [enemy_cover.health, enemy_cover.max_health]
+	_update_status_bar(player_health_bar_back, player_health_bar_fill, player.health, player.max_health, ThemeScript.HAZARD)
+	_update_status_bar(player_cover_bar_back, player_cover_bar_fill, player_cover.health, player_cover.max_health, ThemeScript.OXIDE)
+	_update_status_bar(enemy_health_bar_back, enemy_health_bar_fill, enemy.health, enemy.max_health, ThemeScript.SIGNAL)
+	_update_status_bar(enemy_cover_bar_back, enemy_cover_bar_fill, enemy_cover.health, enemy_cover.max_health, ThemeScript.RUST)
 	if enemy_locator_label.visible:
 		_update_enemy_locator()
 	if target_card.visible:
 		_update_target_card()
+
+func _update_status_bar(
+	back: ColorRect,
+	fill: ColorRect,
+	current: int,
+	maximum: int,
+	normal_color: Color
+) -> void:
+	if back == null or fill == null:
+		return
+	var ratio := 0.0
+	if maximum > 0:
+		ratio = clampf(float(current) / float(maximum), 0.0, 1.0)
+	var width := back.offset_right - back.offset_left
+	fill.offset_left = back.offset_left
+	fill.offset_right = back.offset_left + width * ratio
+	fill.color = ThemeScript.SIGNAL if ratio <= 0.30 else normal_color
 
 func _update_target_card() -> void:
 	target_title_label.text = _current_mission.objective_text if _current_mission != null else "TARGET STATUS"
