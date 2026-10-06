@@ -17,7 +17,6 @@ const ICON_SPEED := GARAGE_ROOT + "/png/icons/icon_stat_speed.png"
 const ICON_FUEL := GARAGE_ROOT + "/png/icons/icon_stat_fuel.png"
 const ICON_LOAD := GARAGE_ROOT + "/png/icons/icon_stat_load.png"
 const PICKUP_THUMB := GARAGE_ROOT + "/art/thumb_veh_01_scavenger_pickup_PLACEHOLDER.png"
-const LOCKED_THUMB := GARAGE_ROOT + "/art/thumb_veh_02_locked_PLACEHOLDER.png"
 
 const PANEL_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/panel_stats_9s.png"
 const CARD_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/card_item_9s.png"
@@ -363,21 +362,9 @@ func _build_cards() -> void:
 			thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			thumb.material = _sharpen_material(0.10)
+			if locked:
+				thumb.modulate = Color(0.42, 0.45, 0.52, 1.0)
 			card.add_child(thumb)
-		elif locked:
-			var locked_thumb := TextureRect.new()
-			locked_thumb.texture = ProductionUIScript.texture(LOCKED_THUMB)
-			locked_thumb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-			locked_thumb.set_anchors_preset(Control.PRESET_FULL_RECT)
-			locked_thumb.offset_left = 12.0
-			locked_thumb.offset_top = 12.0
-			locked_thumb.offset_right = -12.0
-			locked_thumb.offset_bottom = -12.0
-			locked_thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			locked_thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			locked_thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			locked_thumb.material = _sharpen_material(0.08)
-			card.add_child(locked_thumb)
 		else:
 			var preview := PlatformShowcase.new()
 			preview.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -389,9 +376,11 @@ func _build_cards() -> void:
 			preview.draw_floor_shadow = false
 			preview.max_display_width = 205.0
 			preview.configure(definition.id)
+			if locked:
+				preview.modulate = Color(0.42, 0.45, 0.52, 1.0)
 			card.add_child(preview)
 
-		if locked and definition.id == "pickup":
+		if locked:
 			var lock := TextureRect.new()
 			lock.texture = ProductionUIScript.texture(LOCK_PATH)
 			lock.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
