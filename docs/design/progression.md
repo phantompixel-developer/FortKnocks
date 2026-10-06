@@ -279,3 +279,19 @@ Added during the October 2026 Workshop visual-production pass.
 - Cluster ammunition is currently **presentation-only and locked**. Its supplied production art is retained in the four-card Workshop composition without adding an unsupported combat system.
 - Existing platform-module progression remains accessible through the Workshop Modules overlay when the active vehicle supports modules.
 - Save schema v3 adds `weapon_levels` and migrates existing v1/v2 saves with all three implemented weapons starting at Level 1.
+
+
+## Command Board campaign presentation
+
+Locked during the October 2026 reference-driven visual pass.
+
+- The live Command Board is a **vertical scrolling physical campaign map**. This is the scalable implementation of the compact one-screen concept board.
+- Chapters contain regions; regions contain missions; mission numbering continues across the chapter.
+- The approved concept board remains the authority for visual language: pinned map, red route/string, polaroid region landmarks, restrained handwritten/map clutter, wooden rails and a compact paper chapter-progress HUD.
+- The dedicated Command Board preview remains the authority for scrolling behavior, mission-state presentation and fixed top/bottom rails.
+- The current live Chapter 1 only presents implemented content: **Outskirts missions 1–6** and **Suburbs missions 7–10**.
+- Future concept regions are not shown as playable locations before their missions exist. The current route ends at a physical **Chapter 2 locked gate** instead.
+- Completed/current/locked mission state is driven entirely by save/campaign data.
+- The board opens around the player's progression frontier rather than always at the top.
+- Region polaroids are landmarks, not menus; mission pins remain the primary interaction.
+- On wider displays the board, top rail and chapter HUD remain capped to the 720-wide portrait composition while the surrounding plank texture can expand.
