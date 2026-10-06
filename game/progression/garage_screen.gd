@@ -95,7 +95,7 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 func _sync_showroom() -> void:
 	if not is_node_ready():
 		return
-	var target_bottom := %Header.global_position.y - global_position.y + 48.0
+	var target_bottom: float = float(%Header.global_position.y - global_position.y + 48.0)
 	showroom.size = Vector2(size.x, maxf(target_bottom, 420.0))
 
 func _step(direction: int) -> void:
