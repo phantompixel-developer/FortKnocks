@@ -25,7 +25,10 @@ const LOCK_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ico
 @onready var next_button: TextureButton = %NextButton
 @onready var notice_label: Label = %NoticeLabel
 @onready var back_button: TextureButton = %BackButton
+@onready var swipe_area: Control = %SwipeArea
 
+const SWIPE_MIN := 62.0
+var _swipe_start := Vector2.INF
 var _snapshot: Dictionary = {}
 var _definitions: Array[CombatPlatformDefinition] = []
 var _selected_index := 0
@@ -46,6 +49,7 @@ func _ready() -> void:
 	)
 	prev_button.pressed.connect(_step.bind(-1))
 	next_button.pressed.connect(_step.bind(1))
+	swipe_area.gui_input.connect(_on_swipe_input)
 	action_button.pressed.connect(_request_selected)
 
 func configure(save_snapshot: Dictionary, notice := "") -> void:
@@ -247,6 +251,23 @@ func _select_card(index: int) -> void:
 	_selected_index = index
 	_play_ui(&"ui_confirm")
 	_show_selected()
+
+func _on_swipe_input(event: InputEvent) -> void:
+	var pressed := false
+	if event is InputEventScreenTouch:
+		pressed = event.pressed
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		pressed = event.pressed
+	else:
+		return
+
+	if pressed:
+		_swipe_start = event.position
+	elif _swipe_start != Vector2.INF:
+		var delta: Vector2 = event.position - _swipe_start
+		_swipe_start = Vector2.INF
+		if absf(delta.x) >= SWIPE_MIN and absf(delta.x) > absf(delta.y) * 1.4:
+			_step(-1 if delta.x > 0.0 else 1)
 
 func _play_ui(cue: StringName) -> void:
 	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
