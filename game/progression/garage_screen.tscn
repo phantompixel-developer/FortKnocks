@@ -199,7 +199,11 @@ offset_right = 681.0
 offset_bottom = 1063.0
 mouse_filter = 2
 
-[node name="Rows" type="VBoxContainer" parent="Design/StatsPanel"]
+[node name="PanelContent" type="Control" parent="Design/StatsPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Rows" type="VBoxContainer" parent="Design/StatsPanel/PanelContent"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 30.0
@@ -209,7 +213,7 @@ offset_bottom = 207.0
 mouse_filter = 2
 theme_override_constants/separation = 5
 
-[node name="ActionButton" type="Button" parent="Design/StatsPanel"]
+[node name="ActionButton" type="Button" parent="Design/StatsPanel/PanelContent"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 143.0
@@ -218,7 +222,7 @@ offset_right = 508.0
 offset_bottom = 320.0
 focus_mode = 0
 
-[node name="ActionContent" type="HBoxContainer" parent="Design/StatsPanel/ActionButton"]
+[node name="ActionContent" type="HBoxContainer" parent="Design/StatsPanel/PanelContent/ActionButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,7 +235,7 @@ mouse_filter = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="ActionLabel" type="Label" parent="Design/StatsPanel/ActionButton/ActionContent"]
+[node name="ActionLabel" type="Label" parent="Design/StatsPanel/PanelContent/ActionButton/ActionContent"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.075, 0.125, 0.039, 1)
@@ -239,7 +243,7 @@ theme_override_font_sizes/font_size = 29
 text = "ACQUIRE"
 vertical_alignment = 1
 
-[node name="ActionCoin" type="TextureRect" parent="Design/StatsPanel/ActionButton/ActionContent"]
+[node name="ActionCoin" type="TextureRect" parent="Design/StatsPanel/PanelContent/ActionButton/ActionContent"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(42, 42)
 layout_mode = 2
@@ -248,7 +252,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ActionCost" type="Label" parent="Design/StatsPanel/ActionButton/ActionContent"]
+[node name="ActionCost" type="Label" parent="Design/StatsPanel/PanelContent/ActionButton/ActionContent"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.075, 0.125, 0.039, 1)
