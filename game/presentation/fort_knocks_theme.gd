@@ -4,6 +4,8 @@ extends RefCounted
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_industrial.svg"
 const BUTTON_TEXTURE_PATH := "res://assets/art/production/shared/ui/button_industrial.svg"
+const FONT_MEDIUM_PATH := "res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Medium.ttf"
+const FONT_BOLD_PATH := "res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Bold.ttf"
 
 # Locked production palette: dark industrial UI, warm salvage lighting, restrained cold-tech accents.
 const COAL := Color("111820")
@@ -29,6 +31,12 @@ static func build() -> Theme:
 	var panel_texture: Texture2D = ProductionArtScript.texture_from_svg(PANEL_TEXTURE_PATH)
 	var button_texture: Texture2D = ProductionArtScript.texture_from_svg(BUTTON_TEXTURE_PATH)
 	var theme := Theme.new()
+	var medium_font := load(FONT_MEDIUM_PATH) as Font
+	var bold_font := load(FONT_BOLD_PATH) as Font
+	if medium_font != null:
+		theme.default_font = medium_font
+	if bold_font != null:
+		theme.set_font("font", "Button", bold_font)
 	theme.set_color("font_color", "Label", BONE)
 	theme.set_color("font_shadow_color", "Label", Color(0.0, 0.0, 0.0, 0.66))
 	theme.set_constant("shadow_offset_x", "Label", 2)

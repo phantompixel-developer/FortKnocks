@@ -1,8 +1,19 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=15 format=3]
 
-[ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_garage"]
-[ext_resource type="Script" path="res://game/presentation/screen_backdrop.gd" id="2_backdrop"]
-[ext_resource type="Script" path="res://game/presentation/platform_showcase.gd" id="3_showcase"]
+[ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_script"]
+[ext_resource type="Script" path="res://game/presentation/platform_showcase.gd" id="2_showcase"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/bg_ui_lower.png" id="3_lower"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/bg_garage_scene.png" id="4_bg"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/overlay_scene_fade.png" id="5_fade"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/fx/fx_vehicle_contact_shadow.png" id="6_shadow"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back.png" id="7_back"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back_pressed.png" id="8_back_p"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left.png" id="9_left"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left_disabled.png" id="10_left_d"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right.png" id="11_right"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right_disabled.png" id="12_right_d"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/veh_scavenger_pickup_showroom_PLACEHOLDER.png" id="13_pickup"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/thumb_veh_01_scavenger_pickup_PLACEHOLDER.png" id="14_pickup_thumb"]
 
 [node name="Garage" type="Control"]
 layout_mode = 3
@@ -11,141 +22,298 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_garage")
+script = ExtResource("1_script")
 
-[node name="IdentityBackdrop" type="Node2D" parent="."]
-script = ExtResource("2_backdrop")
-variant = 1
-
-[node name="Background" type="ColorRect" parent="."]
+[node name="LowerBg" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.05, 0.06, 0.055, 0.42)
-
-[node name="Title" type="Label" parent="."]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 46.0
-offset_right = 660.0
-offset_bottom = 96.0
-theme_override_font_sizes/font_size = 32
-text = "GARAGE"
-horizontal_alignment = 1
-
-[node name="TopBar" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 126.0
-offset_right = 648.0
-offset_bottom = 184.0
-color = Color(0.08, 0.095, 0.087, 0.92)
-
-[node name="SalvageLabel" type="Label" parent="TopBar"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 13.0
-offset_right = 556.0
-offset_bottom = 45.0
-theme_override_font_sizes/font_size = 18
-text = "SALVAGE  0"
-horizontal_alignment = 1
-
-[node name="CurrentCard" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 232.0
-offset_right = 628.0
-offset_bottom = 540.0
-color = Color(0.10, 0.115, 0.105, 0.94)
-
-[node name="Header" type="Label" parent="CurrentCard"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 14.0
-offset_right = 512.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 18
-text = "COMBAT PLATFORM"
-horizontal_alignment = 1
-
-[node name="PlatformShowcase" type="Control" parent="CurrentCard"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 48.0
-offset_right = 512.0
-offset_bottom = 238.0
 mouse_filter = 2
-script = ExtResource("3_showcase")
+texture = ExtResource("3_lower")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="CurrentLabel" type="Label" parent="CurrentCard"]
+[node name="Design" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_right = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Showroom" type="Control" parent="Design"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 640.0
+mouse_filter = 2
+
+[node name="SceneBg" type="TextureRect" parent="Design/Showroom"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_bg")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Shadow" type="TextureRect" parent="Design/Showroom"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 240.0
-offset_right = 508.0
-offset_bottom = 292.0
-theme_override_font_sizes/font_size = 20
-text = "ACTIVE • RUN-DOWN COMPACT"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_top = 514.0
+offset_right = 692.0
+offset_bottom = 614.0
+mouse_filter = 2
+texture = ExtResource("6_shadow")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
-[node name="NoticeLabel" type="Label" parent="."]
+[node name="PlatformShowcase" type="Control" parent="Design/Showroom"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 14.0
+offset_top = 253.0
+offset_right = 706.0
+offset_bottom = 588.0
+mouse_filter = 2
+script = ExtResource("2_showcase")
+draw_floor_shadow = false
+max_display_width = 650.0
+
+[node name="PickupHero" type="TextureRect" parent="Design/Showroom"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 72.0
-offset_top = 210.0
-offset_right = 648.0
-offset_bottom = 250.0
-theme_override_font_sizes/font_size = 16
-text = "PLATFORM ACQUIRED"
-horizontal_alignment = 1
+offset_left = 14.0
+offset_top = 253.0
+offset_right = 706.0
+offset_bottom = 588.0
+mouse_filter = 2
+texture = ExtResource("13_pickup")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
-[node name="ProgressionCard" type="ColorRect" parent="."]
+[node name="Fade" type="TextureRect" parent="Design/Showroom"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 562.0
-offset_right = 648.0
-offset_bottom = 1016.0
-color = Color(0.10, 0.115, 0.105, 0.9)
+offset_top = 506.0
+offset_right = 720.0
+offset_bottom = 640.0
+mouse_filter = 2
+texture = ExtResource("5_fade")
+expand_mode = 1
 
-[node name="Title" type="Label" parent="ProgressionCard"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 20.0
-offset_right = 552.0
-offset_bottom = 54.0
-theme_override_font_sizes/font_size = 18
-text = "PLATFORM PATH"
-horizontal_alignment = 1
+[node name="SwipeArea" type="Control" parent="Design/Showroom"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
 
-[node name="PlatformList" type="VBoxContainer" parent="ProgressionCard"]
+[node name="BackButton" type="TextureButton" parent="Design"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 28.0
-offset_top = 62.0
-offset_right = 548.0
-offset_bottom = 404.0
-theme_override_constants/separation = 8
+offset_left = 20.0
+offset_top = 24.0
+offset_right = 108.0
+offset_bottom = 112.0
+focus_mode = 0
+texture_normal = ExtResource("7_back")
+texture_pressed = ExtResource("8_back_p")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="DetailLabel" type="Label" parent="ProgressionCard"]
+[node name="PrevButton" type="TextureButton" parent="Design"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 30.0
-offset_top = 408.0
-offset_right = 546.0
-offset_bottom = 446.0
-theme_override_font_sizes/font_size = 13
-text = "Platform trade-off information."
+offset_left = 29.0
+offset_top = 625.0
+offset_right = 84.0
+offset_bottom = 696.0
+focus_mode = 0
+texture_normal = ExtResource("9_left")
+texture_disabled = ExtResource("10_left_d")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="NextButton" type="TextureButton" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 636.0
+offset_top = 625.0
+offset_right = 691.0
+offset_bottom = 696.0
+focus_mode = 0
+texture_normal = ExtResource("11_right")
+texture_disabled = ExtResource("12_right_d")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PlatformTitle" type="Label" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 96.0
+offset_top = 625.0
+offset_right = 624.0
+offset_bottom = 678.0
+theme_override_colors/font_color = Color(0.95, 0.96, 0.965, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.55)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 42
+text = "SCAVENGER PICKUP"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
+text_overrun_behavior = 3
 
-[node name="BackButton" type="Button" parent="."]
+[node name="PlatformStatus" type="Label" parent="Design"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 190.0
-offset_top = 1128.0
-offset_right = 530.0
-offset_bottom = 1212.0
-theme_override_font_sizes/font_size = 20
-text = "BACK TO FORT KNOCKS"
+offset_left = 120.0
+offset_top = 676.0
+offset_right = 600.0
+offset_bottom = 716.0
+theme_override_colors/font_color = Color(0.235, 0.784, 0.91, 1)
+theme_override_font_sizes/font_size = 28
+text = "ACTIVE PLATFORM"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActiveToggle" type="Button" parent="Design"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 646.0
+offset_top = 696.0
+offset_right = 674.0
+offset_bottom = 724.0
+focus_mode = 0
+toggle_mode = true
+tooltip_text = "Set this vehicle as active"
+theme_override_font_sizes/font_size = 18
+text = "✓"
+
+[node name="StatsPanel" type="PanelContainer" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 39.0
+offset_top = 724.0
+offset_right = 681.0
+offset_bottom = 1063.0
+mouse_filter = 2
+
+[node name="PanelContent" type="Control" parent="Design/StatsPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Rows" type="VBoxContainer" parent="Design/StatsPanel/PanelContent"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 612.0
+offset_bottom = 207.0
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="ActionButton" type="Button" parent="Design/StatsPanel/PanelContent"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 143.0
+offset_top = 227.0
+offset_right = 508.0
+offset_bottom = 320.0
+focus_mode = 0
+
+[node name="ActionContent" type="HBoxContainer" parent="Design/StatsPanel/PanelContent/ActionButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ActionLabel" type="Label" parent="Design/StatsPanel/PanelContent/ActionButton/ActionContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.075, 0.125, 0.039, 1)
+theme_override_font_sizes/font_size = 29
+text = "ACQUIRE"
+vertical_alignment = 1
+
+[node name="ActionCoin" type="TextureRect" parent="Design/StatsPanel/PanelContent/ActionButton/ActionContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionCost" type="Label" parent="Design/StatsPanel/PanelContent/ActionButton/ActionContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.075, 0.125, 0.039, 1)
+theme_override_font_sizes/font_size = 29
+text = "1,200"
+vertical_alignment = 1
+
+[node name="CardScroll" type="ScrollContainer" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+horizontal_scroll_mode = 3
+scroll_deadzone = 8
+
+[node name="CardMargin" type="MarginContainer" parent="Design/CardScroll"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 14
+
+[node name="PlatformRow" type="HBoxContainer" parent="Design/CardScroll/CardMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="NoticeLabel" type="Label" parent="Design"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 100.0
+offset_top = 124.0
+offset_right = 620.0
+offset_bottom = 164.0
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+vertical_alignment = 1

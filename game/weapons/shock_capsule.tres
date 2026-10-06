@@ -16,3 +16,8 @@ blast_damage = 34
 blast_force = 780.0
 projectile_color = Color(0.49, 0.72, 0.87, 1)
 trail_color = Color(0.49, 0.72, 0.87, 0.55)
+
+upgrade_base_cost = 65
+direct_damage_per_level = 3
+cover_damage_per_level = 4
+blast_damage_per_level = 5

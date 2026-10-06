@@ -18,6 +18,7 @@ var _active_mission: MissionDefinition
 var _hub_notice := ""
 var _garage_notice := ""
 var _workshop_notice := ""
+var _workshop_focus_weapon_id := "scrap_bolt"
 
 func _ready() -> void:
 	_reconcile_campaign_unlocks()
@@ -49,6 +50,8 @@ func _show_garage() -> void:
 	_replace_screen(garage)
 	garage.back_requested.connect(_show_hub)
 	garage.platform_requested.connect(_on_platform_requested)
+	garage.platform_active_requested.connect(_on_platform_active_requested)
+	garage.platform_upgrade_requested.connect(_on_platform_upgrade_requested)
 	garage.configure(save_service.snapshot(), _garage_notice)
 	_garage_notice = ""
 
@@ -60,7 +63,8 @@ func _show_workshop() -> void:
 	workshop.back_requested.connect(_show_hub)
 	workshop.module_requested.connect(_on_module_requested)
 	workshop.specialist_weapon_requested.connect(_on_specialist_weapon_requested)
-	workshop.configure(save_service.snapshot(), _workshop_notice)
+	workshop.weapon_upgrade_requested.connect(_on_weapon_upgrade_requested)
+	workshop.configure(save_service.snapshot(), _workshop_notice, _workshop_focus_weapon_id)
 	_workshop_notice = ""
 
 func _reconcile_campaign_unlocks() -> void:
@@ -70,6 +74,7 @@ func _reconcile_campaign_unlocks() -> void:
 			save_service.unlock_mission(mission.next_mission_id)
 
 func _on_specialist_weapon_requested(weapon_id: String) -> void:
+	_workshop_focus_weapon_id = weapon_id
 	if not save_service.set_specialist_weapon(weapon_id):
 		return
 
@@ -77,6 +82,44 @@ func _on_specialist_weapon_requested(weapon_id: String) -> void:
 	var display_name := "HEAVY SLUG" if weapon_id == "heavy_slug" else "SHOCK CAPSULE"
 	_workshop_notice = "%s SET AS SPECIALIST" % display_name
 	_hub_notice = "FIELD RACK UPDATED • BOLT + %s" % display_name
+	_show_workshop()
+
+func _on_weapon_upgrade_requested(weapon_id: String) -> void:
+	_workshop_focus_weapon_id = weapon_id
+	var definition: WeaponDefinition
+	match weapon_id:
+		"scrap_bolt":
+			definition = preload("res://game/weapons/scrap_bolt.tres") as WeaponDefinition
+		"heavy_slug":
+			definition = preload("res://game/weapons/heavy_slug.tres") as WeaponDefinition
+		"shock_capsule":
+			definition = preload("res://game/weapons/shock_capsule.tres") as WeaponDefinition
+		_:
+			return
+
+	var current_level: int = save_service.weapon_level(weapon_id)
+	var cost: int = definition.upgrade_cost(current_level)
+	if cost <= 0:
+		_workshop_notice = "%s IS MAX LEVEL" % definition.display_name.to_upper()
+		_show_workshop()
+		return
+
+	if not save_service.upgrade_weapon(weapon_id, cost, definition.max_level):
+		_workshop_notice = "NOT ENOUGH SALVAGE"
+		_show_workshop()
+		return
+
+	var next_level: int = current_level + 1
+	audio_director.play_cue(&"ui_confirm")
+	_workshop_notice = "%s UPGRADED • LEVEL %d • -%d SALVAGE" % [
+		definition.display_name.to_upper(),
+		next_level,
+		cost,
+	]
+	_hub_notice = "WORKSHOP UPGRADE COMPLETE • %s LEVEL %d" % [
+		definition.display_name.to_upper(),
+		next_level,
+	]
 	_show_workshop()
 
 func _on_module_requested(module_id: String) -> void:
@@ -109,20 +152,12 @@ func _on_module_requested(module_id: String) -> void:
 
 func _on_platform_requested(platform_id: String) -> void:
 	var definition := PlatformCatalogScript.by_id(platform_id)
-	if definition == null:
+	if definition == null or save_service.owns_platform(platform_id):
 		return
 
-	var completed := save_service.completed_missions()
-	var unlocked := definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
+	var completed: Array = save_service.completed_missions()
+	var unlocked: bool = definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
 	if not unlocked or not definition.purchasable:
-		return
-
-	if save_service.owns_platform(platform_id):
-		if save_service.equip_platform(platform_id):
-			audio_director.play_cue(&"ui_confirm")
-			_garage_notice = "%s EQUIPPED" % definition.display_name.to_upper()
-			_hub_notice = "GARAGE UPDATED • %s ACTIVE" % definition.display_name.to_upper()
-		_show_garage()
 		return
 
 	if not save_service.purchase_platform(platform_id, definition.purchase_cost):
@@ -131,12 +166,55 @@ func _on_platform_requested(platform_id: String) -> void:
 		return
 
 	audio_director.play_cue(&"ui_confirm")
-	save_service.equip_platform(platform_id)
 	_garage_notice = "%s ACQUIRED • -%d SALVAGE" % [
 		definition.display_name.to_upper(),
 		definition.purchase_cost,
 	]
-	_hub_notice = "GARAGE UPGRADE COMPLETE • %s ACTIVE" % definition.display_name.to_upper()
+	_hub_notice = "GARAGE UPDATED • %s AVAILABLE" % definition.display_name.to_upper()
+	_show_garage()
+
+func _on_platform_active_requested(platform_id: String) -> void:
+	var definition := PlatformCatalogScript.by_id(platform_id)
+	if definition == null or not save_service.owns_platform(platform_id):
+		return
+	if save_service.current_platform_id() == platform_id:
+		return
+	if not save_service.equip_platform(platform_id):
+		return
+
+	audio_director.play_cue(&"ui_confirm")
+	_garage_notice = "%s SET ACTIVE" % definition.display_name.to_upper()
+	_hub_notice = "GARAGE UPDATED • %s ACTIVE" % definition.display_name.to_upper()
+	_show_garage()
+
+func _on_platform_upgrade_requested(platform_id: String) -> void:
+	var definition := PlatformCatalogScript.by_id(platform_id)
+	if definition == null or not save_service.owns_platform(platform_id):
+		return
+
+	var current_level: int = save_service.platform_level(platform_id)
+	var cost: int = definition.upgrade_cost(current_level)
+	if cost <= 0:
+		_garage_notice = "%s IS MAX LEVEL" % definition.display_name.to_upper()
+		_show_garage()
+		return
+
+	if not save_service.upgrade_platform(platform_id, cost, definition.max_level):
+		_garage_notice = "NOT ENOUGH SALVAGE"
+		_show_garage()
+		return
+
+	var next_level: int = current_level + 1
+	audio_director.play_cue(&"ui_confirm")
+	_garage_notice = "%s UPGRADED • LEVEL %d • -%d SALVAGE" % [
+		definition.display_name.to_upper(),
+		next_level,
+		cost,
+	]
+	_hub_notice = "GARAGE UPGRADE COMPLETE • %s LEVEL %d" % [
+		definition.display_name.to_upper(),
+		next_level,
+	]
 	_show_garage()
 
 func _start_mission(mission: MissionDefinition) -> void:
@@ -152,7 +230,11 @@ func _start_mission(mission: MissionDefinition) -> void:
 		return
 
 	var platform_id := save_service.current_platform_id()
-	var platform := PlatformCatalogScript.by_id(platform_id)
+	var platform_source := PlatformCatalogScript.by_id(platform_id)
+	var platform: CombatPlatformDefinition
+	if platform_source != null:
+		platform = platform_source.duplicate(true) as CombatPlatformDefinition
+		platform.cover_health = platform.cover_health_at_level(save_service.platform_level(platform_id))
 	var module_id := save_service.equipped_module_id(platform_id)
 	var module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
 	var weapon_ids: Array[String] = ["scrap_bolt"]
@@ -161,7 +243,7 @@ func _start_mission(mission: MissionDefinition) -> void:
 		weapon_ids.append("shock_capsule")
 	else:
 		weapon_ids.append(save_service.specialist_weapon_id())
-	battle.call("prepare_for_campaign", mission, platform, module, weapon_ids)
+	battle.call("prepare_for_campaign", mission, platform, module, weapon_ids, save_service.weapon_levels())
 	battle.connect("battle_completed", Callable(self, "_on_battle_completed"))
 	battle.connect("exit_requested", Callable(self, "_on_battle_exit_requested"))
 	battle.connect("rematch_requested", Callable(self, "_on_battle_rematch_requested"))

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="548" height="140" viewBox="0 0 548 140">
+<defs><filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/>
+  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 0.75" result="d"/>
+  <feComposite in="d" in2="SourceGraphic" operator="in" result="dd"/>
+  <feBlend in="SourceGraphic" in2="dd" mode="multiply"/>
+</filter><filter id="s" x="-30%" y="-30%" width="160%" height="170%">
+  <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/></filter>
+<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ccf4a"/><stop offset="1" stop-color="#5d9a2a"/></linearGradient></defs>
+<g filter="url(#s)"><rect x="8" y="6" width="532" height="120" rx="16" fill="#365f18"/>
+<rect x="12" y="10" width="524" height="110" rx="13" fill="url(#g)" filter="url(#grain)"/>
+<rect x="20" y="14" width="508" height="6" rx="3" fill="#fff" fill-opacity="0.35"/>
+<rect x="12" y="104" width="524" height="16" rx="8" fill="#000" fill-opacity=".14"/>
+<circle cx="24" cy="22" r="3" fill="#fff" fill-opacity=".35"/><circle cx="524" cy="22" r="3" fill="#fff" fill-opacity=".35"/></g>
+</svg>

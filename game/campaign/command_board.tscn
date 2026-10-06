@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=13 format=3]
 
-[ext_resource type="Script" path="res://game/campaign/command_board.gd" id="1_board"]
-[ext_resource type="Script" path="res://game/presentation/screen_backdrop.gd" id="2_backdrop"]
-[ext_resource type="Script" path="res://game/presentation/command_board_visual.gd" id="3_route"]
+[ext_resource type="Script" path="res://game/campaign/command_board.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_planks.png" id="2_planks"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/scroll_edge_shadow.png" id="3_edge"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/frame_rail_9s.png" id="4_rail"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back.png" id="5_back"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back_pressed.png" id="6_back_p"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/hud_chapter_panel_9s.png" id="7_panel"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/progress_track_9s.png" id="8_track"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/progress_fill_9s.png" id="9_fill"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/hud_chapter_tab_9s.png" id="10_tab"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/deco_string_knot.png" id="11_knot"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_close.png" id="12_close"]
 
 [node name="CommandBoard" type="Control"]
 layout_mode = 3
@@ -11,134 +20,426 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_board")
+script = ExtResource("1_script")
 
-[node name="IdentityBackdrop" type="Node2D" parent="."]
-script = ExtResource("2_backdrop")
-variant = 0
-
-[node name="Background" type="ColorRect" parent="."]
+[node name="Planks" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.05, 0.06, 0.055, 0.38)
+mouse_filter = 2
+texture = ExtResource("2_planks")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 1
 
-[node name="Header" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 38.0
-offset_right = 688.0
-offset_bottom = 150.0
-color = Color(0.08, 0.095, 0.087, 0.94)
+[node name="Design" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_right = 360.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Title" type="Label" parent="Header"]
+[node name="Scroll" type="ScrollContainer" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 113.333
+offset_bottom = -157.333
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+scroll_deadzone = 9
+
+[node name="BoardHolder" type="Control" parent="Design/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="Board" type="Control" parent="Design/Scroll/BoardHolder"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 20.0
-offset_top = 14.0
-offset_right = 636.0
-offset_bottom = 52.0
-theme_override_font_sizes/font_size = 28
+offset_right = 720.0
+offset_bottom = 1000.0
+mouse_filter = 1
+
+[node name="EdgeTop" type="TextureRect" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 113.333
+offset_bottom = 142.667
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("3_edge")
+texture_filter = 2
+expand_mode = 1
+
+[node name="EdgeBottom" type="TextureRect" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -186.667
+offset_bottom = -157.333
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("3_edge")
+texture_filter = 2
+expand_mode = 1
+flip_v = true
+
+[node name="TopRail" type="NinePatchRect" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 113.333
+grow_horizontal = 2
+texture = ExtResource("4_rail")
+texture_filter = 2
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 16
+
+[node name="TopContent" type="Control" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 105.333
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Design/TopContent"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.95, 0.91, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.52)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 34
 text = "COMMAND BOARD"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Header"]
+[node name="BackButton" type="TextureButton" parent="Design/TopContent"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 24.0
-offset_top = 62.0
-offset_right = 632.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 15
-text = "OUTSKIRTS RUNS • CLEAR A ROUTE FOR FORT KNOCKS"
-horizontal_alignment = 1
+offset_left = 16.0
+offset_top = 6.667
+offset_right = 106.667
+offset_bottom = 100.0
+focus_mode = 0
+texture_normal = ExtResource("5_back")
+texture_pressed = ExtResource("6_back_p")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="TopBar" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 52.0
-offset_top = 174.0
-offset_right = 668.0
-offset_bottom = 230.0
-color = Color(0.09, 0.105, 0.095, 0.9)
+[node name="Hud" type="Control" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -157.333
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="SalvageLabel" type="Label" parent="TopBar"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 12.0
-offset_right = 598.0
-offset_bottom = 44.0
-theme_override_font_sizes/font_size = 18
-text = "SALVAGE  0"
-horizontal_alignment = 1
+[node name="Rail" type="NinePatchRect" parent="Design/Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_rail")
+texture_filter = 2
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 16
+flip_v = true
 
-[node name="MissionPanel" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 52.0
-offset_top = 256.0
-offset_right = 668.0
-offset_bottom = 1042.0
-color = Color(0.08, 0.095, 0.087, 0.88)
-
-[node name="SectionTitle" type="Label" parent="MissionPanel"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 16.0
-offset_right = 592.0
-offset_bottom = 48.0
-theme_override_font_sizes/font_size = 19
-text = "RECOVERED ROUTE MAP"
-horizontal_alignment = 1
-
-[node name="RouteVisual" type="Control" parent="MissionPanel"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 56.0
-offset_right = 588.0
-offset_bottom = 356.0
+[node name="HudContent" type="Control" parent="Design/Hud"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("3_route")
 
-[node name="RouteListLabel" type="Label" parent="MissionPanel"]
+[node name="Panel" type="NinePatchRect" parent="Design/Hud/HudContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 46.667
+offset_right = -20.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_panel")
+texture_filter = 2
+patch_margin_left = 27
+patch_margin_top = 27
+patch_margin_right = 27
+patch_margin_bottom = 27
+
+[node name="Track" type="NinePatchRect" parent="Design/Hud/HudContent/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 26.667
+offset_top = 38.667
+offset_right = -26.667
+offset_bottom = 70.667
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("8_track")
+texture_filter = 2
+patch_margin_left = 13
+patch_margin_top = 13
+patch_margin_right = 13
+patch_margin_bottom = 13
+
+[node name="Fill" type="NinePatchRect" parent="Design/Hud/HudContent/Panel/Track"]
+unique_name_in_owner = true
 layout_mode = 0
-offset_left = 24.0
-offset_top = 366.0
-offset_right = 592.0
-offset_bottom = 398.0
-theme_override_font_sizes/font_size = 16
-text = "ROUTE ORDERS"
-horizontal_alignment = 1
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 133.333
+offset_bottom = 28.0
+mouse_filter = 2
+texture = ExtResource("9_fill")
+texture_filter = 2
+patch_margin_left = 11
+patch_margin_top = 11
+patch_margin_right = 11
+patch_margin_bottom = 11
 
-[node name="MissionScroll" type="ScrollContainer" parent="MissionPanel"]
+[node name="CountLabel" type="Label" parent="Design/Hud/HudContent/Panel/Track"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -14.667
+offset_top = -1.333
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.965, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 22
+text = "0/15"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Tab" type="NinePatchRect" parent="Design/Hud/HudContent"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 406.0
-offset_right = 592.0
-offset_bottom = 748.0
-horizontal_scroll_mode = 0
+offset_left = 30.667
+offset_top = 12.0
+offset_right = 224.0
+offset_bottom = 66.667
+mouse_filter = 2
+texture = ExtResource("10_tab")
+texture_filter = 2
+patch_margin_left = 19
+patch_margin_top = 19
+patch_margin_right = 19
+patch_margin_bottom = 19
 
-[node name="MissionList" type="VBoxContainer" parent="MissionPanel/MissionScroll"]
+[node name="ChapterLabel" type="Label" parent="Design/Hud/HudContent/Tab"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -1.333
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.106, 0.086, 0.063, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 25
+text = "CHAPTER 1"
+vertical_alignment = 1
+
+[node name="Knot" type="TextureRect" parent="Design/Hud/HudContent"]
+layout_mode = 0
+offset_left = 213.333
+offset_top = 29.333
+offset_right = 493.333
+offset_bottom = 69.333
+mouse_filter = 2
+texture = ExtResource("11_knot")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BriefingOverlay" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Dim" type="ColorRect" parent="BriefingOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.02, 0.025, 0.03, 0.82)
+
+[node name="BriefingPanel" type="PanelContainer" parent="BriefingOverlay"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -292.0
+offset_top = -316.0
+offset_right = 292.0
+offset_bottom = 316.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="BriefingOverlay/BriefingPanel"]
 layout_mode = 2
-custom_minimum_size = Vector2(544, 0)
-theme_override_constants/separation = 16
+theme_override_constants/margin_left = 34
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 34
+theme_override_constants/margin_bottom = 30
 
-[node name="Footer" type="Label" parent="."]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 1062.0
-offset_right = 648.0
-offset_bottom = 1114.0
-theme_override_font_sizes/font_size = 14
-text = "Clear a mission once to recover its Salvage and open the next route."
+[node name="Content" type="VBoxContainer" parent="BriefingOverlay/BriefingPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BriefingTitle" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.96, 0.965, 1)
+theme_override_font_sizes/font_size = 30
+text = "MISSION"
 horizontal_alignment = 1
+
+[node name="BriefingMeta" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.67, 0.72, 0.72, 1)
+theme_override_font_sizes/font_size = 15
+text = "MISSION 01 • OUTSKIRTS"
+horizontal_alignment = 1
+
+[node name="Rule" type="HSeparator" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+layout_mode = 2
+
+[node name="ObjectiveHeader" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
+theme_override_font_sizes/font_size = 14
+text = "OBJECTIVE"
+
+[node name="BriefingObjective" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "INCAPACITATE ENEMY"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 188.0
-offset_top = 1142.0
-offset_right = 532.0
-offset_bottom = 1222.0
-theme_override_font_sizes/font_size = 20
-text = "BACK TO FORT KNOCKS"
+[node name="BriefingText" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.79, 0.82, 0.82, 1)
+theme_override_font_sizes/font_size = 17
+text = "Mission briefing."
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BriefingReward" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
+theme_override_font_sizes/font_size = 18
+text = "RECOVERY • 0 SALVAGE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeployButton" type="Button" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+text = "DEPLOY"
+
+[node name="BriefingClose" type="Button" parent="BriefingOverlay"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 218.0
+offset_top = -298.0
+offset_right = 274.0
+offset_bottom = -242.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+flat = true
+clip_contents = true
+tooltip_text = "Close briefing"
+
+[node name="Icon" type="TextureRect" parent="BriefingOverlay/BriefingClose"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_close")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 5

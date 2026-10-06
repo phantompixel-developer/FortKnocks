@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="24" viewBox="0 0 96 24">
+<defs><filter id="b"><feGaussianBlur stdDeviation="2.5"/></filter></defs>
+<rect x="0" y="8" width="96" height="8" rx="4" fill="#1a0c04" opacity=".25" filter="url(#b)"/>
+</svg>

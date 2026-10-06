@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="170" viewBox="0 0 300 170">
+<defs>
+<linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a2e1a"/><stop offset=".55" stop-color="#3a2414"/><stop offset=".9" stop-color="#26170c"/><stop offset="1" stop-color="#140b05"/></linearGradient>
+<filter id="g" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.12" numOctaves="3" seed="12"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.10  0 0 0 0 0.06  0 0 0 0 0.03  1.4 0 0 0 -0.45"/><feComposite in2="SourceAlpha" operator="in"/></filter></defs>
+<rect x="0" y="0" width="300" height="158" fill="url(#w)"/>
+<rect x="0" y="0" width="300" height="158" filter="url(#g)"/>
+<rect x="0" y="4" width="300" height="3" fill="#7a5134" opacity=".5"/>
+<rect x="0" y="150" width="300" height="5" fill="#8a5e3c" opacity=".55"/>
+<rect x="0" y="158" width="300" height="12" fill="#000" opacity=".35"/>
+</svg>

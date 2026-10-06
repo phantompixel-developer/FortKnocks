@@ -253,3 +253,47 @@ Do not author a large campaign or seven complete platform tiers before this loop
 Do not build full progression systems until the combat prototype proves aiming, impact, destruction, camera flow, projectile roles, and encounter variety are fun.
 
 See `implementation_roadmap.md` for sequencing.
+
+
+## Garage vehicle reinforcement levels
+
+Added during the October 2026 Garage visual-production pass after explicit approval.
+
+- Owned combat platforms now have a persistent **Level 1–4** Garage reinforcement level.
+- The green Garage action is reserved for **UPGRADE** on owned vehicles; it is no longer used for equip/active state.
+- Upgrade levels currently improve **cover durability only**. Speed, Fuel and Load bars remain concise Garage presentation descriptors rather than separate simulation systems.
+- Equip/active state is a separate player choice represented by an active checkbox and a cyan active-card border.
+- Purchasing a newly unlocked platform does **not** automatically make it active; the player explicitly marks it active.
+- Existing v1 saves migrate to save schema v2 with all already-owned platforms starting at Level 1.
+- Upgrade cost scales by platform family and current level; the system remains intentionally capped and lightweight rather than becoming a broad RPG stat tree.
+
+
+## Workshop ammunition reinforcement levels
+
+Added during the October 2026 Workshop visual-production pass.
+
+- Scrap Bolt, Heavy Slug and Shock Capsule each have a persistent **Level 1–4** Workshop reinforcement level.
+- The green Workshop action is reserved for **UPGRADE**.
+- Upgrade levels increase the player's weapon damage profile only; enemy weapons remain at their base definitions.
+- Heavy Slug / Shock Capsule specialist selection is a separate cyan checkbox/card-border state, matching the Garage separation between upgrade and active/equipped state.
+- Cluster ammunition is currently **presentation-only and locked**. Its supplied production art is retained in the four-card Workshop composition without adding an unsupported combat system.
+- Existing platform-module progression remains accessible through the Workshop Modules overlay when the active vehicle supports modules.
+- Save schema v3 adds `weapon_levels` and migrates existing v1/v2 saves with all three implemented weapons starting at Level 1.
+
+
+## Command Board campaign presentation
+
+Locked during the October 2026 reference-driven visual pass.
+
+- The live Command Board is a **vertical scrolling physical campaign map**, using Claude's authored Command Board project as the geometry authority at exact 2/3 scale for the 720×1280 game viewport.
+- Chapters contain regions; regions contain mission slots; mission numbering resets per chapter.
+- The dedicated Command Board preview is the authority for rail/HUD proportions, scroll framing, route treatment, pin scale, polaroid scale, region mirroring and decor placement.
+- The wider Fort Knocks design board remains the authority for overall art language and atmosphere.
+- **Chapter 1 contains 15 visual mission slots across Outskirts, Suburbs and Highway.**
+- The current ten implemented Fort Knocks missions remain the only playable mission definitions. Highway's remaining Chapter 1 slots stay visibly locked until real missions are authored.
+- **Chapter 2 remains visible below Chapter 1 as Industrial, Badlands and The City**, using the supplied locked region artwork and authored layouts. Its mission slots remain non-playable until real content exists.
+- Completed/current/available state for implemented missions is driven by save/campaign data; future slots are visual locked placeholders only and never launch invented gameplay.
+- The board opens around the current progression frontier, with completed content above and locked content below.
+- The bottom HUD reflects the chapter currently centred in the scroll view: Chapter 1 uses the authored 15-slot denominator; Chapter 2 uses its authored 18-slot structure.
+- Region polaroids are physical map landmarks; mission pins remain the primary interaction.
+- On wide displays the board, top rail and chapter HUD remain capped to the 720-wide portrait composition while the surrounding plank texture may expand.

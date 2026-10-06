@@ -4,7 +4,7 @@ extends Node
 signal save_changed(snapshot: Dictionary)
 
 const SAVE_PATH := "user://fort_knocks_save.json"
-const CURRENT_SAVE_VERSION := 1
+const CURRENT_SAVE_VERSION := 3
 const STARTING_MISSION_ID := "roadblock_trial"
 
 var _data: Dictionary = {}
@@ -52,6 +52,64 @@ func owned_platform_ids() -> Array:
 
 func owns_platform(platform_id: String) -> bool:
 	return owned_platform_ids().has(platform_id)
+
+func platform_level(platform_id: String) -> int:
+	var inventory: Dictionary = _data.get("inventory", {}) as Dictionary
+	var levels: Dictionary = inventory.get("platform_levels", {}) as Dictionary
+	return clampi(int(levels.get(platform_id, 1)), 1, 4)
+
+func upgrade_platform(platform_id: String, cost: int, max_level: int = 4) -> bool:
+	if not owns_platform(platform_id) or cost < 0:
+		return false
+
+	var inventory: Dictionary = _data.get("inventory", {}) as Dictionary
+	var levels: Dictionary = inventory.get("platform_levels", {}) as Dictionary
+	var current_level: int = clampi(int(levels.get(platform_id, 1)), 1, max_level)
+	if current_level >= max_level:
+		return false
+
+	var current_salvage: int = int(inventory.get("salvage", 0))
+	if current_salvage < cost:
+		return false
+
+	inventory["salvage"] = current_salvage - cost
+	levels[platform_id] = current_level + 1
+	inventory["platform_levels"] = levels
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
+
+func weapon_level(weapon_id: String) -> int:
+	var inventory: Dictionary = _data.get("inventory", {}) as Dictionary
+	var levels: Dictionary = inventory.get("weapon_levels", {}) as Dictionary
+	return clampi(int(levels.get(weapon_id, 1)), 1, 4)
+
+func weapon_levels() -> Dictionary:
+	var inventory: Dictionary = _data.get("inventory", {}) as Dictionary
+	return (inventory.get("weapon_levels", {}) as Dictionary).duplicate(true)
+
+func upgrade_weapon(weapon_id: String, cost: int, max_level: int = 4) -> bool:
+	if weapon_id.is_empty() or cost < 0:
+		return false
+
+	var inventory: Dictionary = _data.get("inventory", {}) as Dictionary
+	var levels: Dictionary = inventory.get("weapon_levels", {}) as Dictionary
+	var current_level: int = clampi(int(levels.get(weapon_id, 1)), 1, max_level)
+	if current_level >= max_level:
+		return false
+
+	var current_salvage: int = int(inventory.get("salvage", 0))
+	if current_salvage < cost:
+		return false
+
+	inventory["salvage"] = current_salvage - cost
+	levels[weapon_id] = current_level + 1
+	inventory["weapon_levels"] = levels
+	_data["inventory"] = inventory
+	_persist()
+	save_changed.emit(snapshot())
+	return true
 
 func owned_module_ids() -> Array:
 	var inventory := _data.get("inventory", {}) as Dictionary
@@ -134,6 +192,9 @@ func purchase_platform(platform_id: String, cost: int) -> bool:
 	inventory["salvage"] = current_salvage - cost
 	owned.append(platform_id)
 	inventory["owned_platform_ids"] = owned
+	var levels: Dictionary = inventory.get("platform_levels", {}) as Dictionary
+	levels[platform_id] = maxi(1, int(levels.get(platform_id, 1)))
+	inventory["platform_levels"] = levels
 	_data["inventory"] = inventory
 	_persist()
 	save_changed.emit(snapshot())
@@ -226,6 +287,12 @@ func _default_data() -> Dictionary:
 			"salvage": 0,
 			"platform_id": "run_down_compact",
 			"owned_platform_ids": ["run_down_compact"],
+			"platform_levels": {"run_down_compact": 1},
+			"weapon_levels": {
+				"scrap_bolt": 1,
+				"heavy_slug": 1,
+				"shock_capsule": 1,
+			},
 			"owned_module_ids": [],
 			"equipped_module_by_platform": {},
 			"specialist_weapon_id": "heavy_slug",
@@ -235,12 +302,30 @@ func _default_data() -> Dictionary:
 	}
 
 func _migrate_save(source: Dictionary) -> Dictionary:
-	var version := int(source.get("save_version", 0))
+	var version: int = int(source.get("save_version", 0))
 	if version == CURRENT_SAVE_VERSION:
 		return source.duplicate(true)
 
-	# Persistence starts at schema v1. Future migrations are added here rather
-	# than teaching gameplay systems how to reinterpret older saves.
+	if version in [1, 2]:
+		var migrated: Dictionary = source.duplicate(true)
+		var inventory: Dictionary = migrated.get("inventory", {}) as Dictionary
+
+		if version == 1:
+			var owned: Array = inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
+			var platform_levels: Dictionary = {}
+			for platform_id in owned:
+				platform_levels[str(platform_id)] = 1
+			inventory["platform_levels"] = platform_levels
+
+		inventory["weapon_levels"] = {
+			"scrap_bolt": 1,
+			"heavy_slug": 1,
+			"shock_capsule": 1,
+		}
+		migrated["inventory"] = inventory
+		migrated["save_version"] = CURRENT_SAVE_VERSION
+		return migrated
+
 	push_warning("Unsupported Fort Knocks save version %d. Starting a new v%d save." % [
 		version,
 		CURRENT_SAVE_VERSION,
@@ -280,6 +365,21 @@ func _normalize() -> void:
 		inventory["platform_id"] = "run_down_compact"
 	if not owned_platforms.has(str(inventory["platform_id"])):
 		inventory["platform_id"] = "run_down_compact"
+
+	if typeof(inventory.get("platform_levels", null)) != TYPE_DICTIONARY:
+		inventory["platform_levels"] = {}
+	var platform_levels: Dictionary = inventory["platform_levels"] as Dictionary
+	for platform_id in owned_platforms:
+		var id: String = str(platform_id)
+		platform_levels[id] = clampi(int(platform_levels.get(id, 1)), 1, 4)
+	inventory["platform_levels"] = platform_levels
+
+	if typeof(inventory.get("weapon_levels", null)) != TYPE_DICTIONARY:
+		inventory["weapon_levels"] = {}
+	var weapon_levels: Dictionary = inventory["weapon_levels"] as Dictionary
+	for weapon_id in ["scrap_bolt", "heavy_slug", "shock_capsule"]:
+		weapon_levels[weapon_id] = clampi(int(weapon_levels.get(weapon_id, 1)), 1, 4)
+	inventory["weapon_levels"] = weapon_levels
 
 	if typeof(inventory.get("owned_module_ids", null)) != TYPE_ARRAY:
 		inventory["owned_module_ids"] = []
