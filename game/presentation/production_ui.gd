@@ -83,10 +83,10 @@ static func rebuild_segments(container: HBoxContainer, filled: int, total := 4, 
 			segment.texture = texture(BAR_EMPTY_PATH)
 		container.add_child(segment)
 
-static func apply_safe_area(container: MarginContainer, base := Vector4(24.0, 24.0, 24.0, 18.0)) -> void:
-	if container == null:
-		return
-	var viewport_size := container.get_viewport_rect().size
+static func safe_area_insets(control: Control, base := Vector4.ZERO) -> Vector4:
+	if control == null:
+		return base
+	var viewport_size := control.get_viewport_rect().size
 	var window_size := DisplayServer.window_get_size()
 	var left := base.x
 	var top := base.y
@@ -103,7 +103,13 @@ static func apply_safe_area(container: MarginContainer, base := Vector4(24.0, 24
 			top += float(safe.position.y) * scale.y
 			right += float(window_size.x - (safe.position.x + safe.size.x)) * scale.x
 			bottom += float(window_size.y - (safe.position.y + safe.size.y)) * scale.y
-	container.add_theme_constant_override("margin_left", int(round(left)))
-	container.add_theme_constant_override("margin_top", int(round(top)))
-	container.add_theme_constant_override("margin_right", int(round(right)))
-	container.add_theme_constant_override("margin_bottom", int(round(bottom)))
+	return Vector4(left, top, right, bottom)
+
+static func apply_safe_area(container: MarginContainer, base := Vector4(24.0, 24.0, 24.0, 18.0)) -> void:
+	if container == null:
+		return
+	var insets := safe_area_insets(container, base)
+	container.add_theme_constant_override("margin_left", int(round(insets.x)))
+	container.add_theme_constant_override("margin_top", int(round(insets.y)))
+	container.add_theme_constant_override("margin_right", int(round(insets.z)))
+	container.add_theme_constant_override("margin_bottom", int(round(insets.w)))
