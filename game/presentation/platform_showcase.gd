@@ -60,7 +60,7 @@ func _texture_for_platform(platform_id: String) -> Texture2D:
 		_:
 			return null
 
-	var texture: Texture2D = ProductionArtScript.texture_from_svg(path)
+	var texture: Texture2D = ProductionArtScript.texture_from_svg(path, 2.0)
 	_textures[platform_id] = texture
 	return texture
 
