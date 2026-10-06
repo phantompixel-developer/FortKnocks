@@ -285,13 +285,15 @@ Added during the October 2026 Workshop visual-production pass.
 
 Locked during the October 2026 reference-driven visual pass.
 
-- The live Command Board is a **vertical scrolling physical campaign map**. This is the scalable implementation of the compact one-screen concept board.
-- Chapters contain regions; regions contain missions; mission numbering continues across the chapter.
-- The approved concept board remains the authority for visual language: pinned map, red route/string, polaroid region landmarks, restrained handwritten/map clutter, wooden rails and a compact paper chapter-progress HUD.
-- The dedicated Command Board preview remains the authority for scrolling behavior, mission-state presentation and fixed top/bottom rails.
-- The current live Chapter 1 only presents implemented content: **Outskirts missions 1–6** and **Suburbs missions 7–10**.
-- Future concept regions are not shown as playable locations before their missions exist. The current route ends at a physical **Chapter 2 locked gate** instead.
-- Completed/current/locked mission state is driven entirely by save/campaign data.
-- The board opens around the player's progression frontier rather than always at the top.
-- Region polaroids are landmarks, not menus; mission pins remain the primary interaction.
-- On wider displays the board, top rail and chapter HUD remain capped to the 720-wide portrait composition while the surrounding plank texture can expand.
+- The live Command Board is a **vertical scrolling physical campaign map**, using Claude's authored Command Board project as the geometry authority at exact 2/3 scale for the 720×1280 game viewport.
+- Chapters contain regions; regions contain mission slots; mission numbering resets per chapter.
+- The dedicated Command Board preview is the authority for rail/HUD proportions, scroll framing, route treatment, pin scale, polaroid scale, region mirroring and decor placement.
+- The wider Fort Knocks design board remains the authority for overall art language and atmosphere.
+- **Chapter 1 contains 15 visual mission slots across Outskirts, Suburbs and Highway.**
+- The current ten implemented Fort Knocks missions remain the only playable mission definitions. Highway's remaining Chapter 1 slots stay visibly locked until real missions are authored.
+- **Chapter 2 remains visible below Chapter 1 as Industrial, Badlands and The City**, using the supplied locked region artwork and authored layouts. Its mission slots remain non-playable until real content exists.
+- Completed/current/available state for implemented missions is driven by save/campaign data; future slots are visual locked placeholders only and never launch invented gameplay.
+- The board opens around the current progression frontier, with completed content above and locked content below.
+- The bottom HUD reflects the chapter currently centred in the scroll view: Chapter 1 uses the authored 15-slot denominator; Chapter 2 uses its authored 18-slot structure.
+- Region polaroids are physical map landmarks; mission pins remain the primary interaction.
+- On wide displays the board, top rail and chapter HUD remain capped to the 720-wide portrait composition while the surrounding plank texture may expand.
