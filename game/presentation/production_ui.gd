@@ -101,8 +101,8 @@ static func apply_safe_area(container: MarginContainer, base := Vector4(24.0, 24
 			)
 			left += float(safe.position.x) * scale.x
 			top += float(safe.position.y) * scale.y
-			right += float(window_size.x - safe.end.x) * scale.x
-			bottom += float(window_size.y - safe.end.y) * scale.y
+			right += float(window_size.x - (safe.position.x + safe.size.x)) * scale.x
+			bottom += float(window_size.y - (safe.position.y + safe.size.y)) * scale.y
 	container.add_theme_constant_override("margin_left", int(round(left)))
 	container.add_theme_constant_override("margin_top", int(round(top)))
 	container.add_theme_constant_override("margin_right", int(round(right)))
