@@ -33,3 +33,8 @@ Each vehicle or ammo type needs only **one** normal thumbnail. The locked look (
 - Showroom vehicles / ammo: about 1000px wide, transparent background, consistent 3/4 side view, lit warm from upper left.
 - Card thumbnails: about 320×220, transparent, same angle as the showroom art.
 - Scene backgrounds: paint at **1080×1400 or taller**. 20:9 phones show more height than the mood board covers.
+
+
+## Fort Knocks integration note
+
+The package is now integrated into the live project. The original standalone reference Godot project has been removed to avoid duplicate scripts, resources and sample progression data. Runtime code should point at this `1_Asset_Kit/` tree or the existing `assets/art/production/` tree only.
