@@ -290,6 +290,7 @@ func _build_cards() -> void:
 		preview.offset_right = -12.0
 		preview.offset_bottom = -8.0
 		preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		preview.draw_floor_shadow = false
 		preview.configure(definition.id)
 		if not owned.has(definition.id) and not unlocked:
 			preview.modulate = Color(0.42, 0.45, 0.52, 1.0)
