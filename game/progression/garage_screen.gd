@@ -27,8 +27,8 @@ const SEG_EMPTY_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/pn
 const SEG_FILLED_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/statbar_seg_filled_9s.png"
 
 const SWIPE_MIN: float = 60.0
-const ACTIVE_ACCENT := Color("42c7dc")
-const ACTIVE_DARK := Color("101b24")
+static var ACTIVE_ACCENT: Color = Color("42c7dc")
+static var ACTIVE_DARK: Color = Color("101b24")
 
 @onready var platform_showcase: PlatformShowcase = %PlatformShowcase
 @onready var pickup_hero: TextureRect = %PickupHero
