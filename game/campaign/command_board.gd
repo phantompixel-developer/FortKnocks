@@ -17,7 +17,7 @@ const SUBURBS_H: float = 780.0
 const CHAPTER_GATE_H: float = 220.0
 const BOTTOM_PAD: float = 80.0
 const ROUTE_W: float = 12.0
-const POLAROID_SIZE := Vector2(307.0, 280.0)
+static var POLAROID_SIZE: Vector2 = Vector2(307.0, 280.0)
 
 const BG_TILES: Array[Texture2D] = [
 	preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_a.png"),
