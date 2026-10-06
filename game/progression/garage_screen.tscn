@@ -64,6 +64,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("4_bg")
+texture_filter = 2
 expand_mode = 1
 stretch_mode = 6
 
@@ -75,6 +76,7 @@ offset_right = 692.0
 offset_bottom = 614.0
 mouse_filter = 2
 texture = ExtResource("6_shadow")
+texture_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
@@ -100,6 +102,7 @@ offset_right = 706.0
 offset_bottom = 588.0
 mouse_filter = 2
 texture = ExtResource("13_pickup")
+texture_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
@@ -189,6 +192,20 @@ theme_override_font_sizes/font_size = 28
 text = "ACTIVE PLATFORM"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ActiveToggle" type="Button" parent="Design"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 620.0
+offset_top = 677.0
+offset_right = 676.0
+offset_bottom = 716.0
+focus_mode = 0
+toggle_mode = true
+tooltip_text = "Set this vehicle as active"
+theme_override_font_sizes/font_size = 23
+text = "✓"
 
 [node name="StatsPanel" type="PanelContainer" parent="Design"]
 unique_name_in_owner = true
