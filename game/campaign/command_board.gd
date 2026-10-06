@@ -145,13 +145,23 @@ func _rebuild() -> void:
 	_build_background(board_height)
 
 	var y := 74.0
+	var previous_route_end := Vector2.ZERO
+	var has_previous_route := false
 	_suburbs_y = 0.0
 	_current_pin_y = 0.0
 	for region_index in range(_regions.size()):
 		var region: Dictionary = _regions[region_index]
+		var region_points: PackedVector2Array = region["points"]
 		if region_index == 1:
 			_suburbs_y = y
+		if has_previous_route and not region_points.is_empty():
+			var next_route_start := Vector2(region_points[0].x, y + region_points[0].y)
+			_add_route(PackedVector2Array([previous_route_end, next_route_start]), 0.0)
 		_build_region(region, y)
+		if not region_points.is_empty():
+			var last_point := region_points[region_points.size() - 1]
+			previous_route_end = Vector2(last_point.x, y + last_point.y)
+			has_previous_route = true
 		y += float(region["height"]) + REGION_GAP
 
 	if _current_pin_y <= 0.0:
@@ -172,6 +182,7 @@ func _build_background(board_height: float) -> void:
 		tile.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tile.stretch_mode = TextureRect.STRETCH_SCALE
 		tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		tile.z_index = -10
 		board.add_child(tile)
 		board.move_child(tile, 0)
 
@@ -224,6 +235,7 @@ func _add_route(points: PackedVector2Array, top: float) -> void:
 	shadow.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	shadow.joint_mode = Line2D.LINE_JOINT_ROUND
 	shadow.antialiased = true
+	shadow.z_index = -1
 	shadow.position = Vector2(3.0, 5.0)
 	board.add_child(shadow)
 
@@ -235,6 +247,7 @@ func _add_route(points: PackedVector2Array, top: float) -> void:
 	line.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	line.joint_mode = Line2D.LINE_JOINT_ROUND
 	line.antialiased = true
+	line.z_index = -1
 	board.add_child(line)
 
 func _add_polaroid(caption: String, photo_path: String, position: Vector2, angle: float, attachment: String) -> void:
@@ -417,7 +430,6 @@ func _deploy_briefing_mission() -> void:
 	var mission := _briefing_mission
 	briefing_overlay.visible = false
 	_briefing_mission = null
-	_play_ui(&"ui_confirm")
 	mission_selected.emit(mission)
 
 func _on_back_pressed() -> void:
