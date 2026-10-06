@@ -1,0 +1,170 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://screens/command_board/data/chapter_data.gd" id="1_ch"]
+[ext_resource type="Script" path="res://screens/command_board/data/region_data.gd" id="2_rg"]
+[ext_resource type="Script" path="res://screens/command_board/data/mission_data.gd" id="3_ms"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/region_photo_industrial.png" id="p0"]
+[ext_resource type="Resource" path="res://screens/command_board/layouts/layout_7_missions.tres" id="l0"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/region_photo_badlands.png" id="p1"]
+[ext_resource type="Resource" path="res://screens/command_board/layouts/layout_5_missions.tres" id="l1"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/region_photo_the_city.png" id="p2"]
+[ext_resource type="Resource" path="res://screens/command_board/layouts/layout_6_missions.tres" id="l2"]
+
+[sub_resource type="Resource" id="m1"]
+script = ExtResource("3_ms")
+id = &"c2_m01"
+title = "Smokestacks"
+objective = "Survive the ambush and clear the road."
+reward_coins = 275
+
+[sub_resource type="Resource" id="m2"]
+script = ExtResource("3_ms")
+id = &"c2_m02"
+title = "Crane Drop"
+objective = "Break through the barricade before time runs out."
+reward_coins = 300
+
+[sub_resource type="Resource" id="m3"]
+script = ExtResource("3_ms")
+id = &"c2_m03"
+title = "Pipe Maze"
+objective = "Take out the armoured convoy."
+reward_coins = 325
+
+[sub_resource type="Resource" id="m4"]
+script = ExtResource("3_ms")
+id = &"c2_m04"
+title = "Silo Blast"
+objective = "Destroy every enemy turret."
+reward_coins = 350
+
+[sub_resource type="Resource" id="m5"]
+script = ExtResource("3_ms")
+id = &"c2_m05"
+title = "Foundry Gate"
+objective = "Reach the extraction point with your truck intact."
+reward_coins = 375
+
+[sub_resource type="Resource" id="m6"]
+script = ExtResource("3_ms")
+id = &"c2_m06"
+title = "Rail Yard"
+objective = "Knock down the watchtower in three shots or fewer."
+reward_coins = 400
+
+[sub_resource type="Resource" id="m7"]
+script = ExtResource("3_ms")
+id = &"c2_m07"
+title = "Boiler Room"
+objective = "Survive the ambush and clear the road."
+reward_coins = 425
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("2_rg")
+id = &"industrial"
+display_name = "INDUSTRIAL"
+photo = ExtResource("p0")
+layout = ExtResource("l0")
+mirrored = true
+missions = Array[ExtResource("3_ms")]([SubResource("m1"), SubResource("m2"), SubResource("m3"), SubResource("m4"), SubResource("m5"), SubResource("m6"), SubResource("m7")])
+
+[sub_resource type="Resource" id="m8"]
+script = ExtResource("3_ms")
+id = &"c2_m08"
+title = "Dust Devil"
+objective = "Break through the barricade before time runs out."
+reward_coins = 450
+
+[sub_resource type="Resource" id="m9"]
+script = ExtResource("3_ms")
+id = &"c2_m09"
+title = "Canyon Pass"
+objective = "Take out the armoured convoy."
+reward_coins = 475
+
+[sub_resource type="Resource" id="m10"]
+script = ExtResource("3_ms")
+id = &"c2_m10"
+title = "Mesa Fort"
+objective = "Destroy every enemy turret."
+reward_coins = 500
+
+[sub_resource type="Resource" id="m11"]
+script = ExtResource("3_ms")
+id = &"c2_m11"
+title = "Dry Riverbed"
+objective = "Reach the extraction point with your truck intact."
+reward_coins = 525
+
+[sub_resource type="Resource" id="m12"]
+script = ExtResource("3_ms")
+id = &"c2_m12"
+title = "Red Rock"
+objective = "Knock down the watchtower in three shots or fewer."
+reward_coins = 550
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("2_rg")
+id = &"badlands"
+display_name = "BADLANDS"
+photo = ExtResource("p1")
+layout = ExtResource("l1")
+mirrored = false
+missions = Array[ExtResource("3_ms")]([SubResource("m8"), SubResource("m9"), SubResource("m10"), SubResource("m11"), SubResource("m12")])
+
+[sub_resource type="Resource" id="m13"]
+script = ExtResource("3_ms")
+id = &"c2_m13"
+title = "City Limits"
+objective = "Survive the ambush and clear the road."
+reward_coins = 575
+
+[sub_resource type="Resource" id="m14"]
+script = ExtResource("3_ms")
+id = &"c2_m14"
+title = "Gridlock"
+objective = "Break through the barricade before time runs out."
+reward_coins = 600
+
+[sub_resource type="Resource" id="m15"]
+script = ExtResource("3_ms")
+id = &"c2_m15"
+title = "Tower Block"
+objective = "Take out the armoured convoy."
+reward_coins = 625
+
+[sub_resource type="Resource" id="m16"]
+script = ExtResource("3_ms")
+id = &"c2_m16"
+title = "Underpass"
+objective = "Destroy every enemy turret."
+reward_coins = 650
+
+[sub_resource type="Resource" id="m17"]
+script = ExtResource("3_ms")
+id = &"c2_m17"
+title = "Plaza Assault"
+objective = "Reach the extraction point with your truck intact."
+reward_coins = 675
+
+[sub_resource type="Resource" id="m18"]
+script = ExtResource("3_ms")
+id = &"c2_m18"
+title = "The Last Fort"
+objective = "Knock down the watchtower in three shots or fewer."
+reward_coins = 700
+
+[sub_resource type="Resource" id="r2"]
+script = ExtResource("2_rg")
+id = &"the_city"
+display_name = "THE CITY"
+photo = ExtResource("p2")
+layout = ExtResource("l2")
+mirrored = true
+missions = Array[ExtResource("3_ms")]([SubResource("m13"), SubResource("m14"), SubResource("m15"), SubResource("m16"), SubResource("m17"), SubResource("m18")])
+
+[resource]
+script = ExtResource("1_ch")
+number = 2
+title = "Into the Sprawl"
+regions = Array[ExtResource("2_rg")]([SubResource("r0"), SubResource("r1"), SubResource("r2")])

@@ -1,0 +1,4 @@
+bg_board_tile_a.png, bg_board_tile_b.png and bg_board_tile_c.png are stored once, in:
+  2_Godot_Project/assets/command_board/art/
+(They are byte-identical, so they aren't duplicated here, to keep the download small.)
+They can also be regenerated with source_generators/board_bg.py.

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="240" viewBox="0 0 300 240">
+<defs><filter id="paper" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="21" result="n"/>
+  <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.30  0 0 0 0 0.16  1.3 0 0 0 -0.55" result="stain"/>
+  <feComposite in="stain" in2="SourceAlpha" operator="in" result="s2"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="2" result="g"/>
+  <feColorMatrix in="g" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.15  0 0 0 0 0.1  0.7 0 0 0 -0.28" result="gr"/>
+  <feComposite in="gr" in2="SourceAlpha" operator="in" result="g2"/>
+  <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="s2"/><feMergeNode in="g2"/></feMerge>
+</filter><filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="3" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/></filter></defs>
+<g filter="url(#s)"><path d="M14 18 L284 10 L290 222 L20 230 Z" fill="#eee4cc" filter="url(#paper)" stroke="#b9a684" stroke-width="1.5"/></g>
+<g stroke="#7aa0c4" stroke-width="2" opacity=".6"><path d="M28 64 L280 58"/><path d="M28 98 L281 92"/><path d="M29 132 L282 126"/><path d="M29 166 L283 160"/><path d="M30 200 L284 194"/></g>
+<path d="M62 22 L66 226" stroke="#d0605a" stroke-width="2" opacity=".6"/>
+<g stroke="#2a2a3a" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".75">
+<path d="M80 54 q10 -10 20 0 t20 0 t20 -4 t22 2 t18 -2"/><path d="M80 88 q12 -8 24 0 t24 0 t26 0"/><path d="M80 122 q10 -9 20 -1 t22 0 t20 -2 t24 2 t20 0 t18 -3"/>
+<path d="M80 156 q14 -8 26 0 t24 0"/><path d="M190 150 l40 22 m0 -22 l-40 22" stroke="#b3200e" stroke-width="4"/></g>
+</svg>

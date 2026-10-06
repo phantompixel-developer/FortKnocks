@@ -1,0 +1,63 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://screens/command_board/mission_pin.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/mission_pin_current_glow.png" id="2_glow"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/tag_paper_9s.png" id="3_tag"]
+
+[node name="MissionPin" type="Button"]
+custom_minimum_size = Vector2(140, 140)
+offset_right = 140.0
+offset_bottom = 140.0
+focus_mode = 0
+mouse_filter = 1
+theme_type_variation = &"CardButton"
+script = ExtResource("1_script")
+
+[node name="Glow" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 160.0
+offset_bottom = 157.0
+mouse_filter = 2
+texture = ExtResource("2_glow")
+
+[node name="Icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 124.0
+offset_bottom = 124.0
+mouse_filter = 2
+
+[node name="Tag" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 104.0
+offset_right = 100.0
+offset_bottom = 140.0
+mouse_filter = 2
+texture = ExtResource("3_tag")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="Number" type="Label" parent="Tag"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PinTag"
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

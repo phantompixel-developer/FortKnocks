@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="24" viewBox="0 0 96 24">
+<defs><linearGradient id="r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6a4e"/>
+<stop offset=".5" stop-color="#d42a16"/><stop offset="1" stop-color="#7a0e05"/></linearGradient></defs>
+<rect x="0" y="7" width="68" height="10" rx="5" fill="url(#r)" stroke="#3a0703" stroke-width="1.5"/>
+<rect x="6" y="8.5" width="54" height="2" rx="1" fill="#ffd2c4" opacity=".6"/>
+<rect x="75" y="8.5" width="16" height="7" rx="3.5" fill="#f4ead6" stroke="#7a6a54" stroke-width="1"/>
+</svg>

@@ -1,0 +1,270 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://screens/workshop/workshop_screen.gd" id="1_script"]
+[ext_resource type="Script" path="res://ui/upgrade_screen/upgrade_item_data.gd" id="2_vdata"]
+[ext_resource type="Resource" path="res://screens/workshop/data/ammo_01_standard.tres" id="3_v1"]
+[ext_resource type="Resource" path="res://screens/workshop/data/ammo_02_heavy.tres" id="4_v2"]
+[ext_resource type="Resource" path="res://screens/workshop/data/ammo_03_cluster.tres" id="5_v3"]
+[ext_resource type="Resource" path="res://screens/workshop/data/ammo_04_emp.tres" id="5b_v4"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/bg_ui_lower.png" id="6_lower"]
+[ext_resource type="Texture2D" path="res://assets/workshop/art/bg_workshop_scene.png" id="7_scene"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/overlay_scene_fade.png" id="8_fade"]
+[ext_resource type="Texture2D" path="res://assets/shared/fx/fx_vehicle_contact_shadow.png" id="9_shadow"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/btn_back.png" id="10_back"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/btn_back_pressed.png" id="11_back_p"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/arrow_left.png" id="12_al"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/arrow_left_disabled.png" id="13_al_d"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/arrow_right.png" id="14_ar"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/arrow_right_disabled.png" id="15_ar_d"]
+[ext_resource type="PackedScene" path="res://ui/components/stat_row.tscn" id="16_row"]
+[ext_resource type="PackedScene" path="res://ui/components/upgrade_button.tscn" id="17_up"]
+[ext_resource type="Texture2D" path="res://assets/workshop/icons/icon_stat_damage.png" id="18_i_arm"]
+[ext_resource type="Texture2D" path="res://assets/workshop/icons/icon_stat_explosion.png" id="19_i_spd"]
+[ext_resource type="Texture2D" path="res://assets/workshop/icons/icon_stat_range.png" id="20_i_fuel"]
+[ext_resource type="Texture2D" path="res://assets/workshop/icons/icon_stat_bounce.png" id="21_i_load"]
+
+[node name="WorkshopScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+items = Array[ExtResource("2_vdata")]([ExtResource("3_v1"), ExtResource("4_v2"), ExtResource("5_v3"), ExtResource("5b_v4")])
+stat_label_width = 262.0
+card_size = Vector2(228, 282)
+card_separation = 12
+show_card_captions = true
+display_reference_height = 984.0
+
+[node name="LowerBg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_lower")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Showroom" type="Control" parent="."]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 960.0
+mouse_filter = 2
+
+[node name="SceneBg" type="TextureRect" parent="Showroom"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_scene")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Shadow" type="TextureRect" parent="Showroom"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18
+anchor_top = 0.827
+anchor_right = 0.82
+anchor_bottom = 0.939
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("9_shadow")
+expand_mode = 1
+
+[node name="Display" type="TextureRect" parent="Showroom"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.573
+anchor_right = 0.85
+anchor_bottom = 0.98
+grow_vertical = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Fade" type="TextureRect" parent="Showroom"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("8_fade")
+expand_mode = 1
+
+[node name="SwipeArea" type="Control" parent="Showroom"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Safe" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 20
+
+[node name="Layout" type="VBoxContainer" parent="Safe"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="TopBar" type="HBoxContainer" parent="Safe/Layout"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="BackButton" type="TextureButton" parent="Safe/Layout/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("10_back")
+texture_pressed = ExtResource("11_back_p")
+
+[node name="ShowroomSpacer" type="Control" parent="Safe/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PrevButton" type="TextureButton" parent="Safe/Layout/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+texture_normal = ExtResource("12_al")
+texture_disabled = ExtResource("13_al_d")
+
+[node name="TitleBlock" type="VBoxContainer" parent="Safe/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = -4
+
+[node name="Title" type="Label" parent="Safe/Layout/Header/TitleBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "VEHICLE NAME"
+horizontal_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Level" type="Label" parent="Safe/Layout/Header/TitleBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"LevelLabel"
+text = "LEVEL 1"
+horizontal_alignment = 1
+
+[node name="NextButton" type="TextureButton" parent="Safe/Layout/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+texture_normal = ExtResource("14_ar")
+texture_disabled = ExtResource("15_ar_d")
+
+[node name="GapA" type="Control" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="StatsPanel" type="PanelContainer" parent="Safe/Layout"]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"StatsPanel"
+
+[node name="Rows" type="VBoxContainer" parent="Safe/Layout/StatsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="StatDamage" parent="Safe/Layout/StatsPanel/Rows" instance=ExtResource("16_row")]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("18_i_arm")
+label_text = "DAMAGE"
+
+[node name="StatExplosion" parent="Safe/Layout/StatsPanel/Rows" instance=ExtResource("16_row")]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("19_i_spd")
+label_text = "EXPLOSION"
+
+[node name="StatRange" parent="Safe/Layout/StatsPanel/Rows" instance=ExtResource("16_row")]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("20_i_fuel")
+label_text = "RANGE"
+
+[node name="StatBounce" parent="Safe/Layout/StatsPanel/Rows" instance=ExtResource("16_row")]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("21_i_load")
+label_text = "BOUNCE"
+
+[node name="UpgradeButton" parent="Safe/Layout/StatsPanel/Rows" instance=ExtResource("17_up")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="GapB" type="Control" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CardScroll" type="ScrollContainer" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 326)
+layout_mode = 2
+vertical_scroll_mode = 0
+horizontal_scroll_mode = 3
+scroll_deadzone = 12
+
+[node name="CardMargin" type="MarginContainer" parent="Safe/Layout/CardScroll"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 22
+
+[node name="CardRow" type="HBoxContainer" parent="Safe/Layout/CardScroll/CardMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18

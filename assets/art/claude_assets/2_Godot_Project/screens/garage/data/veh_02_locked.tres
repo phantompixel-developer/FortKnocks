@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="VehicleData" format=3]
+
+[ext_resource type="Script" path="res://screens/garage/vehicle_data.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/garage/art/thumb_veh_02_locked_PLACEHOLDER.png" id="2_thumb"]
+
+
+[resource]
+script = ExtResource("1_script")
+id = &"vehicle_02"
+display_name = "IRONCLAD SUV"
+level = 1
+locked = true
+upgrade_cost = 2500
+thumbnail = ExtResource("2_thumb")
+
+stats = Array[int]([2, 1, 2, 1])
+upgrade_preview = Array[int]([0, 0, 0, 0])

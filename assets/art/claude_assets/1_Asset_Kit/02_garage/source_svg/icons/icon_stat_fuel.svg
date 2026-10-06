@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+<defs><filter id="s" x="-30%" y="-30%" width="160%" height="170%">
+  <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/></filter></defs><g filter="url(#s)" fill="#f2f5f8"><path d="M22 22 h34 l18 18 v46 a6 6 0 0 1 -6 6 h-46 a6 6 0 0 1 -6 -6 v-58 a6 6 0 0 1 6 -6z"/><rect x="58" y="10" width="20" height="10" rx="3" transform="rotate(45 68 15)"/><path d="M30 44 L58 74 M58 44 L30 74" stroke="#5b6f82" stroke-width="7" stroke-linecap="round"/></g>
+</svg>

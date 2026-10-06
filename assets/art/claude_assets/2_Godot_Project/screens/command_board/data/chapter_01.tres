@@ -1,0 +1,149 @@
+[gd_resource type="Resource" script_class="ChapterData" format=3]
+
+[ext_resource type="Script" path="res://screens/command_board/data/chapter_data.gd" id="1_ch"]
+[ext_resource type="Script" path="res://screens/command_board/data/region_data.gd" id="2_rg"]
+[ext_resource type="Script" path="res://screens/command_board/data/mission_data.gd" id="3_ms"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/region_photo_outskirts.png" id="p0"]
+[ext_resource type="Resource" path="res://screens/command_board/layouts/layout_5_missions.tres" id="l0"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/region_photo_suburbs.png" id="p1"]
+[ext_resource type="Resource" path="res://screens/command_board/layouts/layout_4_missions.tres" id="l1"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/region_photo_highway.png" id="p2"]
+[ext_resource type="Resource" path="res://screens/command_board/layouts/layout_6_missions.tres" id="l2"]
+
+[sub_resource type="Resource" id="m1"]
+script = ExtResource("3_ms")
+id = &"c1_m01"
+title = "First Salvage"
+objective = "Knock down the watchtower in three shots or fewer."
+reward_coins = 125
+
+[sub_resource type="Resource" id="m2"]
+script = ExtResource("3_ms")
+id = &"c1_m02"
+title = "Roadside Ambush"
+objective = "Survive the ambush and clear the road."
+reward_coins = 150
+
+[sub_resource type="Resource" id="m3"]
+script = ExtResource("3_ms")
+id = &"c1_m03"
+title = "Scrap Run"
+objective = "Break through the barricade before time runs out."
+reward_coins = 175
+
+[sub_resource type="Resource" id="m4"]
+script = ExtResource("3_ms")
+id = &"c1_m04"
+title = "Tower Down"
+objective = "Take out the armoured convoy."
+reward_coins = 200
+
+[sub_resource type="Resource" id="m5"]
+script = ExtResource("3_ms")
+id = &"c1_m05"
+title = "Clear the Junction"
+objective = "Destroy every enemy turret."
+reward_coins = 225
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("2_rg")
+id = &"outskirts"
+display_name = "OUTSKIRTS"
+photo = ExtResource("p0")
+layout = ExtResource("l0")
+mirrored = false
+missions = Array[ExtResource("3_ms")]([SubResource("m1"), SubResource("m2"), SubResource("m3"), SubResource("m4"), SubResource("m5")])
+
+[sub_resource type="Resource" id="m6"]
+script = ExtResource("3_ms")
+id = &"c1_m06"
+title = "Cul-de-sac Siege"
+objective = "Reach the extraction point with your truck intact."
+reward_coins = 250
+
+[sub_resource type="Resource" id="m7"]
+script = ExtResource("3_ms")
+id = &"c1_m07"
+title = "Garden Wall"
+objective = "Knock down the watchtower in three shots or fewer."
+reward_coins = 275
+
+[sub_resource type="Resource" id="m8"]
+script = ExtResource("3_ms")
+id = &"c1_m08"
+title = "Rooftop Snipers"
+objective = "Survive the ambush and clear the road."
+reward_coins = 300
+
+[sub_resource type="Resource" id="m9"]
+script = ExtResource("3_ms")
+id = &"c1_m09"
+title = "Last House Standing"
+objective = "Break through the barricade before time runs out."
+reward_coins = 325
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("2_rg")
+id = &"suburbs"
+display_name = "SUBURBS"
+photo = ExtResource("p1")
+layout = ExtResource("l1")
+mirrored = true
+missions = Array[ExtResource("3_ms")]([SubResource("m6"), SubResource("m7"), SubResource("m8"), SubResource("m9")])
+
+[sub_resource type="Resource" id="m10"]
+script = ExtResource("3_ms")
+id = &"c1_m10"
+title = "Overpass"
+objective = "Take out the armoured convoy."
+reward_coins = 350
+
+[sub_resource type="Resource" id="m11"]
+script = ExtResource("3_ms")
+id = &"c1_m11"
+title = "Toll Booth Blitz"
+objective = "Destroy every enemy turret."
+reward_coins = 375
+
+[sub_resource type="Resource" id="m12"]
+script = ExtResource("3_ms")
+id = &"c1_m12"
+title = "Broken Span"
+objective = "Reach the extraction point with your truck intact."
+reward_coins = 400
+
+[sub_resource type="Resource" id="m13"]
+script = ExtResource("3_ms")
+id = &"c1_m13"
+title = "Convoy Hunt"
+objective = "Knock down the watchtower in three shots or fewer."
+reward_coins = 425
+
+[sub_resource type="Resource" id="m14"]
+script = ExtResource("3_ms")
+id = &"c1_m14"
+title = "Exit 12"
+objective = "Survive the ambush and clear the road."
+reward_coins = 450
+
+[sub_resource type="Resource" id="m15"]
+script = ExtResource("3_ms")
+id = &"c1_m15"
+title = "Bridgehead"
+objective = "Break through the barricade before time runs out."
+reward_coins = 475
+
+[sub_resource type="Resource" id="r2"]
+script = ExtResource("2_rg")
+id = &"highway"
+display_name = "HIGHWAY"
+photo = ExtResource("p2")
+layout = ExtResource("l2")
+mirrored = false
+missions = Array[ExtResource("3_ms")]([SubResource("m10"), SubResource("m11"), SubResource("m12"), SubResource("m13"), SubResource("m14"), SubResource("m15")])
+
+[resource]
+script = ExtResource("1_ch")
+number = 1
+title = "Breaking Out"
+regions = Array[ExtResource("2_rg")]([SubResource("r0"), SubResource("r1"), SubResource("r2")])

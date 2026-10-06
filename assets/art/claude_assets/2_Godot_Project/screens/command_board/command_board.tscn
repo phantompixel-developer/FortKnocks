@@ -1,0 +1,280 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://screens/command_board/command_board.gd" id="1_script"]
+[ext_resource type="Script" path="res://screens/command_board/data/chapter_data.gd" id="2_chs"]
+[ext_resource type="Resource" path="res://screens/command_board/data/chapter_01.tres" id="3_ch1"]
+[ext_resource type="Resource" path="res://screens/command_board/data/chapter_02.tres" id="4_ch2"]
+[ext_resource type="Texture2D" path="res://assets/command_board/art/bg_board_tile_planks.png" id="5_planks"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/scroll_edge_shadow.png" id="6_edge"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/frame_rail_9s.png" id="7_rail"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/btn_back.png" id="8_back"]
+[ext_resource type="Texture2D" path="res://assets/shared/ui/btn_back_pressed.png" id="9_back_p"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/hud_chapter_panel_9s.png" id="10_panel"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/progress_track_9s.png" id="11_track"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/progress_fill_9s.png" id="12_fill"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/hud_chapter_tab_9s.png" id="13_tab"]
+[ext_resource type="Texture2D" path="res://assets/command_board/ui/deco_string_knot.png" id="14_knot"]
+[ext_resource type="PackedScene" path="res://ui/components/mission_briefing.tscn" id="15_brief"]
+
+[node name="CommandBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+chapters = Array[ExtResource("2_chs")]([ExtResource("3_ch1"), ExtResource("4_ch2")])
+current_mission_id = &"c1_m07"
+
+[node name="Planks" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_planks")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 170.0
+offset_bottom = -236.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+scroll_deadzone = 14
+
+[node name="BoardHolder" type="Control" parent="Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="Board" type="Control" parent="Scroll/BoardHolder"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1000.0
+mouse_filter = 1
+
+[node name="EdgeTop" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 170.0
+offset_bottom = 214.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("6_edge")
+expand_mode = 1
+
+[node name="EdgeBottom" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -280.0
+offset_bottom = -236.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("6_edge")
+expand_mode = 1
+flip_v = true
+
+[node name="TopRail" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 170.0
+grow_horizontal = 2
+texture = ExtResource("7_rail")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 24
+
+[node name="TopContent" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 158.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="TopContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"BoardTitle"
+text = "COMMAND BOARD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="TopContent"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 24.0
+offset_top = 10.0
+offset_right = 160.0
+offset_bottom = 150.0
+focus_mode = 0
+texture_normal = ExtResource("8_back")
+texture_pressed = ExtResource("9_back_p")
+
+[node name="Hud" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -236.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Rail" type="NinePatchRect" parent="Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_rail")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 24
+flip_v = true
+
+[node name="HudContent" type="Control" parent="Hud"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -540.0
+offset_right = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="NinePatchRect" parent="Hud/HudContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 70.0
+offset_right = -30.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_panel")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+
+[node name="Track" type="NinePatchRect" parent="Hud/HudContent/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 40.0
+offset_top = 58.0
+offset_right = -40.0
+offset_bottom = 106.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("11_track")
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="Fill" type="NinePatchRect" parent="Hud/HudContent/Panel/Track"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 200.0
+offset_bottom = 42.0
+mouse_filter = 2
+texture = ExtResource("12_fill")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="CountLabel" type="Label" parent="Hud/HudContent/Panel/Track"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -22.0
+offset_top = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"HudCountLabel"
+text = "0/0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Tab" type="NinePatchRect" parent="Hud/HudContent"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 18.0
+offset_right = 336.0
+offset_bottom = 100.0
+mouse_filter = 2
+texture = ExtResource("13_tab")
+patch_margin_left = 28
+patch_margin_top = 28
+patch_margin_right = 28
+patch_margin_bottom = 28
+
+[node name="ChapterLabel" type="Label" parent="Hud/HudContent/Tab"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"HudChapterLabel"
+text = "CHAPTER 1"
+vertical_alignment = 1
+
+[node name="Knot" type="TextureRect" parent="Hud/HudContent"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 44.0
+offset_right = 740.0
+offset_bottom = 104.0
+mouse_filter = 2
+texture = ExtResource("14_knot")
+
+[node name="Briefing" parent="." instance=ExtResource("15_brief")]
+unique_name_in_owner = true
+layout_mode = 1
