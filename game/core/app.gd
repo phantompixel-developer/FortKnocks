@@ -49,6 +49,8 @@ func _show_garage() -> void:
 	_replace_screen(garage)
 	garage.back_requested.connect(_show_hub)
 	garage.platform_requested.connect(_on_platform_requested)
+	garage.platform_active_requested.connect(_on_platform_active_requested)
+	garage.platform_upgrade_requested.connect(_on_platform_upgrade_requested)
 	garage.configure(save_service.snapshot(), _garage_notice)
 	_garage_notice = ""
 
@@ -109,20 +111,12 @@ func _on_module_requested(module_id: String) -> void:
 
 func _on_platform_requested(platform_id: String) -> void:
 	var definition := PlatformCatalogScript.by_id(platform_id)
-	if definition == null:
+	if definition == null or save_service.owns_platform(platform_id):
 		return
 
-	var completed := save_service.completed_missions()
-	var unlocked := definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
+	var completed: Array = save_service.completed_missions()
+	var unlocked: bool = definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
 	if not unlocked or not definition.purchasable:
-		return
-
-	if save_service.owns_platform(platform_id):
-		if save_service.equip_platform(platform_id):
-			audio_director.play_cue(&"ui_confirm")
-			_garage_notice = "%s EQUIPPED" % definition.display_name.to_upper()
-			_hub_notice = "GARAGE UPDATED • %s ACTIVE" % definition.display_name.to_upper()
-		_show_garage()
 		return
 
 	if not save_service.purchase_platform(platform_id, definition.purchase_cost):
@@ -131,12 +125,55 @@ func _on_platform_requested(platform_id: String) -> void:
 		return
 
 	audio_director.play_cue(&"ui_confirm")
-	save_service.equip_platform(platform_id)
 	_garage_notice = "%s ACQUIRED • -%d SALVAGE" % [
 		definition.display_name.to_upper(),
 		definition.purchase_cost,
 	]
-	_hub_notice = "GARAGE UPGRADE COMPLETE • %s ACTIVE" % definition.display_name.to_upper()
+	_hub_notice = "GARAGE UPDATED • %s AVAILABLE" % definition.display_name.to_upper()
+	_show_garage()
+
+func _on_platform_active_requested(platform_id: String) -> void:
+	var definition := PlatformCatalogScript.by_id(platform_id)
+	if definition == null or not save_service.owns_platform(platform_id):
+		return
+	if save_service.current_platform_id() == platform_id:
+		return
+	if not save_service.equip_platform(platform_id):
+		return
+
+	audio_director.play_cue(&"ui_confirm")
+	_garage_notice = "%s SET ACTIVE" % definition.display_name.to_upper()
+	_hub_notice = "GARAGE UPDATED • %s ACTIVE" % definition.display_name.to_upper()
+	_show_garage()
+
+func _on_platform_upgrade_requested(platform_id: String) -> void:
+	var definition := PlatformCatalogScript.by_id(platform_id)
+	if definition == null or not save_service.owns_platform(platform_id):
+		return
+
+	var current_level: int = save_service.platform_level(platform_id)
+	var cost: int = definition.upgrade_cost(current_level)
+	if cost <= 0:
+		_garage_notice = "%s IS MAX LEVEL" % definition.display_name.to_upper()
+		_show_garage()
+		return
+
+	if not save_service.upgrade_platform(platform_id, cost, definition.max_level):
+		_garage_notice = "NOT ENOUGH SALVAGE"
+		_show_garage()
+		return
+
+	var next_level: int = current_level + 1
+	audio_director.play_cue(&"ui_confirm")
+	_garage_notice = "%s UPGRADED • LEVEL %d • -%d SALVAGE" % [
+		definition.display_name.to_upper(),
+		next_level,
+		cost,
+	]
+	_hub_notice = "GARAGE UPGRADE COMPLETE • %s LEVEL %d" % [
+		definition.display_name.to_upper(),
+		next_level,
+	]
 	_show_garage()
 
 func _start_mission(mission: MissionDefinition) -> void:
@@ -152,7 +189,10 @@ func _start_mission(mission: MissionDefinition) -> void:
 		return
 
 	var platform_id := save_service.current_platform_id()
-	var platform := PlatformCatalogScript.by_id(platform_id)
+	var platform_source := PlatformCatalogScript.by_id(platform_id)
+	var platform: CombatPlatformDefinition = platform_source.duplicate(true) as CombatPlatformDefinition if platform_source != null else null
+	if platform != null:
+		platform.cover_health = platform.cover_health_at_level(save_service.platform_level(platform_id))
 	var module_id := save_service.equipped_module_id(platform_id)
 	var module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
 	var weapon_ids: Array[String] = ["scrap_bolt"]
