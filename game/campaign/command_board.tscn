@@ -182,7 +182,19 @@ patch_margin_right = 20
 patch_margin_bottom = 24
 flip_v = true
 
-[node name="Panel" type="NinePatchRect" parent="Hud"]
+[node name="HudContent" type="Control" parent="Hud"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_right = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="NinePatchRect" parent="Hud/HudContent"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -199,7 +211,7 @@ patch_margin_top = 40
 patch_margin_right = 40
 patch_margin_bottom = 40
 
-[node name="Tab" type="NinePatchRect" parent="Hud"]
+[node name="Tab" type="NinePatchRect" parent="Hud/HudContent"]
 layout_mode = 0
 offset_left = 34.0
 offset_top = 12.0
@@ -211,7 +223,7 @@ patch_margin_top = 28
 patch_margin_right = 28
 patch_margin_bottom = 28
 
-[node name="ChapterLabel" type="Label" parent="Hud/Tab"]
+[node name="ChapterLabel" type="Label" parent="Hud/HudContent/Tab"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -225,7 +237,7 @@ theme_override_font_sizes/font_size = 15
 text = "CHAPTER 1 • OUTSKIRTS"
 vertical_alignment = 1
 
-[node name="Track" type="NinePatchRect" parent="Hud/Panel"]
+[node name="Track" type="NinePatchRect" parent="Hud/HudContent/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
@@ -241,7 +253,7 @@ patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="Fill" type="NinePatchRect" parent="Hud/Panel/Track"]
+[node name="Fill" type="NinePatchRect" parent="Hud/HudContent/Panel/Track"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 6.0
@@ -254,7 +266,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="CountLabel" type="Label" parent="Hud/Panel/Track"]
+[node name="CountLabel" type="Label" parent="Hud/HudContent/Panel/Track"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
