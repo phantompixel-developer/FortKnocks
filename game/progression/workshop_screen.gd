@@ -45,7 +45,10 @@ const THUMB_PATHS := {
 @onready var module_note: Label = %ModuleNote
 @onready var notice_label: Label = %NoticeLabel
 @onready var back_button: TextureButton = %BackButton
+@onready var swipe_area: Control = %SwipeArea
 
+const SWIPE_MIN := 62.0
+var _swipe_start := Vector2.INF
 var _snapshot: Dictionary = {}
 var _weapons: Array[WeaponDefinition] = []
 var _selected_index := 1
@@ -70,6 +73,7 @@ func _ready() -> void:
 	)
 	prev_button.pressed.connect(_step.bind(-1))
 	next_button.pressed.connect(_step.bind(1))
+	swipe_area.gui_input.connect(_on_swipe_input)
 	action_button.pressed.connect(_request_selected_weapon)
 
 func configure(save_snapshot: Dictionary, notice := "") -> void:
@@ -318,6 +322,23 @@ func _full_rack_active() -> bool:
 	var active_module_id := str(equipped.get(platform_id, ""))
 	var active_module: PlatformModuleDefinition = PlatformModuleCatalogScript.by_id(active_module_id) if not active_module_id.is_empty() else null
 	return active_module != null and active_module.carry_both_specialists
+
+func _on_swipe_input(event: InputEvent) -> void:
+	var pressed := false
+	if event is InputEventScreenTouch:
+		pressed = event.pressed
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		pressed = event.pressed
+	else:
+		return
+
+	if pressed:
+		_swipe_start = event.position
+	elif _swipe_start != Vector2.INF:
+		var delta: Vector2 = event.position - _swipe_start
+		_swipe_start = Vector2.INF
+		if absf(delta.x) >= SWIPE_MIN and absf(delta.x) > absf(delta.y) * 1.4:
+			_step(-1 if delta.x > 0.0 else 1)
 
 func _play_ui(cue: StringName) -> void:
 	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
