@@ -266,3 +266,16 @@ Added during the October 2026 Garage visual-production pass after explicit appro
 - Purchasing a newly unlocked platform does **not** automatically make it active; the player explicitly marks it active.
 - Existing v1 saves migrate to save schema v2 with all already-owned platforms starting at Level 1.
 - Upgrade cost scales by platform family and current level; the system remains intentionally capped and lightweight rather than becoming a broad RPG stat tree.
+
+
+## Workshop ammunition reinforcement levels
+
+Added during the October 2026 Workshop visual-production pass.
+
+- Scrap Bolt, Heavy Slug and Shock Capsule each have a persistent **Level 1–4** Workshop reinforcement level.
+- The green Workshop action is reserved for **UPGRADE**.
+- Upgrade levels increase the player's weapon damage profile only; enemy weapons remain at their base definitions.
+- Heavy Slug / Shock Capsule specialist selection is a separate cyan checkbox/card-border state, matching the Garage separation between upgrade and active/equipped state.
+- Cluster ammunition is currently **presentation-only and locked**. Its supplied production art is retained in the four-card Workshop composition without adding an unsupported combat system.
+- Existing platform-module progression remains accessible through the Workshop Modules overlay when the active vehicle supports modules.
+- Save schema v3 adds `weapon_levels` and migrates existing v1/v2 saves with all three implemented weapons starting at Level 1.
