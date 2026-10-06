@@ -26,12 +26,14 @@ const SignalRelayScript := preload("res://game/battle/signal_relay.gd")
 const SalvageLoadScript := preload("res://game/battle/salvage_load.gd")
 const EncounterCatalogScript := preload("res://game/campaign/encounter_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
+const ProductionUIScript := preload("res://game/presentation/production_ui.gd")
 
 const MAX_DRAG := 340.0
 const MIN_FIRE_DRAG := 36.0
 const MIN_SPEED := 520.0
 const MAX_SPEED := 1380.0
 const PENDING_MISSION_META := &"fort_knocks_pending_mission"
+const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 
 @onready var camera_director: BattleCameraDirector = $CameraDirector
 @onready var world: Node2D = $World
@@ -48,9 +50,23 @@ const PENDING_MISSION_META := &"fort_knocks_pending_mission"
 @onready var last_impact_marker: LastImpactMarker = $EffectsLayer/LastImpactMarker
 @onready var aim_guide: AimGuide = $AimGuide
 
+@onready var hud_root: Control = $HUD/Root
+@onready var player_status_card: ColorRect = $HUD/Root/PlayerStatusCard
+@onready var enemy_status_card: ColorRect = $HUD/Root/EnemyStatusCard
+@onready var health_label: Label = $HUD/Root/PlayerStatusCard/HealthLabel
+@onready var player_cover_label: Label = $HUD/Root/PlayerStatusCard/CoverLabel
+@onready var player_health_bar_back: ColorRect = $HUD/Root/PlayerStatusCard/HealthBarBack
+@onready var player_health_bar_fill: ColorRect = $HUD/Root/PlayerStatusCard/HealthBarFill
+@onready var player_cover_bar_back: ColorRect = $HUD/Root/PlayerStatusCard/CoverBarBack
+@onready var player_cover_bar_fill: ColorRect = $HUD/Root/PlayerStatusCard/CoverBarFill
+@onready var enemy_health_label: Label = $HUD/Root/EnemyStatusCard/HealthLabel
+@onready var enemy_cover_label: Label = $HUD/Root/EnemyStatusCard/CoverLabel
+@onready var enemy_health_bar_back: ColorRect = $HUD/Root/EnemyStatusCard/HealthBarBack
+@onready var enemy_health_bar_fill: ColorRect = $HUD/Root/EnemyStatusCard/HealthBarFill
+@onready var enemy_cover_bar_back: ColorRect = $HUD/Root/EnemyStatusCard/CoverBarBack
+@onready var enemy_cover_bar_fill: ColorRect = $HUD/Root/EnemyStatusCard/CoverBarFill
 @onready var turn_label: Label = $HUD/Root/TurnLabel
-@onready var health_label: Label = $HUD/Root/HealthLabel
-@onready var enemy_health_label: Label = $HUD/Root/EnemyHealthLabel
+@onready var feedback_plate: ColorRect = $HUD/Root/FeedbackPlate
 @onready var feedback_label: Label = $HUD/Root/FeedbackLabel
 @onready var enemy_locator_label: Label = $HUD/Root/EnemyLocatorLabel
 @onready var hint_label: Label = $HUD/Root/HintLabel
@@ -135,6 +151,95 @@ var _enemy_speed_correction := {
 	"shock_capsule": 1.0,
 }
 var _enemy_target_x := 0.0
+var _hud_base_offsets: Dictionary = {}
+
+func _style_live_hud() -> void:
+	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	health_label.add_theme_color_override("font_color", ThemeScript.BONE)
+	player_cover_label.add_theme_color_override("font_color", ThemeScript.MUTED)
+	enemy_health_label.add_theme_color_override("font_color", Color("ef9b84"))
+	enemy_cover_label.add_theme_color_override("font_color", ThemeScript.MUTED)
+	player_health_bar_fill.color = ThemeScript.HAZARD
+	player_cover_bar_fill.color = ThemeScript.OXIDE
+	enemy_health_bar_fill.color = ThemeScript.SIGNAL
+	enemy_cover_bar_fill.color = ThemeScript.RUST
+	enemy_locator_label.add_theme_color_override("font_color", ThemeScript.COLD)
+	feedback_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	var weapon_title := weapon_tray.get_node("Title") as Label
+	if weapon_title != null:
+		weapon_title.add_theme_color_override("font_color", ThemeScript.MUTED)
+	weapon_name_label.add_theme_color_override("font_color", ThemeScript.BONE)
+	weapon_role_label.add_theme_color_override("font_color", ThemeScript.MUTED)
+	power_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	angle_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	last_shot_label.add_theme_color_override("font_color", ThemeScript.MUTED)
+	hint_label.add_theme_color_override("font_color", ThemeScript.BONE)
+	inspect_button.add_theme_font_size_override("font_size", 16)
+
+func _capture_hud_layout() -> void:
+	_hud_base_offsets.clear()
+	for item in [
+		player_status_card,
+		enemy_status_card,
+		turn_label,
+		inspect_button,
+		enemy_locator_label,
+		weapon_tray,
+		weapon_info_card,
+		feedback_plate,
+		feedback_label,
+		control_deck,
+		target_card,
+		hint_label,
+	]:
+		var control := item as Control
+		if control == null:
+			continue
+		_hud_base_offsets[control.get_instance_id()] = Vector4(
+			control.offset_left,
+			control.offset_top,
+			control.offset_right,
+			control.offset_bottom
+		)
+
+func _apply_hud_safe_area() -> void:
+	if _hud_base_offsets.is_empty():
+		return
+
+	var viewport_size := hud_root.get_viewport_rect().size
+	var size_delta := viewport_size - HUD_REFERENCE_SIZE
+	var safe := ProductionUIScript.safe_area_insets(hud_root)
+	var left_shift := maxf(0.0, safe.x)
+	var top_shift := maxf(0.0, safe.y)
+	var right_shift := size_delta.x - maxf(0.0, safe.z)
+	var center_shift_x := size_delta.x * 0.5
+	var bottom_shift := size_delta.y - maxf(0.0, safe.w)
+
+	_set_hud_control_shift(player_status_card, Vector2(left_shift, top_shift))
+	_set_hud_control_shift(weapon_tray, Vector2(left_shift, top_shift))
+
+	_set_hud_control_shift(enemy_status_card, Vector2(right_shift, top_shift))
+	_set_hud_control_shift(inspect_button, Vector2(right_shift, top_shift))
+
+	_set_hud_control_shift(turn_label, Vector2(center_shift_x, top_shift))
+	_set_hud_control_shift(weapon_info_card, Vector2(center_shift_x, top_shift))
+	_set_hud_control_shift(enemy_locator_label, Vector2(center_shift_x, top_shift))
+	_set_hud_control_shift(feedback_plate, Vector2(center_shift_x, size_delta.y * 0.35))
+	_set_hud_control_shift(feedback_label, Vector2(center_shift_x, size_delta.y * 0.35))
+
+	_set_hud_control_shift(control_deck, Vector2(center_shift_x, bottom_shift))
+	_set_hud_control_shift(target_card, Vector2(center_shift_x, bottom_shift))
+	_set_hud_control_shift(hint_label, Vector2(center_shift_x, bottom_shift))
+
+func _set_hud_control_shift(control: Control, shift: Vector2) -> void:
+	var base_variant: Variant = _hud_base_offsets.get(control.get_instance_id())
+	if base_variant == null:
+		return
+	var base: Vector4 = base_variant
+	control.offset_left = base.x + shift.x
+	control.offset_top = base.y + shift.y
+	control.offset_right = base.z + shift.x
+	control.offset_bottom = base.w + shift.y
 
 func prepare_for_campaign(
 	definition: MissionDefinition,
@@ -180,17 +285,32 @@ func set_progression_reward(amount: int) -> void:
 		_update_result_card()
 
 func _ready() -> void:
-	ThemeScript.apply($HUD/Root)
-	for card in [weapon_tray, weapon_info_card, control_deck, target_card, mission_brief_card, encounter_picker, result_card]:
+	ThemeScript.apply(hud_root)
+	for card in [
+		player_status_card,
+		enemy_status_card,
+		weapon_tray,
+		weapon_info_card,
+		control_deck,
+		target_card,
+		feedback_plate,
+		mission_brief_card,
+		encounter_picker,
+		result_card,
+	]:
 		ThemeScript.style_card(card)
+	ThemeScript.style_card(control_deck, 1)
 	ThemeScript.style_card(mission_brief_card, 1)
 	ThemeScript.style_card(result_card, 1)
-	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	_style_live_hud()
+	if not get_viewport().size_changed.is_connected(_apply_hud_safe_area):
+		get_viewport().size_changed.connect(_apply_hud_safe_area)
 	_selected_weapon = _player_weapon("scrap_bolt")
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
 	player_cover.health_changed.connect(_on_health_changed)
+	enemy_cover.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
 	inspect_button.pressed.connect(_inspect_enemy)
 	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(_player_weapon("scrap_bolt")))
@@ -200,6 +320,8 @@ func _ready() -> void:
 	change_encounter_button.pressed.connect(_change_encounter)
 
 	world.visible = false
+	player_status_card.visible = false
+	enemy_status_card.visible = false
 	health_label.visible = false
 	enemy_health_label.visible = false
 	inspect_button.visible = false
@@ -213,12 +335,15 @@ func _ready() -> void:
 	result_card.visible = false
 	restart_button.visible = false
 	change_encounter_button.visible = false
+	feedback_plate.visible = false
 	feedback_label.visible = false
 	last_impact_marker.clear_marker()
 
 	_build_encounter_picker()
 	_update_weapon_panel()
 	_update_weapon_buttons()
+	_capture_hud_layout()
+	call_deferred("_apply_hud_safe_area")
 	_set_weapon_buttons_enabled(false)
 	_update_last_shot_display()
 	_update_hud()
@@ -245,9 +370,12 @@ func _show_encounter_picker() -> void:
 	result_card.visible = false
 	restart_button.visible = false
 	change_encounter_button.visible = false
+	player_status_card.visible = false
+	enemy_status_card.visible = false
 	health_label.visible = false
 	enemy_health_label.visible = false
 	turn_label.text = "ENCOUNTER PROOF"
+	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	picker_briefing_label.text = "Choose one of %d greybox battle problems. Each uses the same weapons and combat rules." % _missions.size()
 	hint_label.text = "Select an encounter to begin"
 
@@ -291,9 +419,12 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	restart_button.visible = false
 	change_encounter_button.visible = false
 	world.visible = true
+	player_status_card.visible = true
+	enemy_status_card.visible = true
 	health_label.visible = true
 	enemy_health_label.visible = true
 	turn_label.text = definition.display_name.to_upper()
+	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	hint_label.text = definition.briefing
 	_update_hud()
 	_show_mission_brief(definition)
@@ -404,6 +535,7 @@ func _begin_drag(screen_position: Vector2) -> void:
 	_drag_start = screen_position
 	_set_weapon_choice_ui_visible(false)
 	inspect_button.visible = false
+	enemy_locator_label.visible = false
 	_aim_power = 0.0
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
@@ -453,6 +585,8 @@ func _end_drag(screen_position: Vector2) -> void:
 		aim_guide.clear()
 		_set_weapon_choice_ui_visible(true)
 		inspect_button.visible = true
+		enemy_locator_label.visible = enemy.is_alive()
+		_update_enemy_locator()
 		power_label.text = "POWER —"
 		angle_label.text = "ANGLE —"
 		hint_label.text = "Pull back to aim • release to fire"
@@ -500,6 +634,9 @@ func _update_weapon_buttons() -> void:
 	scrap_bolt_button.button_pressed = _selected_weapon.id == "scrap_bolt"
 	heavy_slug_button.button_pressed = _selected_weapon.id == "heavy_slug"
 	shock_capsule_button.button_pressed = _selected_weapon.id == "shock_capsule"
+	ThemeScript.mark_active(scrap_bolt_button, scrap_bolt_button.button_pressed)
+	ThemeScript.mark_active(heavy_slug_button, heavy_slug_button.button_pressed)
+	ThemeScript.mark_active(shock_capsule_button, shock_capsule_button.button_pressed)
 	_update_weapon_button_visibility()
 
 func _is_weapon_allowed(definition: WeaponDefinition) -> bool:
@@ -515,12 +652,12 @@ func _update_weapon_button_visibility() -> void:
 	shock_capsule_button.visible = _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
 	if _campaign_managed and not _campaign_weapon_ids.is_empty():
-		weapon_tray.offset_bottom = 308.0
+		weapon_tray.offset_bottom = 330.0
 		if shock_capsule_button.visible and not heavy_slug_button.visible:
 			shock_capsule_button.offset_top = 92.0
 			shock_capsule_button.offset_bottom = 134.0
 	else:
-		weapon_tray.offset_bottom = 358.0
+		weapon_tray.offset_bottom = 378.0
 		shock_capsule_button.offset_top = 144.0
 		shock_capsule_button.offset_bottom = 186.0
 
@@ -552,6 +689,7 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
 	turn_label.text = "YOUR TURN"
+	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 
 	if show_enemy_preview:
 		if _current_mission != null and _current_mission.feature_preview_enabled:
@@ -675,6 +813,7 @@ func _start_enemy_turn() -> void:
 	_set_weapon_buttons_enabled(false)
 	aim_guide.clear()
 	turn_label.text = "ENEMY TURN"
+	turn_label.add_theme_color_override("font_color", ThemeScript.SIGNAL)
 	hint_label.text = _enemy_tactic_turn_hint()
 	camera_director.focus_x(enemy.global_position.x, 0.42)
 
@@ -1108,15 +1247,24 @@ func _show_feedback(message: String) -> void:
 		_feedback_tween.kill()
 
 	feedback_label.text = message
+	feedback_plate.visible = true
 	feedback_label.visible = true
+	feedback_plate.modulate = Color.WHITE
 	feedback_label.modulate = Color.WHITE
-	feedback_label.scale = Vector2(0.82, 0.82)
+	feedback_plate.scale = Vector2(0.90, 0.90)
+	feedback_label.scale = Vector2(0.86, 0.86)
 
 	_feedback_tween = create_tween()
 	_feedback_tween.set_parallel(true)
+	_feedback_tween.tween_property(feedback_plate, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_feedback_tween.tween_property(feedback_label, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_feedback_tween.tween_property(feedback_label, "modulate:a", 0.0, 0.62).set_delay(0.22)
-	_feedback_tween.chain().tween_callback(func() -> void: feedback_label.visible = false)
+	_feedback_tween.tween_property(feedback_plate, "modulate:a", 0.0, 0.66).set_delay(0.24)
+	_feedback_tween.tween_property(feedback_label, "modulate:a", 0.0, 0.66).set_delay(0.24)
+	_feedback_tween.chain().tween_callback(_hide_feedback)
+
+func _hide_feedback() -> void:
+	feedback_plate.visible = false
+	feedback_label.visible = false
 
 func _calculate_enemy_velocity(origin: Vector2, target: Vector2, weapon: WeaponDefinition) -> Vector2:
 	var gravity := float(ProjectSettings.get_setting("physics/2d/default_gravity", 980.0))
@@ -1186,6 +1334,7 @@ func _check_game_over() -> bool:
 
 	if victory:
 		turn_label.text = "YOU WIN"
+		turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 		result_title_label.text = "VICTORY"
 		if _current_mission != null and _current_mission.objective_mode == "disable_relay":
 			hint_label.text = "Signal relay disabled — route opened"
@@ -1204,6 +1353,7 @@ func _check_game_over() -> bool:
 			camera_director.focus_x(enemy.global_position.x, 0.35)
 	else:
 		turn_label.text = "DEFEAT"
+		turn_label.add_theme_color_override("font_color", ThemeScript.SIGNAL)
 		result_title_label.text = "DEFEAT"
 		if _objective_failed():
 			hint_label.text = "Protected Salvage was destroyed"
@@ -1316,17 +1466,35 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 	_update_hud()
 
 func _update_hud() -> void:
-	health_label.text = "YOU  %d/%d\nCOVER  %d/%d" % [
-		player.health,
-		player.max_health,
-		player_cover.health,
-		player_cover.max_health,
-	]
+	health_label.text = "YOU  %d/%d" % [player.health, player.max_health]
+	player_cover_label.text = "COVER  %d/%d" % [player_cover.health, player_cover.max_health]
 	enemy_health_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
+	enemy_cover_label.text = "COVER  %d/%d" % [enemy_cover.health, enemy_cover.max_health]
+	_update_status_bar(player_health_bar_back, player_health_bar_fill, player.health, player.max_health, ThemeScript.HAZARD)
+	_update_status_bar(player_cover_bar_back, player_cover_bar_fill, player_cover.health, player_cover.max_health, ThemeScript.OXIDE)
+	_update_status_bar(enemy_health_bar_back, enemy_health_bar_fill, enemy.health, enemy.max_health, ThemeScript.SIGNAL)
+	_update_status_bar(enemy_cover_bar_back, enemy_cover_bar_fill, enemy_cover.health, enemy_cover.max_health, ThemeScript.RUST)
 	if enemy_locator_label.visible:
 		_update_enemy_locator()
 	if target_card.visible:
 		_update_target_card()
+
+func _update_status_bar(
+	back: ColorRect,
+	fill: ColorRect,
+	current: int,
+	maximum: int,
+	normal_color: Color
+) -> void:
+	if back == null or fill == null:
+		return
+	var ratio := 0.0
+	if maximum > 0:
+		ratio = clampf(float(current) / float(maximum), 0.0, 1.0)
+	var width := back.offset_right - back.offset_left
+	fill.offset_left = back.offset_left
+	fill.offset_right = back.offset_left + width * ratio
+	fill.color = ThemeScript.SIGNAL if ratio <= 0.30 else normal_color
 
 func _update_target_card() -> void:
 	target_title_label.text = _current_mission.objective_text if _current_mission != null else "TARGET STATUS"
