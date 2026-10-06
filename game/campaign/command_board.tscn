@@ -32,141 +32,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_planks")
+texture_filter = 2
 expand_mode = 1
 stretch_mode = 1
 
-[node name="Scroll" type="ScrollContainer" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 113.0
-offset_bottom = -157.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 3
-scroll_deadzone = 10
-
-[node name="BoardHolder" type="Control" parent="Scroll"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 1
-
-[node name="Board" type="Control" parent="Scroll/BoardHolder"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_right = 720.0
-offset_bottom = 1000.0
-mouse_filter = 1
-
-[node name="EdgeTop" type="TextureRect" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 113.0
-offset_bottom = 143.0
-grow_horizontal = 2
-mouse_filter = 2
-texture = ExtResource("3_edge")
-expand_mode = 1
-
-[node name="EdgeBottom" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -187.0
-offset_bottom = -157.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 2
-texture = ExtResource("3_edge")
-expand_mode = 1
-flip_v = true
-
-[node name="TopRail" type="NinePatchRect" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 113.0
-grow_horizontal = 2
-texture = ExtResource("4_rail")
-patch_margin_left = 14
-patch_margin_top = 14
-patch_margin_right = 14
-patch_margin_bottom = 16
-
-[node name="TopContent" type="Control" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 105.0
-grow_horizontal = 2
-mouse_filter = 2
-
-[node name="Title" type="Label" parent="TopContent"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 100.0
-offset_right = -100.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.93, 0.87, 0.76, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
-theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 30
-text = "COMMAND BOARD"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BackButton" type="TextureButton" parent="TopContent"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 16.0
-offset_top = 7.0
-offset_right = 107.0
-offset_bottom = 100.0
-focus_mode = 0
-texture_normal = ExtResource("5_back")
-texture_pressed = ExtResource("6_back_p")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Hud" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -157.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Rail" type="NinePatchRect" parent="Hud"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_rail")
-patch_margin_left = 14
-patch_margin_top = 14
-patch_margin_right = 14
-patch_margin_bottom = 16
-flip_v = true
-
-[node name="HudContent" type="Control" parent="Hud"]
-unique_name_in_owner = true
+[node name="Design" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -176,108 +46,233 @@ offset_left = -360.0
 offset_right = 360.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 102.0
+offset_right = 720.0
+offset_bottom = 1134.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+scroll_deadzone = 10
+
+[node name="BoardHolder" type="Control" parent="Design/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="Board" type="Control" parent="Design/Scroll/BoardHolder"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 1000.0
+mouse_filter = 1
+
+[node name="EdgeTop" type="TextureRect" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 102.0
+offset_right = 720.0
+offset_bottom = 129.0
+mouse_filter = 2
+texture = ExtResource("3_edge")
+texture_filter = 2
+expand_mode = 1
+
+[node name="EdgeBottom" type="TextureRect" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 1107.0
+offset_right = 720.0
+offset_bottom = 1134.0
+mouse_filter = 2
+texture = ExtResource("3_edge")
+texture_filter = 2
+expand_mode = 1
+flip_v = true
+
+[node name="TopRail" type="NinePatchRect" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 102.0
+texture = ExtResource("4_rail")
+texture_filter = 2
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 16
+
+[node name="TopContent" type="Control" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 98.0
 mouse_filter = 2
 
-[node name="Panel" type="NinePatchRect" parent="Hud/HudContent"]
+[node name="Title" type="Label" parent="Design/TopContent"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 123.0
+offset_top = 10.0
+offset_right = 660.0
+offset_bottom = 91.0
+theme_override_colors/font_color = Color(0.95, 0.91, 0.82, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.52)
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 31
+text = "COMMAND BOARD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="Design/TopContent"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 7.0
+offset_right = 96.0
+offset_bottom = 94.0
+focus_mode = 0
+texture_normal = ExtResource("5_back")
+texture_pressed = ExtResource("6_back_p")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Hud" type="Control" parent="Design"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 1134.0
+offset_right = 720.0
+offset_bottom = 1280.0
+
+[node name="Rail" type="NinePatchRect" parent="Design/Hud"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 47.0
-offset_right = -20.0
-offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_rail")
+texture_filter = 2
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 16
+flip_v = true
+
+[node name="HudContent" type="Control" parent="Design/Hud"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Panel" type="NinePatchRect" parent="Design/Hud/HudContent"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 40.0
+offset_right = 694.0
+offset_bottom = 135.0
+mouse_filter = 2
 texture = ExtResource("7_panel")
+texture_filter = 2
 patch_margin_left = 27
 patch_margin_top = 27
 patch_margin_right = 27
 patch_margin_bottom = 27
 
-[node name="Track" type="NinePatchRect" parent="Hud/HudContent/Panel"]
+[node name="Track" type="NinePatchRect" parent="Design/Hud/HudContent/Panel"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 27.0
-offset_top = 39.0
-offset_right = -27.0
-offset_bottom = 71.0
-grow_horizontal = 2
+layout_mode = 0
+offset_left = 25.0
+offset_top = 40.0
+offset_right = 643.0
+offset_bottom = 72.0
 mouse_filter = 2
 texture = ExtResource("8_track")
+texture_filter = 2
 patch_margin_left = 13
 patch_margin_top = 13
 patch_margin_right = 13
 patch_margin_bottom = 13
 
-[node name="Fill" type="NinePatchRect" parent="Hud/HudContent/Panel/Track"]
+[node name="Fill" type="NinePatchRect" parent="Design/Hud/HudContent/Panel/Track"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
-offset_right = 134.0
+offset_right = 128.0
 offset_bottom = 28.0
 mouse_filter = 2
 texture = ExtResource("9_fill")
+texture_filter = 2
 patch_margin_left = 11
 patch_margin_top = 11
 patch_margin_right = 11
 patch_margin_bottom = 11
 
-[node name="CountLabel" type="Label" parent="Hud/HudContent/Panel/Track"]
+[node name="CountLabel" type="Label" parent="Design/Hud/HudContent/Panel/Track"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -15.0
-offset_top = -2.0
+offset_right = -13.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.95, 0.96, 0.965, 1)
-theme_override_font_sizes/font_size = 21
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 22
 text = "0/10"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Tab" type="NinePatchRect" parent="Hud/HudContent"]
+[node name="Tab" type="NinePatchRect" parent="Design/Hud/HudContent"]
 layout_mode = 0
-offset_left = 31.0
-offset_top = 12.0
-offset_right = 224.0
-offset_bottom = 67.0
+offset_left = 37.0
+offset_top = 8.0
+offset_right = 218.0
+offset_bottom = 60.0
 mouse_filter = 2
 texture = ExtResource("10_tab")
+texture_filter = 2
 patch_margin_left = 19
 patch_margin_top = 19
 patch_margin_right = 19
 patch_margin_bottom = 19
 
-[node name="ChapterLabel" type="Label" parent="Hud/HudContent/Tab"]
+[node name="ChapterLabel" type="Label" parent="Design/Hud/HudContent/Tab"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
+offset_left = 18.0
+offset_right = -6.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.106, 0.086, 0.063, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 25
 text = "CHAPTER 1"
 vertical_alignment = 1
 
-[node name="Knot" type="TextureRect" parent="Hud/HudContent"]
+[node name="Knot" type="TextureRect" parent="Design/Hud/HudContent"]
 layout_mode = 0
-offset_left = 213.0
-offset_top = 29.0
-offset_right = 493.0
-offset_bottom = 69.0
+offset_left = 208.0
+offset_top = 25.0
+offset_right = 507.0
+offset_bottom = 62.0
 mouse_filter = 2
 texture = ExtResource("11_knot")
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 5
 
 [node name="BriefingOverlay" type="Control" parent="."]
 unique_name_in_owner = true
@@ -346,6 +341,7 @@ horizontal_alignment = 1
 layout_mode = 2
 
 [node name="ObjectiveHeader" type="Label" parent="BriefingOverlay/BriefingPanel/Margin/Content"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
 theme_override_font_sizes/font_size = 14
