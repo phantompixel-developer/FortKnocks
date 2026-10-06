@@ -107,6 +107,8 @@ var _prepared_mission: MissionDefinition
 var _player_platform: CombatPlatformDefinition
 var _player_module: PlatformModuleDefinition
 var _campaign_weapon_ids: Array[String] = []
+var _campaign_weapon_levels: Dictionary = {}
+var _player_weapon_cache: Dictionary = {}
 var _completion_emitted := false
 var _progression_reward := 0
 
@@ -138,13 +140,39 @@ func prepare_for_campaign(
 	definition: MissionDefinition,
 	platform_definition: CombatPlatformDefinition,
 	module_definition: PlatformModuleDefinition = null,
-	weapon_ids: Array[String] = []
+	weapon_ids: Array[String] = [],
+	weapon_levels: Dictionary = {}
 ) -> void:
 	_campaign_managed = true
 	_prepared_mission = definition
 	_player_platform = platform_definition
 	_player_module = module_definition
 	_campaign_weapon_ids = weapon_ids.duplicate()
+	_campaign_weapon_levels = weapon_levels.duplicate(true)
+	_player_weapon_cache.clear()
+
+func _player_weapon(weapon_id: String) -> WeaponDefinition:
+	if _player_weapon_cache.has(weapon_id):
+		return _player_weapon_cache[weapon_id] as WeaponDefinition
+
+	var base: WeaponDefinition
+	match weapon_id:
+		"scrap_bolt":
+			base = ScrapBolt as WeaponDefinition
+		"heavy_slug":
+			base = HeavySlug as WeaponDefinition
+		"shock_capsule":
+			base = ShockCapsule as WeaponDefinition
+		_:
+			return null
+
+	if not _campaign_managed:
+		return base
+
+	var level: int = clampi(int(_campaign_weapon_levels.get(weapon_id, 1)), 1, base.max_level)
+	var upgraded: WeaponDefinition = base.copy_at_level(level)
+	_player_weapon_cache[weapon_id] = upgraded
+	return upgraded
 
 func set_progression_reward(amount: int) -> void:
 	_progression_reward = maxi(0, amount)
@@ -158,16 +186,16 @@ func _ready() -> void:
 	ThemeScript.style_card(mission_brief_card, 1)
 	ThemeScript.style_card(result_card, 1)
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
-	_selected_weapon = ScrapBolt as WeaponDefinition
+	_selected_weapon = _player_weapon("scrap_bolt")
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
 	enemy.health_changed.connect(_on_health_changed)
 	player_cover.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
 	inspect_button.pressed.connect(_inspect_enemy)
-	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(ScrapBolt as WeaponDefinition))
-	heavy_slug_button.pressed.connect(func() -> void: _select_weapon(HeavySlug as WeaponDefinition))
-	shock_capsule_button.pressed.connect(func() -> void: _select_weapon(ShockCapsule as WeaponDefinition))
+	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(_player_weapon("scrap_bolt")))
+	heavy_slug_button.pressed.connect(func() -> void: _select_weapon(_player_weapon("heavy_slug")))
+	shock_capsule_button.pressed.connect(func() -> void: _select_weapon(_player_weapon("shock_capsule")))
 	restart_button.pressed.connect(_restart)
 	change_encounter_button.pressed.connect(_change_encounter)
 
