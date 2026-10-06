@@ -31,3 +31,8 @@ Region names, used consistently: **Outskirts, Suburbs, Highway, Industrial, Badl
 coffee ring, dirt stain, lined note, torn scrap, marker circle / X / arrow, blue and yellow push pins, loose string. Placed per region layout to give the board its physical density.
 
 Shared additions: `00_shared/ui/btn_close` (+pressed), used by the mission briefing.
+
+
+## Live-game mapping
+
+The live Fort Knocks Command Board uses the real campaign catalog: Chapter 1 currently contains Outskirts (missions 1–6) and Suburbs (missions 7–10). Mission numbers therefore continue across regions rather than restarting. The sample chapter/mission data from the former standalone reference project is not used.
