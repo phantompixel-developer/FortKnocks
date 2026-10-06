@@ -161,7 +161,7 @@ func _style_live_hud() -> void:
 
 func _capture_hud_layout() -> void:
 	_hud_base_offsets.clear()
-	for control: Control in [
+	for item in [
 		player_status_card,
 		enemy_status_card,
 		turn_label,
@@ -176,6 +176,9 @@ func _capture_hud_layout() -> void:
 		target_card,
 		hint_label,
 	]:
+		var control := item as Control
+		if control == null:
+			continue
 		_hud_base_offsets[control.get_instance_id()] = Vector4(
 			control.offset_left,
 			control.offset_top,
