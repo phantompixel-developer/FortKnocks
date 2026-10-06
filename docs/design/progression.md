@@ -253,3 +253,16 @@ Do not author a large campaign or seven complete platform tiers before this loop
 Do not build full progression systems until the combat prototype proves aiming, impact, destruction, camera flow, projectile roles, and encounter variety are fun.
 
 See `implementation_roadmap.md` for sequencing.
+
+
+## Garage vehicle reinforcement levels
+
+Added during the October 2026 Garage visual-production pass after explicit approval.
+
+- Owned combat platforms now have a persistent **Level 1–4** Garage reinforcement level.
+- The green Garage action is reserved for **UPGRADE** on owned vehicles; it is no longer used for equip/active state.
+- Upgrade levels currently improve **cover durability only**. Speed, Fuel and Load bars remain concise Garage presentation descriptors rather than separate simulation systems.
+- Equip/active state is a separate player choice represented by an active checkbox and a cyan active-card border.
+- Purchasing a newly unlocked platform does **not** automatically make it active; the player explicitly marks it active.
+- Existing v1 saves migrate to save schema v2 with all already-owned platforms starting at Level 1.
+- Upgrade cost scales by platform family and current level; the system remains intentionally capped and lightweight rather than becoming a broad RPG stat tree.
