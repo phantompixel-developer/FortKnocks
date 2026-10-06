@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://game/campaign/command_board.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_planks.png" id="2_planks"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/hud_chapter_tab_9s.png" id="10_tab"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/deco_string_knot.png" id="11_knot"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_close.png" id="12_close"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_close_pressed.png" id="13_close_p"]
 
 [node name="CommandBoard" type="Control"]
 layout_mode = 3
@@ -413,15 +412,28 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 21
 text = "DEPLOY"
 
-[node name="BriefingClose" type="TextureButton" parent="BriefingOverlay/BriefingPanel"]
+[node name="BriefingClose" type="Button" parent="BriefingOverlay/BriefingPanel"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 0
 offset_left = 510.0
 offset_top = 18.0
 offset_right = 566.0
 offset_bottom = 74.0
 focus_mode = 0
-texture_normal = ExtResource("12_close")
-texture_pressed = ExtResource("13_close_p")
-ignore_texture_size = true
+flat = true
+clip_contents = true
+tooltip_text = "Close briefing"
+
+[node name="Icon" type="TextureRect" parent="BriefingOverlay/BriefingPanel/BriefingClose"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("12_close")
+texture_filter = 2
+expand_mode = 1
 stretch_mode = 5
