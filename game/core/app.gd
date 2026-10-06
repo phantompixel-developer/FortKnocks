@@ -18,6 +18,7 @@ var _active_mission: MissionDefinition
 var _hub_notice := ""
 var _garage_notice := ""
 var _workshop_notice := ""
+var _workshop_focus_weapon_id := "scrap_bolt"
 
 func _ready() -> void:
 	_reconcile_campaign_unlocks()
@@ -63,7 +64,7 @@ func _show_workshop() -> void:
 	workshop.module_requested.connect(_on_module_requested)
 	workshop.specialist_weapon_requested.connect(_on_specialist_weapon_requested)
 	workshop.weapon_upgrade_requested.connect(_on_weapon_upgrade_requested)
-	workshop.configure(save_service.snapshot(), _workshop_notice)
+	workshop.configure(save_service.snapshot(), _workshop_notice, _workshop_focus_weapon_id)
 	_workshop_notice = ""
 
 func _reconcile_campaign_unlocks() -> void:
@@ -73,6 +74,7 @@ func _reconcile_campaign_unlocks() -> void:
 			save_service.unlock_mission(mission.next_mission_id)
 
 func _on_specialist_weapon_requested(weapon_id: String) -> void:
+	_workshop_focus_weapon_id = weapon_id
 	if not save_service.set_specialist_weapon(weapon_id):
 		return
 
@@ -83,6 +85,7 @@ func _on_specialist_weapon_requested(weapon_id: String) -> void:
 	_show_workshop()
 
 func _on_weapon_upgrade_requested(weapon_id: String) -> void:
+	_workshop_focus_weapon_id = weapon_id
 	var definition: WeaponDefinition
 	match weapon_id:
 		"scrap_bolt":
