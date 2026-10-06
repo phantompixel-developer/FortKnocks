@@ -159,8 +159,8 @@ func _build_background(board_height: float) -> void:
 
 func _build_region(region: Dictionary, top: float) -> void:
 	var name := str(region["name"])
-	var missions := region["missions"] as Array
-	var points := region["points"] as PackedVector2Array
+	var missions: Array = region["missions"]
+	var points: PackedVector2Array = region["points"]
 	var section_h := float(region["height"])
 
 	_add_polaroid(
@@ -334,8 +334,10 @@ func _add_region_decor(name: String, top: float, section_h: float) -> void:
 	for item in decor:
 		var tex := TextureRect.new()
 		tex.texture = ProductionUIScript.texture(str(item["path"]))
-		tex.position = item["pos"] as Vector2
-		tex.size = item["size"] as Vector2
+		var decor_position: Vector2 = item["pos"]
+		var decor_size: Vector2 = item["size"]
+		tex.position = decor_position
+		tex.size = decor_size
 		tex.rotation_degrees = float(item["rot"])
 		tex.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
