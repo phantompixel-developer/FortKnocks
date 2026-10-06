@@ -14,4 +14,4 @@ icon_stat_armour (shield), icon_stat_speed (bolt), icon_stat_fuel (jerry can), i
 | thumb_veh_02_locked_PLACEHOLDER.png | Lock baked in (it hid the wheels). No unlocked art exists |
 | thumb_veh_03_blue_suv_PLACEHOLDER.png | Right edge slightly clipped in the reference |
 
-Godot scene: `fort_knocks_godot/screens/garage/garage_screen.tscn`.
+Live Godot scene: `game/progression/garage_screen.tscn`.
