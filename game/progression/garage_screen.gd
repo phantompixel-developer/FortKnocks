@@ -10,6 +10,7 @@ const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 const ProductionUIScript := preload("res://game/presentation/production_ui.gd")
 const GarageSharpenShader := preload("res://game/progression/garage_sharpen.gdshader")
+const GarageBoldFont := preload("res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Bold.ttf")
 
 const GARAGE_ROOT := "res://assets/art/claude_assets/1_Asset_Kit/02_garage"
 const ICON_ARMOUR := GARAGE_ROOT + "/png/icons/icon_stat_armour.png"
@@ -69,6 +70,7 @@ func _ready() -> void:
 		)
 	)
 	ProductionUIScript.style_action_button(action_button)
+	_style_garage_text()
 	_style_active_toggle()
 	pickup_hero.material = _sharpen_material(0.10)
 	action_coin.texture = ProductionUIScript.texture(COIN_PATH)
@@ -260,7 +262,11 @@ func _add_stat_row(label_text: String, icon_path: String, filled: int) -> void:
 	var label := Label.new()
 	label.custom_minimum_size = Vector2(132.0, 0.0)
 	label.text = label_text
+	label.add_theme_font_override("font", GarageBoldFont)
 	label.add_theme_font_size_override("font_size", 26)
+	label.add_theme_color_override("font_shadow_color", Color.TRANSPARENT)
+	label.add_theme_constant_override("shadow_offset_x", 0)
+	label.add_theme_constant_override("shadow_offset_y", 0)
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	row.add_child(label)
 
@@ -442,6 +448,16 @@ func _sharpen_material(strength: float) -> ShaderMaterial:
 	material.shader = GarageSharpenShader
 	material.set_shader_parameter("strength", strength)
 	return material
+
+func _style_garage_text() -> void:
+	action_label.add_theme_font_override("font", GarageBoldFont)
+	action_cost.add_theme_font_override("font", GarageBoldFont)
+	action_label.add_theme_color_override("font_shadow_color", Color.TRANSPARENT)
+	action_cost.add_theme_color_override("font_shadow_color", Color.TRANSPARENT)
+	action_label.add_theme_constant_override("shadow_offset_x", 0)
+	action_label.add_theme_constant_override("shadow_offset_y", 0)
+	action_cost.add_theme_constant_override("shadow_offset_x", 0)
+	action_cost.add_theme_constant_override("shadow_offset_y", 0)
 
 func _style_active_toggle() -> void:
 	var normal := StyleBoxFlat.new()
