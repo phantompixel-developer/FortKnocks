@@ -88,6 +88,7 @@ func _ready() -> void:
 		)
 	)
 	ProductionUIScript.style_action_button(deploy_button)
+	_apply_safe_area()
 	back_button.pressed.connect(_on_back_pressed)
 	briefing_close.pressed.connect(_close_briefing)
 	deploy_button.pressed.connect(_deploy_briefing_mission)
@@ -456,6 +457,40 @@ func _center_board() -> void:
 	if board_holder == null or board == null:
 		return
 	board.position.x = maxf((board_holder.size.x - BOARD_W) * 0.5, 0.0)
+
+func _apply_safe_area() -> void:
+	var viewport_size := get_viewport_rect().size
+	var window_size := DisplayServer.window_get_size()
+	if window_size.x <= 0 or window_size.y <= 0:
+		return
+	var safe := DisplayServer.get_display_safe_area()
+	if safe.size.x <= 0 or safe.size.y <= 0:
+		return
+	var scale := Vector2(
+		viewport_size.x / float(window_size.x),
+		viewport_size.y / float(window_size.y)
+	)
+	var top_inset := float(safe.position.y) * scale.y
+	var bottom_inset := float(window_size.y - (safe.position.y + safe.size.y)) * scale.y
+
+	if top_inset > 0.0 and top_inset < 220.0:
+		$TopRail.offset_bottom += top_inset
+		back_button.offset_top += top_inset
+		back_button.offset_bottom += top_inset
+		$TopRail/Coin.offset_top += top_inset
+		$TopRail/Coin.offset_bottom += top_inset
+		salvage_label.offset_top += top_inset
+		salvage_label.offset_bottom += top_inset
+		scroll.offset_top += top_inset
+		$EdgeTop.offset_top += top_inset
+		$EdgeTop.offset_bottom += top_inset
+
+	if bottom_inset > 0.0 and bottom_inset < 220.0:
+		$Hud.offset_top -= bottom_inset
+		$Hud.offset_bottom -= bottom_inset
+		scroll.offset_bottom -= bottom_inset
+		$EdgeBottom.offset_top -= bottom_inset
+		$EdgeBottom.offset_bottom -= bottom_inset
 
 func _play_ui(cue: StringName) -> void:
 	var audio := get_tree().get_first_node_in_group("fort_knocks_audio")
