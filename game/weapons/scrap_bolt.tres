@@ -16,3 +16,8 @@ bounce_factor = 0.66
 secondary_bounce_factor = 0.54
 projectile_color = Color(0.949, 0.875, 0.522, 1)
 trail_color = Color(0.91, 0.82, 0.53, 0.58)
+
+upgrade_base_cost = 40
+direct_damage_per_level = 5
+cover_damage_per_level = 6
+blast_damage_per_level = 0
