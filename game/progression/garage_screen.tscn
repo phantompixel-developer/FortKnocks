@@ -197,14 +197,14 @@ vertical_alignment = 1
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 620.0
-offset_top = 677.0
-offset_right = 676.0
-offset_bottom = 716.0
+offset_left = 646.0
+offset_top = 696.0
+offset_right = 674.0
+offset_bottom = 724.0
 focus_mode = 0
 toggle_mode = true
 tooltip_text = "Set this vehicle as active"
-theme_override_font_sizes/font_size = 23
+theme_override_font_sizes/font_size = 18
 text = "✓"
 
 [node name="StatsPanel" type="PanelContainer" parent="Design"]
