@@ -580,10 +580,10 @@ func _style_active_toggle() -> void:
 	normal.set_border_width_all(2)
 	normal.set_corner_radius_all(7)
 
-	var hover := normal.duplicate() as StyleBoxFlat
+	var hover: StyleBoxFlat = normal.duplicate() as StyleBoxFlat
 	hover.border_color = ACTIVE_ACCENT.darkened(0.15)
 
-	var active := normal.duplicate() as StyleBoxFlat
+	var active: StyleBoxFlat = normal.duplicate() as StyleBoxFlat
 	active.bg_color = ACTIVE_DARK
 	active.border_color = ACTIVE_ACCENT
 	active.set_border_width_all(3)
