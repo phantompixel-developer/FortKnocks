@@ -190,8 +190,9 @@ func _start_mission(mission: MissionDefinition) -> void:
 
 	var platform_id := save_service.current_platform_id()
 	var platform_source := PlatformCatalogScript.by_id(platform_id)
-	var platform: CombatPlatformDefinition = platform_source.duplicate(true) as CombatPlatformDefinition if platform_source != null else null
-	if platform != null:
+	var platform: CombatPlatformDefinition
+	if platform_source != null:
+		platform = platform_source.duplicate(true) as CombatPlatformDefinition
 		platform.cover_health = platform.cover_health_at_level(save_service.platform_level(platform_id))
 	var module_id := save_service.equipped_module_id(platform_id)
 	var module := PlatformModuleCatalogScript.by_id(module_id) if not module_id.is_empty() else null
