@@ -8,6 +8,7 @@ const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
 const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
 
 @export var draw_floor_shadow := true
+@export var max_display_width := 440.0
 
 var _textures: Dictionary = {}
 
@@ -26,7 +27,7 @@ func _draw() -> void:
 
 	var texture := _texture_for_platform(_platform_id)
 	if texture != null:
-		var target_width := minf(size.x - 38.0, 440.0)
+		var target_width := minf(size.x - 38.0, max_display_width)
 		var aspect := 0.50 if _platform_id == "run_down_compact" else 0.47
 		var target_height := target_width * aspect
 		var target := Rect2(
