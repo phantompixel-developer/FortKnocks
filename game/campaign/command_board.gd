@@ -61,8 +61,18 @@ const SUBURBS_POINTS := PackedVector2Array([
 @onready var progress_track: NinePatchRect = %Track
 @onready var progress_fill: NinePatchRect = %Fill
 @onready var back_button: TextureButton = %BackButton
+@onready var briefing_overlay: Control = %BriefingOverlay
+@onready var briefing_panel: PanelContainer = %BriefingPanel
+@onready var briefing_title: Label = %BriefingTitle
+@onready var briefing_meta: Label = %BriefingMeta
+@onready var briefing_objective: Label = %BriefingObjective
+@onready var briefing_text: Label = %BriefingText
+@onready var briefing_reward: Label = %BriefingReward
+@onready var briefing_close: TextureButton = %BriefingClose
+@onready var deploy_button: Button = %DeployButton
 
 var _snapshot: Dictionary = {}
+var _briefing_mission: MissionDefinition
 var _regions: Array[Dictionary] = []
 var _current_pin_y := 0.0
 var _suburbs_y := 0.0
@@ -70,10 +80,17 @@ var _suburbs_y := 0.0
 func _ready() -> void:
 	ThemeScript.apply(self)
 	$TopRail/Title.add_theme_color_override("font_color", ThemeScript.HAZARD)
-	back_button.pressed.connect(func() -> void:
-		_play_ui(&"ui_back")
-		back_requested.emit()
+	briefing_panel.add_theme_stylebox_override(
+		"panel",
+		ProductionUIScript.texture_box(
+			"res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/panel_stats_9s.png",
+			Vector4(40.0, 40.0, 40.0, 40.0)
+		)
 	)
+	ProductionUIScript.style_action_button(deploy_button)
+	back_button.pressed.connect(_on_back_pressed)
+	briefing_close.pressed.connect(_close_briefing)
+	deploy_button.pressed.connect(_deploy_briefing_mission)
 	scroll.get_v_scroll_bar().value_changed.connect(_on_scroll_changed)
 	resized.connect(_center_board)
 
@@ -366,8 +383,48 @@ func _build_chapter_divider(y: float) -> void:
 	banner.add_child(label)
 
 func _select_mission(mission: MissionDefinition) -> void:
+	if mission == null:
+		return
+	_play_ui(&"ui_confirm")
+	_briefing_mission = mission
+	briefing_title.text = mission.display_name.to_upper()
+	briefing_meta.text = "MISSION %02d  •  %s" % [
+		mission.campaign_order,
+		"SUBURBS" if mission.id.begins_with("suburbs_") else "OUTSKIRTS",
+	]
+	briefing_objective.text = mission.objective_text.to_upper()
+	briefing_text.text = mission.briefing
+	briefing_reward.text = "RECOVERY  •  %d SALVAGE" % mission.salvage_reward
+	briefing_overlay.visible = true
+	briefing_overlay.modulate.a = 0.0
+	briefing_panel.pivot_offset = briefing_panel.size * 0.5
+	briefing_panel.scale = Vector2(0.96, 0.96)
+	var tween := create_tween().set_parallel().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(briefing_overlay, "modulate:a", 1.0, 0.14)
+	tween.tween_property(briefing_panel, "scale", Vector2.ONE, 0.18)
+
+func _close_briefing() -> void:
+	if not briefing_overlay.visible:
+		return
+	_play_ui(&"ui_back")
+	briefing_overlay.visible = false
+	_briefing_mission = null
+
+func _deploy_briefing_mission() -> void:
+	if _briefing_mission == null:
+		return
+	var mission := _briefing_mission
+	briefing_overlay.visible = false
+	_briefing_mission = null
 	_play_ui(&"ui_confirm")
 	mission_selected.emit(mission)
+
+func _on_back_pressed() -> void:
+	if briefing_overlay.visible:
+		_close_briefing()
+		return
+	_play_ui(&"ui_back")
+	back_requested.emit()
 
 func _update_hud() -> void:
 	var campaign := _snapshot.get("campaign", {}) as Dictionary
