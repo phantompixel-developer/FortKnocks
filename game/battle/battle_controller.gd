@@ -148,7 +148,9 @@ func _style_live_hud() -> void:
 	enemy_health_label.add_theme_color_override("font_color", Color("ef9b84"))
 	enemy_locator_label.add_theme_color_override("font_color", ThemeScript.COLD)
 	feedback_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
-	weapon_tray.get_node("Title").add_theme_color_override("font_color", ThemeScript.MUTED)
+	var weapon_title := weapon_tray.get_node("Title") as Label
+	if weapon_title != null:
+		weapon_title.add_theme_color_override("font_color", ThemeScript.MUTED)
 	weapon_name_label.add_theme_color_override("font_color", ThemeScript.BONE)
 	weapon_role_label.add_theme_color_override("font_color", ThemeScript.MUTED)
 	power_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
@@ -159,7 +161,7 @@ func _style_live_hud() -> void:
 
 func _capture_hud_layout() -> void:
 	_hud_base_offsets.clear()
-	for control in [
+	for control: Control in [
 		player_status_card,
 		enemy_status_card,
 		turn_label,
@@ -215,7 +217,7 @@ func _set_hud_control_shift(control: Control, shift: Vector2) -> void:
 	var base_variant: Variant = _hud_base_offsets.get(control.get_instance_id())
 	if base_variant == null:
 		return
-	var base := base_variant as Vector4
+	var base: Vector4 = base_variant
 	control.offset_left = base.x + shift.x
 	control.offset_top = base.y + shift.y
 	control.offset_right = base.z + shift.x
@@ -282,10 +284,8 @@ func _ready() -> void:
 	ThemeScript.style_card(mission_brief_card, 1)
 	ThemeScript.style_card(result_card, 1)
 	_style_live_hud()
-	_capture_hud_layout()
 	if not get_viewport().size_changed.is_connected(_apply_hud_safe_area):
 		get_viewport().size_changed.connect(_apply_hud_safe_area)
-	call_deferred("_apply_hud_safe_area")
 	_selected_weapon = _player_weapon("scrap_bolt")
 	_missions = EncounterCatalogScript.all()
 	player.health_changed.connect(_on_health_changed)
@@ -321,6 +321,8 @@ func _ready() -> void:
 	_build_encounter_picker()
 	_update_weapon_panel()
 	_update_weapon_buttons()
+	_capture_hud_layout()
+	call_deferred("_apply_hud_safe_area")
 	_set_weapon_buttons_enabled(false)
 	_update_last_shot_display()
 	_update_hud()
@@ -626,12 +628,12 @@ func _update_weapon_button_visibility() -> void:
 	shock_capsule_button.visible = _is_weapon_allowed(ShockCapsule as WeaponDefinition)
 
 	if _campaign_managed and not _campaign_weapon_ids.is_empty():
-		weapon_tray.offset_bottom = 308.0
+		weapon_tray.offset_bottom = 312.0
 		if shock_capsule_button.visible and not heavy_slug_button.visible:
 			shock_capsule_button.offset_top = 92.0
 			shock_capsule_button.offset_bottom = 134.0
 	else:
-		weapon_tray.offset_bottom = 358.0
+		weapon_tray.offset_bottom = 360.0
 		shock_capsule_button.offset_top = 144.0
 		shock_capsule_button.offset_bottom = 186.0
 
