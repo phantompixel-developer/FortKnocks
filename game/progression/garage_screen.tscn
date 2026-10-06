@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=3]
 
-[ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_garage"]
+[ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_script"]
 [ext_resource type="Script" path="res://game/presentation/platform_showcase.gd" id="2_showcase"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/bg_ui_lower.png" id="3_lower"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/bg_garage_scene.png" id="4_scene"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/bg_garage_scene.png" id="4_bg"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/overlay_scene_fade.png" id="5_fade"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/fx/fx_vehicle_contact_shadow.png" id="6_shadow"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back.png" id="7_back"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back_pressed.png" id="8_back_pressed"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back_pressed.png" id="8_back_p"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left.png" id="9_left"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left_disabled.png" id="10_left_disabled"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left_disabled.png" id="10_left_d"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right.png" id="11_right"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right_disabled.png" id="12_right_disabled"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right_disabled.png" id="12_right_d"]
 
 [node name="Garage" type="Control"]
 layout_mode = 3
@@ -20,7 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_garage")
+script = ExtResource("1_script")
 
 [node name="LowerBg" type="TextureRect" parent="."]
 layout_mode = 1
@@ -35,13 +35,11 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="Showroom" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.59
-grow_horizontal = 2
-grow_vertical = 2
+unique_name_in_owner = true
 clip_contents = true
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 640.0
 mouse_filter = 2
 
 [node name="SceneBg" type="TextureRect" parent="Showroom"]
@@ -52,19 +50,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("4_scene")
+texture = ExtResource("4_bg")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="Shadow" type="TextureRect" parent="Showroom"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.08
+anchor_left = 0.04
 anchor_top = 1.0
-anchor_right = 0.92
+anchor_right = 0.96
 anchor_bottom = 1.0
 offset_top = -126.0
-offset_bottom = -24.0
+offset_bottom = -26.0
 grow_vertical = 0
 mouse_filter = 2
 texture = ExtResource("6_shadow")
@@ -74,12 +72,12 @@ expand_mode = 1
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
+anchor_left = 0.02
 anchor_top = 1.0
-anchor_right = 0.95
+anchor_right = 0.98
 anchor_bottom = 1.0
-offset_top = -330.0
-offset_bottom = -34.0
+offset_top = -390.0
+offset_bottom = -48.0
 grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("2_showcase")
@@ -90,7 +88,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -132.0
+offset_top = -134.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -115,49 +113,31 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
+theme_override_constants/margin_top = 26
 theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 18
+theme_override_constants/margin_bottom = 13
 
 [node name="Layout" type="VBoxContainer" parent="Safe"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="TopBar" type="HBoxContainer" parent="Safe/Layout"]
-custom_minimum_size = Vector2(0, 68)
+custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="BackButton" type="TextureButton" parent="Safe/Layout/TopBar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(68, 68)
+custom_minimum_size = Vector2(88, 88)
 layout_mode = 2
 focus_mode = 0
 texture_normal = ExtResource("7_back")
-texture_pressed = ExtResource("8_back_pressed")
+texture_pressed = ExtResource("8_back_p")
 ignore_texture_size = true
 stretch_mode = 5
-
-[node name="TopSpacer" type="Control" parent="Safe/Layout/TopBar"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Coin" type="TextureRect" parent="Safe/Layout/TopBar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_vertical = 4
-expand_mode = 1
-stretch_mode = 5
-
-[node name="SalvageLabel" type="Label" parent="Safe/Layout/TopBar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(88, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "0"
-horizontal_alignment = 2
-vertical_alignment = 1
 
 [node name="ShowroomSpacer" type="Control" parent="Safe/Layout"]
 layout_mode = 2
@@ -165,17 +145,19 @@ size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="Header" type="HBoxContainer" parent="Safe/Layout"]
-custom_minimum_size = Vector2(0, 82)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 87)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PrevButton" type="TextureButton" parent="Safe/Layout/Header"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
 texture_normal = ExtResource("9_left")
-texture_disabled = ExtResource("10_left_disabled")
+texture_disabled = ExtResource("10_left_d")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -183,12 +165,14 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-theme_override_constants/separation = -2
+mouse_filter = 2
+theme_override_constants/separation = -3
 
 [node name="PlatformTitle" type="Label" parent="Safe/Layout/Header/TitleBlock"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.95, 0.96, 0.965, 1)
+theme_override_font_sizes/font_size = 44
 text = "RUN-DOWN COMPACT"
 horizontal_alignment = 1
 text_overrun_behavior = 3
@@ -196,80 +180,109 @@ text_overrun_behavior = 3
 [node name="PlatformStatus" type="Label" parent="Safe/Layout/Header/TitleBlock"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
-theme_override_font_sizes/font_size = 16
-text = "ACTIVE PLATFORM"
+theme_override_colors/font_color = Color(0.235, 0.784, 0.91, 1)
+theme_override_font_sizes/font_size = 29
+text = "ACTIVE"
 horizontal_alignment = 1
 
 [node name="NextButton" type="TextureButton" parent="Safe/Layout/Header"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(68, 68)
 layout_mode = 2
 size_flags_vertical = 4
 focus_mode = 0
 texture_normal = ExtResource("11_right")
-texture_disabled = ExtResource("12_right_disabled")
+texture_disabled = ExtResource("12_right_d")
 ignore_texture_size = true
 stretch_mode = 5
-
-[node name="StatsPanel" type="PanelContainer" parent="Safe/Layout"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 214)
-layout_mode = 2
-
-[node name="StatsMargin" type="MarginContainer" parent="Safe/Layout/StatsPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 26
-theme_override_constants/margin_bottom = 18
-
-[node name="StatsContent" type="VBoxContainer" parent="Safe/Layout/StatsPanel/StatsMargin"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Summary" type="Label" parent="Safe/Layout/StatsPanel/StatsMargin/StatsContent"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 42)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.78, 0.82, 0.84, 1)
-theme_override_font_sizes/font_size = 15
-text = "TACTICAL SUMMARY"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="StatRows" type="VBoxContainer" parent="Safe/Layout/StatsPanel/StatsMargin/StatsContent"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 4
 
 [node name="GapA" type="Control" parent="Safe/Layout"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="ActionButton" type="Button" parent="Safe/Layout"]
+[node name="StatsPanel" type="PanelContainer" parent="Safe/Layout"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 66)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "ACTIVE PLATFORM"
+mouse_filter = 2
+
+[node name="Rows" type="VBoxContainer" parent="Safe/Layout/StatsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="ActionButton" type="Button" parent="Safe/Layout/StatsPanel/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(365, 93)
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+
+[node name="ActionContent" type="HBoxContainer" parent="Safe/Layout/StatsPanel/Rows/ActionButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ActionLabel" type="Label" parent="Safe/Layout/StatsPanel/Rows/ActionButton/ActionContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.075, 0.125, 0.039, 1)
+theme_override_font_sizes/font_size = 29
+text = "ACTIVE"
+vertical_alignment = 1
+
+[node name="ActionCoin" type="TextureRect" parent="Safe/Layout/StatsPanel/Rows/ActionButton/ActionContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ActionCost" type="Label" parent="Safe/Layout/StatsPanel/Rows/ActionButton/ActionContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.075, 0.125, 0.039, 1)
+theme_override_font_sizes/font_size = 29
+text = "0"
+vertical_alignment = 1
 
 [node name="GapB" type="Control" parent="Safe/Layout"]
-custom_minimum_size = Vector2(0, 8)
+custom_minimum_size = Vector2(0, 9)
 layout_mode = 2
+mouse_filter = 2
 
-[node name="PlatformScroll" type="ScrollContainer" parent="Safe/Layout"]
-custom_minimum_size = Vector2(0, 164)
+[node name="CardScroll" type="ScrollContainer" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 217)
 layout_mode = 2
 vertical_scroll_mode = 0
 horizontal_scroll_mode = 3
-scroll_deadzone = 10
+scroll_deadzone = 8
 
-[node name="PlatformRow" type="HBoxContainer" parent="Safe/Layout/PlatformScroll"]
+[node name="CardMargin" type="MarginContainer" parent="Safe/Layout/CardScroll"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 13
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 13
+theme_override_constants/margin_bottom = 14
+
+[node name="PlatformRow" type="HBoxContainer" parent="Safe/Layout/CardScroll/CardMargin"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 10
+mouse_filter = 2
+theme_override_constants/separation = 12
 
 [node name="NoticeLabel" type="Label" parent="."]
 unique_name_in_owner = true
@@ -278,12 +291,11 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 100.0
-offset_top = 96.0
+offset_top = 92.0
 offset_right = -100.0
-offset_bottom = 134.0
+offset_bottom = 130.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
-theme_override_font_sizes/font_size = 17
-text = "PLATFORM ACQUIRED"
+theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
 vertical_alignment = 1
