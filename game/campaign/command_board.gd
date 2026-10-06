@@ -37,7 +37,7 @@ const TAPE_PATH := ART_ROOT + "/png/ui/tape_strip.png"
 const STRING_PATH := ART_ROOT + "/png/ui/string_red_tile.png"
 const STRING_SHADOW_PATH := ART_ROOT + "/png/ui/string_shadow_tile.png"
 
-const OUTSKIRTS_POINTS := PackedVector2Array([
+static var OUTSKIRTS_POINTS := PackedVector2Array([
 	Vector2(513, 93),
 	Vector2(587, 257),
 	Vector2(460, 393),
@@ -45,7 +45,7 @@ const OUTSKIRTS_POINTS := PackedVector2Array([
 	Vector2(167, 630),
 	Vector2(347, 767),
 ])
-const SUBURBS_POINTS := PackedVector2Array([
+static var SUBURBS_POINTS := PackedVector2Array([
 	Vector2(513, 100),
 	Vector2(579, 267),
 	Vector2(440, 427),
