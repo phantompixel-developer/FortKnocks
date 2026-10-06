@@ -19,38 +19,38 @@ const SUBURBS_H := 667.0
 
 const ART_ROOT := "res://assets/art/claude_assets/1_Asset_Kit/04_command_board"
 const BG_TILES: Array[Texture2D] = [
-	preload(ART_ROOT + "/art/bg_board_tile_a.png"),
-	preload(ART_ROOT + "/art/bg_board_tile_b.png"),
-	preload(ART_ROOT + "/art/bg_board_tile_c.png"),
+	preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_a.png"),
+	preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_b.png"),
+	preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_c.png"),
 ]
-const OUTSKIRTS_PHOTO := preload(ART_ROOT + "/art/region_photo_outskirts.png")
-const SUBURBS_PHOTO := preload(ART_ROOT + "/art/region_photo_suburbs.png")
-const ROUTE_TEX := preload(ART_ROOT + "/png/ui/string_red_tile.png")
-const ROUTE_SHADOW_TEX := preload(ART_ROOT + "/png/ui/string_shadow_tile.png")
-const BANNER_TEX := preload(ART_ROOT + "/png/ui/chapter_banner_9s.png")
-const TAPE_TEX := preload(ART_ROOT + "/png/ui/tape_strip.png")
-const POLAROID_FRAME := preload(ART_ROOT + "/png/ui/polaroid_frame.png")
-const POLAROID_OVERLAY := preload(ART_ROOT + "/png/ui/polaroid_photo_overlay.png")
-const PUSH_PIN := preload(ART_ROOT + "/png/ui/pushpin_red.png")
-const PIN_COMPLETED := preload(ART_ROOT + "/png/ui/mission_pin_completed.png")
-const PIN_CURRENT := preload(ART_ROOT + "/png/ui/mission_pin_current.png")
-const PIN_AVAILABLE := preload(ART_ROOT + "/png/ui/mission_pin_available.png")
-const PIN_LOCKED := preload(ART_ROOT + "/png/ui/mission_pin_locked.png")
-const PIN_GLOW := preload(ART_ROOT + "/png/ui/mission_pin_current_glow.png")
-const TAG_PAPER := preload(ART_ROOT + "/png/ui/tag_paper_9s.png")
+const OUTSKIRTS_PHOTO := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/region_photo_outskirts.png")
+const SUBURBS_PHOTO := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/region_photo_suburbs.png")
+const ROUTE_TEX := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/string_red_tile.png")
+const ROUTE_SHADOW_TEX := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/string_shadow_tile.png")
+const BANNER_TEX := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/chapter_banner_9s.png")
+const TAPE_TEX := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/tape_strip.png")
+const POLAROID_FRAME := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/polaroid_frame.png")
+const POLAROID_OVERLAY := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/polaroid_photo_overlay.png")
+const PUSH_PIN := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/pushpin_red.png")
+const PIN_COMPLETED := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/mission_pin_completed.png")
+const PIN_CURRENT := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/mission_pin_current.png")
+const PIN_AVAILABLE := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/mission_pin_available.png")
+const PIN_LOCKED := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/mission_pin_locked.png")
+const PIN_GLOW := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/mission_pin_current_glow.png")
+const TAG_PAPER := preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/tag_paper_9s.png")
 
 const DECOR_TEXTURES := {
-	"decor_coffee_ring": preload(ART_ROOT + "/png/decor/decor_coffee_ring.png"),
-	"decor_stain_dirt": preload(ART_ROOT + "/png/decor/decor_stain_dirt.png"),
-	"decor_note_lined": preload(ART_ROOT + "/png/decor/decor_note_lined.png"),
-	"decor_scrap_torn": preload(ART_ROOT + "/png/decor/decor_scrap_torn.png"),
-	"decor_marker_circle": preload(ART_ROOT + "/png/decor/decor_marker_circle.png"),
-	"decor_marker_x": preload(ART_ROOT + "/png/decor/decor_marker_x.png"),
-	"decor_marker_arrow": preload(ART_ROOT + "/png/decor/decor_marker_arrow.png"),
-	"decor_pushpin_blue": preload(ART_ROOT + "/png/decor/decor_pushpin_blue.png"),
-	"decor_pushpin_yellow": preload(ART_ROOT + "/png/decor/decor_pushpin_yellow.png"),
-	"decor_string_loose": preload(ART_ROOT + "/png/decor/decor_string_loose.png"),
-	"tape_strip": preload(ART_ROOT + "/png/ui/tape_strip.png"),
+	"decor_coffee_ring": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_coffee_ring.png"),
+	"decor_stain_dirt": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_stain_dirt.png"),
+	"decor_note_lined": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_note_lined.png"),
+	"decor_scrap_torn": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_scrap_torn.png"),
+	"decor_marker_circle": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_marker_circle.png"),
+	"decor_marker_x": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_marker_x.png"),
+	"decor_marker_arrow": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_marker_arrow.png"),
+	"decor_pushpin_blue": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_pushpin_blue.png"),
+	"decor_pushpin_yellow": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_pushpin_yellow.png"),
+	"decor_string_loose": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/decor/decor_string_loose.png"),
+	"tape_strip": preload("res://assets/art/claude_assets/1_Asset_Kit/04_command_board/png/ui/tape_strip.png"),
 }
 
 @onready var scroll: ScrollContainer = %Scroll
