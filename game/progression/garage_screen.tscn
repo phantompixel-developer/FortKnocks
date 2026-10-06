@@ -82,6 +82,7 @@ grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("2_showcase")
 draw_floor_shadow = false
+max_display_width = 650.0
 
 [node name="Fade" type="TextureRect" parent="Showroom"]
 layout_mode = 1
