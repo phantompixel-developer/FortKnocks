@@ -32,7 +32,7 @@ func upgrade_cost(current_level: int) -> int:
 	return maxi(0, upgrade_base_cost * safe_level)
 
 func copy_at_level(level: int) -> WeaponDefinition:
-	var upgraded := duplicate(true) as WeaponDefinition
+	var upgraded: WeaponDefinition = duplicate(true) as WeaponDefinition
 	if upgraded == null:
 		return self
 	var safe_level: int = clampi(level, 1, max_level)
