@@ -187,7 +187,7 @@ func _build_region(region: Dictionary, top: float) -> void:
 			if not current_found:
 				_current_pin_y = top + points[i].y
 				current_found = true
-		_add_mission_pin(mission, state, mission.campaign_order + 1, top + points[i].y, points[i].x)
+		_add_mission_pin(mission, state, mission.campaign_order, top + points[i].y, points[i].x)
 
 	_add_region_decor(name, top, section_h)
 
@@ -278,7 +278,7 @@ func _add_mission_pin(mission: MissionDefinition, state: String, number: int, y:
 	button.size = Vector2(100.0, 104.0)
 	button.flat = true
 	button.focus_mode = Control.FOCUS_NONE
-	button.tooltip_text = "%02d • %s" % [mission.campaign_order + 1, mission.display_name]
+	button.tooltip_text = "%02d • %s" % [mission.campaign_order, mission.display_name]
 	button.disabled = state == "locked"
 
 	if state == "current":
