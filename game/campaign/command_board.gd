@@ -80,7 +80,7 @@ const DECOR_TEXTURES := {
 @onready var briefing_objective: Label = %BriefingObjective
 @onready var briefing_text: Label = %BriefingText
 @onready var briefing_reward: Label = %BriefingReward
-@onready var briefing_close: TextureButton = %BriefingClose
+@onready var briefing_close: Button = %BriefingClose
 @onready var deploy_button: Button = %DeployButton
 
 var _snapshot: Dictionary = {}
