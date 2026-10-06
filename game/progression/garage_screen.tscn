@@ -81,6 +81,7 @@ offset_bottom = -48.0
 grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("2_showcase")
+draw_floor_shadow = false
 
 [node name="Fade" type="TextureRect" parent="Showroom"]
 layout_mode = 1
