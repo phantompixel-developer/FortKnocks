@@ -7,7 +7,7 @@ Region names, used consistently: **Outskirts, Suburbs, Highway, Industrial, Badl
 ## art/
 | File | Notes |
 |---|---|
-| bg_board_tile_a/b/c.png (1080×2160 each). Stored in `2_Godot_Project/assets/command_board/art/` | Planks + pinned map. **Chained**: a→b→c→a join with no seam, so the pattern only repeats every 3 tiles (about 3.4 screens). Generator: `source_generators/board_bg.py` |
+| bg_board_tile_a/b/c.png (1080×2160 each), stored in this folder's `art/` directory | Planks + pinned map. **Chained**: a→b→c→a join with no seam, so the pattern only repeats every 3 tiles (about 3.4 screens). Generator: `source_generators/board_bg.py` |
 | bg_board_tile_planks.png | Planks only. Fills the sides on screens wider than 1080 |
 | region_photo_*.png (760×500) | **PLACEHOLDERS.** Cropped and upscaled from the gameplay mood board. Must be replaced with clean source artwork before release. The Outskirts banner text has been painted out, but that photo is still placeholder quality |
 
