@@ -1,22 +1,35 @@
-# Fort Knocks: UI assets + Godot project (Garage, Workshop, Command Board)
+# Fort Knocks — Claude visual asset package
 
-## 1_Asset_Kit/
-Source and export files, organised by screen:
-- `00_shared/`: UI used across screens (buttons, panels, stat bars, cards, coin, lock, close button)
-- `02_garage/`: Garage icons + extracted vehicle art (placeholders)
-- `03_workshop/`: Workshop icons, vector ammo illustrations (display + thumbnail), workshop background
-- `04_command_board/`: chained seamless map backgrounds, polaroid/pin/route kit, decor, chapter HUD, placeholder region photos
+The supplied visual package has been integrated into the **existing Fort Knocks Godot project**.
 
-Each screen folder has `source_svg/` (editable masters), `png/` (game exports) and `art/` (painted/extracted art). Read `1_Asset_Kit/README.md` first.
+## Runtime/source asset kit
 
-## 2_Godot_Project/
-Godot 4.4 project with all three screens built and tested (open `project.godot`).
-- F5 runs the Garage.
-- Open `screens/workshop/workshop_screen.tscn` or `screens/command_board/command_board.tscn` and press F6 to run the others.
-Read `2_Godot_Project/README.md` for how to connect the screens to your game.
+Use `1_Asset_Kit/` as the retained source and runtime asset package:
 
-## Still placeholder (replace before release)
-- Garage vehicle art and both scene backgrounds (extracted from the mood board)
-- Command Board region photos
-- The stand-in font (swap in Teko or Oswald via the theme)
-- Sample names, stats, costs and missions in the `data/` folders
+- `00_shared/`: shared UI, buttons, panels, stat bars, icons and contact shadow
+- `02_garage/`: Garage background and stat icon assets
+- `03_workshop/`: Workshop background plus production projectile display/thumbnail art
+- `04_command_board/`: scrolling Command Board backgrounds, region photos, pins, route string, decor and HUD
+
+The original standalone reference Godot project was intentionally removed after integration. It contained sample vehicle/ammo/campaign data that conflicted with the live Fort Knocks data model. The useful chained Command Board background tiles were promoted into `1_Asset_Kit/04_command_board/art/` before removal.
+
+## Live integration
+
+The game now consumes these assets through the existing scenes and systems:
+
+- `game/progression/garage_screen.*`
+- `game/progression/workshop_screen.*`
+- `game/campaign/command_board.*`
+- `game/presentation/production_ui.gd`
+
+Canonical Fort Knocks gameplay data remains authoritative. Do not reintroduce sample data from the removed reference project.
+
+## Known placeholder art
+
+Still replace before final release quality:
+
+- Garage scene background
+- Command Board region photographs
+- Workshop scene background is extracted/upscaled reference art and may need a final authored pass
+
+The existing Fort Knocks four-platform vehicle family remains authoritative; the supplied mood-board vehicle cut-outs were not promoted to gameplay because they do not cover the real progression set cleanly.
