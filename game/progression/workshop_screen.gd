@@ -119,7 +119,7 @@ func _ready() -> void:
 	module_button.pressed.connect(_open_modules)
 	module_close.pressed.connect(_close_modules)
 
-func configure(save_snapshot: Dictionary, notice := "") -> void:
+func configure(save_snapshot: Dictionary, notice := "", focus_weapon_id := "scrap_bolt") -> void:
 	_snapshot = save_snapshot.duplicate(true)
 	_weapons.clear()
 	_weapons.append(ScrapBolt as WeaponDefinition)
@@ -127,6 +127,10 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	_weapons.append(ShockCapsule as WeaponDefinition)
 
 	_selected_index = 0
+	for i in range(_weapons.size()):
+		if _weapons[i].id == focus_weapon_id:
+			_selected_index = i
+			break
 	notice_label.text = notice
 	notice_label.visible = not notice.is_empty()
 
