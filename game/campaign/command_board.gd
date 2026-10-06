@@ -136,6 +136,8 @@ func _rebuild() -> void:
 		_build_region(region, y)
 		y += float(region["height"]) + REGION_GAP
 
+	if _current_pin_y <= 0.0:
+		_current_pin_y = _suburbs_y + SUBURBS_POINTS[SUBURBS_POINTS.size() - 1].y
 	_build_chapter_divider(y - 38.0)
 	_update_hud()
 	_center_board.call_deferred()
@@ -185,10 +187,7 @@ func _build_region(region: Dictionary, top: float) -> void:
 			if not current_found:
 				_current_pin_y = top + points[i].y
 				current_found = true
-		_add_mission_pin(mission, state, i + 1, top + points[i].y, points[i].x)
-
-	if _current_pin_y <= 0.0 and not missions.is_empty():
-		_current_pin_y = top + points[min(missions.size(), points.size()) - 1].y
+		_add_mission_pin(mission, state, mission.campaign_order + 1, top + points[i].y, points[i].x)
 
 	_add_region_decor(name, top, section_h)
 
