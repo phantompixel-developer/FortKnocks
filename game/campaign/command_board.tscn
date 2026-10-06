@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://game/campaign/command_board.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/bg_board_tile_planks.png" id="2_planks"]
