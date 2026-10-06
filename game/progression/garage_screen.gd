@@ -3,6 +3,8 @@ extends Control
 
 signal back_requested
 signal platform_requested(platform_id: String)
+signal platform_active_requested(platform_id: String)
+signal platform_upgrade_requested(platform_id: String)
 
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
@@ -25,12 +27,15 @@ const SEG_EMPTY_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/pn
 const SEG_FILLED_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/statbar_seg_filled_9s.png"
 
 const SWIPE_MIN: float = 60.0
+const ACTIVE_ACCENT := Color("42c7dc")
+const ACTIVE_DARK := Color("101b24")
 
 @onready var platform_showcase: PlatformShowcase = %PlatformShowcase
 @onready var pickup_hero: TextureRect = %PickupHero
 @onready var swipe_area: Control = %SwipeArea
 @onready var title_label: Label = %PlatformTitle
 @onready var status_label: Label = %PlatformStatus
+@onready var active_toggle: Button = %ActiveToggle
 @onready var rows: VBoxContainer = %Rows
 @onready var action_button: Button = %ActionButton
 @onready var action_label: Label = %ActionLabel
@@ -50,6 +55,7 @@ var _selected_index: int = 0
 var _card_buttons: Array[Button] = []
 var _swipe_start: Vector2 = Vector2.INF
 var _action_available: bool = false
+var _action_is_upgrade: bool = false
 
 func _ready() -> void:
 	ThemeScript.apply(self)
@@ -63,6 +69,7 @@ func _ready() -> void:
 		)
 	)
 	ProductionUIScript.style_action_button(action_button)
+	_style_active_toggle()
 	action_coin.texture = ProductionUIScript.texture(COIN_PATH)
 	_apply_back_safe_area()
 
@@ -73,6 +80,7 @@ func _ready() -> void:
 	prev_button.pressed.connect(_step.bind(-1))
 	next_button.pressed.connect(_step.bind(1))
 	action_button.pressed.connect(_request_selected)
+	active_toggle.pressed.connect(_request_active_selected)
 	swipe_area.gui_input.connect(_on_swipe_input)
 
 func configure(save_snapshot: Dictionary, notice := "") -> void:
@@ -114,9 +122,17 @@ func _show_selected(animate := true) -> void:
 	var active_id: String = str(inventory.get("platform_id", "run_down_compact"))
 	var equipped_modules: Dictionary = inventory.get("equipped_module_by_platform", {}) as Dictionary
 	var module_id: String = str(equipped_modules.get(definition.id, ""))
+	var owned_selected: bool = owned.has(definition.id)
+	var level: int = _platform_level(definition.id)
 
 	title_label.text = definition.display_name.to_upper()
-	status_label.text = "TIER %d" % (_selected_index + 1)
+	status_label.text = "LEVEL %d" % level if owned_selected else "LOCKED"
+
+	active_toggle.visible = owned_selected
+	active_toggle.button_pressed = definition.id == active_id
+	active_toggle.disabled = definition.id == active_id
+	active_toggle.text = "✓" if definition.id == active_id else "□"
+	active_toggle.tooltip_text = "Active vehicle" if definition.id == active_id else "Set this vehicle as active"
 
 	var use_pickup_art: bool = definition.id == "pickup"
 	pickup_hero.visible = use_pickup_art
@@ -124,8 +140,8 @@ func _show_selected(animate := true) -> void:
 	if not use_pickup_art:
 		platform_showcase.configure(definition.id, module_id)
 
-	_rebuild_stats(definition)
-	_update_action(definition, owned, completed, active_id)
+	_rebuild_stats(definition, level)
+	_update_action(definition, owned, completed)
 
 	prev_button.disabled = _selected_index == 0
 	next_button.disabled = _selected_index == _definitions.size() - 1
@@ -147,53 +163,83 @@ func _show_selected(animate := true) -> void:
 func _update_action(
 	definition: CombatPlatformDefinition,
 	owned: Array,
-	completed: Array,
-	active_id: String
+	completed: Array
 ) -> void:
 	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
 	var salvage: int = int(inventory.get("salvage", 0))
 	var unlocked: bool = definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
+	var is_owned: bool = owned.has(definition.id)
 
 	_action_available = false
+	_action_is_upgrade = false
 	action_button.disabled = false
 	action_coin.visible = false
 	action_cost.visible = false
 
-	if definition.id == active_id:
-		action_label.text = "ACTIVE"
-	elif owned.has(definition.id):
-		action_label.text = "EQUIP"
-		_action_available = true
-	elif not unlocked or not definition.purchasable:
-		action_label.text = "LOCKED"
-		action_button.disabled = true
-	else:
-		action_label.text = "ACQUIRE" if salvage >= definition.purchase_cost else "NEED"
+	if is_owned:
+		var level: int = _platform_level(definition.id)
+		if level >= definition.max_level:
+			action_label.text = "MAX LEVEL"
+			action_button.disabled = true
+			return
+
+		var cost: int = definition.upgrade_cost(level)
+		action_label.text = "UPGRADE"
 		action_coin.visible = true
 		action_cost.visible = true
-		action_cost.text = _format_number(definition.purchase_cost)
-		if salvage >= definition.purchase_cost:
+		action_cost.text = _format_number(cost)
+		_action_is_upgrade = true
+		if salvage >= cost:
 			_action_available = true
 		else:
 			action_button.disabled = true
+		return
+
+	if not unlocked or not definition.purchasable:
+		action_label.text = "LOCKED"
+		action_button.disabled = true
+		return
+
+	action_label.text = "ACQUIRE"
+	action_coin.visible = true
+	action_cost.visible = true
+	action_cost.text = _format_number(definition.purchase_cost)
+	if salvage >= definition.purchase_cost:
+		_action_available = true
+	else:
+		action_button.disabled = true
 
 func _request_selected() -> void:
 	if _definitions.is_empty() or not _action_available:
 		return
-	platform_requested.emit(_definitions[_selected_index].id)
+	var platform_id: String = _definitions[_selected_index].id
+	if _action_is_upgrade:
+		platform_upgrade_requested.emit(platform_id)
+	else:
+		platform_requested.emit(platform_id)
 
-func _rebuild_stats(definition: CombatPlatformDefinition) -> void:
+func _request_active_selected() -> void:
+	if _definitions.is_empty() or active_toggle.disabled:
+		return
+	var definition: CombatPlatformDefinition = _definitions[_selected_index]
+	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
+	var owned: Array = inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
+	if owned.has(definition.id):
+		platform_active_requested.emit(definition.id)
+
+func _rebuild_stats(definition: CombatPlatformDefinition, level: int) -> void:
 	for child in rows.get_children():
 		child.queue_free()
 
-	var armour: int = clampi(int(round(float(definition.cover_health) / 75.0)), 1, 4)
-	var profile: int = clampi(1 + int(round((definition.cover_size.x - 240.0) / 35.0)), 1, 4)
-	var utility: int = 4 if definition.utility_slot_count > 0 else 0
-	var load: int = clampi(maxi(profile, definition.utility_slot_count + 1), 1, 4)
+	var effective_health: int = definition.cover_health_at_level(level)
+	var armour: int = clampi(int(round(float(effective_health) / 75.0)), 1, 4)
+	var speed: int = clampi(1 + int(round((definition.cover_size.x - 240.0) / 35.0)), 1, 4)
+	var fuel: int = 4 if definition.utility_slot_count > 0 else 0
+	var load: int = clampi(maxi(speed, definition.utility_slot_count + 1), 1, 4)
 
 	_add_stat_row("ARMOUR", ICON_ARMOUR, armour)
-	_add_stat_row("PROFILE", ICON_SPEED, profile)
-	_add_stat_row("UTILITY", ICON_FUEL, utility)
+	_add_stat_row("SPEED", ICON_SPEED, speed)
+	_add_stat_row("FUEL", ICON_FUEL, fuel)
 	_add_stat_row("LOAD", ICON_LOAD, load)
 
 func _add_stat_row(label_text: String, icon_path: String, filled: int) -> void:
@@ -203,6 +249,7 @@ func _add_stat_row(label_text: String, icon_path: String, filled: int) -> void:
 
 	var icon := TextureRect.new()
 	icon.texture = ProductionUIScript.texture(icon_path)
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	icon.custom_minimum_size = Vector2(38.0, 38.0)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -224,6 +271,7 @@ func _add_stat_row(label_text: String, icon_path: String, filled: int) -> void:
 	for i in range(4):
 		var segment := NinePatchRect.new()
 		segment.texture = ProductionUIScript.texture(SEG_FILLED_PATH if i < filled else SEG_EMPTY_PATH)
+		segment.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		segment.patch_margin_left = 8
 		segment.patch_margin_top = 8
 		segment.patch_margin_right = 8
@@ -245,11 +293,13 @@ func _build_cards() -> void:
 	var completed: Array = campaign.get("completed_missions", []) as Array
 	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
 	var owned: Array = inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
+	var active_id: String = str(inventory.get("platform_id", "run_down_compact"))
 
 	for i in range(_definitions.size()):
 		var definition: CombatPlatformDefinition = _definitions[i]
 		var unlocked: bool = definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
 		var locked: bool = not owned.has(definition.id) and not unlocked
+		var is_active: bool = definition.id == active_id
 
 		var card := Button.new()
 		card.custom_minimum_size = Vector2(229.0, 188.0)
@@ -261,6 +311,7 @@ func _build_cards() -> void:
 		var frame := NinePatchRect.new()
 		frame.name = "_Frame"
 		frame.texture = ProductionUIScript.texture(CARD_PATH)
+		frame.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		frame.set_anchors_preset(Control.PRESET_FULL_RECT)
 		frame.patch_margin_left = 20
 		frame.patch_margin_top = 20
@@ -269,9 +320,22 @@ func _build_cards() -> void:
 		frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.add_child(frame)
 
+		var active_frame := Panel.new()
+		active_frame.name = "_ActiveFrame"
+		active_frame.set_anchors_preset(Control.PRESET_FULL_RECT)
+		active_frame.offset_left = 4.0
+		active_frame.offset_top = 4.0
+		active_frame.offset_right = -4.0
+		active_frame.offset_bottom = -4.0
+		active_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		active_frame.add_theme_stylebox_override("panel", _active_card_style())
+		active_frame.visible = is_active
+		card.add_child(active_frame)
+
 		var selected := NinePatchRect.new()
 		selected.name = "_SelectedFrame"
 		selected.texture = ProductionUIScript.texture(CARD_SELECTED_PATH)
+		selected.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		selected.set_anchors_preset(Control.PRESET_FULL_RECT)
 		selected.offset_left = -13.0
 		selected.offset_top = -13.0
@@ -287,6 +351,7 @@ func _build_cards() -> void:
 		if definition.id == "pickup":
 			var thumb := TextureRect.new()
 			thumb.texture = ProductionUIScript.texture(PICKUP_THUMB)
+			thumb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 			thumb.set_anchors_preset(Control.PRESET_FULL_RECT)
 			thumb.offset_left = 14.0
 			thumb.offset_top = 13.0
@@ -299,6 +364,7 @@ func _build_cards() -> void:
 		elif locked:
 			var locked_thumb := TextureRect.new()
 			locked_thumb.texture = ProductionUIScript.texture(LOCKED_THUMB)
+			locked_thumb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 			locked_thumb.set_anchors_preset(Control.PRESET_FULL_RECT)
 			locked_thumb.offset_left = 12.0
 			locked_thumb.offset_top = 12.0
@@ -324,6 +390,7 @@ func _build_cards() -> void:
 		if locked and definition.id == "pickup":
 			var lock := TextureRect.new()
 			lock.texture = ProductionUIScript.texture(LOCK_PATH)
+			lock.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 			lock.anchor_left = 0.5
 			lock.anchor_top = 0.5
 			lock.anchor_right = 0.5
@@ -336,6 +403,23 @@ func _build_cards() -> void:
 			lock.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			lock.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			card.add_child(lock)
+
+		if is_active:
+			var badge := Panel.new()
+			badge.position = Vector2(181.0, 9.0)
+			badge.size = Vector2(34.0, 34.0)
+			badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			badge.add_theme_stylebox_override("panel", _active_badge_style())
+			var tick := Label.new()
+			tick.set_anchors_preset(Control.PRESET_FULL_RECT)
+			tick.text = "✓"
+			tick.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			tick.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			tick.add_theme_color_override("font_color", ACTIVE_ACCENT)
+			tick.add_theme_font_size_override("font_size", 22)
+			tick.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			badge.add_child(tick)
+			card.add_child(badge)
 
 		platform_row.add_child(card)
 		_card_buttons.append(card)
@@ -354,6 +438,51 @@ func _select_card(index: int) -> void:
 	_selected_index = index
 	_play_ui(&"ui_confirm")
 	_show_selected()
+
+func _platform_level(platform_id: String) -> int:
+	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
+	var levels: Dictionary = inventory.get("platform_levels", {}) as Dictionary
+	return clampi(int(levels.get(platform_id, 1)), 1, 4)
+
+func _style_active_toggle() -> void:
+	var normal := StyleBoxFlat.new()
+	normal.bg_color = Color(0.035, 0.065, 0.085, 0.92)
+	normal.border_color = Color(0.32, 0.40, 0.46, 1.0)
+	normal.set_border_width_all(2)
+	normal.set_corner_radius_all(7)
+
+	var hover := normal.duplicate() as StyleBoxFlat
+	hover.border_color = ACTIVE_ACCENT.darkened(0.15)
+
+	var active := normal.duplicate() as StyleBoxFlat
+	active.bg_color = ACTIVE_DARK
+	active.border_color = ACTIVE_ACCENT
+	active.set_border_width_all(3)
+
+	active_toggle.add_theme_stylebox_override("normal", normal)
+	active_toggle.add_theme_stylebox_override("hover", hover)
+	active_toggle.add_theme_stylebox_override("pressed", active)
+	active_toggle.add_theme_stylebox_override("hover_pressed", active)
+	active_toggle.add_theme_stylebox_override("disabled", active)
+	active_toggle.add_theme_color_override("font_color", Color(0.72, 0.79, 0.83, 1.0))
+	active_toggle.add_theme_color_override("font_pressed_color", ACTIVE_ACCENT)
+	active_toggle.add_theme_color_override("font_disabled_color", ACTIVE_ACCENT)
+
+func _active_card_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)
+	style.border_color = ACTIVE_ACCENT
+	style.set_border_width_all(4)
+	style.set_corner_radius_all(16)
+	return style
+
+func _active_badge_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = ACTIVE_DARK
+	style.border_color = ACTIVE_ACCENT
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(7)
+	return style
 
 func _on_swipe_input(event: InputEvent) -> void:
 	var pressed: bool = false
@@ -386,7 +515,7 @@ func _apply_back_safe_area() -> void:
 
 func _format_number(value: int) -> String:
 	var source: String = str(absi(value))
-	var output := ""
+	var output: String = ""
 	while source.length() > 3:
 		output = "," + source.substr(source.length() - 3) + output
 		source = source.substr(0, source.length() - 3)
