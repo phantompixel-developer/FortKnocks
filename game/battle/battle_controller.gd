@@ -1556,9 +1556,10 @@ func _update_status_bar(
 
 func _update_target_card() -> void:
 	target_title_label.text = "TACTICAL READOUT"
-	target_objective_label.text = "OBJECTIVE • %s" % (
-		_current_mission.objective_text if _current_mission != null else "INCAPACITATE ENEMY"
-	)
+	var objective_text := "INCAPACITATE ENEMY"
+	if _current_mission != null:
+		objective_text = _current_mission.objective_text
+	target_objective_label.text = "OBJECTIVE • %s" % objective_text
 	target_enemy_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
 	_update_status_bar(
 		target_enemy_bar_back,
