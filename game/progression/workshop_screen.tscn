@@ -1,8 +1,17 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://game/progression/workshop_screen.gd" id="1_workshop"]
-[ext_resource type="Script" path="res://game/presentation/screen_backdrop.gd" id="2_backdrop"]
-[ext_resource type="Script" path="res://game/presentation/workshop_hardware_display.gd" id="3_hardware"]
+[ext_resource type="Script" path="res://game/presentation/workshop_hardware_display.gd" id="2_hardware"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/bg_ui_lower.png" id="3_lower"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/03_workshop/art/bg_workshop_scene.png" id="4_scene"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/overlay_scene_fade.png" id="5_fade"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/fx/fx_vehicle_contact_shadow.png" id="6_shadow"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back.png" id="7_back"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/btn_back_pressed.png" id="8_back_pressed"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left.png" id="9_left"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left_disabled.png" id="10_left_disabled"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right.png" id="11_right"]
+[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right_disabled.png" id="12_right_disabled"]
 
 [node name="Workshop" type="Control"]
 layout_mode = 3
@@ -13,197 +22,312 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_workshop")
 
-[node name="IdentityBackdrop" type="Node2D" parent="."]
-script = ExtResource("2_backdrop")
-variant = 2
-
-[node name="Background" type="ColorRect" parent="."]
+[node name="LowerBg" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.05, 0.06, 0.055, 0.42)
+mouse_filter = 2
+texture = ExtResource("3_lower")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="Title" type="Label" parent="."]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 42.0
-offset_right = 660.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 32
-text = "WORKSHOP"
+[node name="Showroom" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.56
+grow_horizontal = 2
+grow_vertical = 2
+clip_contents = true
+mouse_filter = 2
+
+[node name="SceneBg" type="TextureRect" parent="Showroom"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_scene")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Shadow" type="TextureRect" parent="Showroom"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18
+anchor_top = 1.0
+anchor_right = 0.82
+anchor_bottom = 1.0
+offset_top = -112.0
+offset_bottom = -24.0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("6_shadow")
+expand_mode = 1
+
+[node name="WeaponDisplay" type="TextureRect" parent="Showroom"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.10
+anchor_top = 1.0
+anchor_right = 0.90
+anchor_bottom = 1.0
+offset_top = -330.0
+offset_bottom = -32.0
+grow_vertical = 0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Fade" type="TextureRect" parent="Showroom"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -128.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("5_fade")
+expand_mode = 1
+
+[node name="Safe" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 18
+
+[node name="Layout" type="VBoxContainer" parent="Safe"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TopBar" type="HBoxContainer" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 68)
+layout_mode = 2
+
+[node name="BackButton" type="TextureButton" parent="Safe/Layout/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(68, 68)
+layout_mode = 2
+focus_mode = 0
+texture_normal = ExtResource("7_back")
+texture_pressed = ExtResource("8_back_pressed")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TopSpacer" type="Control" parent="Safe/Layout/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Coin" type="TextureRect" parent="Safe/Layout/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SalvageLabel" type="Label" parent="Safe/Layout/TopBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ShowroomSpacer" type="Control" parent="Safe/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="PrevButton" type="TextureButton" parent="Safe/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+texture_normal = ExtResource("9_left")
+texture_disabled = ExtResource("10_left_disabled")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TitleBlock" type="VBoxContainer" parent="Safe/Layout/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = -2
+
+[node name="WeaponTitle" type="Label" parent="Safe/Layout/Header/TitleBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "HEAVY SLUG"
 horizontal_alignment = 1
 
-[node name="TopBar" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 112.0
-offset_right = 648.0
-offset_bottom = 168.0
-color = Color(0.08, 0.095, 0.087, 0.92)
-
-[node name="SalvageLabel" type="Label" parent="TopBar"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 12.0
-offset_right = 556.0
-offset_bottom = 44.0
-theme_override_font_sizes/font_size = 18
-text = "SALVAGE  0"
-horizontal_alignment = 1
-
-[node name="NoticeLabel" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 72.0
-offset_top = 182.0
-offset_right = 648.0
-offset_bottom = 220.0
+[node name="WeaponStatus" type="Label" parent="Safe/Layout/Header/TitleBlock"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.68, 0.24, 1)
 theme_override_font_sizes/font_size = 16
-text = "UTILITY MODULE BUILT"
+text = "ACTIVE SPECIALIST"
 horizontal_alignment = 1
 
-[node name="LoadoutCard" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 222.0
-offset_right = 648.0
-offset_bottom = 612.0
-color = Color(0.10, 0.105, 0.09, 0.94)
+[node name="NextButton" type="TextureButton" parent="Safe/Layout/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+texture_normal = ExtResource("11_right")
+texture_disabled = ExtResource("12_right_disabled")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="Header" type="Label" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 16.0
-offset_right = 552.0
-offset_bottom = 48.0
-theme_override_font_sizes/font_size = 18
-text = "FIELD LOADOUT"
-horizontal_alignment = 1
+[node name="StatsPanel" type="PanelContainer" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 212)
+layout_mode = 2
 
-[node name="WeaponDisplay" type="Control" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 50.0
-offset_right = 548.0
-offset_bottom = 196.0
-mouse_filter = 2
-script = ExtResource("3_hardware")
-mode = "weapons"
+[node name="StatsMargin" type="MarginContainer" parent="Safe/Layout/StatsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 14
 
-[node name="CoreLabel" type="Label" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 198.0
-offset_right = 550.0
-offset_bottom = 224.0
-theme_override_font_sizes/font_size = 13
-text = "CORE ROUND: SCRAP BOLT • always carried"
-horizontal_alignment = 1
+[node name="StatsContent" type="VBoxContainer" parent="Safe/Layout/StatsPanel/StatsMargin"]
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="SpecialistLabel" type="Label" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 226.0
-offset_right = 550.0
-offset_bottom = 252.0
+[node name="Description" type="Label" parent="Safe/Layout/StatsPanel/StatsMargin/StatsContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.82, 0.84, 1)
 theme_override_font_sizes/font_size = 14
-text = "FIELD RACK: SCRAP BOLT + HEAVY SLUG"
-horizontal_alignment = 1
-
-[node name="HeavyButton" type="Button" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 258.0
-offset_right = 272.0
-offset_bottom = 342.0
-theme_override_font_sizes/font_size = 13
-text = "HEAVY SLUG\nCover breaker • high force\nACTIVE SPECIALIST"
-
-[node name="ShockButton" type="Button" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 304.0
-offset_top = 258.0
-offset_right = 544.0
-offset_bottom = 342.0
-theme_override_font_sizes/font_size = 13
-text = "SHOCK CAPSULE\nRadial pulse • displacement\nEQUIP SPECIALIST"
-
-[node name="RuleLabel" type="Label" parent="LoadoutCard"]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 348.0
-offset_right = 546.0
-offset_bottom = 378.0
-theme_override_font_sizes/font_size = 12
-text = "Campaign rack: Scrap Bolt + one specialist. Switch freely between runs."
-horizontal_alignment = 1
-
-[node name="UtilityCard" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 628.0
-offset_right = 648.0
-offset_bottom = 1062.0
-color = Color(0.09, 0.105, 0.095, 0.94)
-
-[node name="Title" type="Label" parent="UtilityCard"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 18.0
-offset_right = 552.0
-offset_bottom = 50.0
-theme_override_font_sizes/font_size = 19
-text = "PLATFORM MODULE"
-horizontal_alignment = 1
-
-[node name="PlatformLabel" type="Label" parent="UtilityCard"]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 62.0
-offset_right = 550.0
-offset_bottom = 92.0
-theme_override_font_sizes/font_size = 15
-text = "ACTIVE PLATFORM: RUN-DOWN COMPACT"
-horizontal_alignment = 1
-
-[node name="ModuleDisplay" type="Control" parent="UtilityCard"]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 100.0
-offset_right = 546.0
-offset_bottom = 232.0
-mouse_filter = 2
-script = ExtResource("3_hardware")
-mode = "modules"
-
-[node name="ModuleList" type="VBoxContainer" parent="UtilityCard"]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 222.0
-offset_right = 546.0
-offset_bottom = 374.0
-theme_override_constants/separation = 8
-
-[node name="Note" type="Label" parent="UtilityCard"]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 378.0
-offset_right = 546.0
-offset_bottom = 426.0
-theme_override_font_sizes/font_size = 14
-text = "Equip a platform with a module position to fit field hardware."
+text = "WEAPON DESCRIPTION"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 190.0
-offset_top = 1120.0
-offset_right = 530.0
-offset_bottom = 1206.0
-theme_override_font_sizes/font_size = 20
-text = "BACK TO FORT KNOCKS"
+[node name="StatRows" type="VBoxContainer" parent="Safe/Layout/StatsPanel/StatsMargin/StatsContent"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="GapA" type="Control" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="ActionButton" type="Button" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "ACTIVE SPECIALIST"
+
+[node name="GapB" type="Control" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="WeaponScroll" type="ScrollContainer" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 122)
+layout_mode = 2
+vertical_scroll_mode = 0
+horizontal_scroll_mode = 3
+scroll_deadzone = 10
+
+[node name="WeaponRow" type="HBoxContainer" parent="Safe/Layout/WeaponScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="GapC" type="Control" parent="Safe/Layout"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="ModulePanel" type="PanelContainer" parent="Safe/Layout"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+
+[node name="ModuleMargin" type="MarginContainer" parent="Safe/Layout/ModulePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="ModuleContent" type="HBoxContainer" parent="Safe/Layout/ModulePanel/ModuleMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ModuleDisplay" type="Control" parent="Safe/Layout/ModulePanel/ModuleMargin/ModuleContent"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(184, 0)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_hardware")
+mode = "modules"
+
+[node name="ModuleRight" type="VBoxContainer" parent="Safe/Layout/ModulePanel/ModuleMargin/ModuleContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="ModuleNote" type="Label" parent="Safe/Layout/ModulePanel/ModuleMargin/ModuleContent/ModuleRight"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.82, 0.84, 1)
+theme_override_font_sizes/font_size = 13
+text = "PLATFORM MODULE"
+horizontal_alignment = 1
+
+[node name="ModuleScroll" type="ScrollContainer" parent="Safe/Layout/ModulePanel/ModuleMargin/ModuleContent/ModuleRight"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+horizontal_scroll_mode = 3
+scroll_deadzone = 8
+
+[node name="ModuleRow" type="HBoxContainer" parent="Safe/Layout/ModulePanel/ModuleMargin/ModuleContent/ModuleRight/ModuleScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NoticeLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 100.0
+offset_top = 96.0
+offset_right = -100.0
+offset_bottom = 134.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.77, 0.35, 1)
+theme_override_font_sizes/font_size = 17
+text = "WORKSHOP UPDATED"
+horizontal_alignment = 1
+vertical_alignment = 1
