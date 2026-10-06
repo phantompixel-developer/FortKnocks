@@ -1,0 +1,75 @@
+{
+  "generation": "built-in image_gen",
+  "reference": "reference/hub_original.png",
+  "jobs": [
+    {
+      "id": "hub_background",
+      "transparent": false,
+      "prompt": "Use case: precise-object-edit. Edit the attached Fort Knocks Hub screen into a clean background plate with ALL interface elements removed: remove the gear button and resource counters along the top and the four navigation buttons along the bottom. Reconstruct ONLY the small areas concealed by those controls. Preserve the exact visual composition, positions, scale, buildings, red flag, blue tarps, left jeep, partial red vehicle at right, foreground salvage, sunset orange/pink sky, lighting, style and camera framing. Do not redesign this scene, rearrange props, add new objects, add text or any controls. Full bleed portrait art, same approximately 309:501 aspect ratio, preferably 1024x1664. This is an inpainting/extraction job from a fixed approved design, not a new concept. Opaque background."
+    },
+    {
+      "id": "button_nav_blank",
+      "transparent": true,
+      "prompt": "Use case: background-extraction / precise-object-edit. Extract and faithfully recreate ONE empty navigation button base from the bottom row of the attached Fort Knocks Hub reference (e.g. GARAGE). Remove its white car icon and lettering, leaving the blank button face. Preserve dark blue-charcoal slightly graduated metallic face, thin muted steel edge, soft beveled rim and small rounded corners. Exact reference proportions about 67 wide by 48 tall (1.4:1). Front-on flat UI sprite, not a physical 3D object. Only ONE button centered, on real transparent alpha outside its outline. No text, icon, panel labels, extras, background, checkerboard, floor or cast shadow. Keep the border subtle; no rivets, scratches or ornament that aren't in the reference. Fill most of a landscape canvas with modest transparent padding."
+    },
+    {
+      "id": "panel_resource_blank",
+      "transparent": true,
+      "prompt": "Use case: background-extraction / precise-object-edit. Extract ONE blank resource-counter panel from the top HUD of this exact Fort Knocks Hub reference, the narrow dark navy rounded rectangular bar behind energy 20/20 or coins 4,250. Remove ALL icons and text. Preserve its very dark navy fill, subdued thin blue-grey border, subtly rounded corners and restrained bevel. Width to height ratio 3.2:1. One straight-on 2D UI sprite on genuine transparent alpha outside the outline, centered with only modest transparent padding. No text, glyphs, extra objects, background, floor, checkerboard, heavy bevel, decoration or cast shadow."
+    },
+    {
+      "id": "icon_settings",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the small white settings gear at upper left: eight cog teeth, circular dark/transparent center, simple white flat glyph. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_garage",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the white front-facing car silhouette above GARAGE at bottom left: roof, windshield gap, two wing mirrors, two headlights and two short wheels; flat compact glyph. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_workshop",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the white crossed workshop tools above WORKSHOP, second bottom button: crossed wrench/tool silhouette, same diagonals and proportions, simple white flat glyph. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_missions",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the white clipboard/checklist symbol above MISSIONS, third bottom button: rectangular outline, top clip, small horizontal list strokes; simple white flat glyph. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_map",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the white folded-map with location-marker symbol above MAP, fourth bottom button: the same angular folded silhouette and central pin, white flat glyph. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_energy",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the small yellow-orange lightning-bolt energy symbol in the upper HUD beside 20/20. Preserve its angular shape, vivid warm gold fill and subtle dark edging; not a new symbol. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_coin",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the small round gold/orange currency coin in the upper HUD beside 4,250. Preserve bright golden outer ring, orange inset circular center and existing highlight. Do not add any currency letter, denomination or logo. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_gem",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the small cyan/blue faceted gem in the upper HUD beside 120. Preserve the reference's cube-like hexagonal silhouette, pale icy top facet, saturated blue side facets and dark edge. Do not change to a pointy diamond or stack of gems. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "icon_plus",
+      "transparent": true,
+      "prompt": "Use case: background-extraction. Produce ONE isolated game UI icon from the attached approved Fort Knocks Hub reference: the simple white plus glyph inside the small add button at upper right. One flat white plus, equal stroke thickness and equal arm length, no surrounding square. Match the original symbol, silhouette, proportions, palette and restrained style as closely as the source allows. Remove the surrounding button/panel and all neighbouring art and text. Output ONLY that single icon, centered on true transparent alpha with clean edges and modest padding. Enlarge cleanly for a reusable PNG sprite. No redesign, labels, text, second icon, button, checkerboard, drop shadow, scene, border around the canvas, extra decoration, physical 3D object, or floor. Preserve transparency inside any holes/open areas of the icon. This is a faithful asset isolation job, not a concept design."
+    },
+    {
+      "id": "button_square_blank",
+      "transparent": true,
+      "prompt": "Use case: background-extraction / precise-object-edit. Extract ONE empty small square button face from the settings gear button at the top-left of the attached Fort Knocks Hub image. Remove the white gear icon. Preserve its dark navy-charcoal subtly graduated face, restrained thin steel-grey border and small rounded corners. Exact square proportion, flat front-on UI sprite. One blank square centered with modest padding. True transparent alpha outside the button outline. No icon, letters, text, number, new rivets, scratches, ornate decoration, floor, checkerboard, backdrop or external shadow. Faithfully match the approved source, do not redesign."
+    },
+    {
+      "id": "hub_background_remove_left_car",
+      "prompt": "Edit target: the attached UI-free Fort Knocks Hub background. Precise localized object removal. Completely remove the blue/grey jeep parked on the lower-left, including all visible parts: roof, windshield, body, wheels, grille, bumper, its cast/contact shadow and any vehicle reflections. Reconstruct the newly exposed dirt courtyard and lower-left workshop wall naturally, consistent with the existing ground plane and warm sunset lighting. Do not replace it with another object or vehicle. Preserve all other elements and their exact positions, scale, framing, colours, perspective and style: buildings, garage roller door, flag, blue tarps, skyline, sky, lamps, cables, crates, foreground vegetation and the partial red object/vehicle at the far right must remain. Keep the full portrait canvas and the same 984x1599 dimensions if possible. No crop, no zoom, no compositional shift, no UI or text. Only the left jeep and the area it covered should change. Opaque background plate."
+    }
+  ]
+}

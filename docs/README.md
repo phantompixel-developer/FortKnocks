@@ -56,6 +56,7 @@ Do not silently promote provisional names, balance values, faction concepts, or 
 For any presentation, UI, environment, character, combat-platform or art task, read:
 - `docs/design/visual_reference.md` — authoritative visual target and change-control rules.
 - `docs/design/reference/fort_knocks_primary_visual_reference.svg` — locked concept-board reference.
-- `docs/design/visual_production_pass_4.md` — current implementation sequence.
+- `docs/design/visual_production_pass_4.md` — completed combat-hero production pass.
+- `docs/design/current_game_visual_audit.md` — active whole-game visual audit and ranked remediation plan.
 
 These references control visual direction but do not override canonical gameplay/system scope.

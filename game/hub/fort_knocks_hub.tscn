@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="Script" path="res://game/hub/fort_knocks_hub.gd" id="1_hub"]
-[ext_resource type="Script" path="res://game/hub/fort_knocks_hub_visual.gd" id="2_visual"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_00.webp" id="2_bg0"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_01.webp" id="3_bg1"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_02.webp" id="4_bg2"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_03.webp" id="5_bg3"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_04.webp" id="6_bg4"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_05.webp" id="7_bg5"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_06.webp" id="8_bg6"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_07.webp" id="9_bg7"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_08.webp" id="10_bg8"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/background/hub_bg_09.webp" id="11_bg9"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/ui/buttons/button_nav_blank.webp" id="12_nav"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/ui/panels/panel_resource_blank.webp" id="13_panel"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/ui/icons/icon_coin.webp" id="14_coin"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/ui/icons/icon_missions.webp" id="15_missions"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/ui/icons/icon_garage.webp" id="16_garage"]
+[ext_resource type="Texture2D" path="res://assets/art/production/hub/reference_v1/ui/icons/icon_workshop.webp" id="17_workshop"]
+[ext_resource type="FontFile" path="res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Bold.ttf" id="18_bold"]
+[ext_resource type="FontFile" path="res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Medium.ttf" id="19_medium"]
 
 [node name="FortKnocksHub" type="Control"]
 layout_mode = 3
@@ -12,119 +29,372 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hub")
 
-[node name="Visual" type="Node2D" parent="."]
-script = ExtResource("2_visual")
+[node name="Background" type="Control" parent="."]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 1280.0
+mouse_filter = 2
 
-[node name="Shade" type="ColorRect" parent="."]
+[node name="Tile00" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 128.0
+mouse_filter = 2
+texture = ExtResource("2_bg0")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile01" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 720.0
+offset_bottom = 256.0
+mouse_filter = 2
+texture = ExtResource("3_bg1")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile02" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 256.0
+offset_right = 720.0
+offset_bottom = 384.0
+mouse_filter = 2
+texture = ExtResource("4_bg2")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile03" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 384.0
+offset_right = 720.0
+offset_bottom = 512.0
+mouse_filter = 2
+texture = ExtResource("5_bg3")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile04" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 512.0
+offset_right = 720.0
+offset_bottom = 640.0
+mouse_filter = 2
+texture = ExtResource("6_bg4")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile05" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 640.0
+offset_right = 720.0
+offset_bottom = 768.0
+mouse_filter = 2
+texture = ExtResource("7_bg5")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile06" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 768.0
+offset_right = 720.0
+offset_bottom = 896.0
+mouse_filter = 2
+texture = ExtResource("8_bg6")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile07" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 896.0
+offset_right = 720.0
+offset_bottom = 1024.0
+mouse_filter = 2
+texture = ExtResource("9_bg7")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile08" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 1024.0
+offset_right = 720.0
+offset_bottom = 1152.0
+mouse_filter = 2
+texture = ExtResource("10_bg8")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Tile09" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_top = 1152.0
+offset_right = 720.0
+offset_bottom = 1280.0
+mouse_filter = 2
+texture = ExtResource("11_bg9")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="TopHUD" type="Control" parent="."]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 104.0
+mouse_filter = 2
+
+[node name="SalvagePanel" type="TextureRect" parent="TopHUD"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 232.0
+offset_bottom = 84.0
+mouse_filter = 2
+texture = ExtResource("13_panel")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="CoinIcon" type="TextureRect" parent="TopHUD/SalvagePanel"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 51.0
+offset_bottom = 53.0
+mouse_filter = 2
+texture = ExtResource("14_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SalvageLabel" type="Label" parent="TopHUD/SalvagePanel"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 6.0
+offset_right = 197.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.965, 0.91, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.055, 0.045, 0.035, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("19_medium")
+theme_override_font_sizes/font_size = 19
+text = "SALVAGE\n0"
+vertical_alignment = 1
+
+[node name="ProgressPanel" type="TextureRect" parent="TopHUD"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 20.0
+offset_right = 464.0
+offset_bottom = 84.0
+mouse_filter = 2
+texture = ExtResource("13_panel")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="ProgressIcon" type="TextureRect" parent="TopHUD/ProgressPanel"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 51.0
+offset_bottom = 53.0
+mouse_filter = 2
+texture = ExtResource("15_missions")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProgressLabel" type="Label" parent="TopHUD/ProgressPanel"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 6.0
+offset_right = 197.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.965, 0.91, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.055, 0.045, 0.035, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("19_medium")
+theme_override_font_sizes/font_size = 18
+text = "OUTSKIRTS\n0/6"
+vertical_alignment = 1
+
+[node name="PlatformPanel" type="TextureRect" parent="TopHUD"]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 20.0
+offset_right = 696.0
+offset_bottom = 84.0
+mouse_filter = 2
+texture = ExtResource("13_panel")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="PlatformIcon" type="TextureRect" parent="TopHUD/PlatformPanel"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 51.0
+offset_bottom = 53.0
+mouse_filter = 2
+texture = ExtResource("16_garage")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlatformLabel" type="Label" parent="TopHUD/PlatformPanel"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 6.0
+offset_right = 197.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.965, 0.91, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.055, 0.045, 0.035, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("19_medium")
+theme_override_font_sizes/font_size = 18
+text = "ACTIVE\nCOMPACT"
+vertical_alignment = 1
+
+[node name="NoticePanel" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 110.0
+offset_top = 1014.0
+offset_right = 610.0
+offset_bottom = 1082.0
+mouse_filter = 2
+texture = ExtResource("13_panel")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="NoticeLabel" type="Label" parent="NoticePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+offset_left = 18.0
+offset_top = 7.0
+offset_right = -18.0
+offset_bottom = -7.0
 mouse_filter = 2
-color = Color(0.03, 0.035, 0.032, 0.28)
-
-[node name="Title" type="Label" parent="."]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 44.0
-offset_right = 682.0
-offset_bottom = 94.0
-theme_override_font_sizes/font_size = 34
-text = "FORT KNOCKS"
-horizontal_alignment = 1
-
-[node name="Subtitle" type="Label" parent="."]
-layout_mode = 0
-offset_left = 90.0
-offset_top = 100.0
-offset_right = 630.0
-offset_bottom = 132.0
-theme_override_font_sizes/font_size = 16
-text = "OUTSKIRTS CAMP • HOLDING TOGETHER"
-horizontal_alignment = 1
-
-[node name="TopBar" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 154.0
-offset_right = 686.0
-offset_bottom = 214.0
-color = Color(0.07, 0.085, 0.077, 0.94)
-
-[node name="SalvageLabel" type="Label" parent="TopBar"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 14.0
-offset_right = 302.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 19
-text = "SALVAGE  0"
-
-[node name="ProgressLabel" type="Label" parent="TopBar"]
-layout_mode = 0
-offset_left = 304.0
-offset_top = 14.0
-offset_right = 634.0
-offset_bottom = 46.0
-theme_override_font_sizes/font_size = 17
-text = "OUTSKIRTS  0/6 CLEARED"
-horizontal_alignment = 2
-
-[node name="StatusCard" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = 58.0
-offset_top = 252.0
-offset_right = 352.0
-offset_bottom = 350.0
-color = Color(0.08, 0.095, 0.085, 0.92)
-
-[node name="PlatformLabel" type="Label" parent="StatusCard"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 276.0
-offset_bottom = 82.0
-theme_override_font_sizes/font_size = 17
-text = "ACTIVE PLATFORM\nRUN-DOWN COMPACT"
-vertical_alignment = 1
-
-[node name="NoticeLabel" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 76.0
-offset_top = 374.0
-offset_right = 644.0
-offset_bottom = 438.0
-theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.98, 0.885, 0.58, 1)
+theme_override_colors/font_outline_color = Color(0.055, 0.045, 0.035, 0.95)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("18_bold")
+theme_override_font_sizes/font_size = 20
 text = "+35 SALVAGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Actions" type="VBoxContainer" parent="."]
+[node name="Navigation" type="Control" parent="."]
 layout_mode = 0
-offset_left = 92.0
-offset_top = 970.0
-offset_right = 628.0
-offset_bottom = 1240.0
-theme_override_constants/separation = 16
+offset_top = 1124.0
+offset_right = 720.0
+offset_bottom = 1264.0
 
-[node name="CommandBoardButton" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(0, 82)
-layout_mode = 2
-theme_override_font_sizes/font_size = 23
-text = "COMMAND BOARD\nCHOOSE THE NEXT RUN"
+[node name="GarageButton" type="TextureButton" parent="Navigation"]
+layout_mode = 0
+offset_left = 48.0
+offset_right = 244.0
+offset_bottom = 140.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("12_nav")
+ignore_texture_size = true
+stretch_mode = 0
 
-[node name="GarageButton" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(0, 68)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
+[node name="Icon" type="TextureRect" parent="Navigation/GarageButton"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 15.0
+offset_right = 130.0
+offset_bottom = 79.0
+mouse_filter = 2
+texture = ExtResource("16_garage")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Navigation/GarageButton"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 82.0
+offset_right = 184.0
+offset_bottom = 124.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.98, 0.925, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.035, 0.03, 0.95)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("18_bold")
+theme_override_font_sizes/font_size = 24
 text = "GARAGE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="WorkshopButton" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(0, 68)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
+[node name="WorkshopButton" type="TextureButton" parent="Navigation"]
+layout_mode = 0
+offset_left = 262.0
+offset_right = 458.0
+offset_bottom = 140.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("12_nav")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Navigation/WorkshopButton"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 15.0
+offset_right = 130.0
+offset_bottom = 79.0
+mouse_filter = 2
+texture = ExtResource("17_workshop")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Navigation/WorkshopButton"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 82.0
+offset_right = 184.0
+offset_bottom = 124.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.98, 0.925, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.035, 0.03, 0.95)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("18_bold")
+theme_override_font_sizes/font_size = 23
 text = "WORKSHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MissionsButton" type="TextureButton" parent="Navigation"]
+layout_mode = 0
+offset_left = 476.0
+offset_right = 672.0
+offset_bottom = 140.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("12_nav")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Icon" type="TextureRect" parent="Navigation/MissionsButton"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 15.0
+offset_right = 130.0
+offset_bottom = 79.0
+mouse_filter = 2
+texture = ExtResource("15_missions")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Navigation/MissionsButton"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 82.0
+offset_right = 184.0
+offset_bottom = 124.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.98, 0.925, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.04, 0.035, 0.03, 0.95)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("18_bold")
+theme_override_font_sizes/font_size = 24
+text = "MISSIONS"
+horizontal_alignment = 1
+vertical_alignment = 1

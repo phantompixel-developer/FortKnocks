@@ -199,3 +199,15 @@ Before mobile release/export, the preferred final packaging step remains rasteri
 - **Created:** 2026-10-05
 - **Origin:** original repository-authored vector artwork.
 - **Gameplay authority:** none; existing collision, HP, collapse and discharge logic remains authoritative.
+
+
+## Hub reference-finish pilot v1
+
+- **Assets:** `hub/reference_v1/`
+- **Purpose:** user-supplied first-screen Hub production pilot, integrated as the active Hub presentation.
+- **Integrated:** 2026-10-05
+- **Origin:** supplied directly by the project owner as `Fort_Knocks_Hub_Asset_Kit_v1.zip`, reconstructed from the approved Hub mood-board screen.
+- **Runtime format:** raster art is stored as compact WebP derivatives; the Hub background is split into ten lossless-layout horizontal tiles so the repository connection can carry the authored composition without changing it.
+- **Typography:** Barlow Condensed Bold/Medium supplied with the kit; runtime files are character-subset derivatives used for the current uppercase Hub UI. The SIL Open Font License is stored beside the fonts.
+- **Gameplay authority:** none. Salvage, campaign progress, active platform and navigation continue to come from current save/game state.
+- **Scope guardrail:** Energy, Gem, Settings, Map and Plus artwork is preserved in the asset library but is not wired to invented systems. The current build exposes only the real Garage, Workshop and Missions/Command Board actions.
