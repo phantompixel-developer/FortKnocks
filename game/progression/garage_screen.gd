@@ -9,6 +9,7 @@ signal platform_upgrade_requested(platform_id: String)
 const PlatformCatalogScript := preload("res://game/platforms/platform_catalog.gd")
 const ThemeScript := preload("res://game/presentation/fort_knocks_theme.gd")
 const ProductionUIScript := preload("res://game/presentation/production_ui.gd")
+const GarageSharpenShader := preload("res://game/progression/garage_sharpen.gdshader")
 
 const GARAGE_ROOT := "res://assets/art/claude_assets/1_Asset_Kit/02_garage"
 const ICON_ARMOUR := GARAGE_ROOT + "/png/icons/icon_stat_armour.png"
@@ -70,6 +71,7 @@ func _ready() -> void:
 	)
 	ProductionUIScript.style_action_button(action_button)
 	_style_active_toggle()
+	pickup_hero.material = _sharpen_material(0.10)
 	action_coin.texture = ProductionUIScript.texture(COIN_PATH)
 	_apply_back_safe_area()
 
@@ -360,6 +362,7 @@ func _build_cards() -> void:
 			thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			thumb.material = _sharpen_material(0.10)
 			card.add_child(thumb)
 		elif locked:
 			var locked_thumb := TextureRect.new()
@@ -373,6 +376,7 @@ func _build_cards() -> void:
 			locked_thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			locked_thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			locked_thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			locked_thumb.material = _sharpen_material(0.08)
 			card.add_child(locked_thumb)
 		else:
 			var preview := PlatformShowcase.new()
@@ -443,6 +447,12 @@ func _platform_level(platform_id: String) -> int:
 	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
 	var levels: Dictionary = inventory.get("platform_levels", {}) as Dictionary
 	return clampi(int(levels.get(platform_id, 1)), 1, 4)
+
+func _sharpen_material(strength: float) -> ShaderMaterial:
+	var material := ShaderMaterial.new()
+	material.shader = GarageSharpenShader
+	material.set_shader_parameter("strength", strength)
+	return material
 
 func _style_active_toggle() -> void:
 	var normal := StyleBoxFlat.new()
