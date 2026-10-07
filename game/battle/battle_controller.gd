@@ -1504,6 +1504,8 @@ func _deploy_from_brief() -> void:
 	mission_brief_card.visible = false
 	player_status_card.visible = true
 	enemy_status_card.visible = true
+	health_label.visible = true
+	enemy_health_label.visible = true
 	hint_label.text = "Scanning battlefield"
 	_start_player_turn(true)
 
@@ -1526,7 +1528,7 @@ func _mission_loadout_text() -> String:
 			effective_cover,
 		])
 	if _player_module != null:
-		lines.append("UTILITY • %s" % _player_module.display_name.to_upper())
+		lines.append("MODULE • %s" % _player_module.display_name.to_upper())
 
 	var rack := "BOLT"
 	if _campaign_weapon_ids.has("heavy_slug") and _campaign_weapon_ids.has("shock_capsule"):
@@ -1549,6 +1551,10 @@ func _update_result_card() -> void:
 		"MISSION COMPLETE" if victory else "MISSION FAILED",
 	]
 	result_title_label.text = "VICTORY" if victory else "DEFEAT"
+	result_title_label.add_theme_color_override(
+		"font_color",
+		ThemeScript.HAZARD if victory else ThemeScript.SIGNAL
+	)
 	result_encounter_label.text = _current_mission.display_name.to_upper()
 	result_objective_label.text = "%s\n%s" % [
 		"OBJECTIVE SECURED" if victory else "OBJECTIVE FAILED",
@@ -1577,7 +1583,7 @@ func _update_result_card() -> void:
 	if _progression_reward > 0:
 		result_clear_state_label.text = "FIRST CLEAR"
 		result_reward_label.text = "+%d SALVAGE" % _progression_reward
-		var next_mission := EncounterCatalogScript.by_id(_current_mission.next_mission_id)
+		var next_mission: MissionDefinition = EncounterCatalogScript.by_id(_current_mission.next_mission_id)
 		if next_mission != null:
 			result_unlock_label.text = "NEW ROUTE • %s" % next_mission.display_name.to_upper()
 		else:
