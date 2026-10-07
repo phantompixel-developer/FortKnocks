@@ -1,27 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="350" viewBox="0 0 2160 350">
 <defs>
- <linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3936"/><stop offset=".34" stop-color="#2b2c2b"/><stop offset="1" stop-color="#1f2325"/></linearGradient>
- <linearGradient id="dust" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bd7049" stop-opacity=".03"/><stop offset=".5" stop-color="#db9258" stop-opacity=".24"/><stop offset="1" stop-color="#b7613f" stop-opacity=".04"/></linearGradient>
+ <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#55524a"/>
+  <stop offset=".24" stop-color="#403f3b"/>
+  <stop offset=".62" stop-color="#2d3031"/>
+  <stop offset="1" stop-color="#202529"/>
+ </linearGradient>
+ <linearGradient id="sunwash" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#eaa065" stop-opacity=".05"/>
+  <stop offset=".72" stop-color="#f3b46f" stop-opacity=".15"/>
+  <stop offset="1" stop-color="#d77b4d" stop-opacity=".04"/>
+ </linearGradient>
 </defs>
-<rect width="2160" height="350" fill="url(#asphalt)"/>
-<rect width="2160" height="22" fill="#786b5a"/><rect y="22" width="2160" height="26" fill="#45443e"/><rect y="48" width="2160" height="34" fill="url(#dust)"/>
-<!-- maintenance line is faded, interrupted and unequal -->
-<g fill="#d5a748" opacity=".54"><rect x="55" y="190" width="104" height="9"/><rect x="246" y="190" width="87" height="9"/><rect x="430" y="190" width="116" height="9"/><rect x="632" y="190" width="72" height="9"/><rect x="814" y="190" width="112" height="9"/><rect x="1010" y="190" width="96" height="9"/><rect x="1198" y="190" width="108" height="9"/><rect x="1392" y="190" width="76" height="9"/><rect x="1578" y="190" width="116" height="9"/><rect x="1778" y="190" width="92" height="9"/><rect x="1960" y="190" width="92" height="9"/></g>
-<!-- patchwork and resurfaced strips -->
-<g fill="#303536" opacity=".88"><path d="M246 76 h205 l-20 70 -158 10 -44-40Z"/><path d="M886 212 h252 l-30 84 -198-6 -45-42Z"/><path d="M1628 72 h214 l-20 72 -165 13 -43-43Z"/></g>
-<g fill="#252a2b" opacity=".74"><path d="M590 42 h174 v34 H590Z"/><path d="M1320 96 h176 v30 H1320Z"/><path d="M1880 232 h164 v34 H1880Z"/></g>
-<!-- cracks with varied branching -->
-<g fill="none" stroke="#11171a" stroke-linecap="round" opacity=".78">
- <path d="M110 72 L146 94 132 122 178 143 160 170 M134 120 L98 136 82 164" stroke-width="5"/>
- <path d="M480 100 L520 120 498 148 544 173 526 202 M510 148 L470 166" stroke-width="5"/>
- <path d="M790 66 L824 96 810 132 856 156 834 184" stroke-width="6"/>
- <path d="M1125 110 L1172 128 1144 154 1192 175 M1145 153 L1105 174 1092 202" stroke-width="5"/>
- <path d="M1512 76 L1548 110 1526 138 1572 164 1558 194" stroke-width="6"/>
- <path d="M1884 106 L1924 128 1900 158 1944 180 M1920 132 L1962 116" stroke-width="5"/>
+<rect width="2160" height="350" fill="url(#road)"/>
+<rect width="2160" height="68" fill="url(#sunwash)"/>
+
+<!-- broken shoulder and concrete lip catch warm light -->
+<path d="M0 0 H2160 V18 H0Z" fill="#8a7865"/>
+<path d="M0 18 H2160 V48 H0Z" fill="#5b574e"/>
+<path d="M0 48 C380 40 742 58 1080 44 S1770 58 2160 38 V66 H0Z" fill="#3f403c"/>
+<path d="M0 2 H2160" stroke="#dda06a" stroke-width="5" opacity=".38"/>
+
+<!-- faded road paint; intentionally incomplete and abraded -->
+<g fill="#e8b44f" opacity=".62">
+ <rect x="82" y="196" width="104" height="10" rx="3"/><rect x="292" y="196" width="88" height="10" rx="3"/>
+ <rect x="500" y="196" width="112" height="10" rx="3"/><rect x="724" y="196" width="86" height="10" rx="3"/>
+ <rect x="936" y="196" width="108" height="10" rx="3"/><rect x="1162" y="196" width="76" height="10" rx="3"/>
+ <rect x="1378" y="196" width="114" height="10" rx="3"/><rect x="1600" y="196" width="90" height="10" rx="3"/>
+ <rect x="1818" y="196" width="108" height="10" rx="3"/><rect x="2042" y="196" width="76" height="10" rx="3"/>
 </g>
-<!-- oil, tyre scuffs and aggregate make vehicles sit on a used surface -->
-<g fill="#111719" opacity=".26"><ellipse cx="364" cy="278" rx="70" ry="13"/><ellipse cx="726" cy="116" rx="50" ry="10"/><ellipse cx="1288" cy="270" rx="76" ry="14"/><ellipse cx="1788" cy="170" rx="58" ry="11"/></g>
-<g stroke="#101619" stroke-width="9" opacity=".28"><path d="M310 244 C388 224 430 236 500 220"/><path d="M1390 300 C1470 276 1540 288 1612 266"/></g>
-<g fill="#6a5b49" opacity=".48"><circle cx="680" cy="112" r="8"/><circle cx="710" cy="132" r="5"/><circle cx="1340" cy="220" r="7"/><circle cx="1388" cy="202" r="5"/><circle cx="2020" cy="95" r="8"/><circle cx="2038" cy="118" r="4"/></g>
-<path d="M0 66 C420 52 840 78 1200 62 S1840 74 2160 54" stroke="#e0975e" stroke-width="15" opacity=".065" fill="none"/>
+<g fill="#282c2e" opacity=".84">
+ <path d="M214 78 h232 l-18 70 -182 12 -50-40Z"/>
+ <path d="M922 236 h280 l-26 78 -224-4 -52-40Z"/>
+ <path d="M1664 72 h248 l-20 66 -194 16 -54-38Z"/>
+</g>
+<g fill="#353738" opacity=".78">
+ <path d="M508 244 h170 v32 H508Z"/><path d="M1276 82 h176 v30 H1276Z"/>
+</g>
+
+<!-- cracks: larger primary fractures plus fine branching -->
+<g fill="none" stroke="#161c20" stroke-linecap="round" opacity=".78">
+ <path d="M72 98 L118 122 98 156 148 180 126 214 M112 154 L72 174 54 204" stroke-width="6"/>
+ <path d="M486 92 L530 118 510 150 558 174 538 204 M526 122 L568 106" stroke-width="5"/>
+ <path d="M802 66 L840 100 822 136 872 160 848 194" stroke-width="6"/>
+ <path d="M1128 112 L1174 132 1148 164 1198 186 M1150 162 L1108 184 1094 214" stroke-width="5"/>
+ <path d="M1514 76 L1552 112 1530 142 1578 168 1560 202" stroke-width="6"/>
+ <path d="M1888 106 L1930 130 1904 162 1952 184 M1926 134 L1968 118" stroke-width="5"/>
+</g>
+<g stroke="#7b5848" stroke-width="2.5" opacity=".34">
+ <path d="M102 120 L88 106 M134 178 L162 190 M830 112 L808 98 M856 166 L884 180 M1540 134 L1518 124"/>
+</g>
+
+<!-- tyre/oil contact marks help ground cover vehicles -->
+<g fill="#10161a" opacity=".28">
+ <ellipse cx="354" cy="282" rx="76" ry="14"/><ellipse cx="722" cy="116" rx="54" ry="11"/>
+ <ellipse cx="1292" cy="278" rx="82" ry="15"/><ellipse cx="1788" cy="168" rx="62" ry="12"/>
+</g>
+<g stroke="#11181b" stroke-width="10" opacity=".22" fill="none">
+ <path d="M302 250 C384 228 438 244 510 224"/><path d="M1390 304 C1480 280 1548 292 1624 270"/>
+</g>
+
+<!-- aggregate / rust grit -->
+<g fill="#88705b" opacity=".48">
+ <circle cx="672" cy="116" r="8"/><circle cx="708" cy="136" r="5"/><circle cx="1342" cy="224" r="7"/>
+ <circle cx="1392" cy="204" r="5"/><circle cx="2024" cy="96" r="8"/><circle cx="2044" cy="120" r="4"/>
+</g>
+
+<!-- golden-hour reflected strip keeps gameplay floor linked to the reference -->
+<path d="M0 66 C420 52 840 80 1200 62 S1840 76 2160 54" stroke="#f1a261" stroke-width="18" opacity=".09" fill="none"/>
+<path d="M0 330 H2160" stroke="#0f1519" stroke-width="40" opacity=".22"/>
 </svg>
