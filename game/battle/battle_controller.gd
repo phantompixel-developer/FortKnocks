@@ -74,10 +74,19 @@ const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 @onready var weapon_tray: ColorRect = $HUD/Root/WeaponTray
 @onready var weapon_info_card: ColorRect = $HUD/Root/WeaponInfoCard
 @onready var control_deck: ColorRect = $HUD/Root/ControlDeck
+@onready var inspect_banner: ColorRect = $HUD/Root/InspectBanner
+@onready var inspect_banner_title: Label = $HUD/Root/InspectBanner/Title
+@onready var inspect_banner_subtitle: Label = $HUD/Root/InspectBanner/Subtitle
 @onready var target_card: ColorRect = $HUD/Root/TargetCard
 @onready var target_title_label: Label = $HUD/Root/TargetCard/Title
+@onready var target_objective_label: Label = $HUD/Root/TargetCard/ObjectiveLabel
 @onready var target_enemy_label: Label = $HUD/Root/TargetCard/EnemyInfoLabel
+@onready var target_enemy_bar_back: ColorRect = $HUD/Root/TargetCard/EnemyHealthBarBack
+@onready var target_enemy_bar_fill: ColorRect = $HUD/Root/TargetCard/EnemyHealthBarFill
 @onready var target_cover_label: Label = $HUD/Root/TargetCard/CoverInfoLabel
+@onready var target_cover_bar_back: ColorRect = $HUD/Root/TargetCard/CoverHealthBarBack
+@onready var target_cover_bar_fill: ColorRect = $HUD/Root/TargetCard/CoverHealthBarFill
+@onready var target_tactic_label: Label = $HUD/Root/TargetCard/TacticLabel
 @onready var target_hazard_label: Label = $HUD/Root/TargetCard/HazardInfoLabel
 @onready var weapon_name_label: Label = $HUD/Root/WeaponInfoCard/WeaponNameLabel
 @onready var weapon_role_label: Label = $HUD/Root/WeaponInfoCard/WeaponRoleLabel
@@ -174,6 +183,16 @@ func _style_live_hud() -> void:
 	angle_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	last_shot_label.add_theme_color_override("font_color", ThemeScript.MUTED)
 	hint_label.add_theme_color_override("font_color", ThemeScript.BONE)
+	inspect_banner_title.add_theme_color_override("font_color", ThemeScript.COLD)
+	inspect_banner_subtitle.add_theme_color_override("font_color", ThemeScript.MUTED)
+	target_title_label.add_theme_color_override("font_color", ThemeScript.COLD)
+	target_objective_label.add_theme_color_override("font_color", ThemeScript.MUTED)
+	target_enemy_label.add_theme_color_override("font_color", Color("ef9b84"))
+	target_cover_label.add_theme_color_override("font_color", ThemeScript.BONE)
+	target_tactic_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
+	target_hazard_label.add_theme_color_override("font_color", ThemeScript.COLD)
+	target_enemy_bar_fill.color = ThemeScript.SIGNAL
+	target_cover_bar_fill.color = ThemeScript.RUST
 	inspect_button.add_theme_font_size_override("font_size", 16)
 
 func _capture_hud_layout() -> void:
@@ -186,6 +205,7 @@ func _capture_hud_layout() -> void:
 		enemy_locator_label,
 		weapon_tray,
 		weapon_info_card,
+		inspect_banner,
 		feedback_plate,
 		feedback_label,
 		control_deck,
@@ -223,12 +243,13 @@ func _apply_hud_safe_area() -> void:
 
 	_set_hud_control_shift(turn_label, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(weapon_info_card, Vector2(center_shift_x, top_shift))
+	_set_hud_control_shift(inspect_banner, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(enemy_locator_label, Vector2(center_shift_x, top_shift))
+	_set_hud_control_shift(target_card, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(feedback_plate, Vector2(center_shift_x, size_delta.y * 0.35))
 	_set_hud_control_shift(feedback_label, Vector2(center_shift_x, size_delta.y * 0.35))
 
 	_set_hud_control_shift(control_deck, Vector2(center_shift_x, bottom_shift))
-	_set_hud_control_shift(target_card, Vector2(center_shift_x, bottom_shift))
 	_set_hud_control_shift(hint_label, Vector2(center_shift_x, bottom_shift))
 
 func _set_hud_control_shift(control: Control, shift: Vector2) -> void:
@@ -291,6 +312,7 @@ func _ready() -> void:
 		enemy_status_card,
 		weapon_tray,
 		weapon_info_card,
+		inspect_banner,
 		control_deck,
 		target_card,
 		feedback_plate,
@@ -300,6 +322,7 @@ func _ready() -> void:
 	]:
 		ThemeScript.style_card(card)
 	ThemeScript.style_card(control_deck, 1)
+	ThemeScript.style_card(target_card, 1)
 	ThemeScript.style_card(mission_brief_card, 1)
 	ThemeScript.style_card(result_card, 1)
 	_style_live_hud()
@@ -329,6 +352,7 @@ func _ready() -> void:
 	_set_weapon_choice_ui_visible(false)
 	weapon_info_card.visible = false
 	control_deck.visible = false
+	inspect_banner.visible = false
 	target_card.visible = false
 	mission_brief_card.visible = false
 	encounter_picker.visible = true
@@ -679,6 +703,9 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	_is_inspecting = false
 	inspect_button.visible = false
 	inspect_button.disabled = false
+	inspect_button.text = "INSPECT ENEMY"
+	ThemeScript.mark_active(inspect_button, false)
+	inspect_banner.visible = false
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
@@ -752,34 +779,56 @@ func _inspect_enemy() -> void:
 		return
 
 	_is_inspecting = true
-	inspect_button.text = "RETURN TO SHOOTER"
+	inspect_button.text = "VIEWING TARGET"
+	inspect_button.disabled = true
+	ThemeScript.mark_active(inspect_button, true)
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
-	target_card.visible = true
-	_update_target_card()
+	target_card.visible = false
+	inspect_banner_title.text = "TACTICAL INSPECTION"
+	inspect_banner_subtitle.text = "ACQUIRING TARGET POSITION"
+	inspect_banner.visible = true
 	_set_weapon_buttons_enabled(false)
 
-	hint_label.text = "Inspect enemy position • return when ready"
+	hint_label.text = "Moving to enemy position"
 	camera_director.focus_x(enemy.global_position.x, 0.36)
+	await get_tree().create_timer(0.38).timeout
+	if phase != Phase.PLAYER_AIM or not _is_inspecting:
+		return
+
+	_update_target_card()
+	target_card.visible = true
+	inspect_banner_subtitle.text = "READ POSITION • COVER • HAZARDS"
+	inspect_button.text = "RETURN TO SHOOTER"
+	inspect_button.disabled = false
+	hint_label.text = "Review target • return when ready"
 
 func _return_from_enemy_inspection() -> void:
 	if not _is_inspecting or phase != Phase.PLAYER_AIM:
 		return
 
 	inspect_button.disabled = true
+	inspect_button.text = "RETURNING..."
+	target_card.visible = false
+	inspect_banner_title.text = "RETURNING TO SHOOTER"
+	inspect_banner_subtitle.text = "AIM STATE PRESERVED"
 	hint_label.text = "Returning to your shooter"
 	camera_director.focus_x(player.global_position.x, 0.38)
 	await get_tree().create_timer(0.42).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
+		inspect_banner.visible = false
 		inspect_button.disabled = false
 		inspect_button.text = "INSPECT ENEMY"
+		ThemeScript.mark_active(inspect_button, false)
 		return
 
 	_is_inspecting = false
+	inspect_banner.visible = false
 	inspect_button.disabled = false
 	inspect_button.text = "INSPECT ENEMY"
+	ThemeScript.mark_active(inspect_button, false)
 	enemy_locator_label.visible = enemy.is_alive()
 	_set_weapon_choice_ui_visible(true)
 	control_deck.visible = true
@@ -805,6 +854,9 @@ func _start_enemy_turn() -> void:
 	phase = Phase.ENEMY_THINKING
 	_is_inspecting = false
 	inspect_button.visible = false
+	inspect_button.text = "INSPECT ENEMY"
+	ThemeScript.mark_active(inspect_button, false)
+	inspect_banner.visible = false
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
@@ -913,6 +965,9 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	phase = Phase.PROJECTILE_FLIGHT
 	_is_inspecting = false
 	inspect_button.visible = false
+	inspect_button.text = "INSPECT ENEMY"
+	ThemeScript.mark_active(inspect_button, false)
+	inspect_banner.visible = false
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
@@ -1321,6 +1376,9 @@ func _check_game_over() -> bool:
 	phase = Phase.GAME_OVER
 	_is_inspecting = false
 	inspect_button.visible = false
+	inspect_button.text = "INSPECT ENEMY"
+	ThemeScript.mark_active(inspect_button, false)
+	inspect_banner.visible = false
 	enemy_locator_label.visible = false
 	_set_weapon_choice_ui_visible(false)
 	control_deck.visible = false
@@ -1497,38 +1555,65 @@ func _update_status_bar(
 	fill.color = ThemeScript.SIGNAL if ratio <= 0.30 else normal_color
 
 func _update_target_card() -> void:
-	target_title_label.text = _current_mission.objective_text if _current_mission != null else "TARGET STATUS"
+	target_title_label.text = "TACTICAL READOUT"
+	var objective_text := "INCAPACITATE ENEMY"
+	if _current_mission != null:
+		objective_text = _current_mission.objective_text
+	target_objective_label.text = "OBJECTIVE • %s" % objective_text
 	target_enemy_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
+	_update_status_bar(
+		target_enemy_bar_back,
+		target_enemy_bar_fill,
+		enemy.health,
+		enemy.max_health,
+		ThemeScript.SIGNAL
+	)
 
 	var stage := enemy_cover.get_damage_stage()
+	var cover_state := "INTACT"
 	match stage:
-		0:
-			target_cover_label.text = "COVER: INTACT"
 		1:
-			target_cover_label.text = "COVER: DAMAGED"
+			cover_state = "DAMAGED"
 		2:
-			target_cover_label.text = "COVER: CRITICAL"
-		_:
-			target_cover_label.text = "COVER: RUBBLE"
+			cover_state = "CRITICAL"
+		3:
+			cover_state = "RUBBLE"
+	target_cover_label.text = "COVER  %d/%d • %s" % [
+		enemy_cover.health,
+		enemy_cover.max_health,
+		cover_state,
+	]
+	_update_status_bar(
+		target_cover_bar_back,
+		target_cover_bar_fill,
+		enemy_cover.health,
+		enemy_cover.max_health,
+		ThemeScript.RUST
+	)
+	target_tactic_label.text = "TACTIC • %s" % _enemy_tactic_brief()
 
 	if _salvage_load != null and is_instance_valid(_salvage_load):
 		if _current_mission != null and _current_mission.power_cell_enabled:
 			var cell_state: String = "SPENT" if power_cell.is_discharged else "ACTIVE"
-			target_hazard_label.text = "SALVAGE %d/%d • CELL %s" % [
+			target_hazard_label.text = "ENVIRONMENT • SALVAGE %d/%d • CELL %s" % [
 				_salvage_load.health,
 				_salvage_load.max_health,
 				cell_state,
 			]
 		else:
-			target_hazard_label.text = _salvage_load.status_text()
+			target_hazard_label.text = "ENVIRONMENT • %s" % _salvage_load.status_text()
 	elif _signal_relay != null and is_instance_valid(_signal_relay):
-		target_hazard_label.text = _signal_relay.status_text()
+		target_hazard_label.text = "ENVIRONMENT • %s" % _signal_relay.status_text()
 	elif _current_mission != null and _current_mission.power_cell_enabled:
-		target_hazard_label.text = "POWER CELL: SPENT" if power_cell.is_discharged else "POWER CELL: ACTIVE"
+		target_hazard_label.text = (
+			"ENVIRONMENT • POWER CELL SPENT"
+			if power_cell.is_discharged
+			else "ENVIRONMENT • POWER CELL ACTIVE"
+		)
 	elif _collapsible_barrier != null and is_instance_valid(_collapsible_barrier):
-		target_hazard_label.text = _collapsible_barrier.status_text()
+		target_hazard_label.text = "ENVIRONMENT • %s" % _collapsible_barrier.status_text()
 	else:
-		target_hazard_label.text = "ENVIRONMENT: NO ACTIVE HAZARD"
+		target_hazard_label.text = "ENVIRONMENT • NO ACTIVE HAZARD"
 
 func _update_enemy_locator() -> void:
 	if not enemy.is_alive():
