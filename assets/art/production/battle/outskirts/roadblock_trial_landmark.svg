@@ -1,26 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="booth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59635d"/><stop offset="1" stop-color="#303a37"/></linearGradient>
- <linearGradient id="sign" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6b5a47"/><stop offset=".55" stop-color="#48544f"/><stop offset="1" stop-color="#70513e"/></linearGradient>
+ <linearGradient id="booth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#748078"/><stop offset=".52" stop-color="#52605c"/><stop offset="1" stop-color="#2c3838"/></linearGradient>
+ <linearGradient id="sign" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#92694d"/><stop offset=".48" stop-color="#5b5b50"/><stop offset="1" stop-color="#493f39"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#ef9d5e" stop-opacity=".48"/><stop offset="1" stop-color="#c86d48" stop-opacity=".04"/></linearGradient>
 </defs>
-<!-- East Road: collapsed service-checkpoint furniture frames the real central roadblock. -->
-<g opacity=".92" stroke="#172125" stroke-linejoin="round">
- <path d="M690 846 V604 H735 V846 M1425 846 V604 H1470 V846" fill="#303a37" stroke-width="8"/>
- <path d="M710 612 H1450 L1410 548 H752Z" fill="url(#sign)" stroke-width="9"/>
- <path d="M790 590 H1015 M1135 590 H1350" stroke="#c5964b" stroke-width="12" opacity=".55"/>
- <path d="M780 842 V714 L838 672 H965 L1002 714 V842Z" fill="url(#booth)" stroke-width="8"/>
- <rect x="808" y="724" width="80" height="62" fill="#263236" stroke-width="5"/>
- <path d="M1184 842 V724 L1236 684 H1358 L1394 724 V842Z" fill="#424f4a" stroke-width="8"/>
- <rect x="1210" y="736" width="86" height="56" fill="#2a3638" stroke-width="5"/>
+
+<!-- collapsed civilian service-checkpoint frame; central tactical roadblock remains the hero -->
+<g stroke="#142026" stroke-linejoin="round">
+ <path d="M686 850 V606 H736 V850 M1424 850 V606 H1474 V850" fill="#35413f" stroke-width="9"/>
+ <path d="M706 614 H1452 L1412 548 H754Z" fill="url(#sign)" stroke-width="9"/>
+ <path d="M778 846 V712 L838 670 H968 L1008 712 V846Z" fill="url(#booth)" stroke-width="8"/>
+ <path d="M1182 846 V722 L1236 682 H1362 L1400 722 V846Z" fill="url(#booth)" stroke-width="8"/>
 </g>
+
+<!-- illuminated left planes give the checkpoint physical volume -->
+<g fill="url(#warm)">
+ <path d="M778 712 L838 670 H874 V846 H778Z"/><path d="M1182 722 L1236 682 H1272 V846 H1182Z"/>
+ <path d="M706 614 L754 548 H820 L778 614Z"/>
+</g>
+
+<g stroke="#18242a" stroke-width="5">
+ <rect x="810" y="724" width="84" height="64" fill="#26363b"/>
+ <rect x="1212" y="734" width="90" height="60" fill="#27373b"/>
+</g>
+<g fill="#eda05f" opacity=".18"><rect x="818" y="732" width="68" height="48"/><rect x="1220" y="742" width="74" height="44"/></g>
+
+<!-- faded hazard paint and weathering -->
 <g fill="none" stroke-linecap="round">
- <path d="M738 650 L692 620 M1428 648 L1488 610" stroke="#9e5b42" stroke-width="7"/>
- <path d="M840 814 L902 760 M1232 816 L1290 764" stroke="#d1a348" stroke-width="8" opacity=".58"/>
+ <path d="M790 590 H1018 M1138 590 H1352" stroke="#e4ad4e" stroke-width="12" opacity=".65"/>
+ <path d="M736 652 L694 622 M1430 650 L1490 612" stroke="#a95e43" stroke-width="7"/>
+ <path d="M838 816 L904 758 M1230 818 L1292 762" stroke="#d9a34a" stroke-width="8" opacity=".64"/>
 </g>
-<!-- Abandoned traffic shells sit wide of the tactical centre so the real blocker owns the silhouette. -->
-<g opacity=".62" stroke="#151e21" stroke-width="6">
- <path d="M250 820 L292 778 H420 L472 812 L462 850 H240Z" fill="#4c5753"/><circle cx="302" cy="852" r="25" fill="#101619"/><circle cx="422" cy="852" r="25" fill="#101619"/>
- <path d="M1695 826 L1736 786 H1872 L1928 818 L1918 854 H1685Z" fill="#664a3e"/><circle cx="1744" cy="855" r="25" fill="#101619"/><circle cx="1878" cy="855" r="25" fill="#101619"/>
+<g stroke="#b46747" stroke-width="4" opacity=".52"><path d="M868 620 V690 M918 620 V672 M1262 616 V684 M1328 614 V674"/></g>
+
+<!-- abandoned traffic shells sit wide of the objective and catch the same sunset rim -->
+<g stroke="#121d22" stroke-width="6">
+ <path d="M244 824 L290 778 H424 L478 812 L466 854 H232Z" fill="#52615f"/>
+ <circle cx="304" cy="854" r="27" fill="#0d1418"/><circle cx="424" cy="854" r="27" fill="#0d1418"/>
+ <path d="M1692 828 L1734 784 H1876 L1934 818 L1922 856 H1680Z" fill="#6e5147"/>
+ <circle cx="1746" cy="856" r="27" fill="#0d1418"/><circle cx="1880" cy="856" r="27" fill="#0d1418"/>
 </g>
-<path d="M660 875 H1510" stroke="#d9a64b" stroke-width="6" stroke-dasharray="28 24" opacity=".28"/>
+<path d="M256 810 L296 790 H420" stroke="#e2935b" stroke-width="4" opacity=".32" fill="none"/>
+<path d="M1706 814 L1742 794 H1870" stroke="#e2935b" stroke-width="4" opacity=".30" fill="none"/>
+
+<!-- ground contact / lane history -->
+<path d="M660 878 H1514" stroke="#dfac4f" stroke-width="6" stroke-dasharray="28 24" opacity=".30"/>
+<path d="M690 856 H1480" stroke="#0c1317" stroke-width="18" opacity=".16"/>
 </svg>
