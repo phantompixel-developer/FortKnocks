@@ -30,4 +30,9 @@
 <path d="M55 96 C82 118 108 133 127 101" fill="none" stroke="#503c31" stroke-width="5"/>
 <!-- small salvage details -->
 <rect x="54" y="137" width="18" height="19" fill="#59635d" stroke="#111719" stroke-width="4"/><path d="M57 150 L68 140" stroke="#e7ad3c" stroke-width="3"/>
+
+<!-- shared golden-hour rim: player remains readable without UI-like glow -->
+<path d="M55 84 Q78 72 101 84" stroke="#f0a064" stroke-width="4" opacity=".30" fill="none" stroke-linecap="round"/>
+<path d="M57 91 L52 151 M65 61 Q72 43 88 40" stroke="#ffd18a" stroke-width="3" opacity=".20" fill="none" stroke-linecap="round"/>
+<path d="M48 221 H124" stroke="#0d1418" stroke-width="9" opacity=".26" stroke-linecap="round"/>
 </svg>
