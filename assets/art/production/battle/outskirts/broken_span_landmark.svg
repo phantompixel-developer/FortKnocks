@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
+<defs><linearGradient id="concrete" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f746c"/><stop offset=".45" stop-color="#505852"/><stop offset="1" stop-color="#333b38"/></linearGradient></defs>
+<!-- Broken Span: collapsed flyover with a large central fracture and exposed structure. -->
+<g stroke="#161f22" stroke-linejoin="round">
+ <path d="M700 620 H1220 L1180 706 H700Z" fill="url(#concrete)" stroke-width="9"/>
+ <path d="M1408 686 L1480 614 H2160 V704 H1432Z" fill="url(#concrete)" stroke-width="9"/>
+ <path d="M834 700 V930 H914 V700 M1740 700 V930 H1824 V700" fill="#343d39" stroke-width="8"/>
+</g>
+<!-- Jagged failed ends make this distinct from the intact High Ground deck. -->
+<path d="M1218 620 L1180 650 1202 674 1168 706 1130 690 1095 706" fill="none" stroke="#262e2c" stroke-width="13"/>
+<path d="M1408 686 L1450 662 1432 640 1478 614" fill="none" stroke="#262e2c" stroke-width="13"/>
+<g stroke="#9b5c43" stroke-width="5"><path d="M1168 642 L1134 606 M1188 654 L1160 608 M1446 652 L1416 616 M1462 640 L1438 600"/></g>
+<!-- Fallen sign frame and rubble live below the skyline, never changing collision. -->
+<g opacity=".76">
+ <path d="M490 826 L552 772 H676 L720 806 704 846 H474Z" fill="#3f4b47" stroke="#161f22" stroke-width="6"/>
+ <path d="M1260 846 L1290 810 1360 796 1404 826 1392 850Z" fill="#5b5548" stroke="#161f22" stroke-width="6"/>
+</g>
+<g fill="none" stroke="#26322f" stroke-linecap="round"><path d="M1040 590 L960 520 M1040 590 L1118 526" stroke-width="8"/><path d="M970 528 H1110" stroke-width="8"/></g>
+<path d="M690 720 H1190 M1430 720 H2160" stroke="#0d1316" stroke-width="16" opacity=".28"/>
+</svg>
