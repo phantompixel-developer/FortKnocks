@@ -1,17 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="220" viewBox="0 0 300 220">
-<defs><linearGradient id="concrete" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#85877f"/><stop offset=".56" stop-color="#6a6f69"/><stop offset="1" stop-color="#4e5550"/></linearGradient></defs>
-<ellipse cx="150" cy="194" rx="112" ry="12" fill="#080c0f" opacity=".48"/>
-<path d="M26 185 L34 58 L65 27 H235 L270 59 L274 185Z" fill="#141a1c"/>
-<path d="M39 175 L46 65 L73 40 H227 L258 66 L261 175Z" fill="url(#concrete)"/>
-<path d="M48 150 L72 53 L118 45 L104 170Z" fill="#5b625d" opacity=".75"/>
-<!-- cracks -->
-<g stroke="#3c4440" fill="none" stroke-linecap="round"><path d="M94 58 L122 98 104 124 132 158" stroke-width="7"/><path d="M198 49 L174 93 190 119 166 151" stroke-width="6"/><path d="M118 98 L142 86 M176 94 L151 81" stroke-width="4"/></g>
-<!-- rebar -->
-<g stroke="#9b5e43" stroke-width="6"><path d="M70 42 L61 12 M88 40 L85 9 M224 42 L238 13"/></g>
-<!-- faded maintenance striping -->
-<g stroke-linecap="round"><path d="M54 154 L82 126 M94 157 L122 129 M134 159 L162 131 M174 159 L202 131 M214 158 L242 130" stroke="#d0a548" stroke-width="14" opacity=".62"/><path d="M82 158 L110 130 M162 159 L190 131 M242 157 L260 139" stroke="#9e5a41" stroke-width="10" opacity=".68"/></g>
+<defs>
+ <linearGradient id="concrete" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a19b8c"/><stop offset=".42" stop-color="#777a71"/><stop offset="1" stop-color="#4b5350"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#f0a66b" stop-opacity=".50"/><stop offset="1" stop-color="#cf754c" stop-opacity=".02"/></linearGradient>
+</defs>
+<ellipse cx="150" cy="196" rx="116" ry="13" fill="#070c10" opacity=".56"/>
+<path d="M24 187 L32 58 L64 25 H236 L272 59 L276 187Z" fill="#11181c"/>
+<path d="M38 176 L46 65 L74 39 H228 L260 66 L263 176Z" fill="url(#concrete)"/>
+<path d="M46 65 L74 39 H144 L118 176 H38Z" fill="url(#warm)"/>
+
+<!-- concrete chips / cracks -->
+<g stroke="#3b4440" fill="none" stroke-linecap="round">
+ <path d="M94 58 L122 98 104 124 132 158" stroke-width="7"/>
+ <path d="M198 49 L174 93 190 119 166 151" stroke-width="6"/>
+ <path d="M118 98 L142 86 M176 94 L151 81" stroke-width="4"/>
+</g>
+<g fill="#c7b9a0" opacity=".34"><path d="M50 74 L74 48 96 48 82 70Z"/><path d="M150 44 H226 L218 56 H152Z"/></g>
+<g stroke="#9e5e45" stroke-width="6"><path d="M70 42 L61 12 M88 40 L85 9 M224 42 L238 13"/></g>
+
+<!-- faded road-maintenance striping -->
+<g stroke-linecap="round">
+ <path d="M54 154 L82 126 M94 157 L122 129 M134 159 L162 131 M174 159 L202 131 M214 158 L242 130" stroke="#dfae4e" stroke-width="14" opacity=".66"/>
+ <path d="M82 158 L110 130 M162 159 L190 131 M242 157 L260 139" stroke="#a45e43" stroke-width="10" opacity=".70"/>
+</g>
+
 <!-- reused bolted plate -->
-<rect x="193" y="79" width="54" height="42" rx="3" fill="#46524d" stroke="#1a2223" stroke-width="5"/>
-<circle cx="203" cy="90" r="3" fill="#111719"/><circle cx="237" cy="90" r="3" fill="#111719"/><circle cx="203" cy="111" r="3" fill="#111719"/><circle cx="237" cy="111" r="3" fill="#111719"/>
-<path d="M204 117 L221 97 M225 117 L242 97" stroke="#d4aa55" stroke-width="6" stroke-linecap="round"/>
+<rect x="193" y="79" width="54" height="42" rx="3" fill="#4b5752" stroke="#172024" stroke-width="5"/>
+<circle cx="203" cy="90" r="3" fill="#101619"/><circle cx="237" cy="90" r="3" fill="#101619"/><circle cx="203" cy="111" r="3" fill="#101619"/><circle cx="237" cy="111" r="3" fill="#101619"/>
+<path d="M204 117 L221 97 M225 117 L242 97" stroke="#d9aa4e" stroke-width="6" stroke-linecap="round"/>
+<path d="M50 174 H252" stroke="#e19a62" stroke-width="3" opacity=".22"/>
 </svg>
