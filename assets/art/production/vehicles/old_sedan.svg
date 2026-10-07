@@ -23,4 +23,10 @@
 <g><circle cx="468" cy="198" r="43" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="468" cy="198" r="27" fill="#343c3e"/><circle cx="468" cy="198" r="11" fill="#8d8268"/><path d="M468 174 V222 M444 198 H492 M451 181 L485 215 M485 181 L451 215" stroke="#60686b" stroke-width="3"/></g>
 <path d="M106 189 A42 42 0 0 1 186 189 M428 189 A42 42 0 0 1 508 189" fill="none" stroke="#101619" stroke-width="8"/>
 <path d="M118 105 L157 94 L174 100 M397 103 L430 113" stroke="#a45f42" stroke-width="5" opacity=".7"/>
+
+<!-- shared Fort Knocks golden-hour key / lower cool mass -->
+<path d="M78 151 C168 126 338 116 518 148" stroke="#f0a064" stroke-width="5" opacity=".24" fill="none" stroke-linecap="round"/>
+<path d="M188 91 L358 84" stroke="#ffd18a" stroke-width="3" opacity=".22" stroke-linecap="round"/>
+<path d="M94 185 H528" stroke="#0d1418" stroke-width="13" opacity=".24" stroke-linecap="round"/>
+<g fill="#b66345" opacity=".42"><circle cx="246" cy="168" r="4"/><circle cx="405" cy="154" r="3"/></g>
 </svg>
