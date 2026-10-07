@@ -1,32 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="280" viewBox="0 0 180 280">
 <defs>
- <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#69736d"/><stop offset="1" stop-color="#35423e"/></linearGradient>
- <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#53625d"/><stop offset="1" stop-color="#343f3c"/></linearGradient>
- <radialGradient id="cold"><stop offset="0" stop-color="#dff5f1"/><stop offset=".3" stop-color="#77b6bf"/><stop offset="1" stop-color="#77b6bf" stop-opacity="0"/></radialGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#829087"/><stop offset=".48" stop-color="#65726b"/><stop offset="1" stop-color="#37433f"/></linearGradient>
+ <linearGradient id="panel" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#6d7b74"/><stop offset=".52" stop-color="#4e5d58"/><stop offset="1" stop-color="#313d3a"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#efa265" stop-opacity=".42"/><stop offset="1" stop-color="#ca7049" stop-opacity=".02"/></linearGradient>
+ <radialGradient id="cold"><stop offset="0" stop-color="#ecfffb"/><stop offset=".28" stop-color="#86d3d6"/><stop offset=".62" stop-color="#65b6bf" stop-opacity=".55"/><stop offset="1" stop-color="#65b6bf" stop-opacity="0"/></radialGradient>
 </defs>
-<!-- base -->
-<ellipse cx="90" cy="258" rx="62" ry="10" fill="#080c0f" opacity=".55"/>
-<path d="M60 244 H120 L130 260 H50Z" fill="#111719" stroke="#090d11" stroke-width="5"/>
-<path d="M70 236 H110 L116 249 H64Z" fill="#4c5651"/>
+<ellipse cx="90" cy="260" rx="66" ry="11" fill="#070c10" opacity=".58"/>
+<path d="M58 246 H122 L132 262 H48Z" fill="#10171b" stroke="#090d11" stroke-width="5"/>
+<path d="M68 237 H112 L118 250 H62Z" fill="#515d58"/>
+<path d="M62 238 H92 L82 250 H62Z" fill="url(#warm)"/>
+
 <!-- mast -->
-<rect x="78" y="72" width="24" height="172" rx="4" fill="#111719"/>
-<rect x="84" y="78" width="12" height="158" rx="3" fill="url(#metal)"/>
-<path d="M90 82 V226" stroke="#93a09a" stroke-width="2" opacity=".32"/>
+<rect x="77" y="70" width="26" height="176" rx="4" fill="#10171b"/>
+<rect x="84" y="77" width="12" height="160" rx="3" fill="url(#metal)"/>
+<path d="M90 82 V226" stroke="#abb4ad" stroke-width="2" opacity=".30"/>
+<path d="M84 78 H96 V108 H84Z" fill="url(#warm)"/>
+
 <!-- electronics cabinet -->
-<rect x="39" y="132" width="102" height="72" rx="6" fill="#101719" stroke="#090d11" stroke-width="5"/>
-<rect x="46" y="139" width="88" height="58" rx="4" fill="url(#panel)" stroke="#68736d" stroke-width="3"/>
-<rect x="56" y="150" width="68" height="14" rx="3" fill="#26322f"/>
-<circle cx="64" cy="180" r="18" fill="url(#cold)" opacity=".55"/><circle cx="64" cy="180" r="6" fill="#77b6bf"/><circle cx="64" cy="180" r="2.5" fill="#e7fbf8"/>
-<circle cx="88" cy="180" r="5" fill="#e7ad3c"/><circle cx="105" cy="180" r="5" fill="#a45f42"/>
-<path d="M115 145 L127 158 M112 148 L124 161" stroke="#a45f42" stroke-width="4" opacity=".72"/>
-<!-- dish head -->
-<path d="M90 72 V36" stroke="#111719" stroke-width="10" stroke-linecap="round"/>
-<path d="M90 42 L122 22" stroke="#182326" stroke-width="8" stroke-linecap="round"/>
-<path d="M118 20 Q153 28 157 58 Q132 66 113 48Z" fill="#53635f" stroke="#111719" stroke-width="6"/>
-<path d="M122 28 Q145 34 148 52" fill="none" stroke="#77b6bf" stroke-width="4" opacity=".68"/>
-<circle cx="121" cy="43" r="6" fill="#dff5f1"/>
-<!-- welded braces / FK marking -->
-<path d="M70 226 L90 200 L110 226" fill="none" stroke="#293532" stroke-width="7"/>
-<path d="M52 194 L70 174 M73 194 L91 174" stroke="#e7ad3c" stroke-width="6" stroke-linecap="round"/>
-<path d="M95 194 L113 174" stroke="#b65c36" stroke-width="6" stroke-linecap="round"/>
+<rect x="37" y="130" width="106" height="76" rx="6" fill="#10171b" stroke="#090d11" stroke-width="5"/>
+<rect x="45" y="138" width="90" height="60" rx="4" fill="url(#panel)" stroke="#738079" stroke-width="3"/>
+<path d="M45 138 H135 V154 H45Z" fill="url(#warm)"/>
+<rect x="55" y="150" width="70" height="14" rx="3" fill="#26322f"/>
+<circle cx="64" cy="181" r="20" fill="url(#cold)" opacity=".52"/><circle cx="64" cy="181" r="6" fill="#69b8c8"/><circle cx="64" cy="181" r="2.5" fill="#ecfffb"/>
+<circle cx="89" cy="181" r="5" fill="#e7ad3c"/><circle cx="106" cy="181" r="5" fill="#a45f42"/>
+<path d="M116 146 L128 159 M113 149 L125 162" stroke="#a45f42" stroke-width="4" opacity=".72"/>
+
+<!-- dish -->
+<path d="M90 70 V34" stroke="#10171b" stroke-width="10" stroke-linecap="round"/>
+<path d="M90 40 L123 20" stroke="#182326" stroke-width="8" stroke-linecap="round"/>
+<path d="M118 18 Q154 27 158 58 Q132 67 112 48Z" fill="url(#metal)" stroke="#10171b" stroke-width="6"/>
+<path d="M119 20 Q141 27 150 42 Q142 33 123 28Z" fill="url(#warm)"/>
+<path d="M122 28 Q146 34 149 52" fill="none" stroke="#69b8c8" stroke-width="4" opacity=".64"/>
+<circle cx="121" cy="43" r="6" fill="#e9fdfa"/>
+
+<!-- braces / Fort Knocks mark -->
+<path d="M70 228 L90 202 L110 228" fill="none" stroke="#293532" stroke-width="7"/>
+<path d="M52 196 L70 176 M73 196 L91 176" stroke="#e7ad3c" stroke-width="6" stroke-linecap="round"/>
+<path d="M95 196 L113 176" stroke="#b65c36" stroke-width="6" stroke-linecap="round"/>
 </svg>
