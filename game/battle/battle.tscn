@@ -126,6 +126,61 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="TopChrome" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.025, 0.055, 0.078, 0.9)
+
+[node name="TopAccent" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_top = 176.0
+offset_right = 720.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0.173, 0.514, 0.62, 0.7)
+
+[node name="BottomChrome" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_top = 1062.0
+offset_right = 720.0
+offset_bottom = 1280.0
+mouse_filter = 2
+color = Color(0.02, 0.047, 0.067, 0.93)
+
+[node name="BottomAccent" type="ColorRect" parent="HUD/Root"]
+layout_mode = 0
+offset_top = 1062.0
+offset_right = 720.0
+offset_bottom = 1066.0
+mouse_filter = 2
+color = Color(0.173, 0.514, 0.62, 0.56)
+
+[node name="MissionContextLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 696.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 14
+text = "OUTSKIRTS • ROADBLOCK TRIAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="MissionObjectiveLabel" type="Label" parent="HUD/Root"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 68.0
+offset_right = 570.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 13
+text = "OBJECTIVE • INCAPACITATE ENEMY"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
 [node name="PlayerStatusCard" type="ColorRect" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 18.0
@@ -264,11 +319,11 @@ color = Color(0.714, 0.361, 0.212, 1)
 
 [node name="TurnLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 214.0
-offset_top = 28.0
-offset_right = 506.0
-offset_bottom = 72.0
-theme_override_font_sizes/font_size = 28
+offset_left = 176.0
+offset_top = 30.0
+offset_right = 544.0
+offset_bottom = 66.0
+theme_override_font_sizes/font_size = 26
 text = "FORT KNOCKS"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -301,21 +356,21 @@ mouse_filter = 2
 [node name="InspectButton" type="Button" parent="HUD/Root"]
 layout_mode = 0
 offset_left = 500.0
-offset_top = 184.0
+offset_top = 220.0
 offset_right = 700.0
-offset_bottom = 238.0
+offset_bottom = 270.0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 15
 text = "INSPECT ENEMY"
 
 [node name="EnemyLocatorLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 198.0
-offset_top = 254.0
-offset_right = 522.0
-offset_bottom = 292.0
-theme_override_font_sizes/font_size = 19
-text = "ENEMY →  ~39m"
+offset_left = 488.0
+offset_top = 184.0
+offset_right = 702.0
+offset_bottom = 214.0
+theme_override_font_sizes/font_size = 16
+text = "RIVAL →  ~39m"
 horizontal_alignment = 1
 mouse_filter = 2
 
@@ -335,7 +390,7 @@ offset_top = 8.0
 offset_right = 132.0
 offset_bottom = 32.0
 theme_override_font_sizes/font_size = 14
-text = "WEAPONS"
+text = "FIELD RACK"
 horizontal_alignment = 1
 mouse_filter = 2
 
@@ -403,41 +458,77 @@ mouse_filter = 2
 
 [node name="ControlDeck" type="ColorRect" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 100.0
-offset_top = 1084.0
-offset_right = 620.0
-offset_bottom = 1168.0
+offset_left = 82.0
+offset_top = 1080.0
+offset_right = 638.0
+offset_bottom = 1178.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.88)
 
 [node name="PowerLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
 offset_left = 18.0
-offset_top = 10.0
-offset_right = 226.0
-offset_bottom = 40.0
-theme_override_font_sizes/font_size = 20
+offset_top = 7.0
+offset_right = 236.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 18
 text = "POWER —"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="AngleLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 278.0
-offset_top = 10.0
-offset_right = 486.0
-offset_bottom = 40.0
-theme_override_font_sizes/font_size = 20
+offset_left = 320.0
+offset_top = 7.0
+offset_right = 538.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 18
 text = "ANGLE —"
 horizontal_alignment = 1
 mouse_filter = 2
 
+[node name="PowerBarBack" type="ColorRect" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 36.0
+offset_right = 236.0
+offset_bottom = 46.0
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.052, 0.96)
+
+[node name="PowerBarFill" type="ColorRect" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 36.0
+offset_right = 18.0
+offset_bottom = 46.0
+mouse_filter = 2
+color = Color(0.906, 0.678, 0.235, 1)
+
+[node name="AngleBarBack" type="ColorRect" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 36.0
+offset_right = 538.0
+offset_bottom = 46.0
+mouse_filter = 2
+color = Color(0.035, 0.045, 0.052, 0.96)
+
+[node name="AngleBarFill" type="ColorRect" parent="HUD/Root/ControlDeck"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 36.0
+offset_right = 320.0
+offset_bottom = 46.0
+mouse_filter = 2
+color = Color(0.412, 0.722, 0.784, 1)
+
 [node name="LastShotLabel" type="Label" parent="HUD/Root/ControlDeck"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 48.0
-offset_right = 488.0
-offset_bottom = 70.0
+offset_left = 18.0
+offset_top = 58.0
+offset_right = 538.0
+offset_bottom = 82.0
 theme_override_font_sizes/font_size = 13
 text = "LAST SHOT —"
 horizontal_alignment = 1
@@ -595,10 +686,10 @@ mouse_filter = 2
 
 [node name="HintLabel" type="Label" parent="HUD/Root"]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 1178.0
-offset_right = 656.0
-offset_bottom = 1242.0
+offset_left = 48.0
+offset_top = 1190.0
+offset_right = 672.0
+offset_bottom = 1248.0
 theme_override_font_sizes/font_size = 17
 text = "Preparing battle..."
 horizontal_alignment = 1
