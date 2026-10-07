@@ -24,18 +24,25 @@ All assets listed here are presentation-only unless an owning gameplay document 
 
 ## Outskirts environment kit
 
-- **Assets:**
+- **Shared regional assets:**
   - `battle/outskirts/outskirts_sky_far.svg`
   - `battle/outskirts/outskirts_midground.svg`
   - `battle/outskirts/outskirts_road.svg`
   - `battle/outskirts/outskirts_foreground.svg`
-- **Purpose:** layered 2D/2.5D production environment for the Outskirts campaign region.
-- **Created:** 2026-10-05
+- **Mission landmark assets:**
+  - `battle/outskirts/roadblock_trial_landmark.svg`
+  - `battle/outskirts/high_ground_trial_landmark.svg`
+  - `battle/outskirts/scrap_gate_trial_landmark.svg`
+  - `battle/outskirts/broken_span_landmark.svg`
+  - `battle/outskirts/depot_line_landmark.svg`
+  - `battle/outskirts/outskirts_checkpoint_landmark.svg`
+- **Purpose:** layered 2D/2.5D production environment for every current Outskirts campaign mission, using the same shared-base + authored-landmark pipeline as Suburbs.
+- **Created:** 2026-10-05; mission landmark parity completed 2026-10-07.
 - **Origin:** original repository-authored vector artwork created specifically for Fort Knocks.
 - **External source art:** none.
 - **Licence dependency:** none.
 - **Gameplay authority:** none; authored encounter collision remains separate.
-- **Composition rule:** foreground is intentionally concentrated low in frame to protect pull-back aiming, trajectory visibility and interactives.
+- **Composition rule:** foreground is intentionally concentrated low in frame to protect pull-back aiming, trajectory visibility and interactives. Landmark overlays remain decorative and must never encode gameplay geometry.
 
 ## Fort Knocks Hub environment kit
 
