@@ -1,9 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="100" viewBox="0 0 150 100">
-<ellipse cx="75" cy="84" rx="56" ry="9" fill="#080c0f" opacity=".48"/>
-<path d="M27 76 L44 49 L70 59 L92 39 L124 62 L130 82 H24Z" fill="#111719"/>
-<path d="M36 72 L48 55 L72 65 L94 46 L116 65 L120 77 H34Z" fill="#3b4642"/>
-<path d="M47 56 L60 25" stroke="#151d1e" stroke-width="10"/><path d="M50 55 L62 28" stroke="#60706b" stroke-width="5"/>
-<path d="M95 47 L112 22" stroke="#151d1e" stroke-width="10"/><path d="M97 47 L113 25" stroke="#536b65" stroke-width="5"/>
-<circle cx="83" cy="60" r="9" fill="#273532"/><circle cx="83" cy="60" r="4" fill="#77b6bf" opacity=".20"/>
-<path d="M40 76 L66 59 M91 76 L116 58" stroke="#9a5941" stroke-width="5" opacity=".62"/>
+<defs><linearGradient id="wreck" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#59645f"/><stop offset=".55" stop-color="#3d4945"/><stop offset="1" stop-color="#2b3633"/></linearGradient></defs>
+<ellipse cx="75" cy="86" rx="58" ry="10" fill="#070c10" opacity=".56"/>
+<path d="M25 78 L44 49 L70 59 L94 39 L126 62 L132 84 H22Z" fill="#10171b"/>
+<path d="M35 73 L48 55 L72 65 L96 46 L118 65 L122 78 H33Z" fill="url(#wreck)"/>
+<path d="M46 56 L60 25" stroke="#151d1f" stroke-width="10"/><path d="M49 55 L62 28" stroke="#697a73" stroke-width="5"/>
+<path d="M96 47 L113 22" stroke="#151d1f" stroke-width="10"/><path d="M98 47 L114 25" stroke="#60746d" stroke-width="5"/>
+<circle cx="84" cy="60" r="9" fill="#273532"/><circle cx="84" cy="60" r="4" fill="#69b8c8" opacity=".12"/>
+<path d="M40 76 L66 59 M92 76 L118 58" stroke="#a15c43" stroke-width="5" opacity=".68"/>
+<path d="M40 64 L58 48" stroke="#e19a62" stroke-width="3" opacity=".24"/>
 </svg>
