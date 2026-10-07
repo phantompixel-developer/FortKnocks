@@ -112,6 +112,7 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 
 func _draw() -> void:
 	var stage := get_damage_stage()
+	_draw_contact_shadow(stage)
 	if stage >= 3:
 		_draw_rubble()
 		return
@@ -180,6 +181,20 @@ func _draw() -> void:
 			PackedColorArray([Color("2d322f")])
 		)
 
+
+
+func _draw_contact_shadow(stage: int) -> void:
+	# Visual-only ambient contact. Physics continues to use the existing cover shape.
+	var shadow_width := maxf(180.0, _body_size.x + 28.0)
+	var contact_y := minf(52.0, _body_size.y * 0.50 + 5.0)
+	var alpha := 0.30 if stage < 3 else 0.20
+	draw_set_transform(
+		Vector2(0.0, contact_y),
+		0.0,
+		Vector2(shadow_width / 180.0, 0.26)
+	)
+	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, alpha))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 func _draw_production_rival_cover(stage: int) -> bool:
