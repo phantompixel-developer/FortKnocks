@@ -1,31 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="350" viewBox="0 0 2160 350">
-<!-- Lower-frame depth only: irregular silhouettes intentionally leave the aiming corridor open. -->
-<g fill="#0e151b">
- <path d="M0 350 V266 L48 240 96 252 142 222 202 238 252 194 326 232 382 214 446 252 510 350Z"/>
- <path d="M452 350 V286 L522 252 580 270 632 224 698 244 754 202 820 248 886 226 960 282 1030 350Z"/>
- <path d="M972 350 V276 L1034 246 1098 260 1154 210 1224 234 1288 194 1350 242 1418 222 1492 278 1568 350Z"/>
- <path d="M1506 350 V286 L1572 252 1634 272 1688 224 1750 242 1810 200 1880 246 1948 226 2022 270 2160 248 V350Z"/>
+<defs>
+ <linearGradient id="wreck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#35444a"/><stop offset=".55" stop-color="#202c31"/><stop offset="1" stop-color="#10171b"/></linearGradient>
+ <linearGradient id="warmEdge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f0a064" stop-opacity=".04"/><stop offset=".45" stop-color="#e58b55" stop-opacity=".18"/><stop offset="1" stop-color="#c86f45" stop-opacity=".02"/></linearGradient>
+</defs>
+
+<!-- near-camera framing: dark, irregular and deliberately low -->
+<g fill="#0b1217">
+ <path d="M0 350 V274 L52 244 106 256 152 216 212 238 266 190 336 230 394 210 458 252 522 350Z"/>
+ <path d="M460 350 V292 L530 256 590 274 642 222 710 244 770 196 834 248 902 224 974 282 1042 350Z"/>
+ <path d="M982 350 V280 L1044 248 1110 264 1168 208 1238 234 1300 188 1366 242 1436 220 1512 278 1582 350Z"/>
+ <path d="M1520 350 V294 L1588 258 1652 278 1708 226 1772 246 1836 198 1904 244 1974 222 2048 270 2160 246 V350Z"/>
 </g>
-<!-- foreground wrecks: different silhouettes and scales prevent a tiled black-band feel -->
-<g stroke="#080d11" stroke-width="7">
- <path d="M150 292 L202 232 H342 L408 276 394 326 H134Z" fill="#263238"/><circle cx="214" cy="326" r="36" fill="#080d11"/><circle cx="352" cy="326" r="36" fill="#080d11"/>
- <path d="M1128 300 L1174 252 H1288 L1344 282 1336 328 H1114Z" fill="#222e33"/><circle cx="1180" cy="328" r="32" fill="#080d11"/><circle cx="1292" cy="328" r="32" fill="#080d11"/>
- <path d="M1970 312 L2012 268 H2108 L2160 294 V338 H1960Z" fill="#29343a"/>
+
+<!-- large near wrecks / barriers provide the cinematic depth break from the approved reference -->
+<g stroke="#070c10" stroke-width="8">
+ <path d="M104 306 L164 238 H328 L410 282 396 340 H84Z" fill="url(#wreck)"/>
+ <circle cx="176" cy="338" r="42" fill="#070c10"/><circle cx="342" cy="338" r="42" fill="#070c10"/>
+ <path d="M1090 312 L1140 258 H1288 L1354 290 1344 342 H1074Z" fill="url(#wreck)"/>
+ <circle cx="1150" cy="340" r="36" fill="#070c10"/><circle cx="1298" cy="340" r="36" fill="#070c10"/>
+ <path d="M1950 318 L1996 268 H2114 L2160 296 V346 H1938Z" fill="#253238"/>
 </g>
-<!-- broken concrete / curb pieces -->
-<g fill="#343c3d" stroke="#0a1013" stroke-width="5">
- <path d="M12 310 L64 248 126 266 110 336 34 340Z"/><path d="M692 316 L746 250 812 268 794 338 716 342Z"/><path d="M1818 312 L1876 246 1940 268 1920 338 1842 340Z"/>
- <path d="M1454 326 L1490 278 1544 290 1534 340 1470 342Z"/>
+<!-- warm rim catches on the closest metal -->
+<g fill="none" stroke="#df8a56" opacity=".34" stroke-linecap="round">
+ <path d="M126 290 L174 250 H318" stroke-width="5"/><path d="M1110 298 L1148 270 H1284" stroke-width="4"/><path d="M1972 304 L2008 278 H2100" stroke-width="4"/>
 </g>
-<g stroke="#8e5942" stroke-width="5"><path d="M62 256 L88 210 M82 262 L120 220 M748 258 L778 208 M1880 254 L1908 206 M1900 260 L1940 216"/></g>
-<!-- dry scrub and bent fencing give near-camera parallax texture -->
-<g stroke="#24362f" stroke-width="7" stroke-linecap="round">
- <path d="M558 312 L532 252 M558 304 L582 236 M552 282 L516 264 M566 278 L604 254"/>
- <path d="M918 318 L892 258 M918 308 L944 240 M912 286 L876 270 M930 282 L962 260"/>
- <path d="M1652 316 L1628 254 M1652 306 L1678 238 M1646 284 L1610 268 M1662 280 L1696 258"/>
+
+<!-- broken concrete with exposed rebar -->
+<g fill="#3c4140" stroke="#090f12" stroke-width="5">
+ <path d="M0 320 L62 248 132 268 114 346 30 350Z"/>
+ <path d="M676 322 L738 250 812 270 792 348 706 350Z"/>
+ <path d="M1810 320 L1874 246 1946 270 1922 348 1838 350Z"/>
+ <path d="M1446 332 L1488 282 1548 294 1536 350 1464 350Z"/>
 </g>
-<g stroke="#202c31" stroke-width="7" opacity=".82"><path d="M1004 344 V278 M1060 344 V260 M1004 292 L1060 278 M1014 310 L1050 298"/></g>
-<!-- sparse warm reflected light keeps the foreground readable, not flat black -->
-<g fill="#c46b42" opacity=".54"><circle cx="430" cy="308" r="7"/><circle cx="1082" cy="312" r="6"/><circle cx="1576" cy="306" r="7"/><circle cx="2070" cy="300" r="6"/></g>
-<g stroke="#d38b57" opacity=".10" stroke-width="10"><path d="M80 334 H410 M720 340 H1020 M1210 338 H1510 M1820 336 H2110"/></g>
+<g stroke="#9f5e45" stroke-width="5">
+ <path d="M58 258 L86 208 M80 264 L122 218 M746 260 L780 206 M1878 256 L1910 204 M1902 264 L1944 214"/>
+</g>
+
+<!-- dry roadside vegetation / fencing: organic silhouette vs clean UI geometry -->
+<g stroke="#253a31" stroke-width="8" stroke-linecap="round">
+ <path d="M556 322 L530 254 M556 312 L584 234 M548 286 L510 266 M568 280 L608 252"/>
+ <path d="M916 324 L890 260 M916 314 L946 238 M908 288 L872 268 M930 282 L966 258"/>
+ <path d="M1648 324 L1622 254 M1648 314 L1680 236 M1640 286 L1604 266 M1662 282 L1700 254"/>
+</g>
+<g stroke="#1d2a30" stroke-width="7" opacity=".90"><path d="M1000 350 V278 M1062 350 V258 M1000 294 L1062 278 M1012 314 L1050 300"/></g>
+
+<!-- warm bounce and small rust hits keep foreground dimensional -->
+<rect y="286" width="2160" height="64" fill="url(#warmEdge)"/>
+<g fill="#d87948" opacity=".56"><circle cx="430" cy="310" r="7"/><circle cx="1082" cy="314" r="6"/><circle cx="1580" cy="308" r="7"/><circle cx="2074" cy="302" r="6"/></g>
+<g stroke="#e29a64" opacity=".12" stroke-width="10"><path d="M72 340 H408 M714 346 H1020 M1204 344 H1510 M1810 342 H2110"/></g>
 </svg>
