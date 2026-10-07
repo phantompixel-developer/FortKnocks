@@ -1,27 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="warehouse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#55615b"/><stop offset="1" stop-color="#333e3a"/></linearGradient>
- <linearGradient id="container" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#695044"/><stop offset=".5" stop-color="#7b5b45"/><stop offset="1" stop-color="#4d4540"/></linearGradient>
+ <linearGradient id="warehouse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#69756e"/><stop offset=".5" stop-color="#4b5752"/><stop offset="1" stop-color="#313b39"/></linearGradient>
+ <linearGradient id="container" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#875b49"/><stop offset=".55" stop-color="#6f5548"/><stop offset="1" stop-color="#4d4540"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#efa063" stop-opacity=".44"/><stop offset="1" stop-color="#c66d48" stop-opacity=".03"/></linearGradient>
 </defs>
-<!-- Depot Line: heavy salvage warehouse and container stacks, with the gameplay gate/cell left visually dominant. -->
-<g stroke="#172024" stroke-linejoin="round">
- <path d="M1180 824 V596 H2050 V824Z" fill="url(#warehouse)" stroke-width="9"/>
- <path d="M1148 596 H2080 L2018 536 H1212Z" fill="#6a5847" stroke-width="9"/>
- <rect x="1270" y="646" width="228" height="178" fill="#283437" stroke-width="7"/>
- <rect x="1528" y="644" width="214" height="180" fill="#303b3c" stroke-width="7"/>
- <rect x="1774" y="642" width="190" height="182" fill="#263234" stroke-width="7"/>
+
+<!-- depot mass is heavy and grounded, but the gate/cell remain the active reads -->
+<g stroke="#142026" stroke-linejoin="round">
+ <path d="M1174 830 V592 H2056 V830Z" fill="url(#warehouse)" stroke-width="9"/>
+ <path d="M1142 592 H2084 L2018 530 H1210Z" fill="#745c49" stroke-width="9"/>
+ <rect x="1264" y="644" width="232" height="186" fill="#29373b" stroke-width="7"/>
+ <rect x="1528" y="642" width="216" height="188" fill="#303e40" stroke-width="7"/>
+ <rect x="1774" y="640" width="192" height="190" fill="#273438" stroke-width="7"/>
 </g>
-<g opacity=".86" stroke="#172024" stroke-width="6">
- <rect x="100" y="730" width="300" height="96" rx="4" fill="url(#container)"/>
- <rect x="430" y="754" width="250" height="72" rx="4" fill="#4d5a55"/>
- <rect x="134" y="634" width="242" height="84" rx="4" fill="#465650"/>
+<path d="M1142 592 L1210 530 H1550 L1484 592Z" fill="url(#warm)"/>
+<path d="M1180 830 H2050" stroke="#0e1519" stroke-width="20" opacity=".34"/>
+
+<!-- containers / recovered freight with sunlit upper planes -->
+<g stroke="#142026" stroke-width="6">
+ <rect x="94" y="730" width="310" height="100" rx="4" fill="url(#container)"/>
+ <rect x="432" y="752" width="256" height="78" rx="4" fill="#53615d"/>
+ <rect x="128" y="630" width="250" height="88" rx="4" fill="#4d5d58"/>
 </g>
-<g stroke="#92978d" stroke-width="3" opacity=".36"><path d="M132 750 H370 M132 774 H370 M160 652 H350 M456 772 H650"/></g>
-<!-- Gantry crane and lamp line. -->
-<g fill="none" stroke="#293531" stroke-linecap="round">
- <path d="M760 842 V510 M1020 842 V510 M748 520 H1034" stroke-width="17"/>
- <path d="M890 520 V650" stroke-width="8"/>
+<g fill="url(#warm)">
+ <path d="M94 730 H404 V752 H94Z"/><path d="M432 752 H688 V770 H432Z"/><path d="M128 630 H378 V650 H128Z"/>
 </g>
-<path d="M888 646 H932" stroke="#7d5942" stroke-width="7"/><circle cx="934" cy="646" r="12" fill="#d09a48" opacity=".48"/>
-<g stroke="#a45f42" stroke-width="5" opacity=".55"><path d="M1240 616 L1280 652 M1580 612 L1620 650 M1870 612 L1910 650"/></g>
+<g stroke="#a5a296" stroke-width="3" opacity=".32"><path d="M126 754 H372 M126 780 H372 M158 654 H348 M458 774 H656"/></g>
+<g stroke="#b76547" stroke-width="4" opacity=".48"><path d="M190 734 V820 M286 734 V814 M520 754 V824"/></g>
+
+<!-- gantry crane / work light -->
+<g fill="none" stroke="#293733" stroke-linecap="round">
+ <path d="M758 848 V506 M1024 848 V506 M744 518 H1038" stroke-width="17"/>
+ <path d="M892 518 V650" stroke-width="8"/>
+ <path d="M776 520 L1006 520 M776 536 L1006 536" stroke-width="4" opacity=".36"/>
+</g>
+<path d="M890 646 H936" stroke="#805a43" stroke-width="7"/><circle cx="938" cy="646" r="13" fill="#e3a153" opacity=".58"/>
+<circle cx="938" cy="646" r="28" fill="#efa55c" opacity=".06"/>
+
+<!-- warehouse wear / reflected sunset -->
+<g stroke="#aa5f43" stroke-width="5" opacity=".56"><path d="M1240 612 L1282 654 M1580 610 L1622 650 M1872 610 L1914 650"/></g>
+<g stroke="#dfa061" stroke-width="4" opacity=".22"><path d="M1260 626 H1480 M1536 624 H1736 M1784 622 H1960"/></g>
+<g fill="#11181b" opacity=".25"><ellipse cx="248" cy="842" rx="146" ry="12"/><ellipse cx="560" cy="842" rx="120" ry="11"/><ellipse cx="894" cy="856" rx="136" ry="11"/></g>
 </svg>
