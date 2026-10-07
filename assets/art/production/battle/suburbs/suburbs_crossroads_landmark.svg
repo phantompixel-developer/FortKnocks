@@ -1,14 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Crossroads: damaged junction furniture and corner-shop shell, all decorative -->
-<g opacity=".76">
- <rect x="1270" y="610" width="300" height="142" fill="#414d4c" stroke="#1a2428" stroke-width="7"/>
- <path d="M1248 610 H1594 L1566 576 H1278Z" fill="#725b49" stroke="#1a2428" stroke-width="7"/>
- <rect x="1302" y="644" width="94" height="108" fill="#273337"/><rect x="1420" y="640" width="118" height="52" fill="#536764"/>
- <path d="M1430 704 H1530" stroke="#b96b46" stroke-width="7"/>
+<!-- Crossroads: corner-shop weight stays centre-left, preserving the elevated enemy at x=1840. -->
+<g opacity=".74" stroke="#1a2428" stroke-width="7">
+ <rect x="1180" y="620" width="292" height="138" fill="#414d4c"/>
+ <path d="M1158 620 H1496 L1468 586 H1188Z" fill="#725b49"/>
+ <rect x="1212" y="652" width="90" height="106" fill="#273337"/>
+ <rect x="1324" y="648" width="116" height="50" fill="#536764"/>
+ <path d="M1334 712 H1434" stroke="#b96b46" stroke-width="7"/>
 </g>
-<g stroke="#243034" fill="none" stroke-linecap="round" opacity=".72">
- <path d="M900 790 V570 M900 604 H980" stroke-width="10"/><path d="M980 604 V648" stroke-width="8"/>
- <path d="M1840 790 V590 M1760 620 H1840" stroke-width="10"/><path d="M1760 620 V664" stroke-width="8"/>
+<!-- Damaged junction signal moved away from the enemy silhouette. -->
+<g stroke="#243034" fill="none" stroke-linecap="round" opacity=".68">
+ <path d="M870 798 V580 M870 614 H950" stroke-width="10"/><path d="M950 614 V656" stroke-width="8"/>
+ <path d="M2030 792 V606 M1952 636 H2030" stroke-width="9"/><path d="M1952 636 V674" stroke-width="7"/>
 </g>
-<g fill="#514f45" opacity=".78"><circle cx="980" cy="654" r="12"/><circle cx="1760" cy="670" r="12"/></g>
+<g fill="#514f45" opacity=".70"><circle cx="950" cy="662" r="12"/><circle cx="1952" cy="680" r="11"/></g>
+<!-- Clean raised-position backing improves player/enemy separation. -->
+<path d="M1510 760 H1985" stroke="#303b3a" stroke-width="30" opacity=".42"/>
 </svg>
