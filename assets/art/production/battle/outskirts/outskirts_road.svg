@@ -1,20 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="350" viewBox="0 0 2160 350">
-<defs><linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#393936"/><stop offset=".35" stop-color="#292a2a"/><stop offset="1" stop-color="#202326"/></linearGradient><linearGradient id="edge" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b77349" stop-opacity=".05"/><stop offset=".5" stop-color="#d18b54" stop-opacity=".25"/><stop offset="1" stop-color="#a95e3e" stop-opacity=".06"/></linearGradient></defs>
+<defs>
+ <linearGradient id="asphalt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3936"/><stop offset=".34" stop-color="#2b2c2b"/><stop offset="1" stop-color="#1f2325"/></linearGradient>
+ <linearGradient id="dust" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#bd7049" stop-opacity=".03"/><stop offset=".5" stop-color="#db9258" stop-opacity=".24"/><stop offset="1" stop-color="#b7613f" stop-opacity=".04"/></linearGradient>
+</defs>
 <rect width="2160" height="350" fill="url(#asphalt)"/>
-<rect y="0" width="2160" height="22" fill="#756959"/><rect y="22" width="2160" height="26" fill="#44433d"/>
-<rect y="48" width="2160" height="32" fill="url(#edge)"/>
-<!-- faded maintenance stripe -->
-<g fill="#d4a542" opacity=".62"><rect x="52" y="190" width="108" height="10"/><rect x="240" y="190" width="108" height="10"/><rect x="428" y="190" width="108" height="10"/><rect x="616" y="190" width="108" height="10"/><rect x="804" y="190" width="108" height="10"/><rect x="992" y="190" width="108" height="10"/><rect x="1180" y="190" width="108" height="10"/><rect x="1368" y="190" width="108" height="10"/><rect x="1556" y="190" width="108" height="10"/><rect x="1744" y="190" width="108" height="10"/><rect x="1932" y="190" width="108" height="10"/></g>
-<!-- authored cracks -->
-<g fill="none" stroke="#11171a" stroke-linecap="round" opacity=".75">
- <path d="M110 72 L145 93 132 121 178 142 160 166" stroke-width="6"/><path d="M138 118 L98 132 82 158" stroke-width="4"/>
- <path d="M430 90 L476 107 454 138 502 160 486 188" stroke-width="5"/><path d="M462 137 L425 156" stroke-width="3"/>
- <path d="M780 68 L812 96 800 130 846 154 824 182" stroke-width="6"/>
- <path d="M1120 108 L1168 126 1140 151 1186 171" stroke-width="5"/><path d="M1141 150 L1102 170 1090 198" stroke-width="3"/>
- <path d="M1510 76 L1545 108 1524 136 1570 160 1555 190" stroke-width="6"/>
- <path d="M1880 104 L1920 126 1898 154 1940 176" stroke-width="5"/>
+<rect width="2160" height="22" fill="#786b5a"/><rect y="22" width="2160" height="26" fill="#45443e"/><rect y="48" width="2160" height="34" fill="url(#dust)"/>
+<!-- maintenance line is faded, interrupted and unequal -->
+<g fill="#d5a748" opacity=".54"><rect x="55" y="190" width="104" height="9"/><rect x="246" y="190" width="87" height="9"/><rect x="430" y="190" width="116" height="9"/><rect x="632" y="190" width="72" height="9"/><rect x="814" y="190" width="112" height="9"/><rect x="1010" y="190" width="96" height="9"/><rect x="1198" y="190" width="108" height="9"/><rect x="1392" y="190" width="76" height="9"/><rect x="1578" y="190" width="116" height="9"/><rect x="1778" y="190" width="92" height="9"/><rect x="1960" y="190" width="92" height="9"/></g>
+<!-- patchwork and resurfaced strips -->
+<g fill="#303536" opacity=".88"><path d="M246 76 h205 l-20 70 -158 10 -44-40Z"/><path d="M886 212 h252 l-30 84 -198-6 -45-42Z"/><path d="M1628 72 h214 l-20 72 -165 13 -43-43Z"/></g>
+<g fill="#252a2b" opacity=".74"><path d="M590 42 h174 v34 H590Z"/><path d="M1320 96 h176 v30 H1320Z"/><path d="M1880 232 h164 v34 H1880Z"/></g>
+<!-- cracks with varied branching -->
+<g fill="none" stroke="#11171a" stroke-linecap="round" opacity=".78">
+ <path d="M110 72 L146 94 132 122 178 143 160 170 M134 120 L98 136 82 164" stroke-width="5"/>
+ <path d="M480 100 L520 120 498 148 544 173 526 202 M510 148 L470 166" stroke-width="5"/>
+ <path d="M790 66 L824 96 810 132 856 156 834 184" stroke-width="6"/>
+ <path d="M1125 110 L1172 128 1144 154 1192 175 M1145 153 L1105 174 1092 202" stroke-width="5"/>
+ <path d="M1512 76 L1548 110 1526 138 1572 164 1558 194" stroke-width="6"/>
+ <path d="M1884 106 L1924 128 1900 158 1944 180 M1920 132 L1962 116" stroke-width="5"/>
 </g>
-<!-- patched asphalt -->
-<g fill="#313537" opacity=".82"><path d="M265 80 h180 l-20 62 -142 10 -34-38Z"/><path d="M910 205 h214 l-28 82 -174-6 -34-42Z"/><path d="M1650 82 h185 l-18 66 -146 10 -38-40Z"/></g>
-<g fill="#605749" opacity=".5"><circle cx="680" cy="112" r="8"/><circle cx="710" cy="132" r="5"/><circle cx="1340" cy="220" r="7"/><circle cx="1388" cy="202" r="5"/><circle cx="2020" cy="95" r="8"/></g>
+<!-- oil, tyre scuffs and aggregate make vehicles sit on a used surface -->
+<g fill="#111719" opacity=".26"><ellipse cx="364" cy="278" rx="70" ry="13"/><ellipse cx="726" cy="116" rx="50" ry="10"/><ellipse cx="1288" cy="270" rx="76" ry="14"/><ellipse cx="1788" cy="170" rx="58" ry="11"/></g>
+<g stroke="#101619" stroke-width="9" opacity=".28"><path d="M310 244 C388 224 430 236 500 220"/><path d="M1390 300 C1470 276 1540 288 1612 266"/></g>
+<g fill="#6a5b49" opacity=".48"><circle cx="680" cy="112" r="8"/><circle cx="710" cy="132" r="5"/><circle cx="1340" cy="220" r="7"/><circle cx="1388" cy="202" r="5"/><circle cx="2020" cy="95" r="8"/><circle cx="2038" cy="118" r="4"/></g>
+<path d="M0 66 C420 52 840 78 1200 62 S1840 74 2160 54" stroke="#e0975e" stroke-width="15" opacity=".065" fill="none"/>
 </svg>
