@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
+<defs>
+ <linearGradient id="yard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4e5a55"/><stop offset="1" stop-color="#2d3734"/></linearGradient>
+</defs>
+<!-- Scrap Gate: salvage-yard throat leaves a clean visual slot around the real collapsible gate. -->
+<g stroke="#172024" stroke-linejoin="round">
+ <path d="M0 832 V664 H560 V832Z" fill="url(#yard)" stroke-width="8"/>
+ <path d="M1560 832 V650 H2160 V832Z" fill="#3c4945" stroke-width="8"/>
+ <path d="M0 664 H560 L520 620 H40Z" fill="#6a5745" stroke-width="8"/>
+ <path d="M1560 650 H2160 V608 H1605Z" fill="#625343" stroke-width="8"/>
+</g>
+<!-- Tall crane creates mission identity without imitating the gameplay gate. -->
+<g fill="none" stroke="#26322f" stroke-linecap="round">
+ <path d="M720 846 V430" stroke-width="19"/>
+ <path d="M710 448 H1210" stroke-width="17"/>
+ <path d="M1180 448 L1110 584" stroke-width="9"/>
+ <path d="M722 520 L610 650" stroke-width="11"/>
+</g>
+<path d="M1108 574 V704" stroke="#73523e" stroke-width="6"/><circle cx="1108" cy="718" r="17" fill="#39433f" stroke="#172024" stroke-width="5"/>
+<!-- Uneven scrap stacks sit either side of the central opening. -->
+<g opacity=".82" stroke="#141d20" stroke-width="5">
+ <path d="M590 838 L604 790 760 776 820 810 808 844Z" fill="#59635d"/>
+ <path d="M634 786 L656 742 778 736 832 766 816 802Z" fill="#684b3e"/>
+ <path d="M1290 842 L1310 792 1450 778 1518 814 1500 846Z" fill="#4d5a55"/>
+ <path d="M1340 784 L1362 744 1470 742 1524 770 1510 806Z" fill="#70503e"/>
+</g>
+<g stroke="#c99747" stroke-width="7" opacity=".48"><path d="M70 694 L126 748 M1640 684 L1698 740 M1810 678 L1868 736"/></g>
+</svg>
