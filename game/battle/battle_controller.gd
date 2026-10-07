@@ -51,8 +51,6 @@ const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 @onready var aim_guide: AimGuide = $AimGuide
 
 @onready var hud_root: Control = $HUD/Root
-@onready var mission_context_label: Label = $HUD/Root/MissionContextLabel
-@onready var mission_objective_label: Label = $HUD/Root/MissionObjectiveLabel
 @onready var player_status_card: ColorRect = $HUD/Root/PlayerStatusCard
 @onready var enemy_status_card: ColorRect = $HUD/Root/EnemyStatusCard
 @onready var health_label: Label = $HUD/Root/PlayerStatusCard/HealthLabel
@@ -94,10 +92,6 @@ const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 @onready var weapon_role_label: Label = $HUD/Root/WeaponInfoCard/WeaponRoleLabel
 @onready var power_label: Label = $HUD/Root/ControlDeck/PowerLabel
 @onready var angle_label: Label = $HUD/Root/ControlDeck/AngleLabel
-@onready var power_bar_back: ColorRect = $HUD/Root/ControlDeck/PowerBarBack
-@onready var power_bar_fill: ColorRect = $HUD/Root/ControlDeck/PowerBarFill
-@onready var angle_bar_back: ColorRect = $HUD/Root/ControlDeck/AngleBarBack
-@onready var angle_bar_fill: ColorRect = $HUD/Root/ControlDeck/AngleBarFill
 @onready var last_shot_label: Label = $HUD/Root/ControlDeck/LastShotLabel
 @onready var scrap_bolt_button: Button = $HUD/Root/WeaponTray/ScrapBolt
 @onready var heavy_slug_button: Button = $HUD/Root/WeaponTray/HeavySlug
@@ -177,8 +171,6 @@ var _enemy_target_x := 0.0
 var _hud_base_offsets: Dictionary = {}
 
 func _style_live_hud() -> void:
-	mission_context_label.add_theme_color_override("font_color", ThemeScript.COLD)
-	mission_objective_label.add_theme_color_override("font_color", ThemeScript.BONE)
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	health_label.add_theme_color_override("font_color", ThemeScript.BONE)
 	player_cover_label.add_theme_color_override("font_color", ThemeScript.MUTED)
@@ -224,8 +216,6 @@ func _style_live_hud() -> void:
 func _capture_hud_layout() -> void:
 	_hud_base_offsets.clear()
 	for item in [
-		mission_context_label,
-		mission_objective_label,
 		player_status_card,
 		enemy_status_card,
 		turn_label,
@@ -271,8 +261,6 @@ func _apply_hud_safe_area() -> void:
 	_set_hud_control_shift(enemy_status_card, Vector2(right_shift, top_shift))
 	_set_hud_control_shift(inspect_button, Vector2(right_shift, top_shift))
 
-	_set_hud_control_shift(mission_context_label, Vector2(center_shift_x, top_shift))
-	_set_hud_control_shift(mission_objective_label, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(turn_label, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(weapon_info_card, Vector2(center_shift_x, top_shift))
 	_set_hud_control_shift(inspect_banner, Vector2(center_shift_x, top_shift))
@@ -405,8 +393,6 @@ func _ready() -> void:
 	call_deferred("_apply_hud_safe_area")
 	_set_weapon_buttons_enabled(false)
 	_update_last_shot_display()
-	_update_aim_meters(0.0, 0.0)
-	_update_mission_context()
 	_update_hud()
 
 	if _campaign_managed and _prepared_mission != null:
@@ -437,8 +423,6 @@ func _show_encounter_picker() -> void:
 	enemy_status_card.visible = false
 	health_label.visible = false
 	enemy_health_label.visible = false
-	mission_context_label.text = "FORT KNOCKS • FIELD OPERATIONS"
-	mission_objective_label.text = "SELECT A MISSION"
 	turn_label.text = "FIELD OPERATIONS"
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 	picker_briefing_label.text = "Choose one of %d field operations. Each mission uses the same core combat rules." % _missions.size()
@@ -475,7 +459,6 @@ func _begin_mission(definition: MissionDefinition) -> void:
 		return
 
 	_current_mission = definition
-	_update_mission_context()
 	_completion_emitted = false
 	_progression_reward = 0
 	_mission_deploying = false
@@ -605,7 +588,6 @@ func _begin_drag(screen_position: Vector2) -> void:
 	_aim_angle_degrees = 0.0
 	power_label.text = "POWER 0%"
 	angle_label.text = "ANGLE —"
-	_update_aim_meters(0.0, 0.0)
 	hint_label.text = (
 		"%s • SPOTTER PRECISION PREVIEW" % _selected_weapon.display_name
 		if _spotter_preview_active()
@@ -623,7 +605,6 @@ func _update_drag(screen_position: Vector2) -> void:
 		_aim_angle_degrees = 0.0
 		power_label.text = "POWER 0%"
 		angle_label.text = "ANGLE —"
-		_update_aim_meters(0.0, 0.0)
 		aim_guide.clear()
 		return
 
@@ -640,7 +621,6 @@ func _update_drag(screen_position: Vector2) -> void:
 	aim_guide.show_prediction(player.get_launch_origin(), _aim_velocity, constrained_pullback)
 	power_label.text = "POWER %d%%" % int(round(_aim_power * 100.0))
 	angle_label.text = "ANGLE %d°" % int(round(_aim_angle_degrees))
-	_update_aim_meters(_aim_power, _aim_angle_degrees)
 
 func _end_drag(screen_position: Vector2) -> void:
 	if not _dragging:
@@ -657,7 +637,6 @@ func _end_drag(screen_position: Vector2) -> void:
 		_update_enemy_locator()
 		power_label.text = "POWER —"
 		angle_label.text = "ANGLE —"
-		_update_aim_meters(0.0, 0.0)
 		hint_label.text = "Pull back to aim • release to fire"
 		return
 
@@ -675,7 +654,6 @@ func _select_weapon(definition: WeaponDefinition) -> void:
 	aim_guide.clear()
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
-	_update_aim_meters(0.0, 0.0)
 	hint_label.text = "%s selected" % definition.display_name
 	_update_weapon_panel()
 	_update_weapon_buttons()
@@ -761,7 +739,6 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	last_impact_marker.visible = false
 	power_label.text = "POWER —"
 	angle_label.text = "ANGLE —"
-	_update_aim_meters(0.0, 0.0)
 	turn_label.text = "YOUR TURN"
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 
@@ -1636,9 +1613,9 @@ func _on_health_changed(_current: int, _maximum: int) -> void:
 	_update_hud()
 
 func _update_hud() -> void:
-	health_label.text = "SURVIVOR  %d/%d" % [player.health, player.max_health]
-	player_cover_label.text = "PLATFORM  %d/%d" % [player_cover.health, player_cover.max_health]
-	enemy_health_label.text = "RIVAL  %d/%d" % [enemy.health, enemy.max_health]
+	health_label.text = "YOU  %d/%d" % [player.health, player.max_health]
+	player_cover_label.text = "COVER  %d/%d" % [player_cover.health, player_cover.max_health]
+	enemy_health_label.text = "ENEMY  %d/%d" % [enemy.health, enemy.max_health]
 	enemy_cover_label.text = "COVER  %d/%d" % [enemy_cover.health, enemy_cover.max_health]
 	_update_status_bar(player_health_bar_back, player_health_bar_fill, player.health, player.max_health, ThemeScript.HAZARD)
 	_update_status_bar(player_cover_bar_back, player_cover_bar_fill, player_cover.health, player_cover.max_health, ThemeScript.OXIDE)
@@ -1648,37 +1625,6 @@ func _update_hud() -> void:
 		_update_enemy_locator()
 	if target_card.visible:
 		_update_target_card()
-
-func _update_mission_context() -> void:
-	if mission_context_label == null or mission_objective_label == null:
-		return
-	if _current_mission == null:
-		mission_context_label.text = "FORT KNOCKS • FIELD OPERATIONS"
-		mission_objective_label.text = "SELECT A MISSION"
-		return
-	mission_context_label.text = "%s • MISSION %02d • %s" % [
-		_mission_region_text(_current_mission),
-		maxi(1, _current_mission.campaign_order),
-		_current_mission.display_name.to_upper(),
-	]
-	mission_objective_label.text = "OBJECTIVE • %s" % _current_mission.objective_text.to_upper()
-
-
-func _update_aim_meters(power_ratio: float, angle_degrees: float) -> void:
-	if power_bar_back != null and power_bar_fill != null:
-		var power_width := power_bar_back.offset_right - power_bar_back.offset_left
-		power_bar_fill.offset_left = power_bar_back.offset_left
-		power_bar_fill.offset_right = power_bar_back.offset_left + power_width * clampf(power_ratio, 0.0, 1.0)
-		power_bar_fill.color = ThemeScript.RUST if power_ratio >= 0.82 else ThemeScript.HAZARD
-	if angle_bar_back != null and angle_bar_fill != null:
-		var angle_width := angle_bar_back.offset_right - angle_bar_back.offset_left
-		var angle_ratio := 0.0
-		if angle_degrees > 0.0:
-			angle_ratio = clampf((angle_degrees - 10.0) / 70.0, 0.0, 1.0)
-		angle_bar_fill.offset_left = angle_bar_back.offset_left
-		angle_bar_fill.offset_right = angle_bar_back.offset_left + angle_width * angle_ratio
-		angle_bar_fill.color = ThemeScript.COLD
-
 
 func _update_status_bar(
 	back: ColorRect,
@@ -1766,7 +1712,7 @@ func _update_enemy_locator() -> void:
 	var delta_x := enemy.global_position.x - player.global_position.x
 	var arrow := "→" if delta_x >= 0.0 else "←"
 	var approximate_metres := maxi(1, int(round(absf(delta_x) / 40.0)))
-	enemy_locator_label.text = "RIVAL %s  ~%dm" % [arrow, approximate_metres]
+	enemy_locator_label.text = "ENEMY %s  ~%dm" % [arrow, approximate_metres]
 
 func _restart() -> void:
 	if _campaign_managed:
