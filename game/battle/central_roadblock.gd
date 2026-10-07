@@ -14,12 +14,6 @@ func _draw() -> void:
 		draw_texture_rect(_production_texture, Rect2(-120.0, -100.0, 240.0, 176.0), false)
 		return
 
-func _draw_contact_shadow() -> void:
-	# Extends the authored object's internal shadow so it seats into every road treatment.
-	draw_set_transform(Vector2(0.0, 70.0), 0.0, Vector2(1.45, 0.24))
-	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, 0.24))
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-
 	var outline := Color("171c1b")
 	var concrete := Color("69736d")
 	var shade := Color("4b5550")
@@ -77,3 +71,9 @@ func _draw_contact_shadow() -> void:
 	draw_rect(Rect2(54, -20, 43, 35), Color("46524c"))
 	for p in [Vector2(61, -13), Vector2(89, -13), Vector2(61, 7), Vector2(89, 7)]:
 		draw_circle(p, 3.0, outline)
+
+func _draw_contact_shadow() -> void:
+	# Extends the authored object's internal shadow so it seats into every road treatment.
+	draw_set_transform(Vector2(0.0, 70.0), 0.0, Vector2(1.45, 0.24))
+	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, 0.24))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
