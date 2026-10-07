@@ -1,10 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="280" height="120" viewBox="0 0 280 120">
-<ellipse cx="140" cy="105" rx="112" ry="9" fill="#080c0f" opacity=".50"/>
-<path d="M24 86 L64 63 L102 76 L142 55 L190 78 L236 64 L258 94 H22Z" fill="#111719"/>
-<path d="M36 84 L68 68 L105 82 L145 62 L188 84 L232 70 L244 91 H35Z" fill="#4a4c43"/>
-<path d="M54 68 L90 48" stroke="#80503c" stroke-width="7"/><path d="M127 65 L151 34" stroke="#68736d" stroke-width="8"/><path d="M204 73 L229 48" stroke="#9a6a46" stroke-width="7"/>
-<rect x="72" y="55" width="43" height="30" fill="#655640" stroke="#151b1c" stroke-width="4" transform="rotate(-10 93 70)"/>
-<rect x="158" y="54" width="39" height="28" fill="#756249" stroke="#151b1c" stroke-width="4" transform="rotate(8 177 68)"/>
-<circle cx="62" cy="94" r="15" fill="#090d11"/><circle cx="218" cy="94" r="13" fill="#090d11"/>
-<path d="M82 84 L101 65 M104 84 L123 65" stroke="#d4aa55" stroke-width="5" opacity=".45"/>
+<defs><linearGradient id="wreck" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#62655b"/><stop offset=".5" stop-color="#4b4e46"/><stop offset="1" stop-color="#353a37"/></linearGradient></defs>
+<ellipse cx="140" cy="107" rx="116" ry="10" fill="#070c10" opacity=".56"/>
+<path d="M22 88 L64 63 L102 76 L144 54 L192 78 L238 64 L260 96 H20Z" fill="#10171b"/>
+<path d="M34 85 L68 68 L106 82 L146 62 L190 84 L234 70 L246 92 H33Z" fill="url(#wreck)"/>
+<path d="M54 68 L90 48" stroke="#87523f" stroke-width="7"/><path d="M128 65 L152 34" stroke="#6f7c75" stroke-width="8"/><path d="M206 73 L231 48" stroke="#a06b47" stroke-width="7"/>
+<rect x="72" y="55" width="43" height="30" fill="#705d47" stroke="#151b1d" stroke-width="4" transform="rotate(-10 93 70)"/>
+<rect x="158" y="54" width="39" height="28" fill="#80694d" stroke="#151b1d" stroke-width="4" transform="rotate(8 177 68)"/>
+<circle cx="62" cy="96" r="15" fill="#090d11"/><circle cx="220" cy="96" r="13" fill="#090d11"/>
+<path d="M82 84 L101 65 M104 84 L123 65" stroke="#d8aa4e" stroke-width="5" opacity=".48"/>
+<path d="M40 80 L74 68" stroke="#df9961" stroke-width="3" opacity=".24"/>
 </svg>
