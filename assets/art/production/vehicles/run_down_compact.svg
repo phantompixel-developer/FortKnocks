@@ -109,4 +109,8 @@
   <!-- lower grime -->
   <path d="M178 164 C226 174 299 171 334 163" stroke="#211f1c" stroke-width="8" opacity=".45"/>
   <path d="M80 161 L119 168 M401 159 L431 163" stroke="#2a2621" stroke-width="6" opacity=".5"/>
+
+<!-- shared lower contact mass keeps compact consistent with later platforms -->
+<path d="M82 171 H432" stroke="#0d1418" stroke-width="13" opacity=".24" stroke-linecap="round"/>
+<path d="M150 70 L250 62" stroke="#ffd18a" stroke-width="3" opacity=".18" stroke-linecap="round"/>
 </svg>
