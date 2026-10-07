@@ -74,6 +74,7 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
+	_draw_ground_treatment()
 	if is_destroyed:
 		if _destroyed_texture == null:
 			_destroyed_texture = ProductionArtScript.texture_from_svg(RELAY_DESTROYED_TEXTURE_PATH)
@@ -123,6 +124,19 @@ func _draw() -> void:
 	var ratio: float = float(health) / float(max_health)
 	draw_rect(Rect2(-46, -235, 92, 10), outline)
 	draw_rect(Rect2(-42, -232, 84.0 * ratio, 4), cold)
+
+
+func _draw_ground_treatment() -> void:
+	# Actual recovered-tech objective: restrained cold spill plus neutral contact.
+	draw_set_transform(Vector2(0.0, 2.0), 0.0, Vector2(1.15, 0.22))
+	draw_circle(Vector2.ZERO, 58.0, Color(0.025, 0.035, 0.040, 0.28))
+	if not is_destroyed:
+		draw_circle(Vector2.ZERO, 72.0, Color(0.32, 0.72, 0.76, 0.065))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	if not is_destroyed:
+		# Small floor brackets read as objective framing without becoming HUD.
+		draw_line(Vector2(-78, 4), Vector2(-54, 4), Color("77b6bf", 0.36), 4.0)
+		draw_line(Vector2(54, 4), Vector2(78, 4), Color("77b6bf", 0.36), 4.0)
 
 
 func _draw_production_relay() -> void:
