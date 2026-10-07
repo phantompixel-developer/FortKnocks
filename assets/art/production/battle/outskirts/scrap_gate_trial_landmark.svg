@@ -1,28 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="yard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4e5a55"/><stop offset="1" stop-color="#2d3734"/></linearGradient>
+ <linearGradient id="yardA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65716b"/><stop offset=".52" stop-color="#495650"/><stop offset="1" stop-color="#2c3734"/></linearGradient>
+ <linearGradient id="yardB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c6558"/><stop offset="1" stop-color="#3d4541"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#e9995f" stop-opacity=".42"/><stop offset="1" stop-color="#bd6845" stop-opacity=".03"/></linearGradient>
 </defs>
-<!-- Scrap Gate: salvage-yard throat leaves a clean visual slot around the real collapsible gate. -->
-<g stroke="#172024" stroke-linejoin="round">
- <path d="M0 832 V664 H560 V832Z" fill="url(#yard)" stroke-width="8"/>
- <path d="M1560 832 V650 H2160 V832Z" fill="#3c4945" stroke-width="8"/>
- <path d="M0 664 H560 L520 620 H40Z" fill="#6a5745" stroke-width="8"/>
- <path d="M1560 650 H2160 V608 H1605Z" fill="#625343" stroke-width="8"/>
+
+<!-- salvage-yard throat leaves a clean central silhouette for the real collapsible gate -->
+<g stroke="#142026" stroke-linejoin="round">
+ <path d="M0 838 V664 H566 V838Z" fill="url(#yardA)" stroke-width="8"/>
+ <path d="M1554 838 V650 H2160 V838Z" fill="url(#yardB)" stroke-width="8"/>
+ <path d="M0 664 H566 L522 616 H42Z" fill="#7a5e49" stroke-width="8"/>
+ <path d="M1554 650 H2160 V606 H1602Z" fill="#6a5847" stroke-width="8"/>
 </g>
-<!-- Tall crane creates mission identity without imitating the gameplay gate. -->
-<g fill="none" stroke="#26322f" stroke-linecap="round">
- <path d="M720 846 V430" stroke-width="19"/>
- <path d="M710 448 H1210" stroke-width="17"/>
- <path d="M1180 448 L1110 584" stroke-width="9"/>
- <path d="M722 520 L610 650" stroke-width="11"/>
+<path d="M0 664 L42 616 H154 L110 664Z" fill="url(#warm)"/>
+<path d="M1554 650 L1602 606 H1716 L1662 650Z" fill="url(#warm)"/>
+
+<!-- crane is the mission identifier; structure is dimensional but clearly background -->
+<g fill="none" stroke="#263430" stroke-linecap="round">
+ <path d="M718 850 V424" stroke-width="19"/>
+ <path d="M706 444 H1216" stroke-width="17"/>
+ <path d="M1186 444 L1112 586" stroke-width="9"/>
+ <path d="M720 518 L608 654" stroke-width="11"/>
+ <path d="M728 510 L1018 444" stroke-width="5" opacity=".50"/>
 </g>
-<path d="M1108 574 V704" stroke="#73523e" stroke-width="6"/><circle cx="1108" cy="718" r="17" fill="#39433f" stroke="#172024" stroke-width="5"/>
-<!-- Uneven scrap stacks sit either side of the central opening. -->
-<g opacity=".82" stroke="#141d20" stroke-width="5">
- <path d="M590 838 L604 790 760 776 820 810 808 844Z" fill="#59635d"/>
- <path d="M634 786 L656 742 778 736 832 766 816 802Z" fill="#684b3e"/>
- <path d="M1290 842 L1310 792 1450 778 1518 814 1500 846Z" fill="#4d5a55"/>
- <path d="M1340 784 L1362 744 1470 742 1524 770 1510 806Z" fill="#70503e"/>
+<path d="M1110 576 V706" stroke="#805a43" stroke-width="6"/><circle cx="1110" cy="720" r="18" fill="#404945" stroke="#142026" stroke-width="5"/>
+<path d="M720 436 H1030" stroke="#db9560" stroke-width="4" opacity=".28"/>
+
+<!-- irregular stripped-vehicle/scrap stacks -->
+<g stroke="#121d22" stroke-width="5">
+ <path d="M584 842 L602 790 760 774 824 810 812 848Z" fill="#5b6863"/>
+ <path d="M626 786 L652 740 780 734 838 766 820 804Z" fill="#735247"/>
+ <path d="M1284 846 L1306 792 1452 776 1522 814 1504 850Z" fill="#52605a"/>
+ <path d="M1336 784 L1360 742 1472 740 1528 770 1512 808Z" fill="#7a5947"/>
 </g>
-<g stroke="#c99747" stroke-width="7" opacity=".48"><path d="M70 694 L126 748 M1640 684 L1698 740 M1810 678 L1868 736"/></g>
+<g fill="url(#warm)">
+ <path d="M602 790 L760 774 722 798 604 814Z"/><path d="M1306 792 L1452 776 1414 800 1308 814Z"/>
+</g>
+<g stroke="#d49c4d" stroke-width="7" opacity=".52"><path d="M72 694 L128 750 M1642 684 L1700 742 M1812 680 L1870 738"/></g>
+<g fill="#12191d" opacity=".26"><ellipse cx="722" cy="852" rx="112" ry="11"/><ellipse cx="1420" cy="854" rx="116" ry="11"/></g>
 </svg>
