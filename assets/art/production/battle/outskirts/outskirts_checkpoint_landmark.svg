@@ -1,24 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<defs><linearGradient id="post" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59645e"/><stop offset="1" stop-color="#303a37"/></linearGradient></defs>
-<!-- Outskirts Checkpoint: accumulated defensive infrastructure from prior missions, but no duplicate tactical props. -->
-<g stroke="#172024" stroke-linejoin="round">
- <path d="M1180 824 V604 H1540 V824Z" fill="url(#post)" stroke-width="9"/>
- <path d="M1160 604 H1562 L1524 560 H1200Z" fill="#685645" stroke-width="8"/>
- <rect x="1220" y="650" width="104" height="80" fill="#263236" stroke-width="6"/>
- <rect x="1360" y="642" width="132" height="58" fill="#465b57" stroke-width="6"/>
+<defs>
+ <linearGradient id="post" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f7b74"/><stop offset=".52" stop-color="#505d58"/><stop offset="1" stop-color="#303a37"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#efa165" stop-opacity=".44"/><stop offset="1" stop-color="#ca7049" stop-opacity=".03"/></linearGradient>
+</defs>
+
+<!-- accumulated civilian checkpoint infrastructure; tactical props remain separate -->
+<g stroke="#142026" stroke-linejoin="round">
+ <path d="M1176 830 V600 H1546 V830Z" fill="url(#post)" stroke-width="9"/>
+ <path d="M1156 600 H1566 L1526 554 H1198Z" fill="#735b48" stroke-width="8"/>
+ <rect x="1218" y="648" width="108" height="84" fill="#28373b" stroke-width="6"/>
+ <rect x="1362" y="640" width="136" height="62" fill="#4b615e" stroke-width="6"/>
 </g>
-<!-- Elevated watch/service platform echoes High Ground while remaining background-only. -->
-<g fill="none" stroke="#26322f" stroke-linecap="round">
- <path d="M1600 804 V600 M1960 804 V600 M1590 606 H1972" stroke-width="16"/>
- <path d="M1640 606 V560 M1750 606 V560 M1860 606 V560 M1950 606 V560" stroke-width="7"/>
- <path d="M1634 564 H1960" stroke-width="8"/>
+<path d="M1176 600 L1198 554 H1320 L1280 600Z" fill="url(#warm)"/>
+<g fill="#eda05f" opacity=".16"><rect x="1226" y="656" width="92" height="68"/></g>
+
+<!-- background watch/service platform -->
+<g fill="none" stroke="#293733" stroke-linecap="round">
+ <path d="M1596 808 V596 M1964 808 V596 M1586 604 H1976" stroke-width="16"/>
+ <path d="M1638 604 V556 M1750 604 V556 M1862 604 V556 M1954 604 V556" stroke-width="7"/>
+ <path d="M1630 560 H1966" stroke-width="8"/>
+ <path d="M1612 616 L1948 616" stroke-width="4" opacity=".36"/>
 </g>
-<!-- Checkpoint approach clutter and route markers, kept low and lateral. -->
-<g opacity=".78" stroke="#151e21" stroke-width="6">
- <path d="M320 826 L362 786 H500 L548 816 536 850 H310Z" fill="#4b5752"/>
- <path d="M620 842 L650 808 742 794 792 824 782 848Z" fill="#6a5141"/>
- <path d="M2040 842 L2070 802 2140 794 2160 808 V850 H2030Z" fill="#46534f"/>
+<path d="M1592 598 H1974" stroke="#de9a60" stroke-width="4" opacity=".26"/>
+
+<!-- accumulated route clutter kept low and lateral -->
+<g stroke="#121d22" stroke-width="6">
+ <path d="M314 830 L360 784 H504 L554 816 540 854 H302Z" fill="#50605b"/>
+ <path d="M614 846 L648 806 744 792 798 824 786 852Z" fill="#735446"/>
+ <path d="M2038 846 L2068 800 2142 790 2160 808 V854 H2028Z" fill="#4b5955"/>
 </g>
-<g stroke="#d0a247" stroke-width="8" opacity=".48"><path d="M920 806 L972 754 M1000 816 L1052 764 M1068 812 L1120 760"/></g>
-<path d="M880 858 H1160" stroke="#9f5b42" stroke-width="7" stroke-dasharray="18 18" opacity=".42"/>
+<g fill="url(#warm)"><path d="M326 818 L360 784 H470 L440 806Z"/><path d="M626 838 L650 808 730 796 704 820Z"/></g>
+<g stroke="#d9a34d" stroke-width="8" opacity=".52"><path d="M918 808 L972 752 M1000 818 L1054 762 M1070 814 L1124 758"/></g>
+<path d="M876 860 H1164" stroke="#a45e43" stroke-width="7" stroke-dasharray="18 18" opacity=".44"/>
+<g fill="#10171b" opacity=".24"><ellipse cx="422" cy="860" rx="120" ry="10"/><ellipse cx="706" cy="862" rx="92" ry="9"/></g>
 </svg>
