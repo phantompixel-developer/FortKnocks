@@ -21,4 +21,10 @@
 <path d="M112 201 A44 44 0 0 1 196 201 M460 201 A44 44 0 0 1 544 201" fill="none" stroke="#101619" stroke-width="8"/>
 <!-- exposed welds/repair -->
 <path d="M78 188 L122 182 M225 164 L204 191 M365 171 L382 190" stroke="#c7774e" stroke-width="4" opacity=".65"/>
+
+<!-- shared Fort Knocks golden-hour key / weighted lower silhouette -->
+<path d="M72 164 C172 136 344 126 562 154" stroke="#f0a064" stroke-width="5" opacity=".24" fill="none" stroke-linecap="round"/>
+<path d="M198 100 L318 94" stroke="#ffd18a" stroke-width="3" opacity=".22" stroke-linecap="round"/>
+<path d="M98 199 H574" stroke="#0d1418" stroke-width="14" opacity=".24" stroke-linecap="round"/>
+<g fill="#b66345" opacity=".42"><circle cx="244" cy="182" r="4"/><circle cx="438" cy="174" r="3"/></g>
 </svg>
