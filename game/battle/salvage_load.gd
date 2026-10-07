@@ -74,6 +74,7 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
+	_draw_ground_treatment()
 	if is_destroyed:
 		if _destroyed_texture == null:
 			_destroyed_texture = ProductionArtScript.texture_from_svg(SALVAGE_DESTROYED_TEXTURE_PATH)
@@ -121,6 +122,17 @@ func _draw() -> void:
 	var ratio: float = float(health) / float(max_health)
 	draw_rect(Rect2(-72, -91, 144, 10), outline)
 	draw_rect(Rect2(-68, -88, 136.0 * ratio, 4), hazard)
+
+
+func _draw_ground_treatment() -> void:
+	var alpha := 0.18 if is_destroyed else 0.29
+	draw_set_transform(Vector2(0.0, 2.0), 0.0, Vector2(1.70, 0.22))
+	draw_circle(Vector2.ZERO, 66.0, Color(0.025, 0.035, 0.040, alpha))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	if not is_destroyed:
+		# Hazard-yellow floor ticks keep the protected load readable against road wear.
+		draw_line(Vector2(-126, 4), Vector2(-96, 4), Color("d4aa55", 0.40), 5.0)
+		draw_line(Vector2(96, 4), Vector2(126, 4), Color("d4aa55", 0.40), 5.0)
 
 
 func _draw_production_salvage() -> void:
