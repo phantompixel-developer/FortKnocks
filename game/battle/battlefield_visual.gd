@@ -1,6 +1,8 @@
 extends Node2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
+const OUTSKIRTS_REFERENCE_PHOTO_PATH := "res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/region_photo_outskirts.png"
+const SUBURBS_REFERENCE_PHOTO_PATH := "res://assets/art/claude_assets/1_Asset_Kit/04_command_board/art/region_photo_suburbs.png"
 const OUTSKIRTS_SKY_FAR_PATH := "res://assets/art/production/battle/outskirts/outskirts_sky_far.svg"
 const OUTSKIRTS_MIDGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_midground.svg"
 const OUTSKIRTS_ROAD_PATH := "res://assets/art/production/battle/outskirts/outskirts_road.svg"
@@ -34,17 +36,31 @@ const SCRAP_STACK_OFFSETS: Array[Vector2] = [
 ]
 
 var _variant := 0
+var _outskirts_reference_photo: Texture2D
 var _outskirts_sky_far: Texture2D
 var _outskirts_midground: Texture2D
 var _outskirts_road: Texture2D
 var _outskirts_foreground: Texture2D
 var _outskirts_landmarks: Dictionary = {}
+var _suburbs_reference_photo: Texture2D
 var _suburbs_sky_far: Texture2D
 var _suburbs_midground: Texture2D
 var _suburbs_road: Texture2D
 var _suburbs_foreground: Texture2D
 var _suburbs_landmarks: Dictionary = {}
 var _mission_id := ""
+var _camera_x := 360.0
+
+func _process(_delta: float) -> void:
+	var active_camera := get_viewport().get_camera_2d()
+	if active_camera == null:
+		return
+	var new_camera_x := active_camera.get_screen_center_position().x
+	if absf(new_camera_x - _camera_x) < 0.75:
+		return
+	_camera_x = new_camera_x
+	queue_redraw()
+
 
 func configure_variant(value: int) -> void:
 	_variant = clampi(value, 0, 3)
@@ -88,6 +104,8 @@ func _draw() -> void:
 	_draw_production_outskirts_foreground()
 
 func _ensure_production_textures() -> void:
+	if _outskirts_reference_photo == null and ResourceLoader.exists(OUTSKIRTS_REFERENCE_PHOTO_PATH):
+		_outskirts_reference_photo = load(OUTSKIRTS_REFERENCE_PHOTO_PATH) as Texture2D
 	if _outskirts_sky_far == null:
 		_outskirts_sky_far = ProductionArtScript.texture_from_svg(OUTSKIRTS_SKY_FAR_PATH)
 	if _outskirts_midground == null:
@@ -97,6 +115,8 @@ func _ensure_production_textures() -> void:
 	if _outskirts_foreground == null:
 		_outskirts_foreground = ProductionArtScript.texture_from_svg(OUTSKIRTS_FOREGROUND_PATH)
 	_ensure_mission_landmark(OUTSKIRTS_LANDMARK_PATHS, _outskirts_landmarks)
+	if _suburbs_reference_photo == null and ResourceLoader.exists(SUBURBS_REFERENCE_PHOTO_PATH):
+		_suburbs_reference_photo = load(SUBURBS_REFERENCE_PHOTO_PATH) as Texture2D
 	if _suburbs_sky_far == null:
 		_suburbs_sky_far = ProductionArtScript.texture_from_svg(SUBURBS_SKY_FAR_PATH)
 	if _suburbs_midground == null:
@@ -125,23 +145,22 @@ func _has_complete_suburbs_set() -> bool:
 	)
 
 func _draw_production_suburbs() -> void:
-	draw_texture_rect(_suburbs_sky_far, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
-	draw_texture_rect(_suburbs_midground, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+	_draw_signature_far(_suburbs_reference_photo, _suburbs_sky_far, Color(0.94, 0.98, 1.0, 0.72))
+	_draw_signature_mid(_suburbs_midground)
 
 	var landmark := _suburbs_landmarks.get(_mission_id) as Texture2D
 	if landmark != null:
 		draw_texture_rect(landmark, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+
+	_draw_cinematic_grade(true)
 
 	draw_texture_rect(
 		_suburbs_road,
 		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
 		false
 	)
-	draw_texture_rect(
-		_suburbs_foreground,
-		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
-		false
-	)
+	_draw_signature_foreground(_suburbs_foreground)
+	return
 
 func _has_complete_outskirts_set() -> bool:
 	return (
@@ -152,8 +171,8 @@ func _has_complete_outskirts_set() -> bool:
 	)
 
 func _draw_production_outskirts_base() -> void:
-	draw_texture_rect(_outskirts_sky_far, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
-	draw_texture_rect(_outskirts_midground, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
+	_draw_signature_far(_outskirts_reference_photo, _outskirts_sky_far, Color(1.0, 0.94, 0.88, 0.76))
+	_draw_signature_mid(_outskirts_midground)
 
 func _draw_production_outskirts_landmark() -> void:
 	var landmark := _outskirts_landmarks.get(_mission_id) as Texture2D
@@ -161,6 +180,7 @@ func _draw_production_outskirts_landmark() -> void:
 		draw_texture_rect(landmark, Rect2(0, 0, WORLD_WIDTH, ROAD_TOP), false)
 
 func _draw_production_outskirts_road() -> void:
+	_draw_cinematic_grade(false)
 	draw_texture_rect(
 		_outskirts_road,
 		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
@@ -169,12 +189,77 @@ func _draw_production_outskirts_road() -> void:
 
 func _draw_production_outskirts_foreground() -> void:
 	# Decorative only: no collision and intentionally concentrated below the
-	# aiming corridor, matching the approved secondary-reference foreground.
+	# aiming corridor. Slight near-camera parallax gives the battlefield the
+	# same layered 2.5D depth language as the approved visual target.
+	_draw_signature_foreground(_outskirts_foreground)
+
+func _draw_signature_far(reference_photo: Texture2D, sky_texture: Texture2D, photo_modulate: Color) -> void:
+	var camera_delta := _camera_x - WORLD_WIDTH * 0.5
+	var far_offset := camera_delta * 0.22
+	var far_rect := Rect2(-180.0 + far_offset, -34.0, WORLD_WIDTH + 360.0, ROAD_TOP + 68.0)
+
+	if sky_texture != null:
+		draw_texture_rect(
+			sky_texture,
+			Rect2(-70.0 + camera_delta * 0.12, 0.0, WORLD_WIDTH + 140.0, ROAD_TOP),
+			false
+		)
+
+	if reference_photo != null:
+		draw_texture_rect(reference_photo, far_rect, false, photo_modulate)
+
+	# A soft warm veil keeps the photographic region reference from reading like
+	# a pasted card and pulls it into the same golden-hour world as live props.
+	draw_rect(Rect2(0.0, 430.0, WORLD_WIDTH, 500.0), Color(0.91, 0.48, 0.25, 0.055))
+	draw_rect(Rect2(0.0, 0.0, WORLD_WIDTH, 320.0), Color(0.08, 0.19, 0.28, 0.08))
+
+
+func _draw_signature_mid(texture: Texture2D) -> void:
+	if texture == null:
+		return
+	var camera_delta := _camera_x - WORLD_WIDTH * 0.5
+	var mid_offset := camera_delta * 0.10
 	draw_texture_rect(
-		_outskirts_foreground,
-		Rect2(0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
+		texture,
+		Rect2(-90.0 + mid_offset, 0.0, WORLD_WIDTH + 180.0, ROAD_TOP),
 		false
 	)
+
+
+func _draw_signature_foreground(texture: Texture2D) -> void:
+	if texture == null:
+		return
+	var camera_delta := _camera_x - WORLD_WIDTH * 0.5
+	var near_offset := -camera_delta * 0.055
+	draw_texture_rect(
+		texture,
+		Rect2(-70.0 + near_offset, ROAD_TOP - 4.0, WORLD_WIDTH + 140.0, WORLD_HEIGHT - ROAD_TOP + 18.0),
+		false
+	)
+
+
+func _draw_cinematic_grade(is_suburbs: bool) -> void:
+	# Presentation-only light shaping. It never participates in collision,
+	# aiming, projectile motion, target positions or camera rules.
+	var sun_x := 1760.0 if is_suburbs else 1830.0
+	var warm := Color(0.96, 0.57, 0.30, 0.10 if is_suburbs else 0.13)
+	var haze := Color(1.0, 0.82, 0.59, 0.075)
+	var cool := Color(0.07, 0.16, 0.22, 0.10)
+
+	draw_circle(Vector2(sun_x, 248.0), 265.0, Color(warm, warm.a * 0.58))
+	draw_polygon(
+		PackedVector2Array([
+			Vector2(sun_x - 80.0, 280.0),
+			Vector2(WORLD_WIDTH, 346.0),
+			Vector2(WORLD_WIDTH, 756.0),
+			Vector2(sun_x - 480.0, 590.0),
+		]),
+		PackedColorArray([Color(warm, warm.a * 0.52)])
+	)
+	draw_rect(Rect2(0.0, 610.0, WORLD_WIDTH, 320.0), haze)
+	draw_rect(Rect2(0.0, 0.0, WORLD_WIDTH, 210.0), cool)
+	draw_line(Vector2(0.0, 818.0), Vector2(WORLD_WIDTH, 770.0), Color(1.0, 0.68, 0.38, 0.055), 36.0)
+
 
 func _draw_atmosphere() -> void:
 	# Locked visual reference: warm cinematic horizon with cooler upper atmosphere.
