@@ -7,11 +7,18 @@ const ROADBLOCK_TEXTURE_PATH := "res://assets/art/production/battle/shared/roadb
 var _production_texture: Texture2D
 
 func _draw() -> void:
+	_draw_contact_shadow()
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(ROADBLOCK_TEXTURE_PATH)
 	if _production_texture != null:
 		draw_texture_rect(_production_texture, Rect2(-120.0, -100.0, 240.0, 176.0), false)
 		return
+
+func _draw_contact_shadow() -> void:
+	# Extends the authored object's internal shadow so it seats into every road treatment.
+	draw_set_transform(Vector2(0.0, 70.0), 0.0, Vector2(1.45, 0.24))
+	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, 0.24))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 	var outline := Color("171c1b")
 	var concrete := Color("69736d")
