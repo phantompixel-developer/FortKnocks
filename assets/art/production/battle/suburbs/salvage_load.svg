@@ -1,27 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="280" height="180" viewBox="0 0 280 180">
 <defs>
- <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#66716b"/><stop offset="1" stop-color="#38433f"/></linearGradient>
- <linearGradient id="crate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#806c4f"/><stop offset="1" stop-color="#594a39"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#7d8a82"/><stop offset=".48" stop-color="#606d67"/><stop offset="1" stop-color="#38443f"/></linearGradient>
+ <linearGradient id="crate" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#9a7a59"/><stop offset=".55" stop-color="#755c46"/><stop offset="1" stop-color="#514337"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#efa367" stop-opacity=".44"/><stop offset="1" stop-color="#cb714a" stop-opacity=".02"/></linearGradient>
 </defs>
-<ellipse cx="140" cy="154" rx="116" ry="12" fill="#080c0f" opacity=".56"/>
+<ellipse cx="140" cy="156" rx="120" ry="13" fill="#070c10" opacity=".60"/>
 <!-- low cart -->
-<path d="M22 116 H258 L250 142 H30Z" fill="#111719" stroke="#090d11" stroke-width="6"/>
-<path d="M32 112 H248 L242 132 H38Z" fill="url(#metal)"/>
-<!-- strapped recovered equipment/crates -->
-<rect x="42" y="58" width="84" height="58" rx="4" fill="url(#crate)" stroke="#111719" stroke-width="5"/>
-<path d="M50 67 L117 107 M117 67 L50 107" stroke="#4d4134" stroke-width="4"/>
-<rect x="134" y="52" width="72" height="64" rx="4" fill="#6f624d" stroke="#111719" stroke-width="5"/>
-<path d="M143 61 H197 M143 78 H197 M143 95 H197" stroke="#50483b" stroke-width="4"/>
-<!-- recovered machinery bundle -->
-<rect x="211" y="70" width="31" height="46" rx="5" fill="#465650" stroke="#111719" stroke-width="5"/>
-<circle cx="226" cy="84" r="9" fill="#293834"/><circle cx="226" cy="84" r="4" fill="#77b6bf" opacity=".72"/>
-<!-- straps -->
-<path d="M68 50 V119 M176 45 V119" stroke="#1e2829" stroke-width="9"/>
-<path d="M70 50 V119 M178 45 V119" stroke="#d0a548" stroke-width="4" opacity=".72"/>
-<!-- painted identifier -->
-<path d="M87 111 L104 90 M108 111 L125 90" stroke="#e7ad3c" stroke-width="7" stroke-linecap="round"/>
-<path d="M129 111 L146 90" stroke="#b65c36" stroke-width="7" stroke-linecap="round"/>
-<!-- wheels -->
-<g><circle cx="70" cy="145" r="25" fill="#090d11"/><circle cx="70" cy="145" r="12" fill="#56605d"/><circle cx="70" cy="145" r="5" fill="#8a8066"/></g>
-<g><circle cx="210" cy="145" r="25" fill="#090d11"/><circle cx="210" cy="145" r="12" fill="#56605d"/><circle cx="210" cy="145" r="5" fill="#8a8066"/></g>
+<path d="M20 118 H260 L252 144 H28Z" fill="#10171b" stroke="#090d11" stroke-width="6"/>
+<path d="M30 112 H250 L244 134 H36Z" fill="url(#metal)"/>
+<path d="M30 112 H250 V122 H30Z" fill="url(#warm)"/>
+
+<!-- recovered crates and machinery -->
+<rect x="40" y="56" width="88" height="62" rx="4" fill="url(#crate)" stroke="#10171b" stroke-width="5"/>
+<path d="M48 65 L119 109 M119 65 L48 109" stroke="#514336" stroke-width="4"/>
+<rect x="134" y="50" width="74" height="68" rx="4" fill="#76664f" stroke="#10171b" stroke-width="5"/>
+<path d="M143 59 H199 M143 78 H199 M143 97 H199" stroke="#51483b" stroke-width="4"/>
+<path d="M42 56 H128 V68 H42Z" fill="url(#warm)"/>
+<path d="M134 50 H208 V62 H134Z" fill="url(#warm)"/>
+<rect x="212" y="68" width="32" height="50" rx="5" fill="#4b5c56" stroke="#10171b" stroke-width="5"/>
+<circle cx="228" cy="84" r="10" fill="#293934"/><circle cx="228" cy="84" r="4" fill="#69b8c8" opacity=".72"/>
+
+<!-- straps / FK mark -->
+<path d="M68 48 V121 M178 43 V121" stroke="#1e292a" stroke-width="9"/>
+<path d="M70 48 V121 M180 43 V121" stroke="#d4a84e" stroke-width="4" opacity=".76"/>
+<path d="M87 113 L104 92 M108 113 L125 92" stroke="#e7ad3c" stroke-width="7" stroke-linecap="round"/>
+<path d="M129 113 L146 92" stroke="#b65c36" stroke-width="7" stroke-linecap="round"/>
+
+<!-- wheels / grounded silhouette -->
+<g><circle cx="70" cy="147" r="26" fill="#090d11"/><circle cx="70" cy="147" r="12" fill="#5c6662"/><circle cx="70" cy="147" r="5" fill="#8e8268"/></g>
+<g><circle cx="210" cy="147" r="26" fill="#090d11"/><circle cx="210" cy="147" r="12" fill="#5c6662"/><circle cx="210" cy="147" r="5" fill="#8e8268"/></g>
+<path d="M44 136 H236" stroke="#de975f" stroke-width="3" opacity=".20"/>
 </svg>
