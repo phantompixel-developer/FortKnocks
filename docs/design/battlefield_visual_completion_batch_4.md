@@ -67,3 +67,40 @@ Repository review can verify the asset/code architecture, but these items requir
 7. Confirm no SVG decode warnings appear in the Godot console.
 
 Do not begin Highways until this Play gate passes.
+
+
+## Visual-signature unification extension
+
+Batch 4 is now also the current-content **visual-signature convergence gate**.
+
+The reason is structural: current meta screens already use a richer authored raster/physical treatment while Battle retained a parallel cleaner SVG/UI treatment. Shipping another region on top of that split would multiply the inconsistency.
+
+Authority:
+- `docs/design/visual_signature.md`
+
+Implemented in this extension:
+- Battle's shared theme now uses the same raster panel/card surface family already used by Garage, Workshop and Command Board.
+- Battle remains on the shared Barlow Condensed typography family.
+- The old battle-only SVG panel/button family is no longer the preferred live surface language.
+- Battlefield region/hero art remains on the existing layered architecture but is explicitly treated as requiring continued convergence toward the painterly/cel-shaded signature where local Play still exposes flat-vector mismatch.
+
+### Expanded acceptance gate
+
+Before this batch closes, local review must compare:
+1. Hub,
+2. Command Board,
+3. Garage,
+4. Workshop,
+5. at least two representative Outskirts battles,
+6. at least two representative Suburbs battles.
+
+The test is not whether every location has identical colours or materials. The test is whether they share:
+- rendering finish,
+- light/shadow philosophy,
+- physical weight/contact,
+- typography,
+- UI surface family,
+- wear/detail density,
+- cinematic depth.
+
+If Battle still reads as a different game after the structural/UI convergence in this branch, the remaining work is an **art replacement pass**, not another code/layout rewrite. Current battle layer contracts should be retained and their visible SVG layers replaced with higher-fidelity authored raster layers one category at a time.
