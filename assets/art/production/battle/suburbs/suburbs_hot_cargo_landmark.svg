@@ -1,17 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Hot Cargo: infrastructure is biased right, leaving Salvage (x=790), live cell (x=1010) and roadblock (x=1180) readable. -->
-<g opacity=".72">
- <path d="M1320 744 V594 H1700 V744Z" fill="#3f4948" stroke="#192326" stroke-width="7"/>
- <path d="M1300 594 H1720 V558 H1300Z" fill="#56584f" stroke="#192326" stroke-width="7"/>
- <g stroke="#242f31" stroke-width="8"><path d="M1370 744 V570 M1470 744 V570 M1570 744 V570 M1670 744 V570"/></g>
- <path d="M1340 620 H1680" stroke="#775b47" stroke-width="9" opacity=".66"/>
+<defs>
+ <linearGradient id="utility" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#69716a"/><stop offset=".52" stop-color="#4b5652"/><stop offset="1" stop-color="#303a39"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#efa064" stop-opacity=".42"/><stop offset="1" stop-color="#c97049" stop-opacity=".03"/></linearGradient>
+</defs>
+
+<!-- Hot Cargo: recovered service infrastructure is biased right so Salvage/cell/roadblock remain dominant. -->
+<g stroke="#172227" opacity=".90">
+ <path d="M1310 750 V590 H1712 V750Z" fill="url(#utility)" stroke-width="7"/>
+ <path d="M1288 590 H1734 V552 H1288Z" fill="#615d52" stroke-width="7"/>
+ <g stroke="#283438" stroke-width="8"><path d="M1362 750 V568 M1468 750 V568 M1572 750 V568 M1678 750 V568"/></g>
 </g>
-<g stroke="#273437" fill="none" opacity=".66">
- <path d="M1820 778 V542 M1780 584 H1860" stroke-width="11"/>
- <path d="M1820 560 L1858 530 M1820 560 L1786 530" stroke-width="6"/>
+<path d="M1288 590 H1450 V552 H1288Z" fill="url(#warm)"/>
+<path d="M1332 620 H1690" stroke="#8b634d" stroke-width="9" opacity=".68"/>
+<path d="M1336 606 H1680" stroke="#e19b61" stroke-width="4" opacity=".22"/>
+
+<!-- utility pole remains neutral: no fake teal/live-tech signal near actual cell -->
+<g stroke="#29383c" fill="none" opacity=".72" stroke-linecap="round">
+ <path d="M1822 784 V536 M1780 580 H1864" stroke-width="11"/>
+ <path d="M1822 554 L1860 524 M1822 554 L1786 524" stroke-width="6"/>
 </g>
-<!-- Objective corridor backing: subdued, neutral and deliberately free of teal/live-tech motifs. -->
-<path d="M620 758 H1260" stroke="#303b3a" stroke-width="30" opacity=".38"/>
-<path d="M620 744 H1260" stroke="#72695d" stroke-width="5" opacity=".23"/>
-<g fill="#444e4d" opacity=".55"><rect x="1120" y="684" width="116" height="70"/><rect x="1136" y="700" width="84" height="54" fill="#293538"/></g>
+
+<!-- objective corridor backing: neutral, low contrast, no glow -->
+<path d="M608 764 H1272" stroke="#313c3b" stroke-width="34" opacity=".44"/>
+<path d="M608 746 H1272" stroke="#80766a" stroke-width="6" opacity=".27"/>
+<path d="M622 740 H1256" stroke="#e19a61" stroke-width="3" opacity=".16"/>
+
+<!-- service cabinet sits below/behind the real interactives -->
+<g stroke="#172227" opacity=".68">
+ <rect x="1112" y="684" width="126" height="76" fill="#4b5754" stroke-width="5"/>
+ <rect x="1130" y="702" width="90" height="58" fill="#29383b" stroke-width="4"/>
+</g>
+<g stroke="#a76045" stroke-width="4" opacity=".46"><path d="M1394 596 V676 M1518 596 V684 M1640 596 V674"/></g>
+<g fill="#11181b" opacity=".23"><ellipse cx="1460" cy="768" rx="172" ry="11"/><ellipse cx="1110" cy="774" rx="120" ry="10"/></g>
 </svg>
