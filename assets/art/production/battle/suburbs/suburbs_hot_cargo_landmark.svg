@@ -1,14 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Hot Cargo: denser retaining wall / service infrastructure; no fake power-cell cues -->
-<g opacity=".80">
- <path d="M1100 738 V584 H1570 V738Z" fill="#3f4948" stroke="#192326" stroke-width="7"/>
- <path d="M1080 584 H1590 V548 H1080Z" fill="#56584f" stroke="#192326" stroke-width="7"/>
- <g stroke="#242f31" stroke-width="8"><path d="M1140 738 V560 M1245 738 V560 M1350 738 V560 M1455 738 V560 M1560 738 V560"/></g>
- <path d="M1120 610 H1550" stroke="#775b47" stroke-width="9" opacity=".75"/>
+<!-- Hot Cargo: infrastructure is biased right, leaving Salvage (x=790), live cell (x=1010) and roadblock (x=1180) readable. -->
+<g opacity=".72">
+ <path d="M1320 744 V594 H1700 V744Z" fill="#3f4948" stroke="#192326" stroke-width="7"/>
+ <path d="M1300 594 H1720 V558 H1300Z" fill="#56584f" stroke="#192326" stroke-width="7"/>
+ <g stroke="#242f31" stroke-width="8"><path d="M1370 744 V570 M1470 744 V570 M1570 744 V570 M1670 744 V570"/></g>
+ <path d="M1340 620 H1680" stroke="#775b47" stroke-width="9" opacity=".66"/>
 </g>
-<g stroke="#273437" fill="none" opacity=".72">
- <path d="M1680 770 V532 M1640 575 H1720" stroke-width="11"/>
- <path d="M1680 550 L1718 520 M1680 550 L1646 520" stroke-width="6"/>
+<g stroke="#273437" fill="none" opacity=".66">
+ <path d="M1820 778 V542 M1780 584 H1860" stroke-width="11"/>
+ <path d="M1820 560 L1858 530 M1820 560 L1786 530" stroke-width="6"/>
 </g>
-<g fill="#444e4d" opacity=".72"><rect x="920" y="678" width="130" height="78"/><rect x="936" y="694" width="98" height="62" fill="#293538"/></g>
+<!-- Objective corridor backing: subdued, neutral and deliberately free of teal/live-tech motifs. -->
+<path d="M620 758 H1260" stroke="#303b3a" stroke-width="30" opacity=".38"/>
+<path d="M620 744 H1260" stroke="#72695d" stroke-width="5" opacity=".23"/>
+<g fill="#444e4d" opacity=".55"><rect x="1120" y="684" width="116" height="70"/><rect x="1136" y="700" width="84" height="54" fill="#293538"/></g>
 </svg>
