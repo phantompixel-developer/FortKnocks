@@ -357,3 +357,84 @@ Gameplay separation:
 - gate rotation/collapse and cell discharge remain unchanged.
 
 Reference authority remains `docs/design/visual_reference.md`.
+
+
+## Roadblock Trial raster-finish pilot — 2026-10-07
+
+Roadblock Trial is the first battle to replace the visible mixed photo/SVG
+environment treatment with a coherent authored raster presentation while
+retaining the existing layered, collision-independent renderer contract.
+
+Runtime assets:
+- `assets/art/production/battle/outskirts/roadblock_trial_backdrop.png`
+- `assets/art/production/battle/outskirts/roadblock_trial_foreground.png`
+- `assets/art/production/battle/shared/roadblock_painterly.png`
+- `assets/art/production/battle/shared/unstable_power_cell_painterly.png`
+
+Provenance:
+- authoring tool: OpenAI built-in image generation,
+- source direction: repository-owned `docs/design/reference/outskirts_roadblock_design_reference.png`, `docs/design/visual_reference.md`, and `docs/design/visual_signature.md`,
+- prompts: original Fort Knocks environment/object briefs specifying painterly/cel-shaded golden-hour lighting, ruined civilian roadside infrastructure, no copied third-party content, no baked HUD/combatants/live tactical objects, and transparent alpha for the foreground and live-object sprites,
+- usage: project-local production art for Roadblock Trial,
+- date: 2026-10-07.
+
+Separation rules:
+- the backdrop contains no survivor, cover vehicle, central tactical roadblock,
+  unstable power cell, trajectory, projectile or HUD,
+- the foreground is render-only and remains behind gameplay nodes,
+- painterly roadblock and live-cell sprites remain separate gameplay objects and
+  are now shared by every mission that enables those existing nodes,
+- mission coordinates, collisions, damage, AI, weapons, camera and objective data
+  remain authoritative in their existing scenes/resources/scripts.
+
+
+## Current mission raster completion — 2026-10-07
+
+The Roadblock Trial raster-finish pipeline now covers every current Outskirts and
+Suburbs battlefield. Each panorama is a presentation-only world layer fitted to
+the existing 2160 × 1280 battle world; no mission geometry was moved to match art.
+
+Mission backdrops:
+- `assets/art/production/battle/outskirts/high_ground_trial_backdrop.png` — abandoned elevated maintenance apron and roadside workshops,
+- `assets/art/production/battle/outskirts/scrap_gate_trial_backdrop.png` — reused vehicle salvage yard and raised loading apron,
+- `assets/art/production/battle/outskirts/broken_span_backdrop.png` — failed multi-level flyover and exposed city approach,
+- `assets/art/production/battle/outskirts/depot_line_backdrop.png` — former vehicle-processing depot reused for salvage,
+- `assets/art/production/battle/outskirts/outskirts_checkpoint_backdrop.png` — damaged interchange inspection point and watch structure,
+- `assets/art/production/battle/suburbs/suburbs_dead_air_backdrop.png` — neighbourhood telecom/service strip,
+- `assets/art/production/battle/suburbs/suburbs_crossroads_backdrop.png` — ruined commercial crossroads,
+- `assets/art/production/battle/suburbs/suburbs_loaded_up_backdrop.png` — residential garage and service-lane district,
+- `assets/art/production/battle/suburbs/suburbs_hot_cargo_backdrop.png` — municipal utility and delivery service lane.
+
+Shared authored presentation assets:
+- `assets/art/production/battle/suburbs/suburbs_foreground_painterly.png`,
+- `assets/art/production/battle/shared/outskirts_platform_painterly.png`,
+- `assets/art/production/battle/suburbs/suburbs_platform_painterly.png`,
+- `assets/art/production/battle/shared/scrap_gate_painterly.png`,
+- `assets/art/production/battle/shared/unstable_power_cell_spent_painterly.png`,
+- `assets/art/production/battle/suburbs/signal_relay_painterly.png`,
+- `assets/art/production/battle/suburbs/signal_relay_destroyed_painterly.png`,
+- `assets/art/production/battle/suburbs/salvage_load_painterly.png`,
+- `assets/art/production/battle/suburbs/salvage_load_destroyed_painterly.png`.
+
+Provenance:
+- authoring mode: OpenAI built-in image generation (`stylized-concept` briefs),
+- direction: the repository's locked Fort Knocks visual reference and the accepted
+  Roadblock Trial raster pilot,
+- prompt set: original ruined civilian locations with golden-hour painterly/cel
+  shading, blue-charcoal shadow, dust/haze, weathered concrete/brick/steel,
+  restrained cyan only on active recovered technology, clear projectile corridors,
+  and no baked combatants, HUD or live mission objects,
+- live-prop prompts requested isolated transparent RGBA assets with intact/destroyed
+  continuity and footprint-conscious silhouettes,
+- usage: project-local production presentation for all current battle missions,
+- date: 2026-10-07.
+
+Separation rules:
+- backdrops and near foregrounds are non-colliding decorative layers,
+- central roadblock, gate, power cell, relay, salvage load, cover and combatants
+  remain separate nodes,
+- platform raster faces fit the existing `platform_rects`; the unchanged
+  `RectangleShape2D` remains authoritative,
+- the previous SVG/procedural visuals remain runtime fallbacks,
+- mission `.tres` resources, camera rules, world size, positions, objectives,
+  weapons, projectile physics/bounces, AI, damage and turn logic are unchanged.

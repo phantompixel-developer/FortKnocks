@@ -1,8 +1,12 @@
 class_name ArenaPlatform
 extends StaticBody2D
 
+const OUTSKIRTS_PLATFORM_TEXTURE_PATH := "res://assets/art/production/battle/shared/outskirts_platform_painterly.png"
+const SUBURBS_PLATFORM_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/suburbs_platform_painterly.png"
+
 var platform_size := Vector2(320.0, 80.0)
 var visual_style := "outskirts"
+var _painterly_texture: Texture2D
 
 func configure(rect: Rect2, style := "outskirts") -> void:
 	position = rect.position + rect.size * 0.5
@@ -22,6 +26,24 @@ func _ready() -> void:
 func _draw() -> void:
 	var rect := Rect2(-platform_size * 0.5, platform_size)
 	_draw_platform_contact(rect)
+	var texture_path := (
+		SUBURBS_PLATFORM_TEXTURE_PATH
+		if visual_style == "suburbs"
+		else OUTSKIRTS_PLATFORM_TEXTURE_PATH
+	)
+	if _painterly_texture == null and ResourceLoader.exists(texture_path):
+		_painterly_texture = load(texture_path) as Texture2D
+	if _painterly_texture != null:
+		# Rendering only: the authored face is fitted to the existing mission rect.
+		# The RectangleShape2D above remains the sole gameplay geometry.
+		var texture_size := _painterly_texture.get_size()
+		var source_rect := (
+			Rect2(0.0, 68.0, texture_size.x, 585.0)
+			if visual_style == "suburbs"
+			else Rect2(14.0, 146.0, texture_size.x - 28.0, 467.0)
+		)
+		draw_texture_rect_region(_painterly_texture, rect, source_rect)
+		return
 	if visual_style == "suburbs":
 		_draw_suburbs_retaining_platform(rect)
 		return

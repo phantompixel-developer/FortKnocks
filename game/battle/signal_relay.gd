@@ -4,6 +4,8 @@ extends StaticBody2D
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const RELAY_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay.svg"
 const RELAY_DESTROYED_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay_destroyed.svg"
+const RELAY_PAINTERLY_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay_painterly.png"
+const RELAY_DESTROYED_PAINTERLY_TEXTURE_PATH := "res://assets/art/production/battle/suburbs/signal_relay_destroyed_painterly.png"
 
 var _production_texture: Texture2D
 var _destroyed_texture: Texture2D
@@ -76,12 +78,16 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 func _draw() -> void:
 	_draw_ground_treatment()
 	if is_destroyed:
+		if _destroyed_texture == null and ResourceLoader.exists(RELAY_DESTROYED_PAINTERLY_TEXTURE_PATH):
+			_destroyed_texture = load(RELAY_DESTROYED_PAINTERLY_TEXTURE_PATH) as Texture2D
 		if _destroyed_texture == null:
 			_destroyed_texture = ProductionArtScript.texture_from_svg(RELAY_DESTROYED_TEXTURE_PATH)
 		if _destroyed_texture != null:
 			draw_texture_rect(_destroyed_texture, Rect2(-90.0, -110.0, 180.0, 120.0), false)
 			return
 	else:
+		if _production_texture == null and ResourceLoader.exists(RELAY_PAINTERLY_TEXTURE_PATH):
+			_production_texture = load(RELAY_PAINTERLY_TEXTURE_PATH) as Texture2D
 		if _production_texture == null:
 			_production_texture = ProductionArtScript.texture_from_svg(RELAY_TEXTURE_PATH)
 		if _production_texture != null:

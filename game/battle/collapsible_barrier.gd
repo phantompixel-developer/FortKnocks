@@ -3,6 +3,7 @@ extends StaticBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const SCRAP_GATE_TEXTURE_PATH := "res://assets/art/production/battle/shared/scrap_gate.svg"
+const SCRAP_GATE_PAINTERLY_TEXTURE_PATH := "res://assets/art/production/battle/shared/scrap_gate_painterly.png"
 
 var _production_texture: Texture2D
 
@@ -69,6 +70,8 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 
 func _draw() -> void:
 	_draw_contact_shadow()
+	if _production_texture == null and ResourceLoader.exists(SCRAP_GATE_PAINTERLY_TEXTURE_PATH):
+		_production_texture = load(SCRAP_GATE_PAINTERLY_TEXTURE_PATH) as Texture2D
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(SCRAP_GATE_TEXTURE_PATH)
 	if _production_texture != null:

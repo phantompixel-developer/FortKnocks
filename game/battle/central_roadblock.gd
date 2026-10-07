@@ -3,11 +3,18 @@ extends StaticBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
 const ROADBLOCK_TEXTURE_PATH := "res://assets/art/production/battle/shared/roadblock.svg"
+const ROADBLOCK_PAINTERLY_TEXTURE_PATH := "res://assets/art/production/battle/shared/roadblock_painterly.png"
 
 var _production_texture: Texture2D
+var _painterly_texture: Texture2D
 
 func _draw() -> void:
 	_draw_contact_shadow()
+	if _painterly_texture == null and ResourceLoader.exists(ROADBLOCK_PAINTERLY_TEXTURE_PATH):
+		_painterly_texture = load(ROADBLOCK_PAINTERLY_TEXTURE_PATH) as Texture2D
+	if _painterly_texture != null:
+		draw_texture_rect(_painterly_texture, Rect2(-126.0, -92.0, 252.0, 164.0), false)
+		return
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(ROADBLOCK_TEXTURE_PATH)
 	if _production_texture != null:

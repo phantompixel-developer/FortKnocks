@@ -7,6 +7,20 @@ const OUTSKIRTS_SKY_FAR_PATH := "res://assets/art/production/battle/outskirts/ou
 const OUTSKIRTS_MIDGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_midground.svg"
 const OUTSKIRTS_ROAD_PATH := "res://assets/art/production/battle/outskirts/outskirts_road.svg"
 const OUTSKIRTS_FOREGROUND_PATH := "res://assets/art/production/battle/outskirts/outskirts_foreground.svg"
+const MISSION_BACKDROP_PATHS := {
+	"roadblock_trial": "res://assets/art/production/battle/outskirts/roadblock_trial_backdrop.png",
+	"high_ground_trial": "res://assets/art/production/battle/outskirts/high_ground_trial_backdrop.png",
+	"scrap_gate_trial": "res://assets/art/production/battle/outskirts/scrap_gate_trial_backdrop.png",
+	"broken_span": "res://assets/art/production/battle/outskirts/broken_span_backdrop.png",
+	"depot_line": "res://assets/art/production/battle/outskirts/depot_line_backdrop.png",
+	"outskirts_checkpoint": "res://assets/art/production/battle/outskirts/outskirts_checkpoint_backdrop.png",
+	"suburbs_dead_air": "res://assets/art/production/battle/suburbs/suburbs_dead_air_backdrop.png",
+	"suburbs_crossroads": "res://assets/art/production/battle/suburbs/suburbs_crossroads_backdrop.png",
+	"suburbs_loaded_up": "res://assets/art/production/battle/suburbs/suburbs_loaded_up_backdrop.png",
+	"suburbs_hot_cargo": "res://assets/art/production/battle/suburbs/suburbs_hot_cargo_backdrop.png",
+}
+const OUTSKIRTS_PAINTERLY_FOREGROUND_PATH := "res://assets/art/production/battle/outskirts/roadblock_trial_foreground.png"
+const SUBURBS_PAINTERLY_FOREGROUND_PATH := "res://assets/art/production/battle/suburbs/suburbs_foreground_painterly.png"
 const OUTSKIRTS_LANDMARK_PATHS := {
 	"roadblock_trial": "res://assets/art/production/battle/outskirts/roadblock_trial_landmark.svg",
 	"high_ground_trial": "res://assets/art/production/battle/outskirts/high_ground_trial_landmark.svg",
@@ -41,6 +55,9 @@ var _outskirts_sky_far: Texture2D
 var _outskirts_midground: Texture2D
 var _outskirts_road: Texture2D
 var _outskirts_foreground: Texture2D
+var _mission_backdrops: Dictionary = {}
+var _outskirts_painterly_foreground: Texture2D
+var _suburbs_painterly_foreground: Texture2D
 var _outskirts_landmarks: Dictionary = {}
 var _suburbs_reference_photo: Texture2D
 var _suburbs_sky_far: Texture2D
@@ -72,6 +89,10 @@ func configure_mission(mission_id: String) -> void:
 
 func _draw() -> void:
 	_ensure_production_textures()
+	var mission_backdrop := _mission_backdrops.get(_mission_id) as Texture2D
+	if mission_backdrop != null:
+		_draw_mission_painterly(mission_backdrop)
+		return
 
 	if _variant == 3:
 		if _has_complete_suburbs_set():
@@ -104,6 +125,18 @@ func _draw() -> void:
 	_draw_production_outskirts_foreground()
 
 func _ensure_production_textures() -> void:
+	if MISSION_BACKDROP_PATHS.has(_mission_id):
+		if not _mission_backdrops.has(_mission_id):
+			var backdrop_path := str(MISSION_BACKDROP_PATHS[_mission_id])
+			if ResourceLoader.exists(backdrop_path):
+				_mission_backdrops[_mission_id] = load(backdrop_path) as Texture2D
+		if _variant == 3:
+			if _suburbs_painterly_foreground == null and ResourceLoader.exists(SUBURBS_PAINTERLY_FOREGROUND_PATH):
+				_suburbs_painterly_foreground = load(SUBURBS_PAINTERLY_FOREGROUND_PATH) as Texture2D
+		elif _outskirts_painterly_foreground == null and ResourceLoader.exists(OUTSKIRTS_PAINTERLY_FOREGROUND_PATH):
+			_outskirts_painterly_foreground = load(OUTSKIRTS_PAINTERLY_FOREGROUND_PATH) as Texture2D
+		if _mission_backdrops.get(_mission_id) != null:
+			return
 	if _outskirts_reference_photo == null and ResourceLoader.exists(OUTSKIRTS_REFERENCE_PHOTO_PATH):
 		_outskirts_reference_photo = load(OUTSKIRTS_REFERENCE_PHOTO_PATH) as Texture2D
 	if _outskirts_sky_far == null:
@@ -126,6 +159,34 @@ func _ensure_production_textures() -> void:
 	if _suburbs_foreground == null:
 		_suburbs_foreground = ProductionArtScript.texture_from_svg(SUBURBS_FOREGROUND_PATH)
 	_ensure_mission_landmark(SUBURBS_LANDMARK_PATHS, _suburbs_landmarks)
+
+
+func _draw_mission_painterly(backdrop: Texture2D) -> void:
+	# The raster panorama intentionally contains no combatants, covers, tactical
+	# roadblock, power cell or HUD. Live gameplay objects remain separate nodes.
+	_draw_world_fitted_texture(backdrop)
+	var foreground := _suburbs_painterly_foreground if _variant == 3 else _outskirts_painterly_foreground
+	if foreground != null:
+		_draw_world_fitted_texture(foreground)
+
+
+func _draw_world_fitted_texture(texture: Texture2D) -> void:
+	if texture == null:
+		return
+	var texture_size := texture.get_size()
+	if texture_size.x <= 0.0 or texture_size.y <= 0.0:
+		return
+
+	# Centre-crop only the surplus horizontal source area. The authored vertical
+	# composition maps to the gameplay world without stretching or moving play.
+	var target_aspect := WORLD_WIDTH / WORLD_HEIGHT
+	var source_width := minf(texture_size.x, texture_size.y * target_aspect)
+	var source_x := (texture_size.x - source_width) * 0.5
+	draw_texture_rect_region(
+		texture,
+		Rect2(0.0, 0.0, WORLD_WIDTH, WORLD_HEIGHT),
+		Rect2(source_x, 0.0, source_width, texture_size.y)
+	)
 
 
 func _ensure_mission_landmark(paths: Dictionary, cache: Dictionary) -> void:
