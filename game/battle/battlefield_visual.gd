@@ -246,7 +246,7 @@ func _draw_cinematic_grade(is_suburbs: bool) -> void:
 	var haze := Color(1.0, 0.82, 0.59, 0.075)
 	var cool := Color(0.07, 0.16, 0.22, 0.10)
 
-	draw_circle(Vector2(sun_x, 248.0), 265.0, Color(warm, warm.a * 0.58))
+	draw_circle(Vector2(sun_x, 248.0), 265.0, Color(warm.r, warm.g, warm.b, warm.a * 0.58))
 	draw_polygon(
 		PackedVector2Array([
 			Vector2(sun_x - 80.0, 280.0),
@@ -254,7 +254,7 @@ func _draw_cinematic_grade(is_suburbs: bool) -> void:
 			Vector2(WORLD_WIDTH, 756.0),
 			Vector2(sun_x - 480.0, 590.0),
 		]),
-		PackedColorArray([Color(warm, warm.a * 0.52)])
+		PackedColorArray([Color(warm.r, warm.g, warm.b, warm.a * 0.52)])
 	)
 	draw_rect(Rect2(0.0, 610.0, WORLD_WIDTH, 320.0), haze)
 	draw_rect(Rect2(0.0, 0.0, WORLD_WIDTH, 210.0), cool)
