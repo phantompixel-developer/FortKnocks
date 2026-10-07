@@ -609,58 +609,105 @@ mouse_filter = 2
 [node name="MissionBriefCard" type="ColorRect" parent="HUD/Root"]
 visible = false
 layout_mode = 0
-offset_left = 92.0
-offset_top = 330.0
-offset_right = 628.0
-offset_bottom = 610.0
+offset_left = 70.0
+offset_top = 236.0
+offset_right = 650.0
+offset_bottom = 842.0
 mouse_filter = 2
-color = Color(0.085, 0.095, 0.09, 0.95)
+color = Color(0.085, 0.095, 0.09, 0.97)
+
+[node name="Region" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 20.0
+offset_right = 552.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 14
+text = "OUTSKIRTS • MISSION 01"
+horizontal_alignment = 1
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 20.0
-offset_right = 512.0
-offset_bottom = 58.0
-theme_override_font_sizes/font_size = 26
+offset_left = 28.0
+offset_top = 54.0
+offset_right = 552.0
+offset_bottom = 94.0
+theme_override_font_sizes/font_size = 29
 text = "ROADBLOCK TRIAL"
 horizontal_alignment = 1
 mouse_filter = 2
 
-[node name="Focus" type="Label" parent="HUD/Root/MissionBriefCard"]
+[node name="ObjectiveHeader" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 72.0
-offset_right = 512.0
-offset_bottom = 104.0
-theme_override_font_sizes/font_size = 17
-text = "LONG RANGE • BANK SHOTS"
+offset_left = 36.0
+offset_top = 112.0
+offset_right = 544.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 13
+text = "OBJECTIVE"
 horizontal_alignment = 1
 mouse_filter = 2
 
-[node name="Briefing" type="Label" parent="HUD/Root/MissionBriefCard"]
+[node name="Objective" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 116.0
-offset_right = 502.0
-offset_bottom = 222.0
-theme_override_font_sizes/font_size = 15
-text = "Encounter briefing"
+offset_left = 36.0
+offset_top = 140.0
+offset_right = 544.0
+offset_bottom = 184.0
+theme_override_font_sizes/font_size = 19
+text = "INCAPACITATE ENEMY"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 mouse_filter = 2
 
-[node name="Objective" type="Label" parent="HUD/Root/MissionBriefCard"]
+[node name="Briefing" type="Label" parent="HUD/Root/MissionBriefCard"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 230.0
-offset_right = 502.0
-offset_bottom = 264.0
+offset_left = 42.0
+offset_top = 202.0
+offset_right = 538.0
+offset_bottom = 312.0
+theme_override_font_sizes/font_size = 16
+text = "Mission briefing"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="Tactic" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 326.0
+offset_right = 538.0
+offset_bottom = 358.0
 theme_override_font_sizes/font_size = 14
-text = "OBJECTIVE: INCAPACITATE ENEMY"
+text = "ENEMY • BALANCED"
 horizontal_alignment = 1
 mouse_filter = 2
+
+[node name="Loadout" type="Label" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 370.0
+offset_right = 538.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 14
+text = "PLATFORM • RUN-DOWN COMPACT\nFIELD RACK • BOLT + SLUG"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="DeployButton" type="Button" parent="HUD/Root/MissionBriefCard"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 498.0
+offset_right = 468.0
+offset_bottom = 570.0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 22
+text = "DEPLOY"
 
 [node name="EncounterPicker" type="ColorRect" parent="HUD/Root"]
 layout_mode = 0
@@ -717,76 +764,124 @@ mouse_filter = 2
 [node name="ResultCard" type="ColorRect" parent="HUD/Root"]
 visible = false
 layout_mode = 0
-offset_left = 90.0
-offset_top = 356.0
-offset_right = 630.0
-offset_bottom = 796.0
+offset_left = 78.0
+offset_top = 246.0
+offset_right = 642.0
+offset_bottom = 904.0
 mouse_filter = 2
-color = Color(0.085, 0.095, 0.09, 0.96)
+color = Color(0.085, 0.095, 0.09, 0.97)
+
+[node name="Region" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 20.0
+offset_right = 536.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 14
+text = "OUTSKIRTS • MISSION COMPLETE"
+horizontal_alignment = 1
+mouse_filter = 2
 
 [node name="Title" type="Label" parent="HUD/Root/ResultCard"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 22.0
-offset_right = 512.0
-offset_bottom = 66.0
-theme_override_font_sizes/font_size = 28
+offset_top = 52.0
+offset_right = 536.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 32
 text = "VICTORY"
 horizontal_alignment = 1
 mouse_filter = 2
 
 [node name="EncounterName" type="Label" parent="HUD/Root/ResultCard"]
 layout_mode = 0
-offset_left = 30.0
-offset_top = 76.0
-offset_right = 510.0
-offset_bottom = 106.0
-theme_override_font_sizes/font_size = 16
+offset_left = 32.0
+offset_top = 104.0
+offset_right = 532.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 17
 text = "ROADBLOCK TRIAL"
 horizontal_alignment = 1
 mouse_filter = 2
 
-[node name="Stats" type="Label" parent="HUD/Root/ResultCard"]
+[node name="ObjectiveOutcome" type="Label" parent="HUD/Root/ResultCard"]
 layout_mode = 0
-offset_left = 40.0
-offset_top = 126.0
-offset_right = 500.0
-offset_bottom = 270.0
-theme_override_font_sizes/font_size = 16
-text = "SHOTS 0 • DIRECT 0\nCOVER 0 • ENVIRONMENT 0\nBOLT 0 • SLUG 0 • SHOCK 0"
+offset_left = 38.0
+offset_top = 158.0
+offset_right = 526.0
+offset_bottom = 216.0
+theme_override_font_sizes/font_size = 18
+text = "OBJECTIVE SECURED\nINCAPACITATE ENEMY"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="ClearState" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 232.0
+offset_right = 522.0
+offset_bottom = 262.0
+theme_override_font_sizes/font_size = 14
+text = "FIRST CLEAR"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Reward" type="Label" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 276.0
+offset_right = 522.0
+offset_bottom = 326.0
+theme_override_font_sizes/font_size = 22
+text = "+0 SALVAGE"
 horizontal_alignment = 1
 vertical_alignment = 1
 mouse_filter = 2
 
-[node name="Takeaway" type="Label" parent="HUD/Root/ResultCard"]
+[node name="Unlock" type="Label" parent="HUD/Root/ResultCard"]
 layout_mode = 0
 offset_left = 42.0
-offset_top = 286.0
-offset_right = 498.0
-offset_bottom = 332.0
-theme_override_font_sizes/font_size = 14
-text = "Compare weapon choices across encounters."
+offset_top = 338.0
+offset_right = 522.0
+offset_bottom = 390.0
+theme_override_font_sizes/font_size = 15
+text = "ROUTE STATUS"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 mouse_filter = 2
 
-[node name="RestartButton" type="Button" parent="HUD/Root"]
+[node name="Summary" type="Label" parent="HUD/Root/ResultCard"]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 700.0
-offset_right = 350.0
-offset_bottom = 764.0
-mouse_filter = 0
-theme_override_font_sizes/font_size = 22
-text = "RESTART"
+offset_left = 44.0
+offset_top = 406.0
+offset_right = 520.0
+offset_bottom = 474.0
+theme_override_font_sizes/font_size = 14
+text = "Mission summary"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
 
-[node name="ChangeEncounterButton" type="Button" parent="HUD/Root"]
-visible = false
+[node name="RestartButton" type="Button" parent="HUD/Root/ResultCard"]
 layout_mode = 0
-offset_left = 370.0
-offset_top = 700.0
-offset_right = 540.0
-offset_bottom = 764.0
+offset_left = 38.0
+offset_top = 516.0
+offset_right = 270.0
+offset_bottom = 586.0
 mouse_filter = 0
 theme_override_font_sizes/font_size = 20
-text = "CHOOSE ENCOUNTER"
+text = "REMATCH"
+
+[node name="ChangeEncounterButton" type="Button" parent="HUD/Root/ResultCard"]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 516.0
+offset_right = 526.0
+offset_bottom = 586.0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 18
+text = "FORT KNOCKS"
