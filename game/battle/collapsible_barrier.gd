@@ -68,6 +68,7 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "modulate", Color.WHITE, 0.18)
 
 func _draw() -> void:
+	_draw_contact_shadow()
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(SCRAP_GATE_TEXTURE_PATH)
 	if _production_texture != null:
@@ -77,6 +78,13 @@ func _draw() -> void:
 			draw_rect(Rect2(-31, -174, 62, 10), Color("111719"))
 			draw_rect(Rect2(-28, -171, 56.0 * ratio, 4), Color("e7ad3c"))
 		return
+
+func _draw_contact_shadow() -> void:
+	var alpha := 0.18 if is_collapsed else 0.28
+	var contact_y := 154.0 if not is_collapsed else 118.0
+	draw_set_transform(Vector2(0.0, contact_y), 0.0, Vector2(0.82, 0.20))
+	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, alpha))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 	var outline := Color("171c1b")
 	var frame := Color("2b3531")
