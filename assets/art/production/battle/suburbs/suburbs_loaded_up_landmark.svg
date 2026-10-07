@@ -1,13 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Loaded Up: garage/service lane and a stripped delivery shell in the background -->
-<g opacity=".78" stroke="#1a2428" stroke-width="7">
- <rect x="1050" y="606" width="448" height="154" fill="#404c4c"/>
- <path d="M1028 606 H1522 L1492 570 H1062Z" fill="#615747"/>
- <rect x="1082" y="638" width="120" height="122" fill="#273438"/><rect x="1220" y="638" width="120" height="122" fill="#2d393c"/><rect x="1358" y="638" width="108" height="122" fill="#263236"/>
+<!-- Loaded Up: service lane begins after the protected Salvage's x=760 read zone. -->
+<g opacity=".75" stroke="#1a2428" stroke-width="7">
+ <rect x="1080" y="616" width="420" height="150" fill="#404c4c"/>
+ <path d="M1058 616 H1524 L1496 580 H1090Z" fill="#615747"/>
+ <rect x="1112" y="650" width="112" height="116" fill="#273438"/>
+ <rect x="1242" y="646" width="108" height="120" fill="#2d393c"/>
+ <rect x="1368" y="652" width="96" height="114" fill="#263236"/>
 </g>
-<g opacity=".66" stroke="#172125" stroke-width="6">
- <path d="M1580 720 L1624 674 H1748 L1802 710 L1794 752 H1572Z" fill="#56615e"/>
- <circle cx="1626" cy="754" r="25" fill="#101619"/><circle cx="1752" cy="754" r="25" fill="#101619"/>
- <rect x="1640" y="683" width="78" height="38" fill="#394d4c"/>
+<g opacity=".58" stroke="#172125" stroke-width="6">
+ <path d="M1580 726 L1624 680 H1748 L1802 716 1794 758 H1572Z" fill="#56615e"/>
+ <circle cx="1626" cy="760" r="24" fill="#101619"/><circle cx="1752" cy="760" r="24" fill="#101619"/>
+ <rect x="1640" y="689" width="78" height="36" fill="#394d4c"/>
 </g>
+<!-- Quiet low wall behind the protected load gives it contrast without a UI-like halo. -->
+<path d="M560 756 H948" stroke="#333e3d" stroke-width="28" opacity=".38"/>
+<path d="M560 742 H948" stroke="#746b5e" stroke-width="5" opacity=".25"/>
 </svg>
