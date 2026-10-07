@@ -1,18 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Crossroads: corner-shop weight stays centre-left, preserving the elevated enemy at x=1840. -->
-<g opacity=".74" stroke="#1a2428" stroke-width="7">
- <rect x="1180" y="620" width="292" height="138" fill="#414d4c"/>
- <path d="M1158 620 H1496 L1468 586 H1188Z" fill="#725b49"/>
- <rect x="1212" y="652" width="90" height="106" fill="#273337"/>
- <rect x="1324" y="648" width="116" height="50" fill="#536764"/>
- <path d="M1334 712 H1434" stroke="#b96b46" stroke-width="7"/>
+<defs>
+ <linearGradient id="shop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#706f64"/><stop offset=".52" stop-color="#515b57"/><stop offset="1" stop-color="#303a39"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#efa064" stop-opacity=".44"/><stop offset="1" stop-color="#ca7049" stop-opacity=".03"/></linearGradient>
+</defs>
+
+<!-- Crossroads: corner shop stays centre-left, preserving elevated enemy read on the right. -->
+<g stroke="#172227" stroke-width="7" opacity=".92">
+ <rect x="1166" y="614" width="314" height="148" fill="url(#shop)"/>
+ <path d="M1144 614 H1504 L1470 578 H1178Z" fill="#835f49"/>
+ <rect x="1200" y="650" width="96" height="112" fill="#27373b"/>
+ <rect x="1318" y="644" width="126" height="56" fill="#576b65"/>
 </g>
-<!-- Damaged junction signal moved away from the enemy silhouette. -->
-<g stroke="#243034" fill="none" stroke-linecap="round" opacity=".68">
- <path d="M870 798 V580 M870 614 H950" stroke-width="10"/><path d="M950 614 V656" stroke-width="8"/>
- <path d="M2030 792 V606 M1952 636 H2030" stroke-width="9"/><path d="M1952 636 V674" stroke-width="7"/>
+<path d="M1166 614 L1178 578 H1304 L1264 614Z" fill="url(#warm)"/>
+<g fill="#efa05f" opacity=".15"><rect x="1208" y="658" width="80" height="96"/></g>
+<path d="M1328 714 H1440" stroke="#b86948" stroke-width="7" opacity=".72"/>
+
+<!-- damaged junction furniture sits away from active silhouettes -->
+<g stroke="#27353a" fill="none" stroke-linecap="round" opacity=".78">
+ <path d="M858 804 V574 M858 610 H946" stroke-width="10"/><path d="M946 610 V654" stroke-width="8"/>
+ <path d="M2032 798 V602 M1950 632 H2032" stroke-width="9"/><path d="M1950 632 V672" stroke-width="7"/>
 </g>
-<g fill="#514f45" opacity=".70"><circle cx="950" cy="662" r="12"/><circle cx="1952" cy="680" r="11"/></g>
-<!-- Clean raised-position backing improves player/enemy separation. -->
-<path d="M1510 760 H1985" stroke="#303b3a" stroke-width="30" opacity=".42"/>
+<g fill="#575349" opacity=".80"><circle cx="946" cy="660" r="13"/><circle cx="1950" cy="678" r="12"/></g>
+<g fill="#d79a55" opacity=".20"><circle cx="946" cy="660" r="6"/><circle cx="1950" cy="678" r="5"/></g>
+
+<!-- raised position backing remains quiet enough for enemy silhouette -->
+<path d="M1500 766 H1992" stroke="#313d3c" stroke-width="34" opacity=".48"/>
+<path d="M1500 748 H1992" stroke="#83786c" stroke-width="6" opacity=".28"/>
+<path d="M1512 742 H1976" stroke="#e29b62" stroke-width="3" opacity=".18"/>
+
+<!-- broken kerb/debris reinforces junction identity -->
+<g stroke="#152025" stroke-width="5" opacity=".68">
+ <path d="M742 778 L784 742 H878 L916 770 906 796 H732Z" fill="#56615d"/>
+ <path d="M1030 790 L1060 758 H1120 L1154 782 1146 804 H1020Z" fill="#6e5547"/>
+</g>
+<g fill="#11181b" opacity=".22"><ellipse cx="820" cy="804" rx="86" ry="8"/><ellipse cx="1088" cy="810" rx="62" ry="8"/></g>
 </svg>
