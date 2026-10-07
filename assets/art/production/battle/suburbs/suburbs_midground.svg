@@ -1,56 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#695b50"/><stop offset="1" stop-color="#463f3b"/></linearGradient>
- <linearGradient id="render" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#65706a"/><stop offset="1" stop-color="#414b48"/></linearGradient>
+ <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d5c50"/><stop offset=".6" stop-color="#544942"/><stop offset="1" stop-color="#403a38"/></linearGradient>
+ <linearGradient id="render" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#68726c"/><stop offset=".58" stop-color="#515d58"/><stop offset="1" stop-color="#3c4845"/></linearGradient>
+ <linearGradient id="cool" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#536762"/><stop offset="1" stop-color="#354441"/></linearGradient>
 </defs>
-<!-- terraced / semi-detached residential edge -->
+<!-- Residential edge uses mixed footprints, roof pitches and setbacks instead of one repeated house module. -->
 <g stroke="#182226" stroke-width="7" stroke-linejoin="round">
- <path d="M30 730 L30 592 122 526 236 592 236 730Z" fill="url(#brick)"/>
- <path d="M238 730 L238 600 330 540 438 600 438 730Z" fill="#59625c"/>
- <path d="M470 730 L470 575 576 505 702 575 702 730Z" fill="url(#render)"/>
- <path d="M732 730 L732 612 824 552 928 612 928 730Z" fill="url(#brick)"/>
- <path d="M960 730 L960 570 1064 506 1184 570 1184 730Z" fill="#59645f"/>
- <path d="M1212 730 L1212 604 1304 548 1416 604 1416 730Z" fill="url(#brick)"/>
- <path d="M1448 730 L1448 580 1550 514 1672 580 1672 730Z" fill="url(#render)"/>
- <path d="M1704 730 L1704 612 1798 550 1908 612 1908 730Z" fill="#5b625c"/>
- <path d="M1936 730 L1936 582 2040 520 2160 586 2160 730Z" fill="url(#brick)"/>
+ <path d="M10 736 V604 L106 530 232 592 252 736Z" fill="url(#brick)"/>
+ <path d="M254 736 V626 L300 586 H452 V736Z" fill="#56615c"/>
+ <path d="M476 736 V576 L590 500 720 578 V736Z" fill="url(#render)"/>
+ <path d="M746 736 V632 L820 566 946 610 946 736Z" fill="#62564c"/>
+ <path d="M970 736 V572 L1062 514 1142 542 1204 594 V736Z" fill="url(#cool)"/>
+ <path d="M1228 736 V612 L1300 550 1432 604 V736Z" fill="url(#brick)"/>
+ <path d="M1456 736 V588 L1548 520 1690 582 V736Z" fill="url(#render)"/>
+ <path d="M1718 736 V630 L1780 574 H1926 V736Z" fill="#555f5a"/>
+ <path d="M1950 736 V596 L2052 526 2160 590 V736Z" fill="url(#brick)"/>
 </g>
-<!-- doors/windows; quiet values -->
-<g fill="#273338" opacity=".92">
- <rect x="64" y="650" width="44" height="80"/><rect x="142" y="624" width="55" height="44"/>
- <rect x="270" y="652" width="42" height="78"/><rect x="345" y="626" width="55" height="42"/>
- <rect x="510" y="646" width="46" height="84"/><rect x="605" y="612" width="58" height="46"/>
- <rect x="770" y="654" width="44" height="76"/><rect x="848" y="630" width="52" height="42"/>
- <rect x="1002" y="642" width="45" height="88"/><rect x="1090" y="610" width="58" height="46"/>
- <rect x="1250" y="652" width="44" height="78"/><rect x="1330" y="628" width="54" height="42"/>
- <rect x="1492" y="646" width="44" height="84"/><rect x="1584" y="612" width="58" height="46"/>
- <rect x="1742" y="654" width="44" height="76"/><rect x="1822" y="630" width="52" height="42"/>
- <rect x="1972" y="646" width="44" height="84"/><rect x="2060" y="614" width="58" height="46"/>
+<!-- Chimneys, patched roofs and missing gutters break the roofline. -->
+<g fill="#2e3937" stroke="#172125" stroke-width="5"><rect x="174" y="530" width="26" height="66"/><rect x="650" y="502" width="28" height="68"/><rect x="1100" y="524" width="24" height="64"/><rect x="1604" y="526" width="28" height="70"/><rect x="2084" y="530" width="24" height="64"/></g>
+<g fill="none" stroke="#7f5b48" stroke-width="7" opacity=".55"><path d="M32 604 L108 546 230 604"/><path d="M490 578 L590 516 706 584"/><path d="M1470 590 L1548 536 1674 588"/></g>
+<!-- Doors/windows vary in scale, placement and condition. -->
+<g fill="#273338">
+ <rect x="58" y="660" width="46" height="76"/><rect x="142" y="626" width="60" height="46"/>
+ <rect x="286" y="664" width="42" height="72"/><rect x="360" y="620" width="58" height="44"/>
+ <rect x="520" y="650" width="46" height="86"/><rect x="616" y="610" width="62" height="48"/>
+ <rect x="784" y="666" width="44" height="70"/><rect x="860" y="634" width="52" height="40"/>
+ <rect x="1014" y="646" width="48" height="90"/><rect x="1104" y="606" width="54" height="44"/>
+ <rect x="1268" y="660" width="42" height="76"/><rect x="1352" y="628" width="50" height="42"/>
+ <rect x="1502" y="650" width="46" height="86"/><rect x="1600" y="614" width="58" height="46"/>
+ <rect x="1750" y="664" width="44" height="72"/><rect x="1846" y="626" width="48" height="42"/>
+ <rect x="1988" y="652" width="44" height="84"/><rect x="2080" y="616" width="56" height="44"/>
 </g>
-<!-- broken garden / retaining walls -->
+<!-- boarded / cracked openings and faded render add material breakup -->
+<g stroke="#79634d" stroke-width="7" opacity=".68"><path d="M144 642 L202 612 M616 632 L678 602 M1350 650 L1404 622 M1842 648 L1894 618"/></g>
+<g fill="#48534f" opacity=".55"><path d="M318 594 H430 V616 H318Z"/><path d="M1002 584 H1168 V606 H1002Z"/><path d="M1738 604 H1910 V626 H1738Z"/></g>
+<g stroke="#292f2f" stroke-width="3" opacity=".52"><path d="M220 612 V720 M694 588 V724 M1182 602 V722 M1668 596 V724 M2130 596 V720"/></g>
+<!-- Garden walls have varied heights and missing sections. -->
 <g fill="#444b47" stroke="#20292a" stroke-width="5">
- <path d="M0 774 H330 V812 H0Z"/><path d="M356 786 H688 V822 H356Z"/>
- <path d="M728 770 H1088 V810 H728Z"/><path d="M1120 782 H1456 V820 H1120Z"/>
- <path d="M1490 772 H1810 V812 H1490Z"/><path d="M1842 784 H2160 V822 H1842Z"/>
+ <path d="M0 780 H286 V816 H0Z"/><path d="M330 794 H650 V824 H330Z"/>
+ <path d="M706 778 H1010 V812 H706Z"/><path d="M1084 790 H1400 V822 H1084Z"/>
+ <path d="M1460 780 H1750 V814 H1460Z"/><path d="M1830 796 H2160 V824 H1830Z"/>
 </g>
-<g stroke="#a55d42" stroke-width="4" opacity=".48"><path d="M190 782 L224 806 M875 780 L910 804 M1294 792 L1324 814 M2018 794 L2050 816"/></g>
-<!-- garages / local service strip -->
+<g stroke="#a55d42" stroke-width="4" opacity=".45"><path d="M184 788 L220 812 M856 786 L892 808 M1288 798 L1322 818 M2020 804 L2054 822"/></g>
+<!-- Garages/service units intentionally differ rather than mirror one another. -->
 <g stroke="#192326" stroke-width="6">
- <rect x="520" y="744" width="208" height="116" fill="#414d4c"/><rect x="536" y="770" width="78" height="90" fill="#263236"/><rect x="626" y="770" width="84" height="90" fill="#2e393c"/>
- <rect x="1510" y="746" width="230" height="114" fill="#414c4b"/><rect x="1528" y="772" width="88" height="88" fill="#273337"/><rect x="1628" y="772" width="92" height="88" fill="#303a3c"/>
+ <path d="M492 860 V758 H724 V860Z" fill="#414d4c"/><rect x="512" y="780" width="82" height="80" fill="#263236"/><rect x="610" y="770" width="94" height="90" fill="#303a3c"/>
+ <path d="M1492 860 V750 H1762 V860Z" fill="#3d4948"/><rect x="1510" y="784" width="98" height="76" fill="#273337"/><rect x="1624" y="768" width="118" height="92" fill="#303a3c"/>
 </g>
-<!-- utility poles/cables remain a recurring world motif, but lighter than Outskirts -->
+<g stroke="#68736d" stroke-width="4" opacity=".48"><path d="M520 800 H586 M520 820 H586 M1634 790 H1732 M1634 814 H1732"/></g>
+<!-- Utility poles remain shared-world language but use fewer, irregular spans. -->
 <g stroke="#2a383d" fill="none" stroke-linecap="round">
- <path d="M420 846 V520 M386 566 H454" stroke-width="11"/>
- <path d="M1120 846 V540 M1086 585 H1154" stroke-width="11"/>
- <path d="M1870 846 V524 M1836 570 H1904" stroke-width="11"/>
- <path d="M454 566 C650 612 870 552 1086 585 M1154 585 C1390 625 1600 548 1836 570" stroke-width="4" opacity=".67"/>
+ <path d="M410 850 V516 M376 562 H444" stroke-width="11"/><path d="M1134 850 V544 M1100 588 H1168" stroke-width="11"/><path d="M1884 850 V520 M1850 566 H1918" stroke-width="11"/>
+ <path d="M444 562 C652 606 862 556 1100 588 M1168 588 C1400 626 1620 552 1850 566" stroke-width="4" opacity=".63"/>
 </g>
-<!-- broken bus shelter/service stop, characteristic of region -->
-<g stroke="#222d31" stroke-width="8" fill="none">
- <path d="M870 850 V704 M1062 850 V704 M852 710 H1080"/>
-</g>
-<rect x="900" y="732" width="132" height="86" fill="#536965" opacity=".50" stroke="#243033" stroke-width="5"/>
-<path d="M912 804 L1018 750" stroke="#7bb4b8" stroke-width="4" opacity=".18"/>
-<rect x="912" y="822" width="104" height="12" rx="3" fill="#63584a"/>
+<!-- One damaged shelter anchors the region; no repeated shelter copy. -->
+<g stroke="#222d31" stroke-width="8" fill="none"><path d="M858 858 V706 M1064 858 V706 M842 712 H1082"/></g>
+<rect x="892" y="734" width="138" height="88" fill="#536965" opacity=".43" stroke="#243033" stroke-width="5"/>
+<path d="M904 808 L1018 750" stroke="#7bb4b8" stroke-width="4" opacity=".14"/>
+<rect x="904" y="830" width="104" height="12" rx="3" fill="#63584a"/>
+<!-- base occlusion and warm horizon bounce integrate buildings into the road -->
+<path d="M0 842 H2160 V930 H0Z" fill="#11181b" opacity=".12"/>
+<path d="M0 844 C420 828 760 854 1120 834 S1770 844 2160 824" fill="none" stroke="#d58c5a" stroke-width="16" opacity=".05"/>
 </svg>
