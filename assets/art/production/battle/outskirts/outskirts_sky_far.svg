@@ -1,33 +1,79 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45677c"/><stop offset=".32" stop-color="#667884"/><stop offset=".63" stop-color="#a57461"/><stop offset="1" stop-color="#c47249"/></linearGradient>
- <radialGradient id="sun"><stop offset="0" stop-color="#ffe6aa"/><stop offset=".45" stop-color="#f2b65f" stop-opacity=".88"/><stop offset="1" stop-color="#db7947" stop-opacity="0"/></radialGradient>
- <linearGradient id="haze" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e28b57" stop-opacity=".03"/><stop offset=".48" stop-color="#f5d6b1" stop-opacity=".30"/><stop offset="1" stop-color="#df8452" stop-opacity=".05"/></linearGradient>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#4b82aa"/>
+  <stop offset=".28" stop-color="#74a7c4"/>
+  <stop offset=".57" stop-color="#e2a078"/>
+  <stop offset=".82" stop-color="#f0a363"/>
+  <stop offset="1" stop-color="#9b6750"/>
+ </linearGradient>
+ <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+  <stop offset="0" stop-color="#fff1b8"/>
+  <stop offset=".34" stop-color="#ffd989" stop-opacity=".98"/>
+  <stop offset=".68" stop-color="#f3a453" stop-opacity=".40"/>
+  <stop offset="1" stop-color="#e3783f" stop-opacity="0"/>
+ </radialGradient>
+ <linearGradient id="haze" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#f0ad75" stop-opacity=".07"/>
+  <stop offset=".47" stop-color="#ffe4bf" stop-opacity=".30"/>
+  <stop offset="1" stop-color="#e58a55" stop-opacity=".08"/>
+ </linearGradient>
 </defs>
 <rect width="2160" height="930" fill="url(#sky)"/>
-<circle cx="1775" cy="205" r="205" fill="url(#sun)"/><circle cx="1775" cy="205" r="52" fill="#ffdb91" opacity=".88"/>
-<!-- layered dust/haze bands deepen the horizon without obscuring silhouettes -->
-<path d="M0 330 C300 292 520 366 790 338 S1360 296 1660 350 S1990 310 2160 326 V448 H0Z" fill="#f2d9bd" opacity=".055"/>
-<path d="M0 438 C320 396 610 468 920 430 S1460 410 1760 468 S2040 430 2160 444 V584 H0Z" fill="url(#haze)"/>
-<path d="M0 552 C390 522 760 574 1100 538 S1760 548 2160 514 V672 H0Z" fill="#d7976e" opacity=".08"/>
-<!-- distant industrial silhouette, deliberately lower contrast -->
-<g fill="#56676d" opacity=".72">
- <path d="M0 638 V520 H118 V474 H226 V638Z"/><path d="M270 638 V590 H344 V438 H420 V638Z"/>
- <path d="M470 638 V548 H585 V500 H690 V638Z"/><path d="M744 638 V414 H832 V576 H920 V638Z"/>
- <path d="M970 638 V526 H1110 V460 H1200 V638Z"/><path d="M1260 638 V570 H1370 V486 H1470 V638Z"/>
- <path d="M1520 638 V438 H1605 V548 H1712 V638Z"/><path d="M1760 638 V516 H1888 V454 H1994 V638Z"/><path d="M2040 638 V492 H2160 V638Z"/>
+
+<!-- painterly cloud masses: broad readable shapes rather than thin procedural bands -->
+<g fill="#f5d5b0" opacity=".40">
+ <path d="M-40 286 C90 218 214 238 302 286 C402 210 560 222 650 302 C548 326 436 330 314 320 C184 340 68 332 -40 310Z"/>
+ <path d="M740 250 C842 196 954 214 1034 260 C1120 202 1260 220 1324 278 C1220 300 1112 304 1006 296 C908 310 818 304 740 286Z"/>
+ <path d="M1490 328 C1588 266 1718 270 1806 330 C1892 276 2018 292 2192 364 V424 H1490Z"/>
 </g>
-<g fill="#43565d" opacity=".78">
- <path d="M0 748 V624 H250 V748Z"/><path d="M310 748 V602 H542 V748Z"/><path d="M610 748 V632 H858 V748Z"/>
- <path d="M930 748 V594 H1178 V748Z"/><path d="M1248 748 V626 H1440 V748Z"/><path d="M1500 748 V592 H1760 V748Z"/><path d="M1830 748 V620 H2160 V748Z"/>
+<g fill="#fff0d1" opacity=".18">
+ <path d="M110 352 C280 314 454 334 640 378 C458 388 286 390 112 376Z"/>
+ <path d="M900 356 C1110 324 1320 346 1488 390 C1288 394 1100 394 906 382Z"/>
 </g>
-<!-- stacks, tanks and chimneys avoid a flat skyline rhythm -->
-<g fill="#394c52" opacity=".72">
- <rect x="568" y="370" width="25" height="270"/><ellipse cx="580.5" cy="370" rx="29" ry="10"/>
- <rect x="1458" y="390" width="28" height="248"/><ellipse cx="1472" cy="390" rx="31" ry="11"/>
- <rect x="1990" y="406" width="22" height="232"/>
- <ellipse cx="1168" cy="598" rx="78" ry="25"/><rect x="1090" y="596" width="156" height="84"/>
+
+<!-- strong golden-hour light source, matching Hub/Garage warmth -->
+<circle cx="1800" cy="214" r="250" fill="url(#sun)"/>
+<circle cx="1800" cy="214" r="58" fill="#ffe5a0" opacity=".96"/>
+<path d="M1300 454 C1510 410 1730 414 2160 344 V600 H1260Z" fill="#ef9b5f" opacity=".10"/>
+<path d="M0 472 C370 432 730 488 1110 446 S1760 456 2160 412 V620 H0Z" fill="url(#haze)"/>
+
+<!-- distant collapsed modern skyline: warm-lit faces and cool shadow faces -->
+<g opacity=".76">
+ <g fill="#657983">
+  <path d="M0 660 V548 H110 V492 H226 V660Z"/>
+  <path d="M258 660 V586 H352 V442 H434 V660Z"/>
+  <path d="M482 660 V528 H594 V482 H706 V660Z"/>
+  <path d="M744 660 V414 H836 V566 H936 V660Z"/>
+  <path d="M978 660 V532 H1110 V460 H1208 V660Z"/>
+  <path d="M1250 660 V574 H1370 V488 H1474 V660Z"/>
+  <path d="M1514 660 V438 H1608 V550 H1712 V660Z"/>
+  <path d="M1760 660 V520 H1894 V454 H2000 V660Z"/>
+  <path d="M2040 660 V494 H2160 V660Z"/>
+ </g>
+ <g fill="#bc7555" opacity=".34">
+  <path d="M86 548 H226 V660 H172Z"/><path d="M352 442 H434 V660 H402Z"/>
+  <path d="M594 482 H706 V660 H654Z"/><path d="M836 414 H936 V660 H894Z"/>
+  <path d="M1110 460 H1208 V660 H1164Z"/><path d="M1370 488 H1474 V660 H1430Z"/>
+  <path d="M1608 438 H1712 V660 H1670Z"/><path d="M1894 454 H2000 V660 H1956Z"/>
+ </g>
 </g>
-<path d="M0 740 C355 698 730 738 1060 704 S1750 724 2160 680 V930 H0Z" fill="#35484f"/>
-<path d="M0 716 C420 690 850 720 1220 690 S1840 704 2160 672" fill="none" stroke="#d9905e" stroke-width="22" opacity=".055"/>
+
+<!-- industrial fringe silhouette with recognisable stacks, tanks and bridge fragments -->
+<g fill="#41565d" opacity=".84">
+ <rect x="566" y="372" width="26" height="310"/><ellipse cx="579" cy="372" rx="30" ry="10"/>
+ <rect x="1458" y="388" width="30" height="294"/><ellipse cx="1473" cy="388" rx="31" ry="11"/>
+ <rect x="1988" y="410" width="23" height="272"/>
+ <ellipse cx="1164" cy="620" rx="82" ry="26"/><rect x="1082" y="618" width="164" height="94"/>
+ <path d="M120 642 H530 L584 606 H782 V630 H568 L520 670 H120Z"/>
+</g>
+<g stroke="#293b41" fill="none" opacity=".78">
+ <path d="M122 660 V472 M90 520 H154" stroke-width="12"/>
+ <path d="M500 660 V520 M462 558 H540" stroke-width="10"/>
+ <path d="M90 520 C230 554 330 516 462 558" stroke-width="4"/>
+</g>
+
+<!-- atmospheric foothold ties backdrop into gameplay floor -->
+<path d="M0 748 C350 704 724 744 1054 708 S1754 730 2160 686 V930 H0Z" fill="#344a50"/>
+<path d="M0 724 C420 694 850 730 1220 696 S1840 710 2160 678" fill="none" stroke="#f0a365" stroke-width="24" opacity=".09"/>
 </svg>
