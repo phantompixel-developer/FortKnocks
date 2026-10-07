@@ -1,18 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Loaded Up: service lane begins after the protected Salvage's x=760 read zone. -->
-<g opacity=".75" stroke="#1a2428" stroke-width="7">
- <rect x="1080" y="616" width="420" height="150" fill="#404c4c"/>
- <path d="M1058 616 H1524 L1496 580 H1090Z" fill="#615747"/>
- <rect x="1112" y="650" width="112" height="116" fill="#273438"/>
- <rect x="1242" y="646" width="108" height="120" fill="#2d393c"/>
- <rect x="1368" y="652" width="96" height="114" fill="#263236"/>
+<defs>
+ <linearGradient id="service" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b746e"/><stop offset=".52" stop-color="#4e5956"/><stop offset="1" stop-color="#303b3b"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".25"><stop offset="0" stop-color="#efa164" stop-opacity=".42"/><stop offset="1" stop-color="#ca714b" stop-opacity=".03"/></linearGradient>
+</defs>
+
+<!-- Loaded Up: service lane starts after the protected Salvage read zone. -->
+<g stroke="#172227" stroke-width="7" opacity=".92">
+ <rect x="1068" y="610" width="440" height="158" fill="url(#service)"/>
+ <path d="M1046 610 H1532 L1498 572 H1080Z" fill="#71614f"/>
+ <rect x="1102" y="646" width="118" height="122" fill="#28383c"/>
+ <rect x="1238" y="642" width="114" height="126" fill="#303e40"/>
+ <rect x="1370" y="648" width="100" height="120" fill="#273539"/>
 </g>
-<g opacity=".58" stroke="#172125" stroke-width="6">
- <path d="M1580 726 L1624 680 H1748 L1802 716 1794 758 H1572Z" fill="#56615e"/>
- <circle cx="1626" cy="760" r="24" fill="#101619"/><circle cx="1752" cy="760" r="24" fill="#101619"/>
- <rect x="1640" y="689" width="78" height="36" fill="#394d4c"/>
+<path d="M1068 610 L1080 572 H1212 L1172 610Z" fill="url(#warm)"/>
+<g fill="#efa05f" opacity=".15"><rect x="1110" y="654" width="102" height="106"/></g>
+<g stroke="#a75f44" stroke-width="4" opacity=".48"><path d="M1184 616 V700 M1320 614 V708 M1444 616 V700"/></g>
+
+<!-- abandoned service vehicle creates depth on the right, not behind Salvage -->
+<g stroke="#152025" stroke-width="6" opacity=".76">
+ <path d="M1572 730 L1618 678 H1752 L1808 718 1798 764 H1562Z" fill="#596561"/>
+ <circle cx="1624" cy="766" r="26" fill="#0f161a"/><circle cx="1756" cy="766" r="26" fill="#0f161a"/>
+ <rect x="1638" y="688" width="82" height="38" fill="#3b4f4d"/>
 </g>
-<!-- Quiet low wall behind the protected load gives it contrast without a UI-like halo. -->
-<path d="M560 756 H948" stroke="#333e3d" stroke-width="28" opacity=".38"/>
-<path d="M560 742 H948" stroke="#746b5e" stroke-width="5" opacity=".25"/>
+<path d="M1588 716 L1624 690 H1740" stroke="#e2945c" stroke-width="4" opacity=".30" fill="none"/>
+
+<!-- low quiet backing gives the protected load contrast without a glowing halo -->
+<path d="M546 762 H958" stroke="#343f3e" stroke-width="32" opacity=".44"/>
+<path d="M546 746 H958" stroke="#81776a" stroke-width="6" opacity=".28"/>
+<path d="M558 740 H946" stroke="#e29b62" stroke-width="3" opacity=".17"/>
+
+<!-- service clutter stays below objective height -->
+<g stroke="#152025" stroke-width="5" opacity=".64">
+ <rect x="922" y="716" width="74" height="50" fill="#52605b"/>
+ <path d="M976 766 L1002 730 H1052 L1078 758 1068 776 H966Z" fill="#705247"/>
+</g>
+<g fill="#11181b" opacity=".23"><ellipse cx="1288" cy="780" rx="170" ry="11"/><ellipse cx="1688" cy="776" rx="126" ry="10"/></g>
 </svg>
