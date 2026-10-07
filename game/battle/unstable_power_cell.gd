@@ -42,6 +42,7 @@ func _play_hit_reaction(impulse: Vector2) -> void:
 	_reaction_tween.tween_property(self, "rotation", 0.0, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _draw() -> void:
+	_draw_ground_treatment()
 	if is_discharged:
 		if _spent_texture == null:
 			_spent_texture = ProductionArtScript.texture_from_svg(POWER_CELL_SPENT_TEXTURE_PATH)
@@ -83,6 +84,14 @@ func _draw() -> void:
 	draw_line(Vector2(-25, 34), Vector2(-38, 48), Color("303b37"), 5.0)
 	draw_line(Vector2(25, 34), Vector2(38, 48), Color("303b37"), 5.0)
 	draw_circle(Vector2(0, -12), 24.0, Color(cold, 0.10))
+
+func _draw_ground_treatment() -> void:
+	# The live cell is allowed the strongest cold-tech spill in the current battlefield.
+	draw_set_transform(Vector2(0.0, 32.0), 0.0, Vector2(1.05, 0.24))
+	draw_circle(Vector2.ZERO, 54.0, Color(0.025, 0.035, 0.040, 0.30))
+	if not is_discharged:
+		draw_circle(Vector2.ZERO, 70.0, Color(0.32, 0.72, 0.76, 0.10))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 func _draw_spent_cell() -> void:
 	var outline := Color("171c1b")
