@@ -1,47 +1,108 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="wallA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c5c61"/><stop offset=".62" stop-color="#3b4a4f"/><stop offset="1" stop-color="#28363b"/></linearGradient>
- <linearGradient id="wallB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59625d"/><stop offset="1" stop-color="#394440"/></linearGradient>
- <linearGradient id="awning" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#765946"/><stop offset=".5" stop-color="#5f5043"/><stop offset="1" stop-color="#8c5d44"/></linearGradient>
+ <linearGradient id="wallA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#657379"/><stop offset=".48" stop-color="#4e5b60"/><stop offset="1" stop-color="#2c393e"/></linearGradient>
+ <linearGradient id="wallB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#77675a"/><stop offset=".5" stop-color="#5d5149"/><stop offset="1" stop-color="#373a39"/></linearGradient>
+ <linearGradient id="warmFace" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#d38a59" stop-opacity=".58"/><stop offset="1" stop-color="#8b5542" stop-opacity=".08"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6e8b8d"/><stop offset="1" stop-color="#26393e"/></linearGradient>
 </defs>
-<!-- asymmetrical roadside commercial / industrial shells -->
-<g stroke="#172125" stroke-width="8" stroke-linejoin="round">
- <path d="M20 720 V578 L70 530 H330 L382 576 V720Z" fill="url(#wallA)"/>
- <path d="M410 720 V612 H470 V566 H710 L770 606 V720Z" fill="#405157"/>
- <path d="M816 720 V552 L872 506 H1170 V720Z" fill="url(#wallA)"/>
- <path d="M1210 720 V596 L1270 548 H1505 L1598 606 V720Z" fill="url(#wallB)"/>
- <path d="M1642 720 V570 L1710 520 H2040 L2114 572 V720Z" fill="url(#wallA)"/>
+
+<!-- roadside commercial / salvage fringe. Structures share a warm-left / cool-shadow lighting rule. -->
+<g stroke="#142026" stroke-width="8" stroke-linejoin="round">
+ <path d="M0 742 V590 L58 536 H326 L388 584 V742Z" fill="url(#wallA)"/>
+ <path d="M404 742 V626 H468 V572 H708 L776 618 V742Z" fill="url(#wallB)"/>
+ <path d="M806 742 V560 L866 504 H1176 V742Z" fill="url(#wallA)"/>
+ <path d="M1208 742 V606 L1272 548 H1510 L1604 614 V742Z" fill="url(#wallB)"/>
+ <path d="M1636 742 V574 L1706 516 H2036 L2118 580 V742Z" fill="url(#wallA)"/>
 </g>
-<!-- roof/awning silhouettes, deliberately varied in height and damage -->
-<path d="M0 548 H397 L365 592 H42Z" fill="url(#awning)" stroke="#182226" stroke-width="7"/>
-<path d="M798 526 H1194 L1168 568 H838Z" fill="#6f5849" stroke="#182226" stroke-width="7"/>
-<path d="M1618 540 H2140 L2104 584 H1654Z" fill="#645448" stroke="#182226" stroke-width="7"/>
-<path d="M1240 560 L1320 520 1438 548 1510 522 1580 570" fill="none" stroke="#26322f" stroke-width="10"/>
-<!-- openings/sign remnants; no repeated identical storefront modules -->
-<g>
- <rect x="72" y="608" width="126" height="112" fill="#222e32"/><g stroke="#56636a" stroke-width="5"><path d="M82 625 H188 M82 646 H188 M82 667 H188"/></g>
- <rect x="232" y="596" width="104" height="54" fill="#55706e" opacity=".54"/><path d="M238 656 H332" stroke="#ae5d3d" stroke-width="8"/>
- <rect x="462" y="632" width="72" height="88" fill="#253136"/><rect x="574" y="610" width="142" height="58" fill="#506662" opacity=".48"/>
- <rect x="870" y="580" width="142" height="140" fill="#243035"/><path d="M884 600 H998 M884 624 H998 M884 648 H998" stroke="#4d595e" stroke-width="5"/>
- <rect x="1038" y="570" width="102" height="62" fill="#4c6564" opacity=".56"/><path d="M1042 640 H1138" stroke="#d09b48" stroke-width="8" opacity=".55"/>
- <rect x="1272" y="620" width="94" height="100" fill="#263237"/><rect x="1408" y="604" width="116" height="60" fill="#506461" opacity=".46"/>
- <rect x="1710" y="592" width="124" height="128" fill="#243136"/><rect x="1870" y="582" width="150" height="68" fill="#536b69" opacity=".48"/>
+
+<!-- sun-facing planes make the environment read as illustrated volume rather than flat blocks -->
+<g fill="url(#warmFace)">
+ <path d="M0 590 L58 536 H326 L280 586 H54 V742 H0Z"/>
+ <path d="M404 626 H468 V572 H708 L654 620 H458 V742 H404Z"/>
+ <path d="M806 560 L866 504 H1176 L1110 558 H864 V742 H806Z"/>
+ <path d="M1208 606 L1272 548 H1510 L1448 604 H1260 V742 H1208Z"/>
+ <path d="M1636 574 L1706 516 H2036 L1968 572 H1694 V742 H1636Z"/>
 </g>
-<!-- material wear: patched sheets, water streaks, missing panels -->
-<g fill="#2f3c3e" opacity=".72"><path d="M286 672 L350 654 V716 H286Z"/><path d="M690 676 L754 648 V718 H690Z"/><path d="M1130 660 L1190 640 V718 H1130Z"/><path d="M1530 676 L1590 648 V718 H1530Z"/></g>
-<g stroke="#9a5a40" stroke-width="4" opacity=".46"><path d="M104 552 L145 584 M164 552 L206 584 M900 532 L944 564 M970 532 L1014 564 M1768 546 L1812 578 M1842 546 L1886 578"/></g>
-<g stroke="#252f30" stroke-width="3" opacity=".55"><path d="M328 584 V700 M680 584 V708 M1080 546 V710 M1456 574 V710 M1990 552 V708"/></g>
-<!-- utility rhythm varies rather than repeating at one interval -->
-<g stroke="#222f34" fill="none" stroke-linecap="round">
- <path d="M250 720 V350 M214 405 H286" stroke-width="13"/><path d="M744 720 V404 M710 448 H778" stroke-width="12"/>
- <path d="M1266 720 V362 M1228 412 H1304" stroke-width="13"/><path d="M1850 720 V384 M1814 430 H1886" stroke-width="12"/>
- <path d="M286 405 C474 450 570 408 710 448 M778 448 C970 486 1084 394 1228 412 M1304 412 C1508 460 1664 398 1814 430" stroke-width="4" opacity=".68"/>
+
+<!-- broken roof/awning rhythm -->
+<g stroke="#172127" stroke-width="7" stroke-linejoin="round">
+ <path d="M-12 572 H400 L360 608 H34Z" fill="#775947"/>
+ <path d="M442 590 H800 L764 622 H470Z" fill="#53656a"/>
+ <path d="M784 536 H1190 L1148 574 H824Z" fill="#6b5a49"/>
+ <path d="M1188 580 H1622 L1574 620 H1234Z" fill="#56645f"/>
+ <path d="M1616 548 H2142 L2090 590 H1668Z" fill="#735744"/>
 </g>
-<!-- grounded roadside clutter / wrecks -->
-<g stroke="#151e21" stroke-width="6">
- <path d="M520 688 L555 650 H654 L704 682 696 720 H508Z" fill="#62483e"/><circle cx="555" cy="720" r="24" fill="#101619"/><circle cx="660" cy="720" r="24" fill="#101619"/>
- <path d="M1450 690 L1492 652 H1588 L1638 684 1628 720 H1440Z" fill="#475a57"/><circle cx="1490" cy="720" r="23" fill="#101619"/><circle cx="1592" cy="720" r="23" fill="#101619"/>
+<g stroke="#d68a55" stroke-width="4" opacity=".34">
+ <path d="M38 580 L88 606 M102 580 L152 606 M842 544 L894 570 M912 544 L964 570 M1682 556 L1734 584 M1750 556 L1802 584"/>
 </g>
-<path d="M0 716 H2160 V930 H0Z" fill="#11181b" opacity=".10"/>
-<path d="M0 718 C440 702 780 730 1120 710 S1760 720 2160 698" stroke="#d18a57" stroke-width="18" opacity=".06" fill="none"/>
+
+<!-- bays and shopfronts; dark interiors with warm bounced light -->
+<g stroke="#182329" stroke-width="6">
+ <rect x="54" y="642" width="116" height="100" fill="#18252b"/>
+ <rect x="196" y="626" width="118" height="116" fill="#26363b"/>
+ <rect x="482" y="652" width="104" height="90" fill="#1a282d"/>
+ <rect x="618" y="624" width="122" height="118" fill="#2a383a"/>
+ <rect x="858" y="610" width="144" height="132" fill="#18262c"/>
+ <rect x="1030" y="622" width="112" height="120" fill="#2a383c"/>
+ <rect x="1266" y="650" width="110" height="92" fill="#1c292e"/>
+ <rect x="1412" y="626" width="144" height="116" fill="#263639"/>
+ <rect x="1694" y="614" width="126" height="128" fill="#1b292e"/>
+ <rect x="1852" y="630" width="138" height="112" fill="#26363b"/>
+</g>
+<g fill="#e79b58" opacity=".17">
+ <rect x="64" y="652" width="96" height="80"/><rect x="868" y="620" width="124" height="112"/>
+ <rect x="1276" y="660" width="90" height="72"/><rect x="1704" y="624" width="106" height="108"/>
+</g>
+<g fill="url(#glass)" opacity=".92">
+ <rect x="206" y="644" width="96" height="48"/><rect x="628" y="640" width="98" height="48"/>
+ <rect x="1040" y="638" width="90" height="48"/><rect x="1424" y="642" width="116" height="46"/>
+ <rect x="1864" y="646" width="112" height="48"/>
+</g>
+
+<!-- battered signage / shutters -->
+<g opacity=".70">
+ <rect x="86" y="594" width="126" height="28" rx="3" fill="#2a363b" stroke="#162126" stroke-width="5"/>
+ <path d="M104 608 H184" stroke="#e0ad4f" stroke-width="6"/>
+ <rect x="514" y="588" width="152" height="25" rx="3" fill="#563f36" stroke="#162126" stroke-width="5"/>
+ <path d="M532 600 H638" stroke="#cf7d4e" stroke-width="5"/>
+ <rect x="1308" y="594" width="164" height="26" rx="3" fill="#32474a" stroke="#162126" stroke-width="5"/>
+ <path d="M1324 607 H1452" stroke="#d8a64c" stroke-width="5"/>
+</g>
+
+<!-- material wear: patches, exposed repair plates, rust runs and chipped corners -->
+<g fill="#47565a" opacity=".76">
+ <path d="M238 704 h72 v38 h-72Z"/><path d="M686 682 h66 v46 h-66Z"/><path d="M1092 690 h68 v42 h-68Z"/>
+ <path d="M1510 686 h76 v48 h-76Z"/><path d="M1980 690 h88 v42 h-88Z"/>
+</g>
+<g stroke="#a95f42" stroke-width="4" opacity=".58">
+ <path d="M280 602 V682 M302 600 V656 M718 612 V694 M1118 574 V660 M1542 620 V706 M2020 590 V674"/>
+</g>
+<g stroke="#d7a266" stroke-width="3" opacity=".24">
+ <path d="M72 616 H330 M486 604 H748 M830 568 H1150 M1232 616 H1570 M1660 586 H2080"/>
+</g>
+
+<!-- utility poles/wires create familiar Outskirts silhouette and perspective -->
+<g stroke="#26373d" fill="none" stroke-linecap="round">
+ <path d="M352 850 V458 M314 514 H390" stroke-width="12"/>
+ <path d="M790 850 V500 M752 554 H828" stroke-width="11"/>
+ <path d="M1604 850 V470 M1566 526 H1642" stroke-width="12"/>
+ <path d="M2088 850 V510 M2054 558 H2122" stroke-width="11"/>
+ <path d="M390 514 C520 550 640 526 752 554 M828 554 C1090 602 1310 532 1566 526 M1642 526 C1806 554 1928 544 2054 558" stroke-width="4" opacity=".65"/>
+</g>
+
+<!-- low scrub / stripped shells visually ground the strip before the gameplay road -->
+<g opacity=".70" stroke="#111b20" stroke-width="6">
+ <path d="M338 810 L382 772 H492 L542 804 532 838 H326Z" fill="#4a5758"/>
+ <circle cx="386" cy="840" r="24" fill="#10161a"/><circle cx="490" cy="840" r="24" fill="#10161a"/>
+ <path d="M1136 818 L1176 782 H1282 L1334 810 1324 840 H1126Z" fill="#675047"/>
+ <circle cx="1180" cy="842" r="23" fill="#10161a"/><circle cx="1284" cy="842" r="23" fill="#10161a"/>
+</g>
+<g stroke="#3e5742" stroke-width="7" stroke-linecap="round">
+ <path d="M590 846 L574 798 M590 838 L610 788 M582 820 L554 806 M598 816 L626 800"/>
+ <path d="M1782 846 L1764 798 M1782 838 L1806 788 M1772 818 L1746 804 M1792 814 L1822 796"/>
+</g>
+
+<!-- contact band / bounced sunset light -->
+<path d="M0 846 H2160 V930 H0Z" fill="#11191c" opacity=".12"/>
+<path d="M0 844 C410 826 820 856 1180 834 S1800 846 2160 824" fill="none" stroke="#ef9b5d" stroke-width="18" opacity=".075"/>
 </svg>
