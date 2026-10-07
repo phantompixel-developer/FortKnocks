@@ -79,13 +79,6 @@ func _draw() -> void:
 			draw_rect(Rect2(-28, -171, 56.0 * ratio, 4), Color("e7ad3c"))
 		return
 
-func _draw_contact_shadow() -> void:
-	var alpha := 0.18 if is_collapsed else 0.28
-	var contact_y := 154.0 if not is_collapsed else 118.0
-	draw_set_transform(Vector2(0.0, contact_y), 0.0, Vector2(0.82, 0.20))
-	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, alpha))
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-
 	var outline := Color("171c1b")
 	var frame := Color("2b3531")
 	var panel_a := Color("657069")
@@ -121,3 +114,10 @@ func _draw_contact_shadow() -> void:
 		var ratio := float(health) / float(max_health)
 		draw_rect(Rect2(-28, -151, 56, 10), outline)
 		draw_rect(Rect2(-25, -148, 50.0 * ratio, 4), hazard)
+
+func _draw_contact_shadow() -> void:
+	var alpha := 0.18 if is_collapsed else 0.28
+	var contact_y := 154.0 if not is_collapsed else 118.0
+	draw_set_transform(Vector2(0.0, contact_y), 0.0, Vector2(0.82, 0.20))
+	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, alpha))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
