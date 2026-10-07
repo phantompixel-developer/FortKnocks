@@ -1,39 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<defs><linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#44545a"/><stop offset="1" stop-color="#28363b"/></linearGradient><linearGradient id="rust" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b6045"/><stop offset="1" stop-color="#5d4037"/></linearGradient></defs>
-<!-- repeated roadside shells -->
-<g stroke="#182227" stroke-width="8" stroke-linejoin="round">
- <path d="M55 700 L55 570 95 530 330 530 372 570 372 700Z" fill="url(#wall)"/>
- <path d="M430 700 L430 600 480 552 720 552 760 600 760 700Z" fill="#3f5056"/>
- <path d="M845 700 L845 548 890 510 1132 510 1184 548 1184 700Z" fill="url(#wall)"/>
- <path d="M1275 700 L1275 590 1325 550 1540 550 1592 590 1592 700Z" fill="#405158"/>
- <path d="M1680 700 L1680 560 1738 520 2030 520 2080 560 2080 700Z" fill="url(#wall)"/>
+<defs>
+ <linearGradient id="wallA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c5c61"/><stop offset=".62" stop-color="#3b4a4f"/><stop offset="1" stop-color="#28363b"/></linearGradient>
+ <linearGradient id="wallB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59625d"/><stop offset="1" stop-color="#394440"/></linearGradient>
+ <linearGradient id="awning" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#765946"/><stop offset=".5" stop-color="#5f5043"/><stop offset="1" stop-color="#8c5d44"/></linearGradient>
+</defs>
+<!-- asymmetrical roadside commercial / industrial shells -->
+<g stroke="#172125" stroke-width="8" stroke-linejoin="round">
+ <path d="M20 720 V578 L70 530 H330 L382 576 V720Z" fill="url(#wallA)"/>
+ <path d="M410 720 V612 H470 V566 H710 L770 606 V720Z" fill="#405157"/>
+ <path d="M816 720 V552 L872 506 H1170 V720Z" fill="url(#wallA)"/>
+ <path d="M1210 720 V596 L1270 548 H1505 L1598 606 V720Z" fill="url(#wallB)"/>
+ <path d="M1642 720 V570 L1710 520 H2040 L2114 572 V720Z" fill="url(#wallA)"/>
 </g>
-<!-- shutters/windows/sign remnants -->
+<!-- roof/awning silhouettes, deliberately varied in height and damage -->
+<path d="M0 548 H397 L365 592 H42Z" fill="url(#awning)" stroke="#182226" stroke-width="7"/>
+<path d="M798 526 H1194 L1168 568 H838Z" fill="#6f5849" stroke="#182226" stroke-width="7"/>
+<path d="M1618 540 H2140 L2104 584 H1654Z" fill="#645448" stroke="#182226" stroke-width="7"/>
+<path d="M1240 560 L1320 520 1438 548 1510 522 1580 570" fill="none" stroke="#26322f" stroke-width="10"/>
+<!-- openings/sign remnants; no repeated identical storefront modules -->
 <g>
- <rect x="95" y="596" width="115" height="104" fill="#222d31"/><path d="M103 610 H202 M103 628 H202 M103 646 H202 M103 664 H202" stroke="#556269" stroke-width="5"/>
- <rect x="232" y="584" width="96" height="50" fill="#56706f" opacity=".58"/><path d="M236 638 H326" stroke="#b75d39" stroke-width="8"/>
- <rect x="478" y="608" width="78" height="92" fill="#253136"/><rect x="584" y="596" width="126" height="58" fill="#536a69" opacity=".55"/>
- <rect x="900" y="566" width="126" height="134" fill="#243036"/><rect x="1040" y="558" width="102" height="64" fill="#4e6767" opacity=".6"/><path d="M1045 632 H1138" stroke="#d6a14a" stroke-width="8" opacity=".58"/>
- <rect x="1320" y="605" width="88" height="95" fill="#263237"/><rect x="1435" y="598" width="106" height="56" fill="#536866" opacity=".55"/>
- <rect x="1738" y="574" width="116" height="126" fill="#253136"/><rect x="1880" y="566" width="146" height="67" fill="#536b69" opacity=".52"/>
+ <rect x="72" y="608" width="126" height="112" fill="#222e32"/><g stroke="#56636a" stroke-width="5"><path d="M82 625 H188 M82 646 H188 M82 667 H188"/></g>
+ <rect x="232" y="596" width="104" height="54" fill="#55706e" opacity=".54"/><path d="M238 656 H332" stroke="#ae5d3d" stroke-width="8"/>
+ <rect x="462" y="632" width="72" height="88" fill="#253136"/><rect x="574" y="610" width="142" height="58" fill="#506662" opacity=".48"/>
+ <rect x="870" y="580" width="142" height="140" fill="#243035"/><path d="M884 600 H998 M884 624 H998 M884 648 H998" stroke="#4d595e" stroke-width="5"/>
+ <rect x="1038" y="570" width="102" height="62" fill="#4c6564" opacity=".56"/><path d="M1042 640 H1138" stroke="#d09b48" stroke-width="8" opacity=".55"/>
+ <rect x="1272" y="620" width="94" height="100" fill="#263237"/><rect x="1408" y="604" width="116" height="60" fill="#506461" opacity=".46"/>
+ <rect x="1710" y="592" width="124" height="128" fill="#243136"/><rect x="1870" y="582" width="150" height="68" fill="#536b69" opacity=".48"/>
 </g>
-<!-- corrugated awnings / repair -->
-<path d="M36 546 L386 546 L360 584 L58 584Z" fill="#6e5b49" stroke="#1c262a" stroke-width="7"/>
-<path d="M822 526 L1208 526 L1181 566 L848 566Z" fill="#755846" stroke="#1c262a" stroke-width="7"/>
-<path d="M1652 536 L2108 536 L2080 578 L1680 578Z" fill="#665748" stroke="#1c262a" stroke-width="7"/>
-<g stroke="#b76a43" stroke-width="4" opacity=".55"><path d="M90 552 L130 580 M145 552 L185 580 M200 552 L240 580 M908 532 L950 562 M970 532 L1012 562 M1770 542 L1812 574 M1840 542 L1882 574"/></g>
-<!-- utility poles/cables -->
+<!-- material wear: patched sheets, water streaks, missing panels -->
+<g fill="#2f3c3e" opacity=".72"><path d="M286 672 L350 654 V716 H286Z"/><path d="M690 676 L754 648 V718 H690Z"/><path d="M1130 660 L1190 640 V718 H1130Z"/><path d="M1530 676 L1590 648 V718 H1530Z"/></g>
+<g stroke="#9a5a40" stroke-width="4" opacity=".46"><path d="M104 552 L145 584 M164 552 L206 584 M900 532 L944 564 M970 532 L1014 564 M1768 546 L1812 578 M1842 546 L1886 578"/></g>
+<g stroke="#252f30" stroke-width="3" opacity=".55"><path d="M328 584 V700 M680 584 V708 M1080 546 V710 M1456 574 V710 M1990 552 V708"/></g>
+<!-- utility rhythm varies rather than repeating at one interval -->
 <g stroke="#222f34" fill="none" stroke-linecap="round">
- <path d="M250 705 V350 M214 405 H286 M250 382 L236 350 M250 382 L264 350" stroke-width="13"/>
- <path d="M760 705 V392 M724 442 H796" stroke-width="13"/>
- <path d="M1260 705 V360 M1224 410 H1296" stroke-width="13"/>
- <path d="M1840 705 V370 M1804 420 H1876" stroke-width="13"/>
- <path d="M286 405 C470 455 570 402 724 442 M796 442 C960 485 1070 395 1224 410 M1296 410 C1490 458 1655 390 1804 420" stroke-width="4" opacity=".72"/>
+ <path d="M250 720 V350 M214 405 H286" stroke-width="13"/><path d="M744 720 V404 M710 448 H778" stroke-width="12"/>
+ <path d="M1266 720 V362 M1228 412 H1304" stroke-width="13"/><path d="M1850 720 V384 M1814 430 H1886" stroke-width="12"/>
+ <path d="M286 405 C474 450 570 408 710 448 M778 448 C970 486 1084 394 1228 412 M1304 412 C1508 460 1664 398 1814 430" stroke-width="4" opacity=".68"/>
 </g>
-<!-- stripped wrecks / roadside clutter -->
-<g stroke="#171f23" stroke-width="6">
- <path d="M520 676 L552 642 650 642 698 674 694 706 510 706Z" fill="#62473d"/><circle cx="552" cy="705" r="23" fill="#11171a"/><circle cx="656" cy="705" r="23" fill="#11171a"/>
- <path d="M1450 678 L1490 646 1582 646 1630 678 1622 708 1442 708Z" fill="#475a58"/><circle cx="1486" cy="706" r="22" fill="#11171a"/><circle cx="1588" cy="706" r="22" fill="#11171a"/>
+<!-- grounded roadside clutter / wrecks -->
+<g stroke="#151e21" stroke-width="6">
+ <path d="M520 688 L555 650 H654 L704 682 696 720 H508Z" fill="#62483e"/><circle cx="555" cy="720" r="24" fill="#101619"/><circle cx="660" cy="720" r="24" fill="#101619"/>
+ <path d="M1450 690 L1492 652 H1588 L1638 684 1628 720 H1440Z" fill="#475a57"/><circle cx="1490" cy="720" r="23" fill="#101619"/><circle cx="1592" cy="720" r="23" fill="#101619"/>
 </g>
-<g fill="#78604a"><rect x="390" y="672" width="34" height="34"/><rect x="1200" y="676" width="42" height="30"/><rect x="2100" y="670" width="32" height="36"/></g>
+<path d="M0 716 H2160 V930 H0Z" fill="#11181b" opacity=".10"/>
+<path d="M0 718 C440 702 780 730 1120 710 S1760 720 2160 698" stroke="#d18a57" stroke-width="18" opacity=".06" fill="none"/>
 </svg>
