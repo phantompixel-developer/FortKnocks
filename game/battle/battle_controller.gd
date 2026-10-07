@@ -423,10 +423,10 @@ func _show_encounter_picker() -> void:
 	enemy_status_card.visible = false
 	health_label.visible = false
 	enemy_health_label.visible = false
-	turn_label.text = "ENCOUNTER PROOF"
+	turn_label.text = "FIELD OPERATIONS"
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
-	picker_briefing_label.text = "Choose one of %d greybox battle problems. Each uses the same weapons and combat rules." % _missions.size()
-	hint_label.text = "Select an encounter to begin"
+	picker_briefing_label.text = "Choose one of %d field operations. Each mission uses the same core combat rules." % _missions.size()
+	hint_label.text = "Select an operation to deploy"
 
 func _resume_pending_mission(mission_id: String) -> void:
 	var definition := _mission_for_id(mission_id)
