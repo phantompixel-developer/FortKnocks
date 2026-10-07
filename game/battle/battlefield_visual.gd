@@ -96,11 +96,7 @@ func _ensure_production_textures() -> void:
 		_outskirts_road = ProductionArtScript.texture_from_svg(OUTSKIRTS_ROAD_PATH)
 	if _outskirts_foreground == null:
 		_outskirts_foreground = ProductionArtScript.texture_from_svg(OUTSKIRTS_FOREGROUND_PATH)
-	for mission_id in OUTSKIRTS_LANDMARK_PATHS:
-		if not _outskirts_landmarks.has(mission_id):
-			_outskirts_landmarks[mission_id] = ProductionArtScript.texture_from_svg(
-				str(OUTSKIRTS_LANDMARK_PATHS[mission_id])
-			)
+	_ensure_mission_landmark(OUTSKIRTS_LANDMARK_PATHS, _outskirts_landmarks)
 	if _suburbs_sky_far == null:
 		_suburbs_sky_far = ProductionArtScript.texture_from_svg(SUBURBS_SKY_FAR_PATH)
 	if _suburbs_midground == null:
@@ -109,11 +105,15 @@ func _ensure_production_textures() -> void:
 		_suburbs_road = ProductionArtScript.texture_from_svg(SUBURBS_ROAD_PATH)
 	if _suburbs_foreground == null:
 		_suburbs_foreground = ProductionArtScript.texture_from_svg(SUBURBS_FOREGROUND_PATH)
-	for mission_id in SUBURBS_LANDMARK_PATHS:
-		if not _suburbs_landmarks.has(mission_id):
-			_suburbs_landmarks[mission_id] = ProductionArtScript.texture_from_svg(
-				str(SUBURBS_LANDMARK_PATHS[mission_id])
-			)
+	_ensure_mission_landmark(SUBURBS_LANDMARK_PATHS, _suburbs_landmarks)
+
+
+func _ensure_mission_landmark(paths: Dictionary, cache: Dictionary) -> void:
+	# Mobile guardrail: decode only the current mission overlay, not every landmark
+	# in both regions on the first battlefield draw.
+	if _mission_id.is_empty() or not paths.has(_mission_id) or cache.has(_mission_id):
+		return
+	cache[_mission_id] = ProductionArtScript.texture_from_svg(str(paths[_mission_id]))
 
 
 func _has_complete_suburbs_set() -> bool:
