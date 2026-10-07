@@ -1,49 +1,122 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="booth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#748078"/><stop offset=".52" stop-color="#52605c"/><stop offset="1" stop-color="#2c3838"/></linearGradient>
- <linearGradient id="sign" x1="0" y1="0" x2="1" y2=".2"><stop offset="0" stop-color="#92694d"/><stop offset=".48" stop-color="#5b5b50"/><stop offset="1" stop-color="#493f39"/></linearGradient>
- <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#ef9d5e" stop-opacity=".48"/><stop offset="1" stop-color="#c86d48" stop-opacity=".04"/></linearGradient>
+ <linearGradient id="concrete" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#a39b88"/>
+  <stop offset=".28" stop-color="#777a70"/>
+  <stop offset=".64" stop-color="#505b58"/>
+  <stop offset="1" stop-color="#303b3b"/>
+ </linearGradient>
+ <linearGradient id="underside" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#39484b"/>
+  <stop offset="1" stop-color="#17242a"/>
+ </linearGradient>
+ <linearGradient id="warmFace" x1="0" y1="0" x2="1" y2=".2">
+  <stop offset="0" stop-color="#f2aa68" stop-opacity=".62"/>
+  <stop offset=".5" stop-color="#d98152" stop-opacity=".22"/>
+  <stop offset="1" stop-color="#b76245" stop-opacity=".02"/>
+ </linearGradient>
+ <linearGradient id="shed" x1="0" y1="0" x2="1" y2=".25">
+  <stop offset="0" stop-color="#756858"/>
+  <stop offset=".54" stop-color="#4f5a57"/>
+  <stop offset="1" stop-color="#2d393b"/>
+ </linearGradient>
 </defs>
 
-<!-- collapsed civilian service-checkpoint frame; central tactical roadblock remains the hero -->
+<!-- Signature Roadblock Trial location: an abandoned Outskirts checkpoint beneath a failed flyover.
+     Everything here is decorative. The live roadblock, cover, player, enemy and power cell remain separate nodes. -->
+
+<!-- broken flyover provides the same strong silhouette language as the approved preview -->
 <g stroke="#142026" stroke-linejoin="round">
- <path d="M686 850 V606 H736 V850 M1424 850 V606 H1474 V850" fill="#35413f" stroke-width="9"/>
- <path d="M706 614 H1452 L1412 548 H754Z" fill="url(#sign)" stroke-width="9"/>
- <path d="M778 846 V712 L838 670 H968 L1008 712 V846Z" fill="url(#booth)" stroke-width="8"/>
- <path d="M1182 846 V722 L1236 682 H1362 L1400 722 V846Z" fill="url(#booth)" stroke-width="8"/>
+ <path d="M-90 382 H1370 L1462 420 L1422 516 H-90Z" fill="url(#concrete)" stroke-width="10"/>
+ <path d="M-90 498 H1418 L1388 556 H-90Z" fill="url(#underside)" stroke-width="8"/>
+ <path d="M1532 420 H2220 V512 H1494Z" fill="url(#concrete)" stroke-width="10"/>
+ <path d="M1494 508 H2220 V558 H1470Z" fill="url(#underside)" stroke-width="8"/>
 </g>
 
-<!-- illuminated left planes give the checkpoint physical volume -->
-<g fill="url(#warm)">
- <path d="M778 712 L838 670 H874 V846 H778Z"/><path d="M1182 722 L1236 682 H1272 V846 H1182Z"/>
- <path d="M706 614 L754 548 H820 L778 614Z"/>
+<!-- sun-facing top planes -->
+<path d="M-90 382 H1370 L1410 398 H-90Z" fill="url(#warmFace)"/>
+<path d="M1532 420 H2220 V442 H1510Z" fill="url(#warmFace)"/>
+
+<!-- failed span / exposed reinforcement -->
+<path d="M1370 382 L1426 418 L1402 452 L1454 474 L1420 516" fill="none" stroke="#2b3534" stroke-width="16"/>
+<path d="M1532 420 L1492 444 L1514 468 L1478 506" fill="none" stroke="#2b3534" stroke-width="15"/>
+<g stroke="#a65d43" stroke-width="6">
+ <path d="M1406 420 L1370 350 M1428 440 L1398 352 M1504 444 L1474 398 M1522 432 L1494 388"/>
 </g>
 
-<g stroke="#18242a" stroke-width="5">
- <rect x="810" y="724" width="84" height="64" fill="#26363b"/>
- <rect x="1212" y="734" width="90" height="60" fill="#27373b"/>
+<!-- deep support columns create believable vertical weight without adding collision -->
+<g stroke="#142026" stroke-width="8">
+ <path d="M356 500 H510 L488 900 H378Z" fill="url(#concrete)"/>
+ <path d="M1130 506 H1288 L1264 900 H1150Z" fill="url(#concrete)"/>
+ <path d="M1770 508 H1912 L1892 900 H1790Z" fill="url(#concrete)"/>
 </g>
-<g fill="#eda05f" opacity=".18"><rect x="818" y="732" width="68" height="48"/><rect x="1220" y="742" width="74" height="44"/></g>
-
-<!-- faded hazard paint and weathering -->
-<g fill="none" stroke-linecap="round">
- <path d="M790 590 H1018 M1138 590 H1352" stroke="#e4ad4e" stroke-width="12" opacity=".65"/>
- <path d="M736 652 L694 622 M1430 650 L1490 612" stroke="#a95e43" stroke-width="7"/>
- <path d="M838 816 L904 758 M1230 818 L1292 762" stroke="#d9a34a" stroke-width="8" opacity=".64"/>
+<g fill="url(#warmFace)">
+ <path d="M356 500 H408 L400 900 H378Z"/>
+ <path d="M1130 506 H1184 L1176 900 H1150Z"/>
+ <path d="M1770 508 H1818 L1810 900 H1790Z"/>
 </g>
-<g stroke="#b46747" stroke-width="4" opacity=".52"><path d="M868 620 V690 M918 620 V672 M1262 616 V684 M1328 614 V674"/></g>
+<g stroke="#a85f45" stroke-width="5" opacity=".55">
+ <path d="M432 548 V724 M1210 542 V710 M1848 550 V714"/>
+</g>
 
-<!-- abandoned traffic shells sit wide of the objective and catch the same sunset rim -->
+<!-- player-side salvage scaffold / roadside workshop shell -->
+<g stroke="#121d22" stroke-linejoin="round">
+ <path d="M-40 878 V626 H84 V574 H310 V878Z" fill="url(#shed)" stroke-width="8"/>
+ <path d="M20 626 H328 L296 660 H-10Z" fill="#765744" stroke-width="8"/>
+</g>
+<path d="M20 626 H174 L144 660 H-10Z" fill="url(#warmFace)"/>
+<g stroke="#243338" stroke-width="10" fill="none">
+ <path d="M16 884 V536 M306 884 V530 M16 578 H306 M40 614 L284 842 M282 612 L56 844"/>
+ <path d="M102 878 V662 M230 878 V662 M88 676 H244"/>
+</g>
+<rect x="100" y="688" width="132" height="118" fill="#18262d" stroke="#10181d" stroke-width="7"/>
+<rect x="116" y="704" width="98" height="76" fill="#d47d49" opacity=".16"/>
+<circle cx="164" cy="716" r="30" fill="#f1a45d" opacity=".08"/>
+
+<!-- faded OUTSKIRTS road sign, part of the world rather than UI -->
+<g transform="rotate(-3 738 514)">
+ <rect x="574" y="458" width="332" height="104" rx="6" fill="#244f58" stroke="#132329" stroke-width="9"/>
+ <rect x="592" y="476" width="296" height="68" rx="3" fill="#2c6670" opacity=".74"/>
+ <path d="M608 500 H786" stroke="#d8d6bd" stroke-width="12" stroke-linecap="round" opacity=".82"/>
+ <path d="M814 494 L858 510 820 530" fill="none" stroke="#d8d6bd" stroke-width="10" stroke-linejoin="round" opacity=".76"/>
+ <g stroke="#a85d43" stroke-width="4" opacity=".64"><path d="M620 474 V548 M714 474 V548 M866 474 V548"/></g>
+</g>
+<g stroke="#27363b" stroke-width="12"><path d="M632 558 V772 M850 558 V772"/></g>
+
+<!-- checkpoint booths flank but do not duplicate the gameplay roadblock -->
+<g stroke="#142026" stroke-linejoin="round">
+ <path d="M690 890 V724 L750 682 H908 L952 724 V890Z" fill="url(#shed)" stroke-width="8"/>
+ <path d="M1336 890 V738 L1392 696 H1538 L1584 738 V890Z" fill="url(#shed)" stroke-width="8"/>
+</g>
+<g fill="url(#warmFace)">
+ <path d="M690 724 L750 682 H798 V890 H690Z"/>
+ <path d="M1336 738 L1392 696 H1440 V890 H1336Z"/>
+</g>
+<g stroke="#17242a" stroke-width="6">
+ <rect x="734" y="744" width="98" height="72" fill="#24363b"/>
+ <rect x="1382" y="756" width="94" height="68" fill="#26383c"/>
+</g>
+<g fill="#efa15f" opacity=".17"><rect x="744" y="754" width="78" height="52"/><rect x="1392" y="766" width="74" height="48"/></g>
+
+<!-- hanging faction/salvage cloth adds the same lived-in vertical accent as Hub -->
+<path d="M964 494 L1084 500 L1068 682 L1014 656 L982 688Z" fill="#8c3e34" stroke="#3a2926" stroke-width="6" opacity=".88"/>
+<path d="M1000 534 L1052 586 M1050 534 L1004 588" stroke="#d9c08a" stroke-width="8" opacity=".62"/>
+<g stroke="#bc6846" stroke-width="4" opacity=".5"><path d="M978 522 V638 M1068 518 V640"/></g>
+
+<!-- lateral wrecks / tyres / barriers keep the lane believable without faking gameplay targets -->
 <g stroke="#121d22" stroke-width="6">
- <path d="M244 824 L290 778 H424 L478 812 L466 854 H232Z" fill="#52615f"/>
- <circle cx="304" cy="854" r="27" fill="#0d1418"/><circle cx="424" cy="854" r="27" fill="#0d1418"/>
- <path d="M1692 828 L1734 784 H1876 L1934 818 L1922 856 H1680Z" fill="#6e5147"/>
- <circle cx="1746" cy="856" r="27" fill="#0d1418"/><circle cx="1880" cy="856" r="27" fill="#0d1418"/>
+ <path d="M206 884 L252 838 H386 L444 872 430 910 H194Z" fill="#55635f"/>
+ <circle cx="268" cy="910" r="27" fill="#0c1317"/><circle cx="390" cy="910" r="27" fill="#0c1317"/>
+ <path d="M1642 888 L1688 842 H1828 L1888 876 1874 912 H1630Z" fill="#6f5147"/>
+ <circle cx="1704" cy="912" r="27" fill="#0c1317"/><circle cx="1832" cy="912" r="27" fill="#0c1317"/>
 </g>
-<path d="M256 810 L296 790 H420" stroke="#e2935b" stroke-width="4" opacity=".32" fill="none"/>
-<path d="M1706 814 L1742 794 H1870" stroke="#e2935b" stroke-width="4" opacity=".30" fill="none"/>
+<path d="M220 870 L258 850 H378" stroke="#e4965d" stroke-width="4" opacity=".30" fill="none"/>
+<path d="M1656 874 L1694 854 H1818" stroke="#e4965d" stroke-width="4" opacity=".28" fill="none"/>
 
-<!-- ground contact / lane history -->
-<path d="M660 878 H1514" stroke="#dfac4f" stroke-width="6" stroke-dasharray="28 24" opacity=".30"/>
-<path d="M690 856 H1480" stroke="#0c1317" stroke-width="18" opacity=".16"/>
+<g fill="#11181b" opacity=".30">
+ <ellipse cx="318" cy="920" rx="136" ry="12"/>
+ <ellipse cx="820" cy="904" rx="148" ry="11"/>
+ <ellipse cx="1462" cy="906" rx="140" ry="11"/>
+ <ellipse cx="1764" cy="922" rx="136" ry="12"/>
+</g>
 </svg>
