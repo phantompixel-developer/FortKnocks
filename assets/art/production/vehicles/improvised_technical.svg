@@ -32,4 +32,10 @@
 <g><circle cx="158" cy="223" r="48" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="158" cy="223" r="30" fill="#353e40"/><circle cx="158" cy="223" r="12" fill="#8c8166"/><path d="M158 196 V250 M131 223 H185 M139 204 L177 242 M177 204 L139 242" stroke="#5d6769" stroke-width="3"/></g>
 <g><circle cx="526" cy="223" r="48" fill="#090e11" stroke="#151d20" stroke-width="5"/><circle cx="526" cy="223" r="30" fill="#353e40"/><circle cx="526" cy="223" r="12" fill="#8c8166"/><path d="M526 196 V250 M499 223 H553 M507 204 L545 242 M545 204 L507 242" stroke="#5d6769" stroke-width="3"/></g>
 <path d="M114 214 A46 46 0 0 1 202 214 M482 214 A46 46 0 0 1 570 214" fill="none" stroke="#101619" stroke-width="8"/>
+
+<!-- shared Fort Knocks golden-hour key / weighted lower silhouette -->
+<path d="M74 174 C186 142 380 132 596 166" stroke="#f0a064" stroke-width="5" opacity=".24" fill="none" stroke-linecap="round"/>
+<path d="M202 102 L324 96" stroke="#ffd18a" stroke-width="3" opacity=".22" stroke-linecap="round"/>
+<path d="M102 214 H606" stroke="#0d1418" stroke-width="14" opacity=".24" stroke-linecap="round"/>
+<g fill="#b66345" opacity=".42"><circle cx="250" cy="192" r="4"/><circle cx="426" cy="180" r="3"/></g>
 </svg>
