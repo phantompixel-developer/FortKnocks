@@ -1,9 +1,13 @@
 class_name FortKnocksTheme
 extends RefCounted
 
-const ProductionArtScript := preload("res://game/presentation/production_art.gd")
-const PANEL_TEXTURE_PATH := "res://assets/art/production/shared/ui/panel_industrial.svg"
-const BUTTON_TEXTURE_PATH := "res://assets/art/production/shared/ui/button_industrial.svg"
+# The shared raster UI kit is the canonical live-game surface language.
+# It is also used directly by Garage, Workshop and Command Board, so Battle
+# must not maintain a parallel SVG-only panel/button family.
+const SHARED_UI_ROOT := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui"
+const PANEL_TEXTURE_PATH := SHARED_UI_ROOT + "/panel_stats_9s.png"
+const BUTTON_TEXTURE_PATH := SHARED_UI_ROOT + "/card_item_9s.png"
+const BUTTON_ACTIVE_TEXTURE_PATH := SHARED_UI_ROOT + "/card_item_selected_9s.png"
 const FONT_MEDIUM_PATH := "res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Medium.ttf"
 const FONT_BOLD_PATH := "res://assets/art/production/hub/reference_v1/fonts/BarlowCondensed-Bold.ttf"
 
@@ -28,8 +32,9 @@ static func apply(root: Control) -> void:
 	root.theme = build()
 
 static func build() -> Theme:
-	var panel_texture: Texture2D = ProductionArtScript.texture_from_svg(PANEL_TEXTURE_PATH)
-	var button_texture: Texture2D = ProductionArtScript.texture_from_svg(BUTTON_TEXTURE_PATH)
+	var panel_texture := _texture(PANEL_TEXTURE_PATH)
+	var button_texture := _texture(BUTTON_TEXTURE_PATH)
+	var active_texture := _texture(BUTTON_ACTIVE_TEXTURE_PATH)
 	var theme := Theme.new()
 	var medium_font := load(FONT_MEDIUM_PATH) as Font
 	var bold_font := load(FONT_BOLD_PATH) as Font
@@ -37,42 +42,56 @@ static func build() -> Theme:
 		theme.default_font = medium_font
 	if bold_font != null:
 		theme.set_font("font", "Button", bold_font)
+
+	# Keep the same condensed, high-contrast text treatment visible in Hub,
+	# Garage and Workshop rather than relying on a screen-specific battle look.
 	theme.set_color("font_color", "Label", BONE)
-	theme.set_color("font_shadow_color", "Label", Color(0.0, 0.0, 0.0, 0.66))
-	theme.set_constant("shadow_offset_x", "Label", 2)
+	theme.set_color("font_outline_color", "Label", Color(0.02, 0.025, 0.025, 0.88))
+	theme.set_constant("outline_size", "Label", 2)
+	theme.set_color("font_shadow_color", "Label", Color(0.0, 0.0, 0.0, 0.38))
+	theme.set_constant("shadow_offset_x", "Label", 1)
 	theme.set_constant("shadow_offset_y", "Label", 2)
 
 	theme.set_color("font_color", "Button", BONE)
 	theme.set_color("font_hover_color", "Button", Color("fff3d5"))
-	theme.set_color("font_pressed_color", "Button", SHADOW)
+	theme.set_color("font_pressed_color", "Button", BONE)
 	theme.set_color("font_disabled_color", "Button", Color(0.68, 0.70, 0.68, 0.42))
 	theme.set_color("font_focus_color", "Button", BONE)
+	theme.set_color("font_outline_color", "Button", Color(0.02, 0.025, 0.025, 0.90))
+	theme.set_constant("outline_size", "Button", 2)
+
 	if button_texture != null:
-		theme.set_stylebox("normal", "Button", _texture_box(button_texture, Color.WHITE, 20.0, 15.0))
-		theme.set_stylebox("hover", "Button", _texture_box(button_texture, Color(1.0, 0.91, 0.68, 1.0), 20.0, 15.0))
-		theme.set_stylebox("pressed", "Button", _texture_box(button_texture, Color(1.0, 0.76, 0.38, 1.0), 20.0, 15.0))
-		theme.set_stylebox("focus", "Button", _texture_box(button_texture, Color(0.72, 0.94, 0.94, 1.0), 20.0, 15.0))
-		theme.set_stylebox("disabled", "Button", _texture_box(button_texture, Color(0.46, 0.50, 0.51, 0.68), 20.0, 15.0))
+		theme.set_stylebox("normal", "Button", _texture_box(button_texture, Color.WHITE, 30.0, 30.0))
+		theme.set_stylebox("hover", "Button", _texture_box(button_texture, Color(1.0, 0.96, 0.84, 1.0), 30.0, 30.0))
+		theme.set_stylebox(
+			"pressed",
+			"Button",
+			_texture_box(active_texture if active_texture != null else button_texture, Color.WHITE, 50.0 if active_texture != null else 30.0, 50.0 if active_texture != null else 30.0)
+		)
+		theme.set_stylebox("focus", "Button", _texture_box(button_texture, Color(1.0, 0.91, 0.68, 1.0), 30.0, 30.0))
+		theme.set_stylebox("disabled", "Button", _texture_box(button_texture, Color(0.46, 0.50, 0.51, 0.62), 30.0, 30.0))
 	else:
 		theme.set_stylebox("normal", "Button", _box(IRON, Color("3b4b55"), 2, 6))
 		theme.set_stylebox("hover", "Button", _box(PLATE_LIGHT, HAZARD, 2, 6))
 		theme.set_stylebox("pressed", "Button", _box(HAZARD, Color("ffd16b"), 2, 6))
 		theme.set_stylebox("focus", "Button", _box(Color(0.0, 0.0, 0.0, 0.0), COLD, 2, 6))
 		theme.set_stylebox("disabled", "Button", _box(Color("131b22"), Color("27343c"), 1, 6))
-	theme.set_constant("outline_size", "Button", 1)
 
 	if panel_texture != null:
-		theme.set_stylebox("panel", "PanelContainer", _texture_box(panel_texture, Color.WHITE, 22.0, 22.0))
+		theme.set_stylebox("panel", "PanelContainer", _texture_box(panel_texture, Color.WHITE, 40.0, 40.0))
 	else:
 		theme.set_stylebox("panel", "PanelContainer", _box(Color("141e26"), Color("40515b"), 2, 7))
+
 	theme.set_color("font_color", "RichTextLabel", BONE)
+	theme.set_color("font_outline_color", "RichTextLabel", Color(0.02, 0.025, 0.025, 0.88))
+	theme.set_constant("outline_size", "RichTextLabel", 2)
 	return theme
 
 static func style_card(rect: ColorRect, emphasis := 0) -> void:
 	if rect == null:
 		return
 
-	var panel_texture: Texture2D = ProductionArtScript.texture_from_svg(PANEL_TEXTURE_PATH)
+	var panel_texture := _texture(PANEL_TEXTURE_PATH)
 	if panel_texture == null:
 		match emphasis:
 			1:
@@ -88,11 +107,6 @@ static func style_card(rect: ColorRect, emphasis := 0) -> void:
 	if surface == null:
 		surface = NinePatchRect.new()
 		surface.name = "_ProductionSurface"
-		surface.texture = panel_texture
-		surface.patch_margin_left = 22
-		surface.patch_margin_top = 22
-		surface.patch_margin_right = 22
-		surface.patch_margin_bottom = 22
 		surface.anchor_left = 0.0
 		surface.anchor_top = 0.0
 		surface.anchor_right = 1.0
@@ -105,35 +119,53 @@ static func style_card(rect: ColorRect, emphasis := 0) -> void:
 		rect.add_child(surface)
 		rect.move_child(surface, 0)
 
+	surface.texture = panel_texture
+	surface.patch_margin_left = 40
+	surface.patch_margin_top = 40
+	surface.patch_margin_right = 40
+	surface.patch_margin_bottom = 40
+
 	match emphasis:
 		1:
-			surface.modulate = Color(1.0, 0.96, 0.80, 1.0)
+			surface.modulate = Color(1.0, 0.97, 0.86, 1.0)
 		2:
-			surface.modulate = Color(1.0, 0.82, 0.64, 1.0)
+			surface.modulate = Color(1.0, 0.88, 0.72, 1.0)
 		_:
 			surface.modulate = Color.WHITE
 
 static func mark_active(button: Button, active: bool) -> void:
 	if button == null:
 		return
-	var button_texture: Texture2D = ProductionArtScript.texture_from_svg(BUTTON_TEXTURE_PATH)
+
+	var normal_texture := _texture(BUTTON_TEXTURE_PATH)
+	var active_texture := _texture(BUTTON_ACTIVE_TEXTURE_PATH)
 	if active:
-		button.add_theme_color_override("font_color", HAZARD)
-		button.add_theme_color_override("font_disabled_color", HAZARD)
-		if button_texture != null:
+		button.add_theme_color_override("font_color", BONE)
+		button.add_theme_color_override("font_disabled_color", BONE)
+		if active_texture != null:
 			button.add_theme_stylebox_override(
 				"normal",
-				_texture_box(button_texture, Color(1.0, 0.90, 0.58, 1.0), 20.0, 15.0)
+				_texture_box(active_texture, Color.WHITE, 50.0, 50.0)
 			)
 			button.add_theme_stylebox_override(
 				"disabled",
-				_texture_box(button_texture, Color(0.88, 0.72, 0.42, 0.76), 20.0, 15.0)
+				_texture_box(active_texture, Color(0.86, 0.78, 0.60, 0.86), 50.0, 50.0)
+			)
+		elif normal_texture != null:
+			button.add_theme_stylebox_override(
+				"normal",
+				_texture_box(normal_texture, Color(1.0, 0.90, 0.62, 1.0), 30.0, 30.0)
 			)
 	else:
 		button.remove_theme_color_override("font_color")
 		button.remove_theme_color_override("font_disabled_color")
 		button.remove_theme_stylebox_override("normal")
 		button.remove_theme_stylebox_override("disabled")
+
+static func _texture(path: String) -> Texture2D:
+	if path.is_empty() or not ResourceLoader.exists(path):
+		return null
+	return load(path) as Texture2D
 
 static func _texture_box(
 	texture: Texture2D,
@@ -153,7 +185,6 @@ static func _texture_box(
 	box.set_content_margin(SIDE_TOP, 10.0)
 	box.set_content_margin(SIDE_BOTTOM, 10.0)
 	return box
-
 
 static func _box(background: Color, border: Color, border_width: int, radius: int) -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
