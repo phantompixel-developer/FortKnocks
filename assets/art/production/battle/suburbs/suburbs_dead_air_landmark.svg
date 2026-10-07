@@ -1,17 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
-<!-- Dead Air: visual weight is kept left of the relay's x=1450 objective zone. -->
-<g opacity=".76" stroke="#1a2428" stroke-width="7">
- <rect x="980" y="620" width="300" height="140" fill="#3d4949"/>
- <path d="M958 620 H1302 L1272 582 H992Z" fill="#66594a"/>
- <rect x="1012" y="662" width="78" height="98" fill="#253236"/>
- <rect x="1112" y="650" width="126" height="54" fill="#4f6461"/>
- <path d="M1120 718 H1232" stroke="#9a5a41" stroke-width="7"/>
- <rect x="820" y="686" width="112" height="74" fill="#465352"/>
- <path d="M834 700 H918 M834 720 H918 M834 740 H918" stroke="#69736f" stroke-width="4"/>
+<defs>
+ <linearGradient id="shop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b7771"/><stop offset=".55" stop-color="#4c5955"/><stop offset="1" stop-color="#303b3a"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#efa267" stop-opacity=".42"/><stop offset="1" stop-color="#c96f49" stop-opacity=".03"/></linearGradient>
+</defs>
+
+<!-- Dead Air: visual mass stays left of the Relay objective at x≈1450. -->
+<g stroke="#172227" stroke-width="7" opacity=".90">
+ <rect x="964" y="614" width="320" height="150" fill="url(#shop)"/>
+ <path d="M942 614 H1308 L1274 574 H978Z" fill="#78604d"/>
+ <rect x="998" y="658" width="84" height="106" fill="#26363b"/>
+ <rect x="1106" y="648" width="138" height="58" fill="#506763"/>
+ <rect x="808" y="684" width="122" height="80" fill="#4e5c59"/>
 </g>
-<!-- Behind the live relay: quiet retaining wall only, no antenna/dish/sign silhouette. -->
-<path d="M1330 748 H1602" stroke="#343f3e" stroke-width="34" opacity=".52"/>
-<path d="M1330 732 H1602" stroke="#71675a" stroke-width="6" opacity=".28"/>
-<!-- Lateral debris frames rather than competes with the objective. -->
-<g opacity=".55" stroke="#172125" stroke-width="5"><path d="M1660 752 L1700 716 H1806 L1848 744 1840 770 H1652Z" fill="#4c5753"/><circle cx="1704" cy="770" r="20" fill="#101619"/><circle cx="1808" cy="770" r="20" fill="#101619"/></g>
+<path d="M964 614 L978 574 H1096 L1058 614Z" fill="url(#warm)"/>
+<g fill="#efa05f" opacity=".16"><rect x="1006" y="666" width="68" height="90"/></g>
+<g stroke="#7c8780" stroke-width="4" opacity=".50"><path d="M824 700 H914 M824 722 H914 M824 744 H914"/></g>
+<path d="M1118 718 H1236" stroke="#aa6044" stroke-width="7" opacity=".70"/>
+
+<!-- quiet retaining wall behind Relay: creates value separation without fake tech cues -->
+<path d="M1318 754 H1612" stroke="#35413f" stroke-width="38" opacity=".60"/>
+<path d="M1318 734 H1612" stroke="#8a7f70" stroke-width="7" opacity=".34"/>
+<path d="M1328 728 H1598" stroke="#e3a066" stroke-width="3" opacity=".20"/>
+
+<!-- lateral abandoned car and debris frame the objective instead of competing with it -->
+<g stroke="#152025" stroke-width="5" opacity=".72">
+ <path d="M1656 758 L1698 714 H1812 L1856 746 1846 778 H1646Z" fill="#52615f"/>
+ <circle cx="1706" cy="780" r="22" fill="#0f161a"/><circle cx="1814" cy="780" r="22" fill="#0f161a"/>
+</g>
+<path d="M1668 746 L1704 724 H1804" stroke="#e0935c" stroke-width="4" opacity=".30" fill="none"/>
+<g fill="#12191d" opacity=".24"><ellipse cx="1118" cy="776" rx="136" ry="10"/><ellipse cx="1750" cy="786" rx="112" ry="9"/></g>
 </svg>
