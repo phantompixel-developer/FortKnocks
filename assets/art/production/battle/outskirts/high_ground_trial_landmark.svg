@@ -1,25 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2160" height="930" viewBox="0 0 2160 930">
 <defs>
- <linearGradient id="deck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#687069"/><stop offset=".35" stop-color="#4a5450"/><stop offset="1" stop-color="#303936"/></linearGradient>
+ <linearGradient id="deck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#80857a"/><stop offset=".38" stop-color="#58615b"/><stop offset="1" stop-color="#303936"/></linearGradient>
+ <linearGradient id="sun" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#f0a364" stop-opacity=".44"/><stop offset="1" stop-color="#d67a4e" stop-opacity=".04"/></linearGradient>
 </defs>
-<!-- High Ground: intact service deck behind the authored raised gameplay platform. -->
-<g stroke="#172024" stroke-linejoin="round">
- <path d="M1300 702 H2160 V790 H1300Z" fill="url(#deck)" stroke-width="9"/>
- <path d="M1300 702 L1410 644 H2160 V702Z" fill="#59625b" stroke-width="8"/>
- <path d="M1440 786 V930 H1510 V786 M1910 786 V930 H1980 V786" fill="#303936" stroke-width="8"/>
- <path d="M1308 732 H2152" stroke="#8b8a7c" stroke-width="8" opacity=".52"/>
+
+<!-- intact service deck behind the authored gameplay platform -->
+<g stroke="#142026" stroke-linejoin="round">
+ <path d="M1296 704 H2160 V794 H1296Z" fill="url(#deck)" stroke-width="9"/>
+ <path d="M1296 704 L1410 642 H2160 V704Z" fill="#687069" stroke-width="8"/>
+ <path d="M1438 790 V930 H1512 V790 M1908 790 V930 H1982 V790" fill="#303936" stroke-width="8"/>
 </g>
-<g fill="none" stroke="#283330" stroke-linecap="round">
- <path d="M1370 646 V606 M1490 646 V606 M1610 646 V606 M1730 646 V606 M1850 646 V606 M1970 646 V606 M2090 646 V606" stroke-width="7"/>
- <path d="M1362 610 H2102" stroke-width="8"/>
+<!-- sun-facing fascia / underside shadow establish 2.5D mass -->
+<path d="M1298 704 L1410 642 H2160 V674 H1418 L1328 724Z" fill="url(#sun)"/>
+<path d="M1298 794 H2160" stroke="#0e1519" stroke-width="24" opacity=".40"/>
+<path d="M1310 732 H2152" stroke="#9d9885" stroke-width="8" opacity=".50"/>
+
+<!-- railings / service details -->
+<g fill="none" stroke="#293733" stroke-linecap="round">
+ <path d="M1368 644 V602 M1490 644 V602 M1610 644 V602 M1730 644 V602 M1850 644 V602 M1970 644 V602 M2090 644 V602" stroke-width="7"/>
+ <path d="M1360 606 H2102" stroke-width="8"/>
 </g>
-<!-- Service clutter and weathering break the long deck without reading as targets. -->
-<g opacity=".74">
- <rect x="1540" y="660" width="118" height="40" fill="#3b4744" stroke="#172024" stroke-width="6"/>
- <rect x="1690" y="650" width="72" height="50" fill="#65523f" stroke="#172024" stroke-width="6"/>
- <path d="M1820 698 L1850 654 H1918 L1950 698Z" fill="#46534f" stroke="#172024" stroke-width="6"/>
+<g opacity=".80" stroke="#162126" stroke-width="6">
+ <rect x="1540" y="660" width="120" height="42" fill="#42504d"/>
+ <rect x="1692" y="650" width="74" height="52" fill="#745744"/>
+ <path d="M1820 700 L1850 654 H1922 L1954 700Z" fill="#4a5753"/>
 </g>
-<g stroke="#a45f42" stroke-width="5" opacity=".58"><path d="M1510 708 L1550 748 M1815 708 L1855 748 M2040 708 L2080 748"/></g>
-<path d="M1298 796 H2160" stroke="#0f1518" stroke-width="18" opacity=".38"/>
-<path d="M1360 676 C1540 652 1710 688 1880 660 S2070 670 2160 650" stroke="#d6a05a" stroke-width="10" opacity=".08" fill="none"/>
+<!-- warm glints / rust runs prevent the long geometry feeling procedural -->
+<g stroke="#d99a62" stroke-width="4" opacity=".38"><path d="M1320 690 H1500 M1518 676 H1660 M1810 682 H1950"/></g>
+<g stroke="#aa6043" stroke-width="5" opacity=".60"><path d="M1512 708 L1554 750 M1814 708 L1858 750 M2040 708 L2082 750"/></g>
+<g fill="#151d20" opacity=".24"><ellipse cx="1620" cy="768" rx="88" ry="10"/><ellipse cx="1990" cy="770" rx="74" ry="9"/></g>
 </svg>
