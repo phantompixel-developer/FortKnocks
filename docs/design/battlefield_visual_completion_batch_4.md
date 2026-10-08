@@ -147,3 +147,12 @@ Acceptance is specifically:
 - no gameplay/collision geometry changed.
 
 The remaining gate is local Godot Play at phone scale. Highways remains blocked until that review passes.
+
+
+## Approved vehicle and character asset integration (2026-10-08)
+
+- Garage now uses owner-approved transparent showroom and thumbnail raster art for the four current platform IDs. Existing purchase, active-platform, lock, level and module rules remain unchanged.
+- Those same new showroom images replace the older active player vehicle SVG art in battle cover. Existing cover collision, damage overlays and module rules remain unchanged.
+- The future utility truck, APC and battle tank pairs are stored as production art but are not added to the playable catalog before their rules and progression are authored.
+- The approved mechanic and scout static cutouts are staged for character UI. Battle continues to use 180×240 SVGs, updated to the approved identities while preserving firing alignment and collision.
+- Local Godot Play still must verify import, 720×1280 Garage fit/card legibility, selected module overlay position, and battle cover/character silhouette and launch alignment.

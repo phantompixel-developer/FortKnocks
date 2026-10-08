@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://game/progression/garage_screen.gd" id="1_script"]
 [ext_resource type="Script" path="res://game/presentation/platform_showcase.gd" id="2_showcase"]
@@ -12,8 +12,6 @@
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_left_disabled.png" id="10_left_d"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right.png" id="11_right"]
 [ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/arrow_right_disabled.png" id="12_right_d"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/veh_scavenger_pickup_showroom_PLACEHOLDER.png" id="13_pickup"]
-[ext_resource type="Texture2D" path="res://assets/art/claude_assets/1_Asset_Kit/02_garage/art/thumb_veh_01_scavenger_pickup_PLACEHOLDER.png" id="14_pickup_thumb"]
 
 [node name="Garage" type="Control"]
 layout_mode = 3
@@ -80,6 +78,19 @@ texture_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
+[node name="PickupHero" type="TextureRect" parent="Design/Showroom"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = 253.0
+offset_right = 706.0
+offset_bottom = 588.0
+mouse_filter = 2
+texture_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
 [node name="PlatformShowcase" type="Control" parent="Design/Showroom"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -90,21 +101,8 @@ offset_bottom = 588.0
 mouse_filter = 2
 script = ExtResource("2_showcase")
 draw_floor_shadow = false
+draw_platform = false
 max_display_width = 650.0
-
-[node name="PickupHero" type="TextureRect" parent="Design/Showroom"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = 14.0
-offset_top = 253.0
-offset_right = 706.0
-offset_bottom = 588.0
-mouse_filter = 2
-texture = ExtResource("13_pickup")
-texture_filter = 2
-expand_mode = 1
-stretch_mode = 5
 
 [node name="Fade" type="TextureRect" parent="Design/Showroom"]
 layout_mode = 0

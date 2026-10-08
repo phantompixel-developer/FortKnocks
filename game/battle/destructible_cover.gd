@@ -2,10 +2,10 @@ class_name DestructibleCover
 extends StaticBody2D
 
 const ProductionArtScript := preload("res://game/presentation/production_art.gd")
-const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
-const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
-const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
-const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
+const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact_showroom.png"
+const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan_showroom.png"
+const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup_showroom.png"
+const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical_showroom.png"
 const RIVAL_COVER_TEXTURE_PATH := "res://assets/art/production/vehicles/rival_cover_vehicle.svg"
 
 var _vehicle_textures: Dictionary = {}
@@ -299,7 +299,9 @@ func _texture_for_platform(platform_id: String) -> Texture2D:
 		"improvised_technical":
 			path = TECHNICAL_TEXTURE_PATH
 
-	var texture: Texture2D = ProductionArtScript.texture_from_svg(path)
+	var texture: Texture2D = null
+	if ResourceLoader.exists(path):
+		texture = load(path) as Texture2D
 	_vehicle_textures[platform_id] = texture
 	return texture
 

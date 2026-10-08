@@ -1,26 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="240" viewBox="0 0 180 240">
-<defs><linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b48d58"/><stop offset=".55" stop-color="#806b4d"/><stop offset="1" stop-color="#544837"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d7d79"/><stop offset="1" stop-color="#34423f"/></linearGradient></defs>
+<defs><linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#627588"/><stop offset=".52" stop-color="#3c5364"/><stop offset="1" stop-color="#273847"/></linearGradient><linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d7d79"/><stop offset="1" stop-color="#34423f"/></linearGradient></defs>
+<!-- approved mechanic: blue work jacket, orange scarf, olive trousers, curly hair -->
 <!-- backpack -->
 <path d="M43 78 C29 80 24 96 26 129 L45 151 58 143 60 86Z" fill="#312b27" stroke="#0c1113" stroke-width="6"/><rect x="31" y="91" width="22" height="43" rx="5" fill="#594838"/><path d="M35 104 H50 M35 120 H50" stroke="#8a6b49" stroke-width="3"/>
 <!-- rear shoulder plate -->
 <path d="M48 82 L31 92 38 111 60 104Z" fill="url(#metal)" stroke="#111719" stroke-width="5"/><circle cx="44" cy="96" r="3" fill="#e7ad3c"/>
 <!-- legs/boots -->
-<path d="M66 164 L57 215" stroke="#111719" stroke-width="18"/><path d="M91 163 L102 215" stroke="#111719" stroke-width="18"/><path d="M65 164 L59 211" stroke="#3a403d" stroke-width="9"/><path d="M91 164 L101 211" stroke="#343b39" stroke-width="9"/>
+<path d="M66 164 L57 215" stroke="#111719" stroke-width="18"/><path d="M91 163 L102 215" stroke="#111719" stroke-width="18"/><path d="M65 164 L59 211" stroke="#5e6242" stroke-width="9"/><path d="M91 164 L101 211" stroke="#555a3d" stroke-width="9"/>
 <path d="M48 216 H72" stroke="#0a0f11" stroke-width="12" stroke-linecap="round"/><path d="M96 216 H122" stroke="#0a0f11" stroke-width="12" stroke-linecap="round"/>
 <!-- coat -->
 <path d="M50 86 Q79 70 105 87 L112 154 96 174 64 171 46 154Z" fill="#111719" stroke="#0a0e10" stroke-width="7"/>
-<path d="M56 90 Q79 79 99 91 L104 150 91 165 67 162 54 151Z" fill="url(#coat)"/>
+<path d="M56 90 Q79 79 99 91 L104 150 91 165 67 162 54 151Z" fill="url(#coat)"/><path d="M73 94 L87 94 88 130 73 130Z" fill="#b7aa8e"/><path d="M55 126 L69 124 70 143 55 145Z" fill="#687484" stroke="#1d282c" stroke-width="2"/><path d="M57 130 L67 128" stroke="#b3a887" stroke-width="2"/><path d="M89 145 l10 -4" stroke="#df9b42" stroke-width="3"/>
 <path d="M78 88 L76 159" stroke="#cfb17b" stroke-width="3" opacity=".58"/><path d="M58 130 L101 125" stroke="#483a2f" stroke-width="7"/>
 <!-- scarf -->
-<path d="M59 75 Q79 69 101 76 L97 93 61 93Z" fill="#c18e4e" stroke="#141a1b" stroke-width="5"/><path d="M96 84 L109 111 98 114 88 90Z" fill="#a36b42"/>
+<path d="M59 75 Q79 69 101 76 L97 93 61 93Z" fill="#d35d28" stroke="#141a1b" stroke-width="5"/><path d="M96 84 L109 111 98 114 88 90Z" fill="#ab3b1e"/>
 <!-- head -->
-<circle cx="80" cy="57" r="29" fill="#111719"/><circle cx="80" cy="59" r="22" fill="#bd8d6b"/>
-<!-- cap -->
-<path d="M54 52 Q62 29 84 29 Q105 31 112 48 L101 52 59 53Z" fill="#303a38" stroke="#0c1113" stroke-width="5"/><path d="M98 45 L122 49 101 56Z" fill="#26302e"/>
+<circle cx="80" cy="57" r="29" fill="#111719"/><circle cx="80" cy="59" r="22" fill="#a96843"/>
+<!-- textured curly hair silhouette, no cap -->
+<path d="M53 65 Q46 51 52 39 Q48 29 60 26 Q64 17 75 22 Q84 15 92 22 Q105 19 110 31 Q120 38 110 50 L103 61 Q101 40 89 41 Q77 39 70 49 L58 65Z" fill="#221d1b" stroke="#111719" stroke-width="4"/><g fill="#3b2923" stroke="#1c1a1a" stroke-width="2"><circle cx="55" cy="39" r="8"/><circle cx="62" cy="30" r="9"/><circle cx="73" cy="26" r="8"/><circle cx="85" cy="25" r="9"/><circle cx="98" cy="29" r="8"/><circle cx="106" cy="38" r="8"/><circle cx="101" cy="48" r="7"/><circle cx="58" cy="51" r="7"/></g><path d="M63 28 Q73 20 81 25 M88 23 Q98 26 104 34" stroke="#9a5b28" opacity=".8" stroke-width="2" fill="none"/>
 <!-- face/shadow -->
-<path d="M89 56 Q100 61 99 75 Q89 82 78 79" fill="#8e624f" opacity=".58"/><path d="M84 58 H101" stroke="#1a211f" stroke-width="4"/><circle cx="96" cy="58" r="2.8" fill="#e2b85a"/>
+<path d="M89 56 Q100 61 99 75 Q89 82 78 79" fill="#70432e" opacity=".58"/><path d="M84 58 H101" stroke="#1a211f" stroke-width="4"/><circle cx="96" cy="58" r="2.8" fill="#dc8b40"/>
 <!-- arms bracing launcher -->
-<path d="M95 104 L122 99" stroke="#111719" stroke-width="19" stroke-linecap="round"/><path d="M96 104 L121 101" stroke="#8b704f" stroke-width="9" stroke-linecap="round"/>
+<path d="M95 104 L122 99" stroke="#111719" stroke-width="19" stroke-linecap="round"/><path d="M96 104 L121 101" stroke="#4b6374" stroke-width="9" stroke-linecap="round"/>
 <path d="M70 101 L103 112" stroke="#111719" stroke-width="18" stroke-linecap="round"/><path d="M72 101 L104 111" stroke="#8b704f" stroke-width="8" stroke-linecap="round"/>
 <circle cx="121" cy="101" r="7" fill="#bd8d6b"/><circle cx="105" cy="112" r="7" fill="#bd8d6b"/>
 <!-- improvised launcher aligned to gameplay muzzle -->
@@ -29,10 +30,5 @@
 <!-- sling -->
 <path d="M55 96 C82 118 108 133 127 101" fill="none" stroke="#503c31" stroke-width="5"/>
 <!-- small salvage details -->
-<rect x="54" y="137" width="18" height="19" fill="#59635d" stroke="#111719" stroke-width="4"/><path d="M57 150 L68 140" stroke="#e7ad3c" stroke-width="3"/>
-
-<!-- shared golden-hour rim: player remains readable without UI-like glow -->
-<path d="M55 84 Q78 72 101 84" stroke="#f0a064" stroke-width="4" opacity=".30" fill="none" stroke-linecap="round"/>
-<path d="M57 91 L52 151 M65 61 Q72 43 88 40" stroke="#ffd18a" stroke-width="3" opacity=".20" fill="none" stroke-linecap="round"/>
-<path d="M48 221 H124" stroke="#0d1418" stroke-width="9" opacity=".26" stroke-linecap="round"/>
+<rect x="54" y="137" width="18" height="19" fill="#626b5b" stroke="#111719" stroke-width="4"/><path d="M57 150 L68 140" stroke="#e7ad3c" stroke-width="3"/>
 </svg>

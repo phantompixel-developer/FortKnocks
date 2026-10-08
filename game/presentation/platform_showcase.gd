@@ -1,13 +1,13 @@
 class_name PlatformShowcase
 extends Control
 
-const ProductionArtScript := preload("res://game/presentation/production_art.gd")
-const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact.svg"
-const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan.svg"
-const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup.svg"
-const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical.svg"
+const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_compact_showroom.png"
+const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan_showroom.png"
+const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup_showroom.png"
+const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical_showroom.png"
 
 @export var draw_floor_shadow := true
+@export var draw_platform := true
 @export var max_display_width := 440.0
 
 var _textures: Dictionary = {}
@@ -22,6 +22,10 @@ func configure(platform_id: String, module_id := "") -> void:
 
 func _draw() -> void:
 	var center := size * 0.5
+	if not draw_platform:
+		var overlay_width := minf(size.x - 38.0, max_display_width)
+		_draw_module_indicator(center, overlay_width, overlay_width * 0.47)
+		return
 	if draw_floor_shadow:
 		draw_ellipse_shadow(center + Vector2(0, 54), Vector2(minf(size.x * 0.38, 205.0), 22.0))
 
@@ -60,7 +64,9 @@ func _texture_for_platform(platform_id: String) -> Texture2D:
 		_:
 			return null
 
-	var texture: Texture2D = ProductionArtScript.texture_from_svg(path, 2.0)
+	var texture: Texture2D = null
+	if ResourceLoader.exists(path):
+		texture = load(path) as Texture2D
 	_textures[platform_id] = texture
 	return texture
 

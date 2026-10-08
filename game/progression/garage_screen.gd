@@ -17,7 +17,19 @@ const ICON_ARMOUR := GARAGE_ROOT + "/png/icons/icon_stat_armour.png"
 const ICON_SPEED := GARAGE_ROOT + "/png/icons/icon_stat_speed.png"
 const ICON_FUEL := GARAGE_ROOT + "/png/icons/icon_stat_fuel.png"
 const ICON_LOAD := GARAGE_ROOT + "/png/icons/icon_stat_load.png"
-const PICKUP_THUMB := GARAGE_ROOT + "/art/thumb_veh_01_scavenger_pickup_PLACEHOLDER.png"
+const VEHICLE_ART_ROOT := "res://assets/art/production/vehicles"
+const SHOWROOM_PATHS := {
+	"run_down_compact": VEHICLE_ART_ROOT + "/run_down_compact_showroom.png",
+	"old_sedan": VEHICLE_ART_ROOT + "/old_sedan_showroom.png",
+	"pickup": VEHICLE_ART_ROOT + "/pickup_showroom.png",
+	"improvised_technical": VEHICLE_ART_ROOT + "/improvised_technical_showroom.png",
+}
+const THUMB_PATHS := {
+	"run_down_compact": VEHICLE_ART_ROOT + "/run_down_compact_thumbnail.png",
+	"old_sedan": VEHICLE_ART_ROOT + "/old_sedan_thumbnail.png",
+	"pickup": VEHICLE_ART_ROOT + "/pickup_thumbnail.png",
+	"improvised_technical": VEHICLE_ART_ROOT + "/improvised_technical_thumbnail.png",
+}
 
 const PANEL_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/panel_stats_9s.png"
 const CARD_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/card_item_9s.png"
@@ -32,7 +44,7 @@ static var ACTIVE_ACCENT: Color = Color("42c7dc")
 static var ACTIVE_DARK: Color = Color("101b24")
 
 @onready var platform_showcase: PlatformShowcase = %PlatformShowcase
-@onready var pickup_hero: TextureRect = %PickupHero
+@onready var vehicle_hero: TextureRect = %PickupHero
 @onready var swipe_area: Control = %SwipeArea
 @onready var title_label: Label = %PlatformTitle
 @onready var status_label: Label = %PlatformStatus
@@ -72,7 +84,7 @@ func _ready() -> void:
 	ProductionUIScript.style_action_button(action_button)
 	_style_garage_text()
 	_style_active_toggle()
-	pickup_hero.material = _sharpen_material(0.10)
+	vehicle_hero.material = _sharpen_material(0.10)
 	action_coin.texture = ProductionUIScript.texture(COIN_PATH)
 	_apply_back_safe_area()
 
@@ -137,11 +149,10 @@ func _show_selected(animate := true) -> void:
 	active_toggle.text = "✓" if definition.id == active_id else "□"
 	active_toggle.tooltip_text = "Active vehicle" if definition.id == active_id else "Set this vehicle as active"
 
-	var use_pickup_art: bool = definition.id == "pickup"
-	pickup_hero.visible = use_pickup_art
-	platform_showcase.visible = not use_pickup_art
-	if not use_pickup_art:
-		platform_showcase.configure(definition.id, module_id)
+	vehicle_hero.texture = ProductionUIScript.texture(str(SHOWROOM_PATHS.get(definition.id, "")))
+	vehicle_hero.visible = vehicle_hero.texture != null
+	platform_showcase.configure(definition.id, module_id)
+	platform_showcase.visible = not module_id.is_empty()
 
 	_rebuild_stats(definition, level)
 	_update_action(definition, owned, completed)
@@ -155,7 +166,7 @@ func _show_selected(animate := true) -> void:
 		card_scroll.ensure_control_visible.call_deferred(_card_buttons[_selected_index])
 
 	if animate:
-		var display: Control = pickup_hero if use_pickup_art else platform_showcase
+		var display: Control = vehicle_hero
 		display.pivot_offset = display.size * 0.5
 		display.modulate.a = 0.0
 		display.scale = Vector2(0.94, 0.94)
@@ -355,36 +366,21 @@ func _build_cards() -> void:
 		selected.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.add_child(selected)
 
-		if definition.id == "pickup":
-			var thumb := TextureRect.new()
-			thumb.texture = ProductionUIScript.texture(PICKUP_THUMB)
-			thumb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-			thumb.set_anchors_preset(Control.PRESET_FULL_RECT)
-			thumb.offset_left = 14.0
-			thumb.offset_top = 13.0
-			thumb.offset_right = -14.0
-			thumb.offset_bottom = -13.0
-			thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			thumb.material = _sharpen_material(0.10)
-			if locked:
-				thumb.modulate = Color(0.42, 0.45, 0.52, 1.0)
-			card.add_child(thumb)
-		else:
-			var preview := PlatformShowcase.new()
-			preview.set_anchors_preset(Control.PRESET_FULL_RECT)
-			preview.offset_left = 12.0
-			preview.offset_top = 8.0
-			preview.offset_right = -12.0
-			preview.offset_bottom = -8.0
-			preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			preview.draw_floor_shadow = false
-			preview.max_display_width = 205.0
-			preview.configure(definition.id)
-			if locked:
-				preview.modulate = Color(0.42, 0.45, 0.52, 1.0)
-			card.add_child(preview)
+		var thumb := TextureRect.new()
+		thumb.texture = ProductionUIScript.texture(str(THUMB_PATHS.get(definition.id, "")))
+		thumb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		thumb.set_anchors_preset(Control.PRESET_FULL_RECT)
+		thumb.offset_left = 14.0
+		thumb.offset_top = 13.0
+		thumb.offset_right = -14.0
+		thumb.offset_bottom = -13.0
+		thumb.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		thumb.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		thumb.material = _sharpen_material(0.10)
+		if locked:
+			thumb.modulate = Color(0.42, 0.45, 0.52, 1.0)
+		card.add_child(thumb)
 
 		if locked:
 			var lock := TextureRect.new()
