@@ -1,5 +1,7 @@
 # Survivor art
 
-`fort_knocks_survivor.svg` and `rival_survivor.svg` are the left/right battle assets loaded by `game/battle/combatant.gd`. Their 180×240 canvas, shooter direction and muzzle position preserve the existing combat contract. They are static battle poses with the existing hit flash/rotation and health state.
+The approved female mechanic and male salvage scout are the character identities for this set. `mechanic_portrait.png` and `scout_portrait.png` are transparent full-body cutouts derived from the approved designs.
 
-`mechanic_portrait.png` and `scout_portrait.png` are approved transparent full-body character cutouts for later Garage, dialogue or crew UI. They are stored as static art and are not loaded by combat. The battle rival adapts the approved male silhouette; the UI scout cutout does not itself define a new playable crew slot.
+`mechanic_battle.png` and `scout_battle.png` are transparent 720×960 combat poses of those same characters, facing right and left respectively. `game/battle/combatant.gd` renders them in its 180×240 world rectangle and keeps the established health strip, hit response, collision and launch origin. The PNG canvases position their muzzles near the existing launch origins. Portraits are available for future UI but do not create a playable crew system.
+
+Godot imports these PNG textures on project import.

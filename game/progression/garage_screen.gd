@@ -23,12 +23,25 @@ const SHOWROOM_PATHS := {
 	"old_sedan": VEHICLE_ART_ROOT + "/old_sedan_showroom.png",
 	"pickup": VEHICLE_ART_ROOT + "/pickup_showroom.png",
 	"improvised_technical": VEHICLE_ART_ROOT + "/improvised_technical_showroom.png",
+	"armoured_utility_truck": VEHICLE_ART_ROOT + "/armoured_utility_truck_showroom.png",
+	"recovered_apc": VEHICLE_ART_ROOT + "/recovered_apc_showroom.png",
+	"restored_battle_tank": VEHICLE_ART_ROOT + "/restored_battle_tank_showroom.png",
 }
 const THUMB_PATHS := {
 	"run_down_compact": VEHICLE_ART_ROOT + "/run_down_compact_thumbnail.png",
 	"old_sedan": VEHICLE_ART_ROOT + "/old_sedan_thumbnail.png",
 	"pickup": VEHICLE_ART_ROOT + "/pickup_thumbnail.png",
 	"improvised_technical": VEHICLE_ART_ROOT + "/improvised_technical_thumbnail.png",
+	"armoured_utility_truck": VEHICLE_ART_ROOT + "/armoured_utility_truck_thumbnail.png",
+	"recovered_apc": VEHICLE_ART_ROOT + "/recovered_apc_thumbnail.png",
+	"restored_battle_tank": VEHICLE_ART_ROOT + "/restored_battle_tank_thumbnail.png",
+}
+
+const FUTURE_VEHICLE_IDS := ["armoured_utility_truck", "recovered_apc", "restored_battle_tank"]
+const FUTURE_VEHICLE_NAMES := {
+	"armoured_utility_truck": "Armoured Utility Truck",
+	"recovered_apc": "Recovered APC",
+	"restored_battle_tank": "Restored Battle Tank",
 }
 
 const PANEL_PATH := "res://assets/art/claude_assets/1_Asset_Kit/00_shared/png/ui/panel_stats_9s.png"
@@ -64,6 +77,7 @@ static var ACTIVE_DARK: Color = Color("101b24")
 
 var _snapshot: Dictionary = {}
 var _definitions: Array[CombatPlatformDefinition] = []
+var _display_ids: Array[String] = []
 var _selected_index: int = 0
 var _card_buttons: Array[Button] = []
 var _swipe_start: Vector2 = Vector2.INF
@@ -101,6 +115,11 @@ func _ready() -> void:
 func configure(save_snapshot: Dictionary, notice := "") -> void:
 	_snapshot = save_snapshot.duplicate(true)
 	_definitions = PlatformCatalogScript.all()
+	_display_ids.clear()
+	for definition in _definitions:
+		_display_ids.append(definition.id)
+	for future_id in FUTURE_VEHICLE_IDS:
+		_display_ids.append(future_id)
 
 	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
 	var active_id: String = str(inventory.get("platform_id", "run_down_compact"))
@@ -116,9 +135,9 @@ func configure(save_snapshot: Dictionary, notice := "") -> void:
 	_show_selected(false)
 
 func _step(direction: int) -> void:
-	if _definitions.is_empty():
+	if _display_ids.is_empty():
 		return
-	var next_index: int = clampi(_selected_index + direction, 0, _definitions.size() - 1)
+	var next_index: int = clampi(_selected_index + direction, 0, _display_ids.size() - 1)
 	if next_index == _selected_index:
 		return
 	_selected_index = next_index
@@ -126,39 +145,51 @@ func _step(direction: int) -> void:
 	_show_selected()
 
 func _show_selected(animate := true) -> void:
-	if _definitions.is_empty():
+	if _display_ids.is_empty():
 		return
 
-	var definition: CombatPlatformDefinition = _definitions[_selected_index]
-	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
-	var campaign: Dictionary = _snapshot.get("campaign", {}) as Dictionary
-	var owned: Array = inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
-	var completed: Array = campaign.get("completed_missions", []) as Array
-	var active_id: String = str(inventory.get("platform_id", "run_down_compact"))
-	var equipped_modules: Dictionary = inventory.get("equipped_module_by_platform", {}) as Dictionary
-	var module_id: String = str(equipped_modules.get(definition.id, ""))
-	var owned_selected: bool = owned.has(definition.id)
-	var level: int = _platform_level(definition.id)
+	var platform_id: String = _display_ids[_selected_index]
+	if _selected_index >= _definitions.size():
+		title_label.text = str(FUTURE_VEHICLE_NAMES.get(platform_id, platform_id)).to_upper()
+		status_label.text = "FUTURE VEHICLE"
+		active_toggle.visible = false
+		platform_showcase.visible = false
+		_clear_stats()
+		_action_available = false
+		_action_is_upgrade = false
+		action_button.disabled = true
+		action_label.text = "NOT AVAILABLE"
+		action_coin.visible = false
+		action_cost.visible = false
+	else:
+		var definition: CombatPlatformDefinition = _definitions[_selected_index]
+		var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
+		var campaign: Dictionary = _snapshot.get("campaign", {}) as Dictionary
+		var owned: Array = inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
+		var completed: Array = campaign.get("completed_missions", []) as Array
+		var active_id: String = str(inventory.get("platform_id", "run_down_compact"))
+		var equipped_modules: Dictionary = inventory.get("equipped_module_by_platform", {}) as Dictionary
+		var module_id: String = str(equipped_modules.get(definition.id, ""))
+		var owned_selected: bool = owned.has(definition.id)
+		var level: int = _platform_level(definition.id)
 
-	title_label.text = definition.display_name.to_upper()
-	status_label.text = "LEVEL %d" % level if owned_selected else "LOCKED"
+		title_label.text = definition.display_name.to_upper()
+		status_label.text = "LEVEL %d" % level if owned_selected else "LOCKED"
+		active_toggle.visible = owned_selected
+		active_toggle.button_pressed = definition.id == active_id
+		active_toggle.disabled = definition.id == active_id
+		active_toggle.text = "✓" if definition.id == active_id else "□"
+		active_toggle.tooltip_text = "Active vehicle" if definition.id == active_id else "Set this vehicle as active"
+		platform_showcase.configure(definition.id, module_id)
+		platform_showcase.visible = not module_id.is_empty()
+		_rebuild_stats(definition, level)
+		_update_action(definition, owned, completed)
 
-	active_toggle.visible = owned_selected
-	active_toggle.button_pressed = definition.id == active_id
-	active_toggle.disabled = definition.id == active_id
-	active_toggle.text = "✓" if definition.id == active_id else "□"
-	active_toggle.tooltip_text = "Active vehicle" if definition.id == active_id else "Set this vehicle as active"
-
-	vehicle_hero.texture = ProductionUIScript.texture(str(SHOWROOM_PATHS.get(definition.id, "")))
+	vehicle_hero.texture = ProductionUIScript.texture(str(SHOWROOM_PATHS.get(platform_id, "")))
 	vehicle_hero.visible = vehicle_hero.texture != null
-	platform_showcase.configure(definition.id, module_id)
-	platform_showcase.visible = not module_id.is_empty()
-
-	_rebuild_stats(definition, level)
-	_update_action(definition, owned, completed)
 
 	prev_button.disabled = _selected_index == 0
-	next_button.disabled = _selected_index == _definitions.size() - 1
+	next_button.disabled = _selected_index == _display_ids.size() - 1
 
 	for i in range(_card_buttons.size()):
 		_set_card_selected(_card_buttons[i], i == _selected_index)
@@ -224,7 +255,7 @@ func _update_action(
 		action_button.disabled = true
 
 func _request_selected() -> void:
-	if _definitions.is_empty() or not _action_available:
+	if _selected_index >= _definitions.size() or not _action_available:
 		return
 	var platform_id: String = _definitions[_selected_index].id
 	if _action_is_upgrade:
@@ -233,7 +264,7 @@ func _request_selected() -> void:
 		platform_requested.emit(platform_id)
 
 func _request_active_selected() -> void:
-	if _definitions.is_empty() or active_toggle.disabled:
+	if _selected_index >= _definitions.size() or active_toggle.disabled:
 		return
 	var definition: CombatPlatformDefinition = _definitions[_selected_index]
 	var inventory: Dictionary = _snapshot.get("inventory", {}) as Dictionary
@@ -241,9 +272,12 @@ func _request_active_selected() -> void:
 	if owned.has(definition.id):
 		platform_active_requested.emit(definition.id)
 
-func _rebuild_stats(definition: CombatPlatformDefinition, level: int) -> void:
+func _clear_stats() -> void:
 	for child in rows.get_children():
 		child.queue_free()
+
+func _rebuild_stats(definition: CombatPlatformDefinition, level: int) -> void:
+	_clear_stats()
 
 	var effective_health: int = definition.cover_health_at_level(level)
 	var armour: int = clampi(int(round(float(effective_health) / 75.0)), 1, 4)
@@ -313,11 +347,12 @@ func _build_cards() -> void:
 	var owned: Array = inventory.get("owned_platform_ids", ["run_down_compact"]) as Array
 	var active_id: String = str(inventory.get("platform_id", "run_down_compact"))
 
-	for i in range(_definitions.size()):
-		var definition: CombatPlatformDefinition = _definitions[i]
-		var unlocked: bool = definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id)
-		var locked: bool = not owned.has(definition.id) and not unlocked
-		var is_active: bool = definition.id == active_id
+	for i in range(_display_ids.size()):
+		var platform_id: String = _display_ids[i]
+		var definition: CombatPlatformDefinition = _definitions[i] if i < _definitions.size() else null
+		var unlocked: bool = definition != null and (definition.unlock_after_mission_id.is_empty() or completed.has(definition.unlock_after_mission_id))
+		var locked: bool = definition == null or (not owned.has(platform_id) and not unlocked)
+		var is_active: bool = platform_id == active_id
 
 		var card := Button.new()
 		card.custom_minimum_size = Vector2(229.0, 188.0)
@@ -367,7 +402,7 @@ func _build_cards() -> void:
 		card.add_child(selected)
 
 		var thumb := TextureRect.new()
-		thumb.texture = ProductionUIScript.texture(str(THUMB_PATHS.get(definition.id, "")))
+		thumb.texture = ProductionUIScript.texture(str(THUMB_PATHS.get(platform_id, "")))
 		thumb.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		thumb.set_anchors_preset(Control.PRESET_FULL_RECT)
 		thumb.offset_left = 14.0
@@ -428,7 +463,7 @@ func _set_card_selected(card: Button, selected: bool) -> void:
 		glow.visible = selected
 
 func _select_card(index: int) -> void:
-	if index < 0 or index >= _definitions.size():
+	if index < 0 or index >= _display_ids.size():
 		return
 	_selected_index = index
 	_play_ui(&"ui_confirm")

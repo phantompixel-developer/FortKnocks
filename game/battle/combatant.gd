@@ -1,9 +1,8 @@
 class_name Combatant
 extends CharacterBody2D
 
-const ProductionArtScript := preload("res://game/presentation/production_art.gd")
-const PLAYER_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/fort_knocks_survivor.svg"
-const RIVAL_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/rival_survivor.svg"
+const PLAYER_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/mechanic_battle.png"
+const RIVAL_SURVIVOR_TEXTURE_PATH := "res://assets/art/production/characters/scout_battle.png"
 
 var _production_survivor_textures: Dictionary = {}
 
@@ -149,7 +148,10 @@ func _draw_production_survivor() -> bool:
 	var texture_key := "player" if facing > 0 else "rival"
 	if not _production_survivor_textures.has(texture_key):
 		var texture_path := PLAYER_SURVIVOR_TEXTURE_PATH if facing > 0 else RIVAL_SURVIVOR_TEXTURE_PATH
-		_production_survivor_textures[texture_key] = ProductionArtScript.texture_from_svg(texture_path)
+		var loaded_texture: Texture2D = null
+		if ResourceLoader.exists(texture_path):
+			loaded_texture = load(texture_path) as Texture2D
+		_production_survivor_textures[texture_key] = loaded_texture
 
 	var survivor_texture := _production_survivor_textures[texture_key] as Texture2D
 	if survivor_texture == null:
@@ -157,7 +159,7 @@ func _draw_production_survivor() -> bool:
 
 	var alive := health > 0
 	var tint := Color.WHITE if alive else Color(0.48, 0.50, 0.49, 1.0)
-	# The SVG was authored around the existing collision/launch contract.
+	# The transparent PNGs are composed around the existing collision/launch contract.
 	# Muzzle remains close to get_launch_origin(); neither physics nor aim math
 	# derives from this rectangle.
 	var rect := Rect2(-90.0, -216.0, 180.0, 240.0)

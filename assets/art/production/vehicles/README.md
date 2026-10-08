@@ -1,17 +1,17 @@
 # Fort Knocks vehicle art
 
-The approved showroom and thumbnail PNGs replace the older active vehicle visuals. Both Garage and the player-side battle cover load the new showroom image for the four current platform IDs; Garage cards load the matching thumbnails. Battle retains the existing cover collision and authored damage overlays.
+All seven approved vehicle showroom and thumbnail pairs are visible in the Garage. Tiers 1–4 have playable platform definitions and use their showroom images for player-side battle cover. Tiers 5–7 are selectable Garage previews labeled `FUTURE VEHICLE`; purchase, activation, statistics and battle use await authored definitions and progression.
 
-| Tier | ID | Status |
-| --- | --- | --- |
-| 1 | run_down_compact | Garage and battle cover |
-| 2 | old_sedan | Garage and battle cover |
-| 3 | pickup | Garage and battle cover |
-| 4 | improvised_technical | Garage and battle cover |
-| 5 | armoured_utility_truck | Art ready; no playable definition yet |
-| 6 | recovered_apc | Art ready; no playable definition yet |
-| 7 | restored_battle_tank | Art ready; no playable definition yet |
+| Tier | ID | Garage | Battle cover |
+| --- | --- | --- | --- |
+| 1 | run_down_compact | Playable | Yes |
+| 2 | old_sedan | Playable | Yes |
+| 3 | pickup | Playable | Yes |
+| 4 | improvised_technical | Playable | Yes |
+| 5 | armoured_utility_truck | Preview | No |
+| 6 | recovered_apc | Preview | No |
+| 7 | restored_battle_tank | Preview | No |
 
-Each ID has `<id>_showroom.png` (up to 1024×512) and `<id>_thumbnail.png` (512×256). The first four are live; the final three are staged without inventing progression rules. The opposing cover remains faction-neutral art.
+Each ID has `<id>_showroom.png` (up to 1024×512) and `<id>_thumbnail.png` (512×256). Battle retains the existing cover collision and authored damage overlays. The opposing cover remains faction-neutral art.
 
-The pickup showroom uses the pre-existing approved pickup cutout. The other six showrooms and all seven thumbnails derive from owner-approved art created on 2026-10-08. Thumbnails were transparency-trimmed and fitted to the Garage card ratio; their vehicle pixels were not repainted.
+The pickup showroom uses the approved pickup cutout. The other showrooms and all thumbnails derive from owner-approved art created on 2026-10-08. Thumbnails were transparency-trimmed and fitted to the Garage card ratio.
