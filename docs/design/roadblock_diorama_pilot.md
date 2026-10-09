@@ -12,7 +12,7 @@ This is an isolated experiment for **Roadblock Trial only**. All other Outskirts
 
 ## Implementation
 
-- `game/battle/roadblock_diorama_back.gd` — a new world-anchored background renderer under collision and live actors. Reuses the original painting only for far-upper scenery, then draws distinct midground and authored checkpoint landmark planes. The actual road and its contact line are world anchored, with flyover cast-shadows, curb/shoulder transitions, wear and material seams.
+- `game/battle/roadblock_diorama_back.gd` — a new world-anchored background renderer under collision and live actors. Splits the existing painterly panorama into distant upper scenery and an independently world-anchored painterly road plane, blending the skyline into distinct midground and authored checkpoint landmark planes. The road and its contact line share world coordinates with collision, with flyover cast-shadows, curb/shoulder transitions, wear and material seams. SVG road art is retained as a fallback if the painterly texture is unavailable.
 - `game/battle/roadblock_diorama_near.gd` — localized near-ground occlusion in front of the actors, with foot/wheel contact strips following actual character/vehicle positions instead of replaying a wide semi-transparent panorama.
 - `game/battle/battle.tscn` — both pilot layers are new, initially hidden World children. They sandwich the pre-existing interactive nodes. This does **not** add a collider or alter child ownership for gameplay.
 - `game/battle/battle_controller.gd` — enables both pilot layers only for `roadblock_trial`, hides the legacy panorama/near pass for that mission, and restores the legacy path automatically for every other mission.
