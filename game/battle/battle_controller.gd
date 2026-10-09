@@ -39,6 +39,8 @@ const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 @onready var world: Node2D = $World
 @onready var battlefield_visual: Node2D = $World/BattlefieldVisual
 @onready var near_occlusion: BattlefieldNearOcclusion = $World/NearOcclusion
+@onready var roadblock_diorama_back: RoadblockDioramaBack = $World/RoadblockDioramaBack
+@onready var roadblock_diorama_near: RoadblockDioramaNear = $World/RoadblockDioramaNear
 @onready var roadblock: CentralRoadblock = $World/CentralRoadblock
 @onready var encounter_geometry: Node2D = $World/EncounterGeometry
 @onready var player: Combatant = $World/Player
@@ -558,6 +560,13 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		battlefield_visual.call("configure_mission", definition.id)
 	near_occlusion.configure_variant(definition.visual_variant)
 	near_occlusion.configure_platforms(definition.platform_rects)
+	# Visual-only A/B pilot: every other mission keeps the Batch 4 artwork.
+	# Do not touch player/enemy positions, collision, camera, or weapon rules.
+	var use_roadblock_diorama := definition.id == "roadblock_trial"
+	battlefield_visual.visible = not use_roadblock_diorama
+	near_occlusion.visible = not use_roadblock_diorama
+	roadblock_diorama_back.visible = use_roadblock_diorama
+	roadblock_diorama_near.visible = use_roadblock_diorama
 	_apply_scene_lighting(definition.visual_variant)
 
 func _apply_scene_lighting(visual_variant: int) -> void:
