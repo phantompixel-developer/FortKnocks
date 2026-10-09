@@ -65,13 +65,24 @@ func _draw_distant_panorama() -> void:
 		var size := _backdrop.get_size()
 		var crop_width := minf(size.x, size.y * WORLD_WIDTH / WORLD_HEIGHT)
 		var crop_x := (size.x - crop_width) * 0.5
-		var upper_fraction := 0.59
+		# Avoid a hard horizontal cut between raster painting and world-space
+		# architectural art: fade the lower region progressively into the scene.
+		var solid_height := 570.0
 		draw_texture_rect_region(
 			_backdrop,
-			Rect2(-300.0 + drift, 0.0, WORLD_WIDTH + 600.0, 755.0),
-			Rect2(crop_x, 0.0, crop_width, size.y * upper_fraction),
-			Color(0.92, 0.95, 1.0, 0.92)
+			Rect2(-300.0 + drift, 0.0, WORLD_WIDTH + 600.0, solid_height),
+			Rect2(crop_x, 0.0, crop_width, size.y * solid_height / WORLD_HEIGHT),
+			Color(0.92, 0.95, 1.0, 0.91)
 		)
+		for band in range(8):
+			var y := solid_height + float(band) * 30.0
+			var alpha := 0.91 * (1.0 - (float(band) + 0.5) / 8.0)
+			draw_texture_rect_region(
+				_backdrop,
+				Rect2(-300.0 + drift, y, WORLD_WIDTH + 600.0, 30.0),
+				Rect2(crop_x, size.y * y / WORLD_HEIGHT, crop_width, size.y * 30.0 / WORLD_HEIGHT),
+				Color(0.92, 0.95, 1.0, alpha)
+			)
 	elif _sky != null:
 		draw_texture_rect(
 			_sky, Rect2(-300.0 + drift, 0.0, WORLD_WIDTH + 600.0, ROAD_TOP),
