@@ -4,6 +4,10 @@ signal battle_completed(result: Dictionary)
 signal exit_requested
 signal rematch_requested
 
+# Pilot A/B: disable in the Battle inspector to compare with untouched Batch 4.
+# Defaults on for Roadblock Trial only; never changes other missions.
+@export var enable_roadblock_diorama_pilot := true
+
 enum Phase {
 	INTRO,
 	PLAYER_AIM,
@@ -562,7 +566,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	near_occlusion.configure_platforms(definition.platform_rects)
 	# Visual-only A/B pilot: every other mission keeps the Batch 4 artwork.
 	# Do not touch player/enemy positions, collision, camera, or weapon rules.
-	var use_roadblock_diorama := definition.id == "roadblock_trial"
+	var use_roadblock_diorama := enable_roadblock_diorama_pilot and definition.id == "roadblock_trial"
 	battlefield_visual.visible = not use_roadblock_diorama
 	near_occlusion.visible = not use_roadblock_diorama
 	roadblock_diorama_back.visible = use_roadblock_diorama
