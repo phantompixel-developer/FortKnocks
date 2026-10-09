@@ -83,7 +83,7 @@ func _draw() -> void:
 		if _destroyed_texture == null:
 			_destroyed_texture = ProductionArtScript.texture_from_svg(RELAY_DESTROYED_TEXTURE_PATH)
 		if _destroyed_texture != null:
-			draw_texture_rect(_destroyed_texture, Rect2(-90.0, -110.0, 180.0, 120.0), false)
+			draw_texture_rect(_destroyed_texture, Rect2(-150.0, -188.0, 300.0, 198.0), false)
 			return
 	else:
 		if _production_texture == null and ResourceLoader.exists(RELAY_PAINTERLY_TEXTURE_PATH):
@@ -134,7 +134,7 @@ func _draw() -> void:
 
 func _draw_ground_treatment() -> void:
 	# Actual recovered-tech objective: restrained cold spill plus neutral contact.
-	draw_set_transform(Vector2(0.0, 2.0), 0.0, Vector2(1.15, 0.22))
+	draw_set_transform(Vector2(0.0, 2.0), 0.0, Vector2(1.70, 0.25))
 	draw_circle(Vector2.ZERO, 58.0, Color(0.025, 0.035, 0.040, 0.28))
 	if not is_destroyed:
 		draw_circle(Vector2.ZERO, 72.0, Color(0.32, 0.72, 0.76, 0.065))
@@ -148,12 +148,12 @@ func _draw_ground_treatment() -> void:
 func _draw_production_relay() -> void:
 	draw_texture_rect(
 		_production_texture,
-		Rect2(-90.0, -270.0, 180.0, 280.0),
+		Rect2(-150.0, -452.0, 300.0, 462.0),
 		false
 	)
 
 	var outline := Color("111719")
 	var cold := Color("77b6bf")
 	var ratio: float = float(health) / float(max_health)
-	draw_rect(Rect2(-46, -287, 92, 10), outline)
-	draw_rect(Rect2(-42, -284, 84.0 * ratio, 4), cold)
+	draw_rect(Rect2(-46, -469, 92, 10), outline)
+	draw_rect(Rect2(-42, -466, 84.0 * ratio, 4), cold)

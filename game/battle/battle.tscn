@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
 [ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://game/battle/unstable_power_cell.gd" id="7_hazard"]
 [ext_resource type="Script" path="res://game/battle/central_roadblock.gd" id="8_roadblock"]
 [ext_resource type="Script" path="res://game/battle/last_impact_marker.gd" id="9_marker"]
+[ext_resource type="Script" path="res://game/battle/battlefield_near_occlusion.gd" id="10_occlusion"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_ground"]
 size = Vector2(2160, 90)
@@ -98,6 +99,9 @@ shape = SubResource("RectangleShape_character")
 
 [node name="EncounterGeometry" type="Node2D" parent="World"]
 
+[node name="NearOcclusion" type="Node2D" parent="World"]
+script = ExtResource("10_occlusion")
+
 [node name="ProjectileLayer" type="Node2D" parent="."]
 
 [node name="EffectsLayer" type="Node2D" parent="."]
@@ -111,9 +115,11 @@ script = ExtResource("6_aim")
 
 [node name="CameraDirector" type="Node2D" parent="."]
 script = ExtResource("5_camera")
+fixed_y = 850.0
 
 [node name="Camera2D" type="Camera2D" parent="CameraDirector"]
 position_smoothing_enabled = false
+zoom = Vector2(1.35, 1.35)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -324,7 +330,7 @@ layout_mode = 0
 offset_left = 18.0
 offset_top = 184.0
 offset_right = 158.0
-offset_bottom = 378.0
+offset_bottom = 390.0
 mouse_filter = 2
 color = Color(0.105, 0.115, 0.108, 0.88)
 
@@ -344,7 +350,7 @@ layout_mode = 0
 offset_left = 10.0
 offset_top = 40.0
 offset_right = 132.0
-offset_bottom = 82.0
+offset_bottom = 88.0
 toggle_mode = true
 theme_override_font_sizes/font_size = 14
 text = "BOLT"
@@ -354,7 +360,7 @@ layout_mode = 0
 offset_left = 10.0
 offset_top = 92.0
 offset_right = 132.0
-offset_bottom = 134.0
+offset_bottom = 140.0
 toggle_mode = true
 theme_override_font_sizes/font_size = 14
 text = "SLUG"
@@ -364,7 +370,7 @@ layout_mode = 0
 offset_left = 10.0
 offset_top = 144.0
 offset_right = 132.0
-offset_bottom = 186.0
+offset_bottom = 192.0
 toggle_mode = true
 theme_override_font_sizes/font_size = 14
 text = "SHOCK"

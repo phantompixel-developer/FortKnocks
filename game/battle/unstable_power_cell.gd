@@ -52,20 +52,20 @@ func _draw() -> void:
 		if _spent_texture == null:
 			_spent_texture = ProductionArtScript.texture_from_svg(POWER_CELL_SPENT_TEXTURE_PATH)
 		if _spent_texture != null:
-			draw_texture_rect(_spent_texture, Rect2(-75.0, -68.0, 150.0, 100.0), false)
+			draw_texture_rect(_spent_texture, Rect2(-126.0, -134.0, 252.0, 166.0), false)
 			return
 		_draw_spent_cell()
 		return
 	if _painterly_texture == null and ResourceLoader.exists(POWER_CELL_PAINTERLY_TEXTURE_PATH):
 		_painterly_texture = load(POWER_CELL_PAINTERLY_TEXTURE_PATH) as Texture2D
 	if _painterly_texture != null:
-		draw_texture_rect(_painterly_texture, Rect2(-75.0, -146.0, 150.0, 180.0), false)
+		draw_texture_rect(_painterly_texture, Rect2(-126.0, -266.0, 252.0, 300.0), false)
 		return
 
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(POWER_CELL_TEXTURE_PATH)
 	if _production_texture != null:
-		draw_texture_rect(_production_texture, Rect2(-75.0, -146.0, 150.0, 180.0), false)
+		draw_texture_rect(_production_texture, Rect2(-126.0, -266.0, 252.0, 300.0), false)
 		return
 
 	var outline := Color("171c1b")
@@ -97,7 +97,7 @@ func _draw() -> void:
 
 func _draw_ground_treatment() -> void:
 	# The live cell is allowed the strongest cold-tech spill in the current battlefield.
-	draw_set_transform(Vector2(0.0, 32.0), 0.0, Vector2(1.05, 0.24))
+	draw_set_transform(Vector2(0.0, 32.0), 0.0, Vector2(1.55, 0.27))
 	draw_circle(Vector2.ZERO, 54.0, Color(0.025, 0.035, 0.040, 0.30))
 	if not is_discharged:
 		draw_circle(Vector2.ZERO, 70.0, Color(0.32, 0.72, 0.76, 0.10))

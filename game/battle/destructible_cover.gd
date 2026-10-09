@@ -23,6 +23,7 @@ var _reaction_tween: Tween
 var _body_size := Vector2(240.0, 95.0)
 var _visual_profile := 0
 var _module_id := ""
+var shadow_direction := -1
 
 func _ready() -> void:
 	health = max_health
@@ -185,13 +186,13 @@ func _draw() -> void:
 
 func _draw_contact_shadow(stage: int) -> void:
 	# Visual-only ambient contact. Physics continues to use the existing cover shape.
-	var shadow_width := maxf(180.0, _body_size.x + 28.0)
+	var shadow_width := (_body_size.x + 46.0) * 1.65
 	var contact_y := minf(52.0, _body_size.y * 0.50 + 5.0)
-	var alpha := 0.30 if stage < 3 else 0.20
+	var alpha := 0.42 if stage < 3 else 0.24
 	draw_set_transform(
 		Vector2(0.0, contact_y),
 		0.0,
-		Vector2(shadow_width / 180.0, 0.26)
+		Vector2(shadow_width / 144.0, 0.28)
 	)
 	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, alpha))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -205,16 +206,18 @@ func _draw_production_rival_cover(stage: int) -> bool:
 	if texture == null:
 		return false
 
-	var target_width := _body_size.x + 46.0
+	var base_width := _body_size.x + 46.0
+	var target_width := base_width * 1.65
 	var target_height := target_width * (250.0 / 520.0)
 	var target := Rect2(
 		-target_width * 0.5,
-		-target_height * 0.72,
+		base_width * (250.0 / 520.0) * 0.28 - target_height,
 		target_width,
 		target_height
 	)
 	var tint := Color.WHITE.darkened(float(stage) * 0.10)
 
+	_draw_cast_shadow(texture, target)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1.0, 1.0))
 	draw_texture_rect(texture, target, false, tint)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -243,16 +246,18 @@ func _draw_production_platform(stage: int) -> bool:
 	if texture == null:
 		return false
 
-	var target_width := _body_size.x + 46.0
+	var base_width := _body_size.x + 46.0
+	var target_width := base_width * 1.65
 	var aspect := 0.50 if platform_id == "run_down_compact" else 0.47
 	var target_height := target_width * aspect
 	var tint := Color.WHITE.darkened(float(stage) * 0.08)
 	var target := Rect2(
 		-target_width * 0.5,
-		-target_height * 0.72,
+		base_width * aspect * 0.28 - target_height,
 		target_width,
 		target_height
 	)
+	_draw_cast_shadow(texture, target)
 	draw_texture_rect(texture, target, false, tint)
 	_draw_production_module_overlay(target)
 
@@ -274,6 +279,11 @@ func _draw_production_platform(stage: int) -> bool:
 		draw_line(Vector2(half_width * 0.43, -58), Vector2(half_width * 0.63, -18), Color("090d11"), 8.0)
 		draw_line(Vector2(-half_width * 0.72, -38), Vector2(-half_width * 0.52, 4), Color("090d11"), 7.0)
 	return true
+
+func _draw_cast_shadow(texture: Texture2D, target: Rect2) -> void:
+	draw_set_transform(Vector2(50.0 * float(shadow_direction), 43.0), 0.0, Vector2(1.05, 0.18))
+	draw_texture_rect(texture, target, false, Color(0.025, 0.035, 0.045, 0.20))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 func _platform_id_from_visual_profile() -> String:
 	match _visual_profile:

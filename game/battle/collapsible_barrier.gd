@@ -75,11 +75,11 @@ func _draw() -> void:
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(SCRAP_GATE_TEXTURE_PATH)
 	if _production_texture != null:
-		draw_texture_rect(_production_texture, Rect2(-60.0, -160.0, 120.0, 320.0), false)
+		draw_texture_rect(_production_texture, Rect2(-96.0, -234.0, 192.0, 468.0), false)
 		if not is_collapsed:
 			var ratio: float = float(health) / float(max_health)
-			draw_rect(Rect2(-31, -174, 62, 10), Color("111719"))
-			draw_rect(Rect2(-28, -171, 56.0 * ratio, 4), Color("e7ad3c"))
+			draw_rect(Rect2(-31, -213, 62, 10), Color("111719"))
+			draw_rect(Rect2(-28, -210, 56.0 * ratio, 4), Color("e7ad3c"))
 		return
 
 	var outline := Color("171c1b")
@@ -120,7 +120,7 @@ func _draw() -> void:
 
 func _draw_contact_shadow() -> void:
 	var alpha := 0.18 if is_collapsed else 0.28
-	var contact_y := 154.0 if not is_collapsed else 118.0
-	draw_set_transform(Vector2(0.0, contact_y), 0.0, Vector2(0.82, 0.20))
+	var contact_y := 185.0 if not is_collapsed else 118.0
+	draw_set_transform(Vector2(0.0, contact_y), 0.0, Vector2(1.28, 0.23))
 	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, alpha))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)

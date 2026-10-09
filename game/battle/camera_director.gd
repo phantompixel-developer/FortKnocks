@@ -3,8 +3,7 @@ extends Node2D
 
 @export var world_left := 0.0
 @export var world_right := 2160.0
-@export var viewport_half_width := 360.0
-@export var fixed_y := 640.0
+@export var fixed_y := 850.0
 @export var follow_response := 8.0
 
 @onready var camera: Camera2D = $Camera2D
@@ -14,15 +13,21 @@ var _move_tween: Tween
 var _impulse_tween: Tween
 
 func _ready() -> void:
-	global_position = Vector2(viewport_half_width, fixed_y)
+	global_position = Vector2(_visible_half_width(), fixed_y)
 	camera.enabled = true
 
 func focus_x(world_x: float, duration := 0.45) -> void:
+	_focus(Vector2(world_x, global_position.y), duration)
+
+func focus_subject(world_position: Vector2, duration := 0.45) -> void:
+	_focus(Vector2(world_position.x, _subject_center_y(world_position.y)), duration)
+
+func _focus(world_position: Vector2, duration: float) -> void:
 	_follow_target = null
 	if _move_tween != null and _move_tween.is_running():
 		_move_tween.kill()
 
-	var target := Vector2(_clamp_x(world_x), fixed_y)
+	var target := Vector2(_clamp_x(world_position.x), world_position.y)
 	if duration <= 0.0:
 		global_position = target
 		return
@@ -39,7 +44,7 @@ func follow(target: Node2D) -> void:
 
 func stop_follow_at(world_position: Vector2, duration := 0.16) -> void:
 	_follow_target = null
-	focus_x(world_position.x, duration)
+	focus_subject(world_position, duration)
 
 func impact_impulse(strength := 1.0, horizontal_direction := 1.0) -> void:
 	if _impulse_tween != null and _impulse_tween.is_running():
@@ -63,7 +68,16 @@ func _process(delta: float) -> void:
 	var desired_x := _clamp_x(_follow_target.global_position.x)
 	var smoothing := 1.0 - exp(-follow_response * delta)
 	global_position.x = lerpf(global_position.x, desired_x, smoothing)
-	global_position.y = fixed_y
+	var desired_y := _subject_center_y(_follow_target.global_position.y)
+	global_position.y = lerpf(global_position.y, desired_y, smoothing * 0.75)
 
 func _clamp_x(value: float) -> float:
-	return clampf(value, world_left + viewport_half_width, world_right - viewport_half_width)
+	var half_width := _visible_half_width()
+	return clampf(value, world_left + half_width, world_right - half_width)
+
+func _visible_half_width() -> float:
+	return get_viewport_rect().size.x / (2.0 * camera.zoom.x)
+
+func _subject_center_y(world_y: float) -> float:
+	var half_height := get_viewport_rect().size.y / (2.0 * camera.zoom.y)
+	return clampf(world_y - 190.0, half_height, fixed_y)

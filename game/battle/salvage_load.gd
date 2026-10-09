@@ -83,7 +83,7 @@ func _draw() -> void:
 		if _destroyed_texture == null:
 			_destroyed_texture = ProductionArtScript.texture_from_svg(SALVAGE_DESTROYED_TEXTURE_PATH)
 		if _destroyed_texture != null:
-			draw_texture_rect(_destroyed_texture, Rect2(-110.0, -92.0, 220.0, 94.0), false)
+			draw_texture_rect(_destroyed_texture, Rect2(-184.0, -154.0, 368.0, 156.0), false)
 			return
 	else:
 		if _production_texture == null and ResourceLoader.exists(SALVAGE_PAINTERLY_TEXTURE_PATH):
@@ -132,7 +132,7 @@ func _draw() -> void:
 
 func _draw_ground_treatment() -> void:
 	var alpha := 0.18 if is_destroyed else 0.29
-	draw_set_transform(Vector2(0.0, 2.0), 0.0, Vector2(1.70, 0.22))
+	draw_set_transform(Vector2(0.0, 2.0), 0.0, Vector2(2.50, 0.25))
 	draw_circle(Vector2.ZERO, 66.0, Color(0.025, 0.035, 0.040, alpha))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if not is_destroyed:
@@ -144,12 +144,12 @@ func _draw_ground_treatment() -> void:
 func _draw_production_salvage() -> void:
 	draw_texture_rect(
 		_production_texture,
-		Rect2(-110.0, -137.0, 220.0, 141.0),
+		Rect2(-184.0, -230.0, 368.0, 234.0),
 		false
 	)
 
 	var outline := Color("111719")
 	var hazard := Color("e7ad3c")
 	var ratio: float = float(health) / float(max_health)
-	draw_rect(Rect2(-72, -151, 144, 10), outline)
-	draw_rect(Rect2(-68, -148, 136.0 * ratio, 4), hazard)
+	draw_rect(Rect2(-72, -244, 144, 10), outline)
+	draw_rect(Rect2(-68, -241, 136.0 * ratio, 4), hazard)

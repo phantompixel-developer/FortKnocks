@@ -13,12 +13,12 @@ func _draw() -> void:
 	if _painterly_texture == null and ResourceLoader.exists(ROADBLOCK_PAINTERLY_TEXTURE_PATH):
 		_painterly_texture = load(ROADBLOCK_PAINTERLY_TEXTURE_PATH) as Texture2D
 	if _painterly_texture != null:
-		draw_texture_rect(_painterly_texture, Rect2(-126.0, -92.0, 252.0, 164.0), false)
+		draw_texture_rect(_painterly_texture, Rect2(-210.0, -198.0, 420.0, 270.0), false)
 		return
 	if _production_texture == null:
 		_production_texture = ProductionArtScript.texture_from_svg(ROADBLOCK_TEXTURE_PATH)
 	if _production_texture != null:
-		draw_texture_rect(_production_texture, Rect2(-120.0, -100.0, 240.0, 176.0), false)
+		draw_texture_rect(_production_texture, Rect2(-202.0, -212.0, 404.0, 288.0), false)
 		return
 
 	var outline := Color("171c1b")
@@ -81,6 +81,6 @@ func _draw() -> void:
 
 func _draw_contact_shadow() -> void:
 	# Extends the authored object's internal shadow so it seats into every road treatment.
-	draw_set_transform(Vector2(0.0, 70.0), 0.0, Vector2(1.45, 0.24))
+	draw_set_transform(Vector2(0.0, 70.0), 0.0, Vector2(2.12, 0.27))
 	draw_circle(Vector2.ZERO, 72.0, Color(0.025, 0.035, 0.040, 0.24))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)

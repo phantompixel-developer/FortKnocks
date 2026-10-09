@@ -30,12 +30,23 @@ static func apply(root: Control) -> void:
 	if root == null:
 		return
 	root.theme = build()
+	_enlarge_small_type(root)
+
+static func _enlarge_small_type(control: Control) -> void:
+	if control.has_theme_font_size_override("font_size"):
+		var current := control.get_theme_font_size("font_size")
+		if current < 28:
+			control.add_theme_font_size_override("font_size", maxi(16, current + 2))
+	for child in control.get_children():
+		if child is Control:
+			_enlarge_small_type(child as Control)
 
 static func build() -> Theme:
 	var panel_texture := _texture(PANEL_TEXTURE_PATH)
 	var button_texture := _texture(BUTTON_TEXTURE_PATH)
 	var active_texture := _texture(BUTTON_ACTIVE_TEXTURE_PATH)
 	var theme := Theme.new()
+	theme.default_font_size = 18
 	var medium_font := load(FONT_MEDIUM_PATH) as Font
 	var bold_font := load(FONT_BOLD_PATH) as Font
 	if medium_font != null:

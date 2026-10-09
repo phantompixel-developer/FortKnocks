@@ -154,5 +154,13 @@ The remaining gate is local Godot Play at phone scale. Highways remains blocked 
 - Garage now uses owner-approved transparent showroom and thumbnail raster art for the four current platform IDs. Existing purchase, active-platform, lock, level and module rules remain unchanged.
 - Those same new showroom images replace the older active player vehicle SVG art in battle cover. Existing cover collision, damage overlays and module rules remain unchanged.
 - The future utility truck, APC and battle tank pairs are stored as production art but are not added to the playable catalog before their rules and progression are authored.
-- The approved mechanic and scout static cutouts are staged for character UI. Battle continues to use 180×240 SVGs, updated to the approved identities while preserving firing alignment and collision.
+- The approved mechanic and scout transparent PNG combat cutouts are used in battle; their portraits are staged for future character UI. Battle keeps separate firing alignment and collision.
 - Local Godot Play still must verify import, 720×1280 Garage fit/card legibility, selected module overlay position, and battle cover/character silhouette and launch alignment.
+
+## Battle scale and grounding follow-up (2026-10-08)
+
+- The battle camera moves closer at 1.35 zoom, places road-level characters higher in the viewport, and frames each combatant toward its adjacent cover. Raised encounters receive vertical subject focus. Horizontal bounds use the actual viewport width and zoom.
+- Survivor, vehicle and interactive art footprints are enlarged beyond the first readability pass. The survivor launch offset is raised explicitly to meet the enlarged barrel.
+- Directional cast shadows, stronger contact shadows and a common warm ambient tint tie characters, vehicles and props to the city light and their surfaces. A low second pass of the authored regional foreground overlaps road-level feet and wheels; a matching strip of each raised platform overlaps occupants at its front lip. These are non-colliding presentation layers.
+- The near pass stays below the projectile corridor. Collision shapes, mission coordinates, objective rules, HP and weapon tuning are unchanged.
+- Roadblock Trial, High Ground, Crossroads and Hot Cargo are the priority phone-scale checks for crop, occlusion and aim readability.

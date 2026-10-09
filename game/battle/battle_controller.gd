@@ -38,6 +38,7 @@ const HUD_REFERENCE_SIZE := Vector2(720.0, 1280.0)
 @onready var camera_director: BattleCameraDirector = $CameraDirector
 @onready var world: Node2D = $World
 @onready var battlefield_visual: Node2D = $World/BattlefieldVisual
+@onready var near_occlusion: BattlefieldNearOcclusion = $World/NearOcclusion
 @onready var roadblock: CentralRoadblock = $World/CentralRoadblock
 @onready var encounter_geometry: Node2D = $World/EncounterGeometry
 @onready var player: Combatant = $World/Player
@@ -211,7 +212,7 @@ func _style_live_hud() -> void:
 	result_unlock_label.add_theme_color_override("font_color", ThemeScript.COLD)
 	result_summary_label.add_theme_color_override("font_color", ThemeScript.MUTED)
 	ThemeScript.mark_active(mission_deploy_button, true)
-	inspect_button.add_theme_font_size_override("font_size", 16)
+	inspect_button.add_theme_font_size_override("font_size", 18)
 
 func _capture_hud_layout() -> void:
 	_hud_base_offsets.clear()
@@ -440,9 +441,9 @@ func _build_encounter_picker() -> void:
 	for index in range(_missions.size()):
 		var mission: MissionDefinition = _missions[index]
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0.0, 74.0)
+		button.custom_minimum_size = Vector2(0.0, 80.0)
 		button.text = "%d  %s\n%s" % [index + 1, mission.display_name.to_upper(), mission.test_focus]
-		button.add_theme_font_size_override("font_size", 16)
+		button.add_theme_font_size_override("font_size", 18)
 		button.pressed.connect(_begin_mission.bind(mission))
 		mission_button_list.add_child(button)
 
@@ -555,6 +556,38 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		battlefield_visual.call("configure_variant", definition.visual_variant)
 	if battlefield_visual.has_method("configure_mission"):
 		battlefield_visual.call("configure_mission", definition.id)
+	near_occlusion.configure_variant(definition.visual_variant)
+	near_occlusion.configure_platforms(definition.platform_rects)
+	_apply_scene_lighting(definition.visual_variant)
+
+func _apply_scene_lighting(visual_variant: int) -> void:
+	# A common ambient grade and sun-side cast shadows make transparent hero art
+	# share the backdrop's road-level lighting instead of reading as cutouts.
+	var ambient := Color(0.92, 0.91, 0.89, 1.0)
+	var shadow_side := 1 if visual_variant == 3 else -1
+	player.shadow_direction = shadow_side
+	enemy.shadow_direction = shadow_side
+	player_cover.shadow_direction = shadow_side
+	enemy_cover.shadow_direction = shadow_side
+	for item in [player, enemy, player_cover, enemy_cover, roadblock, power_cell, _collapsible_barrier, _signal_relay, _salvage_load]:
+		var canvas_item := item as CanvasItem
+		if canvas_item == null:
+			continue
+		canvas_item.self_modulate = ambient
+		canvas_item.queue_redraw()
+
+func _focus_player(duration: float) -> void:
+	# Keep the enlarged shooter and cover in the same portrait composition.
+	camera_director.focus_subject(
+		Vector2(lerpf(player.global_position.x, player_cover.global_position.x, 0.45), player.global_position.y),
+		duration
+	)
+
+func _focus_enemy(duration: float) -> void:
+	camera_director.focus_subject(
+		Vector2(lerpf(enemy.global_position.x, enemy_cover.global_position.x, 0.45), enemy.global_position.y),
+		duration
+	)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if phase != Phase.PLAYER_AIM or _is_inspecting:
@@ -753,14 +786,14 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 		hint_label.text = "Enemy position"
 		target_card.visible = true
 		_update_target_card()
-		camera_director.focus_x(enemy.global_position.x, 0.35)
+		_focus_enemy(0.35)
 		await get_tree().create_timer(0.70).timeout
 		target_card.visible = false
 		if phase == Phase.GAME_OVER:
 			return
 
 	hint_label.text = "Returning to your position"
-	camera_director.focus_x(player.global_position.x, 0.48)
+	_focus_player(0.48)
 	await get_tree().create_timer(0.52).timeout
 	if phase == Phase.GAME_OVER:
 		return
@@ -816,7 +849,7 @@ func _inspect_enemy() -> void:
 	_set_weapon_buttons_enabled(false)
 
 	hint_label.text = "Moving to enemy position"
-	camera_director.focus_x(enemy.global_position.x, 0.36)
+	_focus_enemy(0.36)
 	await get_tree().create_timer(0.38).timeout
 	if phase != Phase.PLAYER_AIM or not _is_inspecting:
 		return
@@ -838,7 +871,7 @@ func _return_from_enemy_inspection() -> void:
 	inspect_banner_title.text = "RETURNING TO SHOOTER"
 	inspect_banner_subtitle.text = "AIM STATE PRESERVED"
 	hint_label.text = "Returning to your shooter"
-	camera_director.focus_x(player.global_position.x, 0.38)
+	_focus_player(0.38)
 	await get_tree().create_timer(0.42).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
@@ -891,7 +924,7 @@ func _start_enemy_turn() -> void:
 	turn_label.text = "ENEMY TURN"
 	turn_label.add_theme_color_override("font_color", ThemeScript.SIGNAL)
 	hint_label.text = _enemy_tactic_turn_hint()
-	camera_director.focus_x(enemy.global_position.x, 0.42)
+	_focus_enemy(0.42)
 
 	await get_tree().create_timer(0.72).timeout
 	if phase == Phase.GAME_OVER:
@@ -1425,16 +1458,16 @@ func _check_game_over() -> bool:
 			if _signal_relay != null and is_instance_valid(_signal_relay):
 				camera_director.focus_x(_signal_relay.global_position.x, 0.35)
 			else:
-				camera_director.focus_x(enemy.global_position.x, 0.35)
+				_focus_enemy(0.35)
 		elif _current_mission != null and _current_mission.objective_mode == "protect_salvage":
 			hint_label.text = "Raiders cleared — Salvage secured"
 			if _salvage_load != null and is_instance_valid(_salvage_load):
 				camera_director.focus_x(_salvage_load.global_position.x, 0.35)
 			else:
-				camera_director.focus_x(enemy.global_position.x, 0.35)
+				_focus_enemy(0.35)
 		else:
 			hint_label.text = "Enemy survivor incapacitated"
-			camera_director.focus_x(enemy.global_position.x, 0.35)
+			_focus_enemy(0.35)
 	else:
 		turn_label.text = "DEFEAT"
 		turn_label.add_theme_color_override("font_color", ThemeScript.SIGNAL)
@@ -1444,10 +1477,10 @@ func _check_game_over() -> bool:
 			if _salvage_load != null and is_instance_valid(_salvage_load):
 				camera_director.focus_x(_salvage_load.global_position.x, 0.35)
 			else:
-				camera_director.focus_x(player.global_position.x, 0.35)
+				_focus_player(0.35)
 		else:
 			hint_label.text = "Your survivor was incapacitated"
-			camera_director.focus_x(player.global_position.x, 0.35)
+			_focus_player(0.35)
 
 	if not _completion_emitted:
 		_play_audio(&"victory" if victory else &"defeat")

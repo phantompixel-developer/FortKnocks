@@ -29,6 +29,8 @@ An overview state may be added only if encounters require it.
 ## World bounds
 The camera must respect authored battlefield bounds but may use controlled overscan/lead framing for projectiles.
 
+The current battle presentation uses `Camera2D.zoom = (1.35, 1.35)` and a road-level vertical center of 850 world units. Subject focus moves the vertical center upward for raised encounters and projectile travel while keeping the scene within its vertical framing range. Horizontal clamping derives from the live viewport width and zoom so portrait safe framing still reaches both world edges. Shooter and enemy focus points lean toward their nearby cover to keep the enlarged combat objects readable together.
+
 ## Testing
 Camera tests should include:
 - short and very long shots,

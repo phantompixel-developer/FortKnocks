@@ -467,7 +467,7 @@ func _create_pin_base(state: String, number: int) -> Button:
 	label.add_theme_font_override("font", BoardBoldFont)
 	label.add_theme_color_override("font_color", Color(0.227, 0.173, 0.11, 1))
 	label.add_theme_color_override("font_shadow_color", Color.TRANSPARENT)
-	label.add_theme_font_size_override("font_size", 16)
+	label.add_theme_font_size_override("font_size", 18)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tag.add_child(label)
 

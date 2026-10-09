@@ -88,6 +88,9 @@ func configure_mission(mission_id: String) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	# Small lower overscan supports the higher subject framing without a blank
+	# strip beneath the authored road and near-foreground layers.
+	draw_rect(Rect2(0.0, WORLD_HEIGHT, WORLD_WIDTH, 100.0), Color("171c20"))
 	_ensure_production_textures()
 	var mission_backdrop := _mission_backdrops.get(_mission_id) as Texture2D
 	if mission_backdrop != null:

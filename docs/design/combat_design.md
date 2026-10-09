@@ -29,6 +29,8 @@ The implementation must support an accessibility alternative later: aim, lock, t
 
 Trajectory assistance must not reveal the complete solution. The initial target is a short dotted preview near the shooter, sufficient to communicate direction without removing judgement.
 
+The current enlarged battle pose uses an explicit launch offset of `(60 × facing, -194)` world units from the survivor origin. This keeps shots visually aligned with the larger launcher; the texture still does not define projectile physics.
+
 ## Previous-shot memory
 The player's next aiming turn may show the previous shot as a compact learning aid:
 - previous power percentage,

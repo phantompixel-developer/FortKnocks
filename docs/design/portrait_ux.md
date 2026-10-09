@@ -119,3 +119,7 @@ All permanent HUD controls must respect iOS/Android safe areas and avoid assumpt
 
 ## Responsive rule
 World framing may expand with aspect ratio. HUD remains anchored to safe regions. Do not scale the entire interface blindly from a single reference phone.
+
+## Phone-scale readability adjustment — 2026-10-08
+
+Current battle combatants, cover vehicles and interactive foreground props use larger render footprints so they separate from city art at the 720×1280 reference size. The battle camera uses a 1.35 zoom, places road-level characters higher in the viewport, and frames each survivor with nearby cover; raised encounters receive vertical subject focus. Collision shapes and authored mission coordinates remain unchanged; the explicit projectile launch offset is raised to follow the larger launcher art. A low, partially transparent near-foreground pass overlaps feet and wheels while leaving the shot corridor clear. Combatants and cover have directional cast shadows, contact shadows, and a shared warm ambient tint to connect them to the city light. Shared UI type below 28 points is increased by at least two points, with a 16-point floor for small captions, and the weapon controls have taller touch targets. These values require physical-phone review in both Outskirts and Suburbs.

@@ -16,6 +16,7 @@ signal health_changed(current: int, maximum: int)
 
 var health := 100
 var knockback_multiplier: float = 1.0
+var shadow_direction := -1
 var _reaction_tween: Tween
 
 func _ready() -> void:
@@ -29,7 +30,7 @@ func configure_knockback_multiplier(value: float) -> void:
 	knockback_multiplier = clampf(value, 0.25, 1.0)
 
 func get_launch_origin() -> Vector2:
-	return global_position + Vector2(60.0 * float(facing), -110.0)
+	return global_position + Vector2(60.0 * float(facing), -194.0)
 
 func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	if health <= 0:
@@ -162,15 +163,26 @@ func _draw_production_survivor() -> bool:
 	# The transparent PNGs are composed around the existing collision/launch contract.
 	# Muzzle remains close to get_launch_origin(); neither physics nor aim math
 	# derives from this rectangle.
-	var rect := Rect2(-90.0, -216.0, 180.0, 240.0)
+	# Keep the boots near the road and the muzzle near the fixed launch origin.
+	# The cutout is wider/taller than the collision capsule for phone-scale read.
+	var left := -223.0 if facing > 0 else -117.0
+	var rect := Rect2(left, -356.0, 340.0, 370.0)
+	# The flattened silhouette follows the scene's sun direction across the
+	# road, while a tighter contact shadow seats the boots on the surface.
+	draw_set_transform(Vector2(46.0 * float(shadow_direction), 29.0), 0.0, Vector2(1.0, 0.15))
+	draw_texture_rect(survivor_texture, rect, false, Color(0.025, 0.035, 0.045, 0.22))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	draw_set_transform(Vector2(0.0, 25.0), 0.0, Vector2(1.28, 0.17))
+	draw_circle(Vector2.ZERO, 112.0, Color(0.025, 0.035, 0.040, 0.42))
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	draw_texture_rect(survivor_texture, rect, false, tint)
 
 	# Keep the established world-space health strip as gameplay information.
 	var outline := Color("090d11")
-	draw_rect(Rect2(-39, -236, 78, 11), outline)
+	draw_rect(Rect2(-39, -260, 78, 11), outline)
 	var ratio := clampf(float(health) / float(max_health), 0.0, 1.0)
 	draw_rect(
-		Rect2(-35, -232, 70.0 * ratio, 4),
+		Rect2(-35, -256, 70.0 * ratio, 4),
 		(Color("e7ad3c") if facing > 0 else Color("a45f42")) if alive else Color("5c625e")
 	)
 	return true

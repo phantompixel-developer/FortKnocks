@@ -533,7 +533,7 @@ func _rebuild_modules() -> void:
 		button.custom_minimum_size = Vector2(170.0, 62.0)
 		button.focus_mode = Control.FOCUS_NONE
 		button.add_theme_font_override("font", WorkshopBoldFont)
-		button.add_theme_font_size_override("font_size", 13)
+		button.add_theme_font_size_override("font_size", 16)
 		ProductionUIScript.style_card_button(button, is_active)
 
 		if is_active:
