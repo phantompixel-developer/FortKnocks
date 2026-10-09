@@ -569,7 +569,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	var use_roadblock_diorama := enable_roadblock_diorama_pilot and definition.id == "roadblock_trial"
 	battlefield_visual.visible = not use_roadblock_diorama
 	near_occlusion.visible = not use_roadblock_diorama
-	roadblock_diorama_back.visible = use_roadblock_diorama
+	roadblock_diorama_back.set_pilot_active(use_roadblock_diorama)
 	roadblock_diorama_near.visible = use_roadblock_diorama
 	_apply_scene_lighting(definition.visual_variant)
 
