@@ -23,15 +23,22 @@ var _mid: Texture2D
 var _landmark: Texture2D
 var _road: Texture2D
 var _camera_x := 1080.0
+var _art_loaded := false
 
 
-func _ready() -> void:
-	if ResourceLoader.exists(BACKDROP_PATH):
-		_backdrop = load(BACKDROP_PATH) as Texture2D
-	_sky = ProductionArtScript.texture_from_svg(SKY_PATH)
-	_mid = ProductionArtScript.texture_from_svg(MID_PATH)
-	_landmark = ProductionArtScript.texture_from_svg(LANDMARK_PATH)
-	_road = ProductionArtScript.texture_from_svg(ROAD_PATH)
+func set_pilot_active(active: bool) -> void:
+	visible = active
+	if not active:
+		return
+	# Do not decode pilot-only art when running the other nine missions.
+	if not _art_loaded:
+		_art_loaded = true
+		if ResourceLoader.exists(BACKDROP_PATH):
+			_backdrop = load(BACKDROP_PATH) as Texture2D
+		_sky = ProductionArtScript.texture_from_svg(SKY_PATH)
+		_mid = ProductionArtScript.texture_from_svg(MID_PATH)
+		_landmark = ProductionArtScript.texture_from_svg(LANDMARK_PATH)
+		_road = ProductionArtScript.texture_from_svg(ROAD_PATH)
 	queue_redraw()
 
 
