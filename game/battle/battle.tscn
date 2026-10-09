@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://game/battle/battle_controller.gd" id="1_battle"]
 [ext_resource type="Script" path="res://game/battle/battlefield_visual.gd" id="2_field"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://game/battle/central_roadblock.gd" id="8_roadblock"]
 [ext_resource type="Script" path="res://game/battle/last_impact_marker.gd" id="9_marker"]
 [ext_resource type="Script" path="res://game/battle/battlefield_near_occlusion.gd" id="10_occlusion"]
+[ext_resource type="Script" path="res://game/battle/roadblock_diorama_back.gd" id="11_diorama_back"]
+[ext_resource type="Script" path="res://game/battle/roadblock_diorama_near.gd" id="12_diorama_near"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape_ground"]
 size = Vector2(2160, 90)
@@ -33,6 +35,10 @@ script = ExtResource("1_battle")
 
 [node name="BattlefieldVisual" type="Node2D" parent="World"]
 script = ExtResource("2_field")
+
+[node name="RoadblockDioramaBack" type="Node2D" parent="World"]
+visible = false
+script = ExtResource("11_diorama_back")
 
 [node name="Ground" type="StaticBody2D" parent="World" groups=["ground_surface"]]
 position = Vector2(1080, 1080)
@@ -101,6 +107,10 @@ shape = SubResource("RectangleShape_character")
 
 [node name="NearOcclusion" type="Node2D" parent="World"]
 script = ExtResource("10_occlusion")
+
+[node name="RoadblockDioramaNear" type="Node2D" parent="World"]
+visible = false
+script = ExtResource("12_diorama_near")
 
 [node name="ProjectileLayer" type="Node2D" parent="."]
 
