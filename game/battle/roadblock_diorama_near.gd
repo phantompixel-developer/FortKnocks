@@ -54,7 +54,8 @@ func _draw() -> void:
 
 
 func _draw_boot_contact(origin: Vector2) -> void:
-	var y := origin.y + 1.0
+	# Approved battle PNG boots extend slightly below their Node2D origin.
+	var y := origin.y + 10.0
 	draw_line(Vector2(origin.x - 36.0, y), Vector2(origin.x + 32.0, y + 2.0), Color("242c2a", 0.80), 7.0)
 	draw_line(Vector2(origin.x - 28.0, y - 2.0), Vector2(origin.x + 22.0, y - 2.0), Color("a77c56", 0.25), 2.0)
 	for offset in [-40.0, 41.0]:
