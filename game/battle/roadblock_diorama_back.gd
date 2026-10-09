@@ -124,7 +124,20 @@ func _draw_roadside_architecture() -> void:
 func _draw_world_road() -> void:
 	# Critical separation from the old green-screen composition: the playable
 	# road has a fixed world-space contact plane (ground collision top = 1035).
-	if _road != null:
+	if _backdrop != null:
+		# Keep the approved painterly road texture, but extract it from the
+		# camera-moving panorama. It now sits at fixed WORLD coordinates and
+		# shares its footprint with the actual ground collision.
+		var size := _backdrop.get_size()
+		var crop_width := minf(size.x, size.y * WORLD_WIDTH / WORLD_HEIGHT)
+		var crop_x := (size.x - crop_width) * 0.5
+		var source_top := size.y * ROAD_TOP / WORLD_HEIGHT
+		draw_texture_rect_region(
+			_backdrop,
+			Rect2(0.0, ROAD_TOP, WORLD_WIDTH, WORLD_HEIGHT - ROAD_TOP),
+			Rect2(crop_x, source_top, crop_width, size.y - source_top)
+		)
+	elif _road != null:
 		draw_texture_rect(_road, Rect2(0.0, ROAD_TOP, WORLD_WIDTH, 350.0), false)
 	else:
 		draw_rect(Rect2(0.0, ROAD_TOP, WORLD_WIDTH, 350.0), Color("383b39"))
