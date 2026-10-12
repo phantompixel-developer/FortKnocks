@@ -77,6 +77,12 @@ func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 
 	queue_redraw()
 
+# Same authored sprite footprint used by _draw_production_platform().
+# The pilot positions the survivor beside any equipped vehicle tier.
+func get_battle_art_half_width() -> float:
+	return (_body_size.x + 46.0) * 1.65 * 0.5
+
+
 func get_damage_stage() -> int:
 	if is_destroyed or health <= 0:
 		return 3
