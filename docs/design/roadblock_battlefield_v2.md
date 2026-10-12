@@ -19,10 +19,10 @@ surfaces as a single scene.
 - Base road `Ground` collision top remains **y=1035**; its existing long road
   rebound surface is retained between/behind the positions.
 - Two *actual* `ArenaPlatform` collision rectangles represent cracked raised
-  road shoulders: **(342,1010,575,70)** and **(1203,1010,575,70)**.
+  road shoulders: **(280,1010,650,70)** and **(1190,1010,650,70)**.
   They use existing Outskirts material, not new invisible terrain. Projectiles
   encounter their top faces at y=1010.
-- Pilot player vehicle center **(752,970)**, rival cover **(1368,970)**,
+- Pilot player vehicle center **(710,970)**, rival cover **(1410,970)**,
   central collidable blocker **(1060,958)**.
 - Player and rival stand at **y=1010**, adjacent to the rendered outer edge of
   their respective vehicles. Their x coordinate is derived from
