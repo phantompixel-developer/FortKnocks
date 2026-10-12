@@ -28,9 +28,10 @@ surfaces as a single scene.
   their respective vehicles. Their x coordinate is derived from
   `get_battle_art_half_width()`, including when the player equips a wider
   Sedan/Pickup/Technical. No launch-origin/weapon calculation is changed.
-- The unstable power cell remains a live gameplay target at its authored mission
-  position. Objective, HP, weapon behaviour, shot memory, bounce limits, enemy
-  tactics, and progression rewards remain unchanged.
+- The unstable power cell remains a live gameplay target, staged at
+  **(1875,1028)** on the base road, clear of the relocated rival and raised
+  shoulder. Objective, HP, weapon behaviour, shot memory, bounce limits,
+  enemy tactics, and progression rewards remain unchanged.
 - The world-space road treatment paints irregular foundations, wheel tracks,
   broken road edges and a checkpoint apron at those *same world coordinates*.
   A near pass overlaps actual boots and wheels with gravel, cover-stage scrap
