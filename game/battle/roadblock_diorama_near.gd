@@ -25,7 +25,7 @@ func _ready() -> void:
 
 
 func register_shot(world_position: Vector2) -> void:
-	_add_dust(Vector2(world_position.x, GROUND_CONTACT_Y), 0.46)
+	_add_dust(world_position + Vector2(0.0, 4.0), 0.46)
 
 
 func register_impact(world_position: Vector2, strength: float = 1.0) -> void:
