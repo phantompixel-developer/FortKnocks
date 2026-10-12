@@ -526,7 +526,9 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	if roadblock_shape != null:
 		roadblock_shape.disabled = not definition.roadblock_enabled
 
-	power_cell.global_position = definition.power_cell_position
+	# Keep the live hazard adjacent to, but not intersecting, the rival crew or
+	# raised platform. It remains within the authored power-cell blast zone.
+	power_cell.global_position = Vector2(1875.0, 1028.0) if roadblock_v2 else definition.power_cell_position
 	power_cell.visible = definition.power_cell_enabled
 	power_cell.collision_layer = 1 if definition.power_cell_enabled else 0
 	power_cell.collision_mask = 1 if definition.power_cell_enabled else 0
@@ -590,8 +592,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		battlefield_visual.call("configure_mission", definition.id)
 	near_occlusion.configure_variant(definition.visual_variant)
 	near_occlusion.configure_platforms(definition.platform_rects)
-	# Visual-only A/B pilot: every other mission keeps the Batch 4 artwork.
-	# Do not touch player/enemy positions, collision, camera, or weapon rules.
+	# Roadblock V2 A/B pilot: all other missions retain their existing visual,
+	# position, camera and physics contracts. Weapons remain unchanged.
 	var use_roadblock_diorama := enable_roadblock_diorama_pilot and definition.id == "roadblock_trial"
 	battlefield_visual.visible = not use_roadblock_diorama
 	near_occlusion.visible = not use_roadblock_diorama
