@@ -503,7 +503,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	if _player_module != null:
 		player_knockback_multiplier = _player_module.crew_knockback_multiplier
 	player.configure_knockback_multiplier(player_knockback_multiplier)
-	player_cover.global_position = Vector2(752.0, 970.0) if roadblock_v2 else definition.player_cover_position
+	player_cover.global_position = Vector2(710.0, 970.0) if roadblock_v2 else definition.player_cover_position
 	if _player_platform != null:
 		player_cover.configure_platform(_player_platform, _player_module)
 	if roadblock_v2:
@@ -514,7 +514,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		preview_steps += _player_module.trajectory_preview_steps_bonus
 	aim_guide.set_preview_steps(preview_steps)
 	enemy.global_position = definition.enemy_position
-	enemy_cover.global_position = Vector2(1368.0, 970.0) if roadblock_v2 else definition.enemy_cover_position
+	enemy_cover.global_position = Vector2(1410.0, 970.0) if roadblock_v2 else definition.enemy_cover_position
 	if roadblock_v2:
 		enemy.global_position = Vector2(enemy_cover.global_position.x + enemy_cover.get_battle_art_half_width() + 50.0, 1010.0)
 
@@ -553,8 +553,8 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		# sit on broken raised road shoulders. The central roadblock remains the
 		# collidable choke between them; road rebounds respect shoulder tops.
 		for shoulder_rect in [
-			Rect2(342.0, 1010.0, 575.0, 70.0),
-			Rect2(1203.0, 1010.0, 575.0, 70.0),
+			Rect2(280.0, 1010.0, 650.0, 70.0),
+			Rect2(1190.0, 1010.0, 650.0, 70.0),
 		]:
 			var shoulder := ArenaPlatformScript.new() as ArenaPlatform
 			if shoulder != null:
