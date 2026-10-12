@@ -96,8 +96,8 @@ func _draw() -> void:
 
 	_draw_boot_in_road(player.global_position, 1.0)
 	_draw_boot_in_road(enemy.global_position, -1.0)
-	_draw_vehicle_in_road(player_cover.global_position, player_cover.get_damage_stage())
-	_draw_vehicle_in_road(enemy_cover.global_position, enemy_cover.get_damage_stage())
+	_draw_vehicle_in_road(player_cover.global_position, player_cover.get_damage_stage(), player_cover.get_battle_art_half_width())
+	_draw_vehicle_in_road(enemy_cover.global_position, enemy_cover.get_damage_stage(), enemy_cover.get_battle_art_half_width())
 	_draw_impact_dust()
 
 
@@ -129,14 +129,15 @@ func _draw_boot_in_road(origin: Vector2, facing: float) -> void:
 	)
 
 
-func _draw_vehicle_in_road(origin: Vector2, damage_stage: int) -> void:
+func _draw_vehicle_in_road(origin: Vector2, damage_stage: int, half_width: float) -> void:
 	# Vehicle artwork has a 40-unit drop below the physical cover origin.
 	# Wheel ruts and accumulated gravel therefore intersect that precise line,
 	# rather than being a generic horizontal shadow disconnected from the car.
 	var y := origin.y + 42.0
-	var left := origin.x - 120.0
-	var right := origin.x + 120.0
-	for offset in [-97.0, 91.0]:
+	var wheel_span := half_width * 0.62
+	var left := origin.x - half_width * 0.76
+	var right := origin.x + half_width * 0.76
+	for offset in [-wheel_span, wheel_span]:
 		draw_colored_polygon(
 			PackedVector2Array([
 				Vector2(origin.x + offset - 28.0, y + 1.0),
@@ -160,7 +161,7 @@ func _draw_vehicle_in_road(origin: Vector2, damage_stage: int) -> void:
 		# Visible scraps accumulate at the exact position of damaged cover.
 		for n in range(damage_stage * 3):
 			var side := -1.0 if n % 2 == 0 else 1.0
-			var dx := side * (90.0 + float(n) * 13.0)
+			var dx := side * (wheel_span * 0.86 + float(n) * 13.0)
 			var p := Vector2(origin.x + dx, y + 21.0 + float(n % 3) * 4.0)
 			draw_line(p, p + Vector2(13.0 * side, -5.0), Color("6f6452", 0.84), 5.0)
 
