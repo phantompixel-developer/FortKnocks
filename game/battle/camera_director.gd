@@ -11,10 +11,27 @@ extends Node2D
 var _follow_target: Node2D
 var _move_tween: Tween
 var _impulse_tween: Tween
+var _zoom_tween: Tween
 
 func _ready() -> void:
 	global_position = Vector2(_visible_half_width(), fixed_y)
 	camera.enabled = true
+
+# Keep the camera zoom tied to the authored battle framing, not to combat rules.
+# One common zoom is used on both axes: no stretching of the 2D illustration.
+func set_zoom_level(level: float, duration: float = 0.35) -> void:
+	var safe_zoom := clampf(level, 0.75, 1.6)
+	if _zoom_tween != null and _zoom_tween.is_running():
+		_zoom_tween.kill()
+	var target := Vector2(safe_zoom, safe_zoom)
+	if duration <= 0.0:
+		camera.zoom = target
+		return
+	_zoom_tween = create_tween()
+	_zoom_tween.set_trans(Tween.TRANS_CUBIC)
+	_zoom_tween.set_ease(Tween.EASE_IN_OUT)
+	_zoom_tween.tween_property(camera, "zoom", target, duration)
+
 
 func focus_x(world_x: float, duration := 0.45) -> void:
 	_focus(Vector2(world_x, global_position.y), duration)
