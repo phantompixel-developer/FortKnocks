@@ -43,6 +43,20 @@ func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	health_changed.emit(health, max_health)
 	queue_redraw()
 
+# A hit on adjacent cover makes the crew brace without dealing crew damage.
+func play_cover_brace(hit_direction: float) -> void:
+	if not is_alive():
+		return
+	if _reaction_tween != null and _reaction_tween.is_running():
+		_reaction_tween.kill()
+	var direction := signf(hit_direction)
+	if is_zero_approx(direction):
+		direction = 1.0
+	rotation = deg_to_rad(-3.5 * direction)
+	_reaction_tween = create_tween()
+	_reaction_tween.tween_property(self, "rotation", 0.0, 0.24).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
 func _play_hit_reaction(impulse: Vector2) -> void:
 	if _reaction_tween != null and _reaction_tween.is_running():
 		_reaction_tween.kill()
