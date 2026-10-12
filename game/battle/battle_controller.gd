@@ -498,25 +498,25 @@ func _roadblock_v2_active() -> bool:
 func _configure_mission(definition: MissionDefinition) -> void:
 	var roadblock_v2 := enable_roadblock_diorama_pilot and definition.id == "roadblock_trial"
 	camera_director.set_zoom_level(1.35, 0.0)
-	player.global_position = Vector2(510.0, 1040.0) if roadblock_v2 else definition.player_position
+	player.global_position = Vector2(510.0, 1010.0) if roadblock_v2 else definition.player_position
 	var player_knockback_multiplier: float = 1.0
 	if _player_module != null:
 		player_knockback_multiplier = _player_module.crew_knockback_multiplier
 	player.configure_knockback_multiplier(player_knockback_multiplier)
-	player_cover.global_position = Vector2(752.0, 1000.0) if roadblock_v2 else definition.player_cover_position
+	player_cover.global_position = Vector2(752.0, 970.0) if roadblock_v2 else definition.player_cover_position
 	if _player_platform != null:
 		player_cover.configure_platform(_player_platform, _player_module)
 	if roadblock_v2:
 		# Crew stands at the illustrated edge for every Garage vehicle tier.
-		player.global_position.x = player_cover.global_position.x - player_cover.get_battle_art_half_width() - 12.0
+		player.global_position.x = player_cover.global_position.x - player_cover.get_battle_art_half_width() - 50.0
 	var preview_steps := 9
 	if _player_module != null:
 		preview_steps += _player_module.trajectory_preview_steps_bonus
 	aim_guide.set_preview_steps(preview_steps)
 	enemy.global_position = definition.enemy_position
-	enemy_cover.global_position = Vector2(1368.0, 1000.0) if roadblock_v2 else definition.enemy_cover_position
+	enemy_cover.global_position = Vector2(1368.0, 970.0) if roadblock_v2 else definition.enemy_cover_position
 	if roadblock_v2:
-		enemy.global_position = Vector2(enemy_cover.global_position.x + enemy_cover.get_battle_art_half_width() + 12.0, 1040.0)
+		enemy.global_position = Vector2(enemy_cover.global_position.x + enemy_cover.get_battle_art_half_width() + 50.0, 1010.0)
 
 	roadblock.global_position = Vector2(1060.0, 958.0) if roadblock_v2 else definition.roadblock_position
 	roadblock.visible = definition.roadblock_enabled
@@ -547,6 +547,19 @@ func _configure_mission(definition: MissionDefinition) -> void:
 		var platform_style := "suburbs" if definition.visual_variant == 3 else "outskirts"
 		platform.configure(rect, platform_style)
 		encounter_geometry.add_child(platform)
+
+	if roadblock_v2:
+		# Real 2D collision geometry, not a painted lip: both firing positions
+		# sit on broken raised road shoulders. The central roadblock remains the
+		# collidable choke between them; road rebounds respect shoulder tops.
+		for shoulder_rect in [
+			Rect2(342.0, 1010.0, 575.0, 70.0),
+			Rect2(1203.0, 1010.0, 575.0, 70.0),
+		]:
+			var shoulder := ArenaPlatformScript.new() as ArenaPlatform
+			if shoulder != null:
+				shoulder.configure(shoulder_rect, "outskirts")
+				encounter_geometry.add_child(shoulder)
 
 	if definition.collapsible_barrier_enabled:
 		_collapsible_barrier = CollapsibleBarrierScript.new() as CollapsibleBarrier
