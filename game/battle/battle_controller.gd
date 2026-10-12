@@ -489,23 +489,31 @@ func _begin_mission(definition: MissionDefinition) -> void:
 	_update_hud()
 	_show_mission_brief(definition)
 
+# Only the Roadblock V2 experiment adjusts encounter staging. Turning the
+# pilot off restores the authored baseline for direct A/B comparison.
+func _roadblock_v2_active() -> bool:
+	return enable_roadblock_diorama_pilot and _current_mission != null and _current_mission.id == "roadblock_trial"
+
+
 func _configure_mission(definition: MissionDefinition) -> void:
-	player.global_position = definition.player_position
+	var roadblock_v2 := enable_roadblock_diorama_pilot and definition.id == "roadblock_trial"
+	camera_director.set_zoom_level(1.35, 0.0)
+	player.global_position = Vector2(510.0, 1040.0) if roadblock_v2 else definition.player_position
 	var player_knockback_multiplier: float = 1.0
 	if _player_module != null:
 		player_knockback_multiplier = _player_module.crew_knockback_multiplier
 	player.configure_knockback_multiplier(player_knockback_multiplier)
-	player_cover.global_position = definition.player_cover_position
+	player_cover.global_position = Vector2(752.0, 1000.0) if roadblock_v2 else definition.player_cover_position
 	if _player_platform != null:
 		player_cover.configure_platform(_player_platform, _player_module)
 	var preview_steps := 9
 	if _player_module != null:
 		preview_steps += _player_module.trajectory_preview_steps_bonus
 	aim_guide.set_preview_steps(preview_steps)
-	enemy.global_position = definition.enemy_position
-	enemy_cover.global_position = definition.enemy_cover_position
+	enemy.global_position = Vector2(1606.0, 1040.0) if roadblock_v2 else definition.enemy_position
+	enemy_cover.global_position = Vector2(1368.0, 1000.0) if roadblock_v2 else definition.enemy_cover_position
 
-	roadblock.global_position = definition.roadblock_position
+	roadblock.global_position = Vector2(1060.0, 958.0) if roadblock_v2 else definition.roadblock_position
 	roadblock.visible = definition.roadblock_enabled
 	roadblock.collision_layer = 1 if definition.roadblock_enabled else 0
 	roadblock.collision_mask = 1 if definition.roadblock_enabled else 0
@@ -571,6 +579,10 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	near_occlusion.visible = not use_roadblock_diorama
 	roadblock_diorama_back.set_pilot_active(use_roadblock_diorama)
 	roadblock_diorama_near.visible = use_roadblock_diorama
+	if use_roadblock_diorama:
+		# During the mission briefing, establish the central physical obstruction.
+		camera_director.set_zoom_level(1.04, 0.0)
+		camera_director.focus_x(1060.0, 0.0)
 	_apply_scene_lighting(definition.visual_variant)
 
 func _apply_scene_lighting(visual_variant: int) -> void:
@@ -590,13 +602,17 @@ func _apply_scene_lighting(visual_variant: int) -> void:
 		canvas_item.queue_redraw()
 
 func _focus_player(duration: float) -> void:
-	# Keep the enlarged shooter and cover in the same portrait composition.
+	# Battle-specific staging preserves the usual high-detail shooter close-up.
+	if _roadblock_v2_active():
+		camera_director.set_zoom_level(1.08, duration)
 	camera_director.focus_subject(
 		Vector2(lerpf(player.global_position.x, player_cover.global_position.x, 0.45), player.global_position.y),
 		duration
 	)
 
 func _focus_enemy(duration: float) -> void:
+	if _roadblock_v2_active():
+		camera_director.set_zoom_level(1.08, duration)
 	camera_director.focus_subject(
 		Vector2(lerpf(enemy.global_position.x, enemy_cover.global_position.x, 0.45), enemy.global_position.y),
 		duration
@@ -788,7 +804,33 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 	turn_label.text = "YOUR TURN"
 	turn_label.add_theme_color_override("font_color", ThemeScript.HAZARD)
 
-	if show_enemy_preview:
+	if show_enemy_preview and _roadblock_v2_active():
+		# In portrait the two crews cannot share a readable close-up. A single
+		# uninterrupted physical-road traversal establishes their relationship.
+		# Do not shrink the whole arena into a tiny letterboxed overview.
+		camera_director.set_zoom_level(0.94, 0.3)
+		hint_label.text = "Your roadside fighting position"
+		camera_director.focus_x(player_cover.global_position.x, 0.28)
+		await get_tree().create_timer(0.33).timeout
+		if phase == Phase.GAME_OVER:
+			return
+		hint_label.text = "Concrete choke • shots must clear or bank around it"
+		camera_director.focus_x(roadblock.global_position.x, 0.52)
+		await get_tree().create_timer(0.57).timeout
+		if phase == Phase.GAME_OVER:
+			return
+		hint_label.text = "Rival position • cover and unstable power cell"
+		camera_director.focus_x(enemy_cover.global_position.x, 0.56)
+		await get_tree().create_timer(0.61).timeout
+		if phase == Phase.GAME_OVER:
+			return
+		target_card.visible = true
+		_update_target_card()
+		await get_tree().create_timer(0.48).timeout
+		target_card.visible = false
+		if phase == Phase.GAME_OVER:
+			return
+	elif show_enemy_preview:
 		if _current_mission != null and _current_mission.feature_preview_enabled:
 			hint_label.text = _current_mission.feature_preview_text
 			camera_director.focus_x(_current_mission.feature_preview_position.x, 0.28)
@@ -862,8 +904,8 @@ func _inspect_enemy() -> void:
 	_set_weapon_buttons_enabled(false)
 
 	hint_label.text = "Moving to enemy position"
-	_focus_enemy(0.36)
-	await get_tree().create_timer(0.38).timeout
+	_focus_enemy(0.57 if _roadblock_v2_active() else 0.36)
+	await get_tree().create_timer(0.61 if _roadblock_v2_active() else 0.38).timeout
 	if phase != Phase.PLAYER_AIM or not _is_inspecting:
 		return
 
@@ -884,8 +926,8 @@ func _return_from_enemy_inspection() -> void:
 	inspect_banner_title.text = "RETURNING TO SHOOTER"
 	inspect_banner_subtitle.text = "AIM STATE PRESERVED"
 	hint_label.text = "Returning to your shooter"
-	_focus_player(0.38)
-	await get_tree().create_timer(0.42).timeout
+	_focus_player(0.55 if _roadblock_v2_active() else 0.38)
+	await get_tree().create_timer(0.59 if _roadblock_v2_active() else 0.42).timeout
 	if phase != Phase.PLAYER_AIM:
 		_is_inspecting = false
 		inspect_banner.visible = false
@@ -1046,6 +1088,10 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	_set_weapon_buttons_enabled(false)
 	_active_shooter = shooter
 	aim_guide.clear()
+	if _roadblock_v2_active():
+		# More road context during flight; real muzzle dust reacts to the shooter.
+		camera_director.set_zoom_level(0.96, 0.22)
+		roadblock_diorama_near.register_shot(shooter.global_position)
 	hint_label.text = "%s away" % weapon.display_name
 	_play_audio(_fire_cue(weapon))
 
@@ -1065,6 +1111,8 @@ func _on_projectile_bounced(world_position: Vector2, bounce_number: int, remaini
 	_play_audio(&"ricochet")
 	var strength := 0.64 if bounce_number == 1 else 0.52
 	_spawn_impact_effect(world_position, ImpactEffect.Kind.DUST, strength)
+	if _roadblock_v2_active():
+		roadblock_diorama_near.register_impact(world_position, strength)
 	_show_feedback("RICOCHET %d/2" % bounce_number)
 	if remaining_bounces > 0:
 		hint_label.text = "First rebound — one road bounce remains"
@@ -1079,6 +1127,10 @@ func _on_projectile_resolved(
 	weapon: WeaponDefinition
 ) -> void:
 	phase = Phase.IMPACT_RESOLUTION
+	if _roadblock_v2_active():
+		camera_director.set_zoom_level(1.08, 0.24)
+		if hit_body != null:
+			roadblock_diorama_near.register_impact(impact_position, 1.0)
 	camera_director.stop_follow_at(impact_position, 0.10)
 
 	if _active_shooter == player:
