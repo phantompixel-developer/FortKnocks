@@ -195,8 +195,8 @@ func _draw_fighting_positions() -> void:
 	)
 	draw_line(Vector2(0.0, CONTACT_LINE + 39.0), Vector2(WORLD_WIDTH, CONTACT_LINE + 39.0), Color("b28362", 0.15), 4.0)
 
-	for site in [player_cover.global_position, enemy_cover.global_position]:
-		_draw_position_foundation(site, roadside, gravel, rim)
+	_draw_position_foundation(player_cover.global_position, player_cover.get_battle_art_half_width(), roadside, gravel, rim)
+	_draw_position_foundation(enemy_cover.global_position, enemy_cover.get_battle_art_half_width(), roadside, gravel, rim)
 
 	# The real central StaticBody2D sits exactly on this torn-out foundation.
 	# The visible kerb and rebar fragments point toward the collidable blocker.
@@ -221,7 +221,7 @@ func _draw_fighting_positions() -> void:
 	draw_line(Vector2(center - 130.0, CONTACT_LINE + 15.0), Vector2(center + 124.0, CONTACT_LINE + 17.0), Color("af8062", 0.29), 4.0)
 
 
-func _draw_position_foundation(site: Vector2, asphalt: Color, gravel: Color, rim: Color) -> void:
+func _draw_position_foundation(site: Vector2, half_width: float, asphalt: Color, gravel: Color, rim: Color) -> void:
 	# These irregular concrete/asphalt aprons are painted onto the same road
 	# collision plane used by boots, tyres and bouncing ammunition.
 	var x := site.x
@@ -237,10 +237,10 @@ func _draw_position_foundation(site: Vector2, asphalt: Color, gravel: Color, rim
 			Vector2(x + 257.0, y + 100.0),
 			Vector2(x - 252.0, y + 97.0),
 		]),
-		Color(asphalt, 0.52)
+		Color(asphalt.r, asphalt.g, asphalt.b, 0.52)
 	)
 	for direction in [-1.0, 1.0]:
-		var wheel_x := x + direction * 94.0
+		var wheel_x := x + direction * (half_width * 0.62)
 		draw_line(Vector2(wheel_x - 27.0, y + 12.0), Vector2(wheel_x + 30.0, y + 90.0), Color("111e21", 0.25), 19.0)
 		draw_line(Vector2(wheel_x - 12.0, y + 16.0), Vector2(wheel_x + 15.0, y + 82.0), Color("a77f61", 0.17), 4.0)
 		draw_line(Vector2(x + direction * 197.0, y + 7.0), Vector2(x + direction * 241.0, y + 57.0), rim, 5.0)
