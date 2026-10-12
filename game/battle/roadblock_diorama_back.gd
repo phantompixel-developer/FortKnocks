@@ -168,10 +168,10 @@ func _draw_world_road() -> void:
 
 
 
-# The player and rival positions now share the exact same ground contact line
-# as the existing physics Ground rectangle (top y = 1035). All materials here
-# are below firing height. These foundations are part of the road, not floating
-# platforms or hidden projectile blockers.
+# Central asphalt contacts the existing Ground body at y=1035. The two
+# raised shoulder bodies have their own collidable tops at y=1010 and the
+# combatants/vehicles are placed at those same levels. No fake collision is
+# introduced by the drawn asphalt, gravel and fractured edges.
 func _draw_fighting_positions() -> void:
 	var roadside := Color("262e30")
 	var gravel := Color("7c7463", 0.40)
@@ -225,7 +225,8 @@ func _draw_position_foundation(site: Vector2, asphalt: Color, gravel: Color, rim
 	# These irregular concrete/asphalt aprons are painted onto the same road
 	# collision plane used by boots, tyres and bouncing ammunition.
 	var x := site.x
-	var y := CONTACT_LINE
+	# Vehicle origin is 40 units above its wheel contact plane.
+	var y := site.y + 40.0
 	draw_colored_polygon(
 		PackedVector2Array([
 			Vector2(x - 240.0, y + 13.0),
