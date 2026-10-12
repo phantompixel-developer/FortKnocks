@@ -506,12 +506,17 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	player_cover.global_position = Vector2(752.0, 1000.0) if roadblock_v2 else definition.player_cover_position
 	if _player_platform != null:
 		player_cover.configure_platform(_player_platform, _player_module)
+	if roadblock_v2:
+		# Crew stands at the illustrated edge for every Garage vehicle tier.
+		player.global_position.x = player_cover.global_position.x - player_cover.get_battle_art_half_width() - 12.0
 	var preview_steps := 9
 	if _player_module != null:
 		preview_steps += _player_module.trajectory_preview_steps_bonus
 	aim_guide.set_preview_steps(preview_steps)
-	enemy.global_position = Vector2(1606.0, 1040.0) if roadblock_v2 else definition.enemy_position
+	enemy.global_position = definition.enemy_position
 	enemy_cover.global_position = Vector2(1368.0, 1000.0) if roadblock_v2 else definition.enemy_cover_position
+	if roadblock_v2:
+		enemy.global_position = Vector2(enemy_cover.global_position.x + enemy_cover.get_battle_art_half_width() + 12.0, 1040.0)
 
 	roadblock.global_position = Vector2(1060.0, 958.0) if roadblock_v2 else definition.roadblock_position
 	roadblock.visible = definition.roadblock_enabled
@@ -1156,6 +1161,11 @@ func _on_projectile_resolved(
 	elif hit_body is DestructibleCover:
 		_play_audio(&"hit_metal")
 		var cover := hit_body as DestructibleCover
+		if _roadblock_v2_active():
+			if cover == player_cover:
+				player.play_cover_brace(direction)
+			elif cover == enemy_cover:
+				enemy.play_cover_brace(direction)
 		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
 		_spawn_damage_popup(impact_position + Vector2(0.0, -70.0), "-%d COVER" % damage_amount, Color("e4bd78"))
 		if cover.is_destroyed:
