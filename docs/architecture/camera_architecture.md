@@ -43,3 +43,18 @@ Camera tests should include:
 - environment misses,
 - interrupted inspection,
 - unusual phone aspect ratios.
+
+
+## Roadblock Trial V2 camera pilot (October 2026)
+
+The Roadblock Trial V2 branch introduces `CameraDirector.set_zoom_level()` as
+an interruptible presentation tween owned by the camera, with a common x/y
+zoom to preserve 2D art proportions. The first mission reveal now sweeps the
+continuous world-space roadside positions through the central choke to the
+rival instead of pretending both fighters can be made legible at once in a
+portrait wide shot. Subsequent aim/inspect/enemy turns retain conventional
+close framing; projectiles still own follow and impact movement.
+
+This is an opt-in Roadblock-only composition pilot, not a global camera
+retune. All nonpilot encounters stay at the existing 1.35 reference zoom.
+See `docs/design/roadblock_battlefield_v2.md` for local Play criteria.
