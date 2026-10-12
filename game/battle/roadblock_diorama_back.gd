@@ -64,7 +64,7 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	# Empty-space safety at the bottom of taller-than-design phone viewports.
-	draw_rect(Rect2(-500.0, 0.0, 3200.0, WORLD_HEIGHT + 220.0), Color("24292c"))
+	draw_rect(Rect2(-500.0, 0.0, 3200.0, WORLD_HEIGHT + 400.0), Color("24292c"))
 	_draw_distant_panorama()
 	_draw_roadside_architecture()
 	_draw_world_road()
