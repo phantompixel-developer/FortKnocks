@@ -438,3 +438,21 @@ Separation rules:
 - the previous SVG/procedural visuals remain runtime fallbacks,
 - mission `.tres` resources, camera rules, world size, positions, objectives,
   weapons, projectile physics/bounces, AI, damage and turn logic are unchanged.
+
+
+## Battlefield V2 rival-vehicle correction — 2026-10-12
+
+The legacy `rival_cover_vehicle.svg` is no longer the active enemy-cover render.
+`MissionDefinition.enemy_vehicle_id` now selects one of the approved production
+showroom families without changing cover stats or behavior:
+
+- Run-down Compact — High Ground,
+- Old Sedan / Estate — Roadblock, Broken Span and Dead Air,
+- Pickup — Scrap Gate, Depot Line and Crossroads,
+- Improvised Technical — Outskirts Checkpoint, Loaded Up and Hot Cargo.
+
+Enemy presentation mirrors the source toward the opposing firing direction,
+uses a muted olive grade and a broken-ring stencil rather than Fort Knocks'
+two-slash identifier, and is fitted closer to the existing collision footprint.
+This is a data-driven visual mapping only: player equipment never determines the
+enemy vehicle, and enemy cover durability/damage stages remain unchanged.

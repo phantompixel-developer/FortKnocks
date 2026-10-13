@@ -40,6 +40,7 @@ extends Resource
 
 @export_group("Enemy tactics")
 @export_enum("balanced", "breacher", "displacer", "raider") var enemy_tactic: String = "balanced"
+@export_enum("run_down_compact", "old_sedan", "pickup", "improvised_technical") var enemy_vehicle_id: String = "old_sedan"
 
 @export_group("Greybox geometry")
 @export var platform_rects: Array[Rect2] = []

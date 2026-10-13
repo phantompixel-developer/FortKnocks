@@ -25,5 +25,6 @@ power_cell_enabled = true
 power_cell_position = Vector2(1510, 828)
 collapsible_barrier_enabled = true
 collapsible_barrier_position = Vector2(1320, 900)
+enemy_vehicle_id = "improvised_technical"
 platform_rects = Array[Rect2]([Rect2(1510, 840, 520, 195)])
 visual_variant = 1

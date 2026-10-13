@@ -240,7 +240,7 @@ func _draw_position_foundation(site: Vector2, half_width: float, asphalt: Color,
 		Color(asphalt.r, asphalt.g, asphalt.b, 0.52)
 	)
 	for direction in [-1.0, 1.0]:
-		var wheel_x := x + direction * (half_width * 0.62)
+		var wheel_x: float = x + float(direction) * (half_width * 0.62)
 		draw_line(Vector2(wheel_x - 27.0, y + 12.0), Vector2(wheel_x + 30.0, y + 90.0), Color("111e21", 0.25), 19.0)
 		draw_line(Vector2(wheel_x - 12.0, y + 16.0), Vector2(wheel_x + 15.0, y + 82.0), Color("a77f61", 0.17), 4.0)
 		draw_line(Vector2(x + direction * 197.0, y + 7.0), Vector2(x + direction * 241.0, y + 57.0), rim, 5.0)

@@ -28,5 +28,6 @@ signal_relay_enabled = true
 signal_relay_position = Vector2(1450, 850)
 signal_relay_health = 120
 enemy_tactic = "breacher"
+enemy_vehicle_id = "old_sedan"
 platform_rects = Array[Rect2]([Rect2(1320, 850, 300, 180)])
 visual_variant = 3

@@ -3,6 +3,8 @@ extends Node2D
 
 @export var world_left := 0.0
 @export var world_right := 2160.0
+@export var world_top := 0.0
+@export var world_bottom := 1280.0
 @export var fixed_y := 850.0
 @export var follow_response := 8.0
 
@@ -14,7 +16,7 @@ var _impulse_tween: Tween
 var _zoom_tween: Tween
 
 func _ready() -> void:
-	global_position = Vector2(_visible_half_width(), fixed_y)
+	global_position = Vector2(_visible_half_width(), _clamp_center_y(fixed_y))
 	camera.enabled = true
 
 # Keep the camera zoom tied to the authored battle framing, not to combat rules.
@@ -34,7 +36,7 @@ func set_zoom_level(level: float, duration: float = 0.35) -> void:
 
 
 func focus_x(world_x: float, duration := 0.45) -> void:
-	_focus(Vector2(world_x, global_position.y), duration)
+	_focus(Vector2(world_x, _clamp_center_y(global_position.y)), duration)
 
 func focus_subject(world_position: Vector2, duration := 0.45) -> void:
 	_focus(Vector2(world_position.x, _subject_center_y(world_position.y)), duration)
@@ -96,5 +98,15 @@ func _visible_half_width() -> float:
 	return get_viewport_rect().size.x / (2.0 * camera.zoom.x)
 
 func _subject_center_y(world_y: float) -> float:
+	return _clamp_center_y(world_y - 190.0)
+
+func _clamp_center_y(value: float) -> float:
 	var half_height := get_viewport_rect().size.y / (2.0 * camera.zoom.y)
-	return clampf(world_y - 190.0, half_height, fixed_y)
+	var minimum := world_top + half_height
+	var maximum := minf(fixed_y, world_bottom - half_height)
+	# At zoom levels below 1.0 the portrait viewport is taller than the authored
+	# world. Align its top edge instead of retaining the old low camera centre,
+	# which exposed a large empty strip beneath the battlefield.
+	if minimum > maximum:
+		return minimum
+	return clampf(value, minimum, maximum)

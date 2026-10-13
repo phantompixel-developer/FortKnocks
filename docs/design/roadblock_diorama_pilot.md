@@ -57,3 +57,23 @@ Godot is not available via the repository connector; no Play-mode claim is made.
 - **Fail:** no material improvement in in-world placement, clashes between SVG and painterly art dominate, contact masks hide gameplay, or camera motion exposes seams. Retain Batch 4 as fallback; iterate the Roadblock-only pilot or revisit the art direction **before** building Highways.
 
 Do not merge this experimental branch or start Highways merely because the files import cleanly.
+
+## Battlefield V2 correction follow-up — 2026-10-12
+
+The later correction branch deliberately changes three contracts that the
+original visual-only pilot held fixed:
+
+- the obsolete 48×118 proof-era character rectangle is replaced by separate
+  authored head, torso/arms and leg shapes for each current production PNG;
+- Roadblock camera states are widened to `0.98` for mission establishment and
+  `0.94` for reveal, focus, projectile flight and impact, with camera Y bounded
+  against the authored 1280-unit world;
+- rival cover now uses mission-selected assets from the approved production
+  vehicle family, with a restrained olive grade and broken-ring rival marking.
+
+These corrections do not change weapon damage, trajectory, mission positions,
+cover durability, bounce counts or objective behavior. Automated CCD tests cover
+head, torso, limb-edge, empty-space near misses and cover interception in both
+directions; the mission smoke test covers Roadblock low/high paths, shoulder
+rebound, cover destruction and a player-to-enemy turn handoff, plus High Ground
+and Dead Air configuration.

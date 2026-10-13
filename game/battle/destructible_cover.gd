@@ -6,7 +6,7 @@ const COMPACT_TEXTURE_PATH := "res://assets/art/production/vehicles/run_down_com
 const SEDAN_TEXTURE_PATH := "res://assets/art/production/vehicles/old_sedan_showroom.png"
 const PICKUP_TEXTURE_PATH := "res://assets/art/production/vehicles/pickup_showroom.png"
 const TECHNICAL_TEXTURE_PATH := "res://assets/art/production/vehicles/improvised_technical_showroom.png"
-const RIVAL_COVER_TEXTURE_PATH := "res://assets/art/production/vehicles/rival_cover_vehicle.svg"
+const ENEMY_VEHICLE_IDS := ["run_down_compact", "old_sedan", "pickup", "improvised_technical"]
 
 var _vehicle_textures: Dictionary = {}
 
@@ -23,6 +23,7 @@ var _reaction_tween: Tween
 var _body_size := Vector2(240.0, 95.0)
 var _visual_profile := 0
 var _module_id := ""
+var _enemy_vehicle_id := "old_sedan"
 var shadow_direction := -1
 
 func _ready() -> void:
@@ -60,6 +61,10 @@ func configure_platform(
 	health_changed.emit(health, max_health)
 	queue_redraw()
 
+func configure_enemy_vehicle(vehicle_id: String) -> void:
+	_enemy_vehicle_id = vehicle_id if vehicle_id in ENEMY_VEHICLE_IDS else "old_sedan"
+	queue_redraw()
+
 func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 	if is_destroyed:
 		return
@@ -80,7 +85,8 @@ func apply_hit(damage: int, impulse: Vector2, _hit_position: Vector2) -> void:
 # Same authored sprite footprint used by _draw_production_platform().
 # The pilot positions the survivor beside any equipped vehicle tier.
 func get_battle_art_half_width() -> float:
-	return (_body_size.x + 46.0) * 1.65 * 0.5
+	var art_scale := 1.65 if facing > 0 else 1.16
+	return (_body_size.x + 46.0) * art_scale * 0.5
 
 
 func get_damage_stage() -> int:
@@ -124,8 +130,8 @@ func _draw() -> void:
 		_draw_rubble()
 		return
 
-	# Fort Knocks player platforms use the authored production vehicle family.
-	# Enemy cover deliberately keeps faction-neutral procedural presentation.
+	# Both factions use the approved production vehicle family. Rival vehicles
+	# receive their own restrained colour grade and marking below.
 	if facing > 0 and _draw_production_platform(stage):
 		return
 	if facing < 0 and _draw_production_rival_cover(stage):
@@ -205,28 +211,27 @@ func _draw_contact_shadow(stage: int) -> void:
 
 
 func _draw_production_rival_cover(stage: int) -> bool:
-	if not _vehicle_textures.has("rival_cover"):
-		_vehicle_textures["rival_cover"] = ProductionArtScript.texture_from_svg(RIVAL_COVER_TEXTURE_PATH)
-
-	var texture := _vehicle_textures["rival_cover"] as Texture2D
+	var texture := _texture_for_platform(_enemy_vehicle_id)
 	if texture == null:
 		return false
 
 	var base_width := _body_size.x + 46.0
-	var target_width := base_width * 1.65
-	var target_height := target_width * (250.0 / 520.0)
+	var target_width := base_width * 1.16
+	var aspect := 0.50 if _enemy_vehicle_id == "run_down_compact" else 0.47
+	var target_height := target_width * aspect
 	var target := Rect2(
 		-target_width * 0.5,
-		base_width * (250.0 / 520.0) * 0.28 - target_height,
+		base_width * aspect * 0.28 - target_height,
 		target_width,
 		target_height
 	)
-	var tint := Color.WHITE.darkened(float(stage) * 0.10)
+	var tint := Color("d0d8c5").darkened(float(stage) * 0.09)
 
 	_draw_cast_shadow(texture, target)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2(-1.0, 1.0))
 	draw_texture_rect(texture, target, false, tint)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	_draw_rival_faction_mark(target)
 
 	if stage >= 1:
 		draw_line(Vector2(-78, -42), Vector2(-42, -8), Color("202729"), 7.0)
@@ -245,6 +250,15 @@ func _draw_production_rival_cover(stage: int) -> bool:
 		draw_line(Vector2(66, -56), Vector2(96, -18), Color("090d11"), 8.0)
 		draw_line(Vector2(-104, -36), Vector2(-78, 4), Color("090d11"), 7.0)
 	return true
+
+func _draw_rival_faction_mark(target: Rect2) -> void:
+	# A muted olive plate and broken-ring stencil separate the rival vehicle
+	# without repainting the approved source art or borrowing Fort Knocks marks.
+	var anchor := target.position + Vector2(target.size.x * 0.56, target.size.y * 0.64)
+	draw_rect(Rect2(anchor - Vector2(34.0, 12.0), Vector2(68.0, 24.0)), Color("39463f", 0.82))
+	draw_arc(anchor, 8.0, 0.30, TAU - 0.55, 16, Color("a96545"), 3.0, true)
+	draw_line(anchor + Vector2(-15.0, 0.0), anchor + Vector2(-7.0, 0.0), Color("c6b58c"), 3.0)
+	draw_line(anchor + Vector2(7.0, 0.0), anchor + Vector2(15.0, 0.0), Color("c6b58c"), 3.0)
 
 func _draw_production_platform(stage: int) -> bool:
 	var platform_id := _platform_id_from_visual_profile()

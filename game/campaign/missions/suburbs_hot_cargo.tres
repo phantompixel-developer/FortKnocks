@@ -30,5 +30,6 @@ salvage_load_enabled = true
 salvage_load_position = Vector2(790, 1000)
 salvage_load_health = 170
 enemy_tactic = "raider"
+enemy_vehicle_id = "improvised_technical"
 platform_rects = Array[Rect2]([Rect2(1490, 840, 500, 195)])
 visual_variant = 3

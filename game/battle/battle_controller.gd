@@ -20,6 +20,12 @@ enum Phase {
 
 const ProjectileScene := preload("res://game/battle/projectile.tscn")
 const ImpactEffectScript := preload("res://game/battle/impact_effect.gd")
+
+const ROADBLOCK_V2_BRIEF_ZOOM := 0.98
+const ROADBLOCK_V2_REVEAL_ZOOM := 0.94
+const ROADBLOCK_V2_FOCUS_ZOOM := 0.94
+const ROADBLOCK_V2_FLIGHT_ZOOM := 0.94
+const ROADBLOCK_V2_IMPACT_ZOOM := 0.94
 const DamagePopupScript := preload("res://game/battle/damage_popup.gd")
 const ScrapBolt := preload("res://game/weapons/scrap_bolt.tres")
 const HeavySlug := preload("res://game/weapons/heavy_slug.tres")
@@ -515,6 +521,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	aim_guide.set_preview_steps(preview_steps)
 	enemy.global_position = definition.enemy_position
 	enemy_cover.global_position = Vector2(1410.0, 970.0) if roadblock_v2 else definition.enemy_cover_position
+	enemy_cover.configure_enemy_vehicle(definition.enemy_vehicle_id)
 	if roadblock_v2:
 		enemy.global_position = Vector2(enemy_cover.global_position.x + enemy_cover.get_battle_art_half_width() + 50.0, 1010.0)
 
@@ -601,7 +608,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	roadblock_diorama_near.visible = use_roadblock_diorama
 	if use_roadblock_diorama:
 		# During the mission briefing, establish the central physical obstruction.
-		camera_director.set_zoom_level(1.04, 0.0)
+		camera_director.set_zoom_level(ROADBLOCK_V2_BRIEF_ZOOM, 0.0)
 		camera_director.focus_x(1060.0, 0.0)
 	_apply_scene_lighting(definition.visual_variant)
 
@@ -624,7 +631,7 @@ func _apply_scene_lighting(visual_variant: int) -> void:
 func _focus_player(duration: float) -> void:
 	# Battle-specific staging preserves the usual high-detail shooter close-up.
 	if _roadblock_v2_active():
-		camera_director.set_zoom_level(1.08, duration)
+		camera_director.set_zoom_level(ROADBLOCK_V2_FOCUS_ZOOM, duration)
 	camera_director.focus_subject(
 		Vector2(lerpf(player.global_position.x, player_cover.global_position.x, 0.45), player.global_position.y),
 		duration
@@ -632,7 +639,7 @@ func _focus_player(duration: float) -> void:
 
 func _focus_enemy(duration: float) -> void:
 	if _roadblock_v2_active():
-		camera_director.set_zoom_level(1.08, duration)
+		camera_director.set_zoom_level(ROADBLOCK_V2_FOCUS_ZOOM, duration)
 	camera_director.focus_subject(
 		Vector2(lerpf(enemy.global_position.x, enemy_cover.global_position.x, 0.45), enemy.global_position.y),
 		duration
@@ -828,7 +835,7 @@ func _start_player_turn(show_enemy_preview: bool) -> void:
 		# In portrait the two crews cannot share a readable close-up. A single
 		# uninterrupted physical-road traversal establishes their relationship.
 		# Do not shrink the whole arena into a tiny letterboxed overview.
-		camera_director.set_zoom_level(0.94, 0.3)
+		camera_director.set_zoom_level(ROADBLOCK_V2_REVEAL_ZOOM, 0.3)
 		hint_label.text = "Your roadside fighting position"
 		camera_director.focus_x(player_cover.global_position.x, 0.28)
 		await get_tree().create_timer(0.33).timeout
@@ -1110,7 +1117,7 @@ func _fire_projectile(shooter: Combatant, launch_velocity: Vector2, weapon: Weap
 	aim_guide.clear()
 	if _roadblock_v2_active():
 		# More road context during flight; real muzzle dust reacts to the shooter.
-		camera_director.set_zoom_level(0.96, 0.22)
+		camera_director.set_zoom_level(ROADBLOCK_V2_FLIGHT_ZOOM, 0.22)
 		roadblock_diorama_near.register_shot(shooter.global_position)
 	hint_label.text = "%s away" % weapon.display_name
 	_play_audio(_fire_cue(weapon))
@@ -1148,7 +1155,7 @@ func _on_projectile_resolved(
 ) -> void:
 	phase = Phase.IMPACT_RESOLUTION
 	if _roadblock_v2_active():
-		camera_director.set_zoom_level(1.08, 0.24)
+		camera_director.set_zoom_level(ROADBLOCK_V2_IMPACT_ZOOM, 0.24)
 		if hit_body != null:
 			roadblock_diorama_near.register_impact(impact_position, 1.0)
 	camera_director.stop_follow_at(impact_position, 0.10)

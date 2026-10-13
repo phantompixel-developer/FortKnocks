@@ -29,7 +29,16 @@ An overview state may be added only if encounters require it.
 ## World bounds
 The camera must respect authored battlefield bounds but may use controlled overscan/lead framing for projectiles.
 
-The current battle presentation uses `Camera2D.zoom = (1.35, 1.35)` and a road-level vertical center of 850 world units. Subject focus moves the vertical center upward for raised encounters and projectile travel while keeping the scene within its vertical framing range. Horizontal clamping derives from the live viewport width and zoom so portrait safe framing still reaches both world edges. Shooter and enemy focus points lean toward their nearby cover to keep the enlarged combat objects readable together.
+The nonpilot battle presentation uses `Camera2D.zoom = (1.35, 1.35)` and a
+road-level maximum vertical center of 850 world units. Subject focus moves the
+vertical center upward for raised encounters and projectile travel. Vertical
+clamping now also derives from the authored `0..1280` world bounds; when a zoom
+below `1.0` makes the portrait viewport taller than the world, the camera aligns
+to the world top instead of retaining a low center that exposes a large empty
+strip below the battlefield. Horizontal clamping derives from the live viewport
+width and zoom so portrait safe framing still reaches both world edges. Shooter
+and enemy focus points lean toward their nearby cover to keep the enlarged
+combat objects readable together.
 
 ## Testing
 Camera tests should include:
@@ -58,3 +67,16 @@ close framing; projectiles still own follow and impact movement.
 This is an opt-in Roadblock-only composition pilot, not a global camera
 retune. All nonpilot encounters stay at the existing 1.35 reference zoom.
 See `docs/design/roadblock_battlefield_v2.md` for local Play criteria.
+
+The Battlefield V2 correction pass widens only the Roadblock pilot states:
+
+- mission-brief establishment: `0.98`,
+- first battlefield reveal/traversal: `0.94`,
+- player/enemy aim and inspection focus: `0.94`,
+- projectile follow: `0.94`,
+- impact framing: `0.94`.
+
+The separate constants remain in `battle_controller.gd`; this is not a single
+global zoom override. The slightly tighter `0.98` briefing preserves the central
+choke hierarchy, while the shared `0.94` gameplay framing improves environmental
+awareness and avoids visible zoom pumping between aim, flight and impact.

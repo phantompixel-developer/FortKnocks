@@ -226,5 +226,14 @@ Future objective modes such as survive-turn-count or boss/module objectives shou
 ## Physics policy
 Use deterministic-enough, controlled 2D physics and clamp extreme outcomes. Spectacle must not compromise readability. Only objects designed to react should participate in costly dynamic simulation.
 
+Production survivor collision follows the vulnerable opaque silhouette rather
+than the transparent texture rectangle or the earlier proof-era body box. Each
+current battle survivor uses authored head, torso/arms and separate leg shapes;
+the player and rival profiles are intentionally different because their PNG
+compositions are asymmetric. Weapons and held launchers are not broad damage
+targets. Projectile CCD remains enabled, source-body collision exceptions remain
+in place, and cover continues to resolve before a protected survivor when it is
+physically between the projectile and crew shapes.
+
 ## Prototype scope
 The current three projectile types and one interactive hazard exist to prove tactical variety. Do not expand into a large inventory until these options produce meaningfully different player choices.

@@ -24,5 +24,6 @@ roadblock_position = Vector2(1110, 958)
 power_cell_enabled = true
 power_cell_position = Vector2(1460, 1008)
 collapsible_barrier_enabled = false
+enemy_vehicle_id = "old_sedan"
 platform_rects = Array[Rect2]([Rect2(1450, 900, 520, 135), Rect2(860, 980, 300, 55)])
 visual_variant = 1
