@@ -70,6 +70,8 @@ func _draw() -> void:
 			_:
 				_draw_city_backdrop()
 		_draw_road()
+		if _mission_id == "roadblock_trial":
+			_draw_roadblock_ground_contact()
 		_draw_foreground_dressing()
 		return
 
@@ -84,6 +86,8 @@ func _draw() -> void:
 			pass
 
 	_draw_production_outskirts_road()
+	if _mission_id == "roadblock_trial":
+		_draw_roadblock_ground_contact()
 	_draw_production_outskirts_foreground()
 
 func _ensure_production_textures() -> void:
@@ -332,3 +336,29 @@ func _draw_foreground_dressing() -> void:
 	# Small warm accents prevent the foreground from reading as a flat black bar.
 	for x in range(150, 2100, 520):
 		draw_circle(Vector2(x, 1218), 7.0, Color("c66f3c", 0.48))
+
+
+func _draw_roadblock_ground_contact() -> void:
+	# Roadblock Trial V2 — world-anchored wear tied to actual obstacle position
+	# (1080, 958), with the road collision plane at y=1035.
+	# These are ground markings, NEVER additional invisible obstacles.
+	# The obstacle itself draws its own contact shadow and damage states.
+	var road_dark := Color("1b2425", 0.50)
+	var road_wear := Color("978471", 0.28)
+	var earth := Color("a17a58", 0.23)
+	draw_colored_polygon(PackedVector2Array([
+		Vector2(932, 1038), Vector2(1010, 1044), Vector2(1115, 1040),
+		Vector2(1227, 1051), Vector2(1250, 1086), Vector2(926, 1082)
+	]), Color("171d1e", 0.16))
+	# Tyre marks converge towards the physical barrier rather than floating
+	# as a texture detached from the battle geometry.
+	draw_line(Vector2(715, 1064), Vector2(944, 1052), road_dark, 7.0, true)
+	draw_line(Vector2(740, 1092), Vector2(960, 1076), road_dark, 6.0, true)
+	draw_line(Vector2(1170, 1057), Vector2(1400, 1069), road_dark, 5.0, true)
+	# Fracture lines and grime at the barrier foot stay below the aiming lane.
+	draw_line(Vector2(995, 1039), Vector2(966, 1063), road_wear, 4.0, true)
+	draw_line(Vector2(966, 1063), Vector2(932, 1070), road_wear, 3.0, true)
+	draw_line(Vector2(1164, 1040), Vector2(1195, 1060), road_wear, 4.0, true)
+	draw_line(Vector2(1195, 1060), Vector2(1245, 1052), road_wear, 3.0, true)
+	for x in [971.0, 1020.0, 1152.0, 1214.0]:
+		draw_circle(Vector2(x, 1084.0 + fmod(x, 3.0) * 6.0), 9.0, earth)

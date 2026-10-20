@@ -29,6 +29,9 @@ Start as a vulnerable scavenger with improvised protection and become the leader
 11. Push further into contested territory.
 
 ## Core pillars
+
+**Combat V2 priority (confirmed 2026-10-20):** tactical artillery **and** authored environmental destruction, inside the established Salvage/survival campaign. The desired repeated experience is **judge a shot → change the battlefield → exploit the opening → secure the objective → bring Salvage home**. Neither backdrop polish alone nor uncontrolled physics spectacle satisfies this priority. The first playable verification is Roadblock Trial; see `roadblock_trial_v2_playtest.md`.
+
 - **Precision** — shots reward judgement of angle, power, distance, and later environmental forces.
 - **Physics** — impacts create readable trajectories, knockback, bounce, debris, and displacement.
 - **Destruction** — cover is part of the problem, not scenery.

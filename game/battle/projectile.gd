@@ -92,6 +92,9 @@ func _can_ground_bounce() -> bool:
 func _damage_for_body(body: Node) -> int:
 	if weapon == null:
 		return 50
+	if body is CentralRoadblock:
+		var obstacle: CentralRoadblock = body as CentralRoadblock
+		return weapon.cover_damage if obstacle.breakable and not obstacle.is_breached else 0
 	if body is DestructibleCover or body is CollapsibleBarrier or body is SignalRelay or body is SalvageLoad:
 		return weapon.cover_damage
 	return weapon.direct_damage

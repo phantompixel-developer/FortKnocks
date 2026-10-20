@@ -126,6 +126,12 @@ The greybox encounter now includes a tall central concrete roadblock. It exists 
 
 This is intentionally authored geometry, not procedural terrain.
 
+### Combat V2 — Roadblock Trial breakable obstacle
+
+On the Combat V2 implementation branch, **only Roadblock Trial** opts into `roadblock_breakable`. Its concrete obstacle takes cover-damage values and transitions from a tall intact blocking collider to a **low, still-solid rubble collider** when breached. Cracks and low-rubble art use the same gameplay-world anchor. This allows a deliberate breaching shot to change later trajectory choices; it does not freely deform terrain. Every other mission retains the original solid roadblock by default.
+
+The exact Play-mode acceptance and world-coordinate layout are in `roadblock_trial_v2_playtest.md`. This work is not considered accepted until the Godot playtest passes.
+
 ## Environmental interaction
 The current greybox arena contains one unstable salvaged power cell near the enemy position. Direct impact or a nearby Shock Capsule pulse can discharge it.
 

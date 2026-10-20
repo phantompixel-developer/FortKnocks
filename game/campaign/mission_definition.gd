@@ -26,6 +26,8 @@ extends Resource
 
 @export_group("Authored encounter features")
 @export var roadblock_enabled := true
+# Opt-in only: existing encounters keep the original solid obstacle behavior.
+@export var roadblock_breakable := false
 @export var roadblock_position := Vector2(1080.0, 958.0)
 @export var power_cell_enabled := true
 @export var power_cell_position := Vector2(1715.0, 1028.0)
