@@ -357,6 +357,7 @@ func _ready() -> void:
 	player_cover.health_changed.connect(_on_health_changed)
 	enemy_cover.health_changed.connect(_on_health_changed)
 	power_cell.discharged.connect(_on_power_cell_discharged)
+	roadblock.breached.connect(_on_roadblock_breached)
 	inspect_button.pressed.connect(_inspect_enemy)
 	mission_deploy_button.pressed.connect(_deploy_from_brief)
 	scrap_bolt_button.pressed.connect(func() -> void: _select_weapon(_player_weapon("scrap_bolt")))
@@ -499,12 +500,7 @@ func _configure_mission(definition: MissionDefinition) -> void:
 	enemy_cover.global_position = definition.enemy_cover_position
 
 	roadblock.global_position = definition.roadblock_position
-	roadblock.visible = definition.roadblock_enabled
-	roadblock.collision_layer = 1 if definition.roadblock_enabled else 0
-	roadblock.collision_mask = 1 if definition.roadblock_enabled else 0
-	var roadblock_shape := roadblock.get_node_or_null("CollisionShape2D") as CollisionShape2D
-	if roadblock_shape != null:
-		roadblock_shape.disabled = not definition.roadblock_enabled
+	roadblock.configure_for_mission(definition.roadblock_enabled, definition.roadblock_breakable)
 
 	power_cell.global_position = definition.power_cell_position
 	power_cell.visible = definition.power_cell_enabled
@@ -1107,6 +1103,23 @@ func _on_projectile_resolved(
 			_show_feedback("SALVAGE HIT")
 			hint_label.text = salvage.status_text()
 			camera_director.impact_impulse(0.72, direction)
+	elif hit_body is CentralRoadblock:
+		var blocker: CentralRoadblock = hit_body as CentralRoadblock
+		_spawn_impact_effect(impact_position, ImpactEffect.Kind.COVER, impact_strength)
+		_play_audio(&"hit_metal")
+		if blocker.breakable and not blocker.is_breached:
+			_spawn_damage_popup(impact_position + Vector2(0.0, -70.0), "-%d BLOCKER" % damage_amount, Color("e4bd78"))
+			_show_feedback("ROADBLOCK CRACKED")
+			hint_label.text = blocker.status_text()
+			camera_director.impact_impulse(0.72, direction)
+		elif blocker.is_breached and damage_amount > 0:
+			_show_feedback("ROADBLOCK BREACHED")
+			hint_label.text = "Low rubble remains — a new firing line is open"
+			camera_director.impact_impulse(1.0, direction)
+		else:
+			_show_feedback("ROADBLOCK IMPACT")
+			hint_label.text = "Concrete blocks the shot"
+			camera_director.impact_impulse(0.55, direction)
 	elif hit_body is UnstablePowerCell:
 		_show_feedback("POWER CELL HIT")
 		hint_label.text = "The unstable cell discharged"
@@ -1170,7 +1183,7 @@ func _shot_result_name(hit_body: Node) -> String:
 	if hit_body is SalvageLoad:
 		return "SALVAGE"
 	if hit_body is CentralRoadblock:
-		return "ROADBLOCK"
+		return "BREACH" if (hit_body as CentralRoadblock).is_breached else "ROADBLOCK"
 	if hit_body.is_in_group("ground_surface"):
 		return "GROUND"
 	return "IMPACT"
@@ -1196,6 +1209,8 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 		candidates.append(power_cell)
 	if _collapsible_barrier != null and is_instance_valid(_collapsible_barrier) and not _collapsible_barrier.is_collapsed:
 		candidates.append(_collapsible_barrier)
+	if roadblock.breakable and not roadblock.is_breached:
+		candidates.append(roadblock)
 	if _signal_relay != null and is_instance_valid(_signal_relay) and not _signal_relay.is_destroyed:
 		candidates.append(_signal_relay)
 	if _salvage_load != null and is_instance_valid(_salvage_load) and not _salvage_load.is_destroyed:
@@ -1226,10 +1241,21 @@ func _apply_weapon_pulse(impact_position: Vector2, weapon: WeaponDefinition, dir
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -95.0), "-%d PULSE" % pulse_damage, Color("9dc8d4"))
 		elif target is CollapsibleBarrier:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -110.0), "-%d GATE" % pulse_damage, Color("9dc8d4"))
+		elif target is CentralRoadblock:
+			_spawn_damage_popup(target.global_position + Vector2(0.0, -95.0), "-%d BLOCKER" % pulse_damage, Color("9dc8d4"))
 		elif target is SignalRelay:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -125.0), "-%d RELAY" % pulse_damage, Color("8fcfd0"))
 		elif target is SalvageLoad:
 			_spawn_damage_popup(target.global_position + Vector2(0.0, -105.0), "-%d SALVAGE" % pulse_damage, Color("e4bd78"))
+
+func _on_roadblock_breached(world_position: Vector2) -> void:
+	if _active_shooter == player:
+		_player_environment_events += 1
+	_spawn_impact_effect(world_position + Vector2(0.0, -40.0), ImpactEffect.Kind.COVER, 1.35)
+	_play_audio(&"hit_metal")
+	# The following projectile impact still owns the camera's settling phase.
+	_show_feedback("ROADBLOCK BREACHED")
+
 
 func _on_collapsible_barrier_collapsed(world_position: Vector2) -> void:
 	if _active_shooter == player:
@@ -1694,11 +1720,16 @@ func _update_target_card() -> void:
 	elif _signal_relay != null and is_instance_valid(_signal_relay):
 		target_hazard_label.text = "ENVIRONMENT • %s" % _signal_relay.status_text()
 	elif _current_mission != null and _current_mission.power_cell_enabled:
-		target_hazard_label.text = (
-			"ENVIRONMENT • POWER CELL SPENT"
-			if power_cell.is_discharged
-			else "ENVIRONMENT • POWER CELL ACTIVE"
-		)
+		if roadblock.breakable:
+			var cell_state: String = "SPENT" if power_cell.is_discharged else "ACTIVE"
+			var barrier_state: String = "BREACHED" if roadblock.is_breached else "SOLID"
+			target_hazard_label.text = "ENVIRONMENT • BLOCKER %s • CELL %s" % [barrier_state, cell_state]
+		else:
+			target_hazard_label.text = (
+				"ENVIRONMENT • POWER CELL SPENT"
+				if power_cell.is_discharged
+				else "ENVIRONMENT • POWER CELL ACTIVE"
+			)
 	elif _collapsible_barrier != null and is_instance_valid(_collapsible_barrier):
 		target_hazard_label.text = "ENVIRONMENT • %s" % _collapsible_barrier.status_text()
 	else:
